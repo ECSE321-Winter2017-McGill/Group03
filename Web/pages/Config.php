@@ -1,4 +1,8 @@
 <?php
+// this is configs for AWS login database
+
+// DO NOT EDIT OR INSERT ANYTHING IN THIS DATABASE
+
    define('DB_SERVER', 'test.cabyhhnybi2l.us-west-2.rds.amazonaws.com');
    define('DB_USERNAME', 'wzs1234566');
    define('DB_PASSWORD', 'yuwen120');

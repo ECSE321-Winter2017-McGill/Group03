@@ -106,7 +106,7 @@ class Application
   {
     $wasSet = false;
     if (!$this->canSetApplicant) { return false; }
-//     if ($aApplicant.nil?)
+//     if ($aApplicant.nil)
 //     {
 //       return wasSet;
 //     }

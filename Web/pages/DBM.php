@@ -1,4 +1,5 @@
 <?php
+//This is a database manager, currentlly still in develpoment
 class DBM{
     function __construct(){
         define('DB_SERVER', 'test.cabyhhnybi2l.us-west-2.rds.amazonaws.com');

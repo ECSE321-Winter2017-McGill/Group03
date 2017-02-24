@@ -24,17 +24,19 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 	<div id="wrapper">
 		<div class="navbar-default sidebar" role="navigation">
 			<div class="sidebar-nav navbar-collapse">
-				<ul class="nav" id="side-menu">
-					<div class="navbar-header">
-						<a class="navbar-brand" href="dashboard.php">TAMAS</a>
-					</div>
-					<h6 class="welcome">Welcome
+
+				<div class="navbar-header">
+					<a class="navbar-brand" href="dashboard.php">TAMAS</a>
+				</div>
+				<h6 class="welcome">Welcome
                             <?php echo $login_session; ?>
                         </h6>
-					<h6 class="welcome">
-						<a href="logout.php">Sign Out</a>
-					</h6>
-					</li>
+				<h6 class="welcome">
+					<a href="logout.php">Sign Out</a>
+				</h6>
+				
+
+				<ul class="nav" id="side-menu">
 					<li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i>
 							Dashboard</a></li>
 					<li><a href="jobPostings.php"><i class="fa fa-dashboard fa-fw"></i>
@@ -47,7 +49,7 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Add Job </h1>
+					<h1 class="page-header">Add Job</h1>
 				</div>
 			</div>
 			<div class="row">
@@ -129,9 +131,7 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 						
 						</form>
 
-						<br>
-						<br>
-						<br>
+						<br> <br> <br>
 							<?php
 							$pm = new PersistenceTAMAS ();
 							$rm = $pm->loadDataFromStore ();

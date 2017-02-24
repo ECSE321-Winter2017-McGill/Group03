@@ -1,3 +1,4 @@
+<!-- This is a log in page -->
 <html>
 
 <head>
@@ -34,8 +35,8 @@
                         <p class="error">
                             <span class="error">
                             <?php
-			if (isset ( $_SESSION ['error'] ) && !empty ( $_SESSION ['error'] )) {
-				echo "*" . $_SESSION ['error'];
+			if (isset ( $_SESSION ['loginError'] ) && !empty ( $_SESSION ['loginError'] )) {//display error messages.
+				echo "*" . $_SESSION ['loginError'];
 			}
 			?>
 			</span>

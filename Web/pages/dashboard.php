@@ -18,22 +18,23 @@ include ('session.php');
 	<div id="wrapper">
 		<div class="navbar-default sidebar" role="navigation">
 			<div class="sidebar-nav navbar-collapse">
-				<ul class="nav" id="side-menu">
-					<div class="navbar-header">
-						<a class="navbar-brand" href="dashboard.php">TAMAS</a>
-					</div>
-					<h6 class="welcome">Welcome
-                            <?php echo $login_session; ?>
+
+				<div class="navbar-header">
+					<a class="navbar-brand" href="dashboard.php">TAMAS</a>
+				</div>
+				<h6 class="welcome">Welcome
+                            <?php echo $login_session; //say welcome to logged in user?> 
                         </h6>
-					<h6 class="welcome">
-						<a href="logout.php">Sign Out</a>
-					</h6>
+				<h6 class="welcome">
+					<a href="logout.php">Sign Out</a>
+				</h6>
+				<ul class="nav" id="side-menu">
 					<li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i>
 							Dashboard</a></li>
 					<li><a href="jobPostings.php"><i class="fa fa-dashboard fa-fw"></i>
 							Job Postings</a></li>
-					<li><a href="courses.php"><i class="fa fa-dashboard fa-fw"></i>
-							Job Postings</a></li>
+					<!-- 					<li><a href="courses.php"><i class="fa fa-dashboard fa-fw"></i> Job -->
+					<!-- <!-- 							Postings</a></li> -->
 				</ul>
 			</div>
 		</div>
@@ -61,7 +62,7 @@ include ('session.php');
 								</thead>
 								<tbody>
 									<tr>
-										<td><a href="courses.html">COMP 250</a></td>
+										<td><a href="jobPostings.php">COMP 250</a></td>
 										<td>Intro to Computer Science</td>
 										<td><span class="label label-success">2/5</span></td>
 										<!--<td><p>2/5</p></td>-->
@@ -69,7 +70,7 @@ include ('session.php');
 										</td>
 									</tr>
 									<tr>
-										<td><a href="courses.html">ECSE 200</a></td>
+										<td><a href="jobPostings.php">ECSE 200</a></td>
 										<td>Electrical Circuits 1</td>
 										<td><span class="label label-warning">0/3</span></td>
 										<!--<td><p>2/5</p></td>-->
@@ -78,7 +79,7 @@ include ('session.php');
 										</td>
 									</tr>
 									<tr>
-										<td><a href="courses.html">ECSE 321</a></td>
+										<td><a href="jobPostings.php">ECSE 321</a></td>
 										<td>Intro. to Soft.Eng</td>
 										<td><span class="label label-danger">5/5</span></td>
 										<td>
@@ -87,7 +88,7 @@ include ('session.php');
 										</td>
 									</tr>
 									<tr>
-										<td><a href="courses.html">ECSE 221</a></td>
+										<td><a href="jobPostings.php">ECSE 221</a></td>
 										<td>Intro. to Comp.Eng</td>
 										<td><span class="label label-info">1/3</span></td>
 										<td>

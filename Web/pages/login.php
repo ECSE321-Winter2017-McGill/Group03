@@ -12,7 +12,6 @@
       $sql = "SELECT id FROM login WHERE name = '$myusername' and password = '$mypassword'";
       $result = mysqli_query($db,$sql);
       $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-      //$active = $row['active'];
       
       $count = mysqli_num_rows($result);
       
@@ -24,7 +23,7 @@
          
          header("location: dashboard.php");
       }else {
-         $_SESSION ['error'] = "Your Login Name or Password is invalid";
+         $_SESSION ['loginError'] = "Your Login Name or Password is invalid";
         header("location: ../index.php");
       } 
    }
@@ -32,6 +31,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!--<meta http-equiv="refresh" content="3; url=index.php" />-->
+<!-- <meta http-equiv="refresh" content="0; url=index.php" /> -->
 </head>
 </html>

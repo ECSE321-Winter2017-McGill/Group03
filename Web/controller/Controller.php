@@ -9,17 +9,15 @@ class Controller {
 	public function __construct() {
 	}
 	public function createJobPosting($jobTitle, $deadLine, $perferredExperience, $numNeeded, $hourlyRate, $course) {
-		$error = "";
-		$flag = 0;
-		
+		$error = "";//empty errors.
 		$jt = InputValidator::validate_input ( $jobTitle );
 		$dl = InputValidator::validate_input ( $deadLine );
 		$pe = InputValidator::validate_input ( $perferredExperience );
 		$nn = InputValidator::validate_input ( $numNeeded );
 		$hr = InputValidator::validate_input ( $hourlyRate );
-		$c = InputValidator::validate_input ( $course );
+		$c = InputValidator::validate_input ( $course );//validation check
 		
-		if ($jt == null || strlen ( $jt ) == 0) {
+		if ($jt == null || strlen ( $jt ) == 0) { //errors
 			$error .= "@1job title cannot be empty! ";
 		}
 		if ($dl == null || strlen ( $dl ) == 0) {
@@ -31,7 +29,6 @@ class Controller {
 		if ($nn == null || strlen ( $nn ) == 0) {
 			$error .= "@4num needed cannot be empty! ";
 		}
-		
 		if ($hr == null || strlen ( $hr ) == 0) {
 			$error .= "@5hourly rate cannot be empty! ";
 		}
@@ -42,18 +39,15 @@ class Controller {
 			throw new Exception ( trim ( $error ) );
 		} else {
 			try {
-				$pm = new PersistenceTAMAS ();
-				$rm = $pm->loadDataFromStore ();
-				$co = new Course ( "winter 2017", $c, 1, 1, 100, 3, 3, 3, 100.00, new Allocation (), $rm );
-				$jp = new JobPosting ( $jt, $dl, $pe, $nn, $hr, $rm, $co );
-				$rm->addJobPosting ( $jp );
-				$pm->writeDataToStore ( $rm );
+				$pm = new PersistenceTAMAS (); // new persistence manager
+				$rm = $pm->loadDataFromStore ();//get TAMAS management system
+				$co = new Course ( "winter 2017", $c, 1, 1, 100, 3, 3, 3, 100.00, new Allocation (), $rm );// create a fake course
+				$jp = new JobPosting ( $jt, $dl, $pe, $nn, $hr, $rm, $co );// create a jobposting
+				$rm->addJobPosting ( $jp );//add job posting
+				$pm->writeDataToStore ( $rm );//store data to file
 			} catch ( Exception $e ) {
-				echo $e->getMessage ();
+				throw new Exception ( trim ( $error ) );//throw any exceptions
 			}
 		}
-		// } else {
-		// throw new Exception ( trim ( $error ) );
-		// }
 	}
 }
