@@ -1,0 +1,168 @@
+<?php
+   include('session.php');
+?>
+    <html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>DashBoard</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/main.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="wrapper">
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="dashboard.php">TAMAS</a>
+                        </div>
+                        <h6 class="welcome">Welcome
+                            <?php echo $login_session; ?>
+                        </h6>
+                        <h6 class="welcome"><a href="logout.php">Sign Out</a></h6>
+                        <li>
+                            <a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="jobPostings.php"><i class="fa fa-dashboard fa-fw"></i> Job Postings</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="page-wrapper">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Dashboard</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="box box-info col-lg-12">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Overview</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table class="table no-margin">
+                                    <thead>
+                                        <tr>
+                                            <th>Course ID</th>
+                                            <th>Course Name</th>
+                                            <th>TA (Current/Needed)</th>
+                                            <th>Grader (Current/Needed)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><a href="courses.html">COMP 250</a></td>
+                                            <td>Intro to Computer Science</td>
+                                            <td><span class="label label-success">2/5</span></td>
+                                            <!--<td><p>2/5</p></td>-->
+                                            <td>
+                                                <span class="label label-success">2/5</span>
+                                                <!--<div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>-->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="courses.html">ECSE 200</a></td>
+                                            <td>Electrical Circuits 1</td>
+                                            <td><span class="label label-warning">0/3</span></td>
+                                            <!--<td><p>2/5</p></td>-->
+                                            <td>
+                                                <span class="label label-info">1/3</span>
+                                                <!--<p>2/5</p>-->
+                                                <!--<div class="sparkbar" data-color="#f39c12" data-height="20"> <td><p>2/5</p></td></div>-->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="courses.html">ECSE 321</a></td>
+                                            <td>Intro. to Soft.Eng</td>
+                                            <td><span class="label label-danger">5/5</span></td>
+                                            <td>
+                                                <!--<div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>-->
+                                                <span class="label label-info">1/3</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="courses.html">ECSE 221</a></td>
+                                            <td>Intro. to Comp.Eng</td>
+                                            <td><span class="label label-info">1/3</span></td>
+                                            <td>
+                                                <!--<div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>-->
+                                                <span class="label label-info">1/3</span>
+                                            </td>
+                                        </tr>
+                                        <!--<tr>
+                    <td><a href="pages/examples/invoice.html">OR1848</a></td>
+                    <td>Samsung Smart TV</td>
+                    <td><span class="label label-warning">Pending</span></td>
+                    <td>
+                      <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                    <td>iPhone 6 Plus</td>
+                    <td><span class="label label-danger">Delivered</span></td>
+                    <td>
+                      <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                    <td>Call of Duty IV</td>
+                    <td><span class="label label-success">Shipped</span></td>
+                    <td>
+                      <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
+                    </td>
+                  </tr>-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- /.col-lg-8 -->
+
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Add New Courses</a>
+                    <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Courses</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+        <!-- /.col-lg-4 -->
+
+        <!-- /.row -->
+        <!-- /#wrapper -->
+
+        <!-- jQuery -->
+<!--         <script src="../vendor/jquery/jquery.min.js"></script> -->
+
+        <!-- Bootstrap Core JavaScript -->
+<!--         <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> -->
+
+        <!-- Metis Menu Plugin JavaScript -->
+<!--         <script src="../vendor/metisMenu/metisMenu.min.js"></script> -->
+
+        <!-- Morris Charts JavaScript -->
+<!--         <script src="../vendor/raphael/raphael.min.js"></script> -->
+<!--         <script src="../vendor/morrisjs/morris.min.js"></script> -->
+<!--         <script src="../data/morris-data.js"></script> -->
+
+        <!-- Custom Theme JavaScript -->
+<!--         <script src="../dist/js/sb-admin-2.js"></script> -->
+
+    </body>
+
+    </html>
