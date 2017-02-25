@@ -32,7 +32,7 @@ include ('session.php');
 					<li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i>
 							Dashboard</a></li>
 					<li><a href="jobPostings.php"><i class="fa fa-dashboard fa-fw"></i>
-							Add Job Postings</a></li>
+							Job Postings</a></li>
 					<!-- 					<li><a href="courses.php"><i class="fa fa-dashboard fa-fw"></i> Job -->
 					<!-- <!-- 							Postings</a></li> -->
 				</ul>

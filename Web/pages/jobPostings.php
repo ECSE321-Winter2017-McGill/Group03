@@ -39,8 +39,8 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 							Dashboard</a></li>
 					<li><a href="jobPostings.php"><i class="fa fa-dashboard fa-fw"></i>
 							Add Job Postings</a></li>
-					<!-- 					<li><a href="courses.php"><i class="fa fa-dashboard fa-fw"></i> Job -->
-					<!-- 							Postings</a></li> -->
+<!-- 					<li><a href="courses.php"><i class="fa fa-dashboard fa-fw"></i> Job -->
+<!-- 							Postings</a></li> -->
 				</ul>
 			</div>
 		</div>
@@ -52,29 +52,31 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 			</div>
 			<div class="row">
 				<div class="box box-info col-lg-12">
-					<div class="box-header with-border"></div>
+					<div class="box-header with-border">
+						<h3 class="box-title">Overview</h3>
+					</div>
 					<!-- 					$aJobTitle, $aSubmissionDeadline, $aPerferredExperience, $aNumNeeded, $aHourRate, $aCourse -->
 					<div class="box-body">
 
 						<form action="addJobPosting.php" method="post">
-							<label>Select a course:</label>			<?php
+							<h4>select a course:</h4>			<?php
 							if (isset ( $_SESSION ['errorCourse'] ) && ! empty ( $_SESSION ['errorCourse'] )) {
 								echo "*" . $_SESSION ["errorCourse"];
 							}
 							?>
-							<select name="courses" class="form-control" id="">
+							<select name="courses" id="">
 								<option value="COMP 251">COMP 251</option>
 								<option value="ECSE 321">ECSE 321</option>
 								<option value="ECSE 211">ECSE 211</option>
 
 							</select> <br>
 							<p>
-								<label>Job Title: </label><?php
+								<br> Job Title <?php
 								if (isset ( $_SESSION ['errorJobTitle'] ) && ! empty ( $_SESSION ['errorJobTitle'] )) {
 									echo "*" . $_SESSION ["errorJobTitle"];
 								}
 								?>
-								<select name="jobTitle" class="form-control" id="">
+								<select name="jobTitle" id="">
 									<option value="TA">TA</option>
 									<option value="Grader">Grader</option>
 								</select>
@@ -82,8 +84,7 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 							</p>
 
 							<p>
-								<label>Dead Line: </label> <input class="form-control"
-									type="date" name="deadLine"
+								DeadLine: <input type="date" name="deadLine"
 									value="<?php echo date('Y-m-d'); ?>" /> <span class="error">
 			<?php
 			if (isset ( $_SESSION ['errorDeadLine'] ) && ! empty ( $_SESSION ['errorDeadLine'] )) {
@@ -92,21 +93,19 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 			?>
 			</span>
 							</p>
-							<div>
-								<label>Perferred Experience: </label>
-								<textarea class="form-control" name="perferredExperience"></textarea>
-								<span class="error">
+							<p>
+								Perferred Experience <input type="text"
+									name="perferredExperience" value="" /> <span class="error">
 			<?php
 			if (isset ( $_SESSION ['errorPerferredExperience'] ) && ! empty ( $_SESSION ['errorPerferredExperience'] )) {
 				echo "*" . $_SESSION ["errorPerferredExperience"];
 			}
 			?>
 			</span>
-							</div>
-
+							</p>
 							<p>
-								<label>Number needed: </label> <input class="form-control"
-									type="text" name="numberNeeded" value="" /> <span class="error">
+								Number needed <input type="text" name="numberNeeded" value="" />
+								<span class="error">
 			<?php
 			if (isset ( $_SESSION ['errorNumberNeeded'] ) && ! empty ( $_SESSION ['errorNumberNeeded'] )) {
 				echo "*" . $_SESSION ["errorNumberNeeded"];
@@ -115,8 +114,8 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 			</span>
 							</p>
 							<p>
-								<label>Hourly Rate: </label> <input class="form-control"
-									type="text" name="hourlyRate" value="" /> <span class="error">
+								Hourly Rate <input type="text" name="hourlyRate" value="" /> <span
+									class="error">
 			<?php
 			if (isset ( $_SESSION ['errorHourlyRate'] ) && ! empty ( $_SESSION ['errorHourlyRate'] )) {
 				echo "*" . $_SESSION ["errorHourlyRate"];
@@ -132,13 +131,13 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 
 						<br> <br> <br>
 							<?php
-// 							$pm = new PersistenceTAMAS ();
-// 							$rm = $pm->loadDataFromStore ();
-// 							foreach ( $rm->getJobPosting () as $jobPostings ) {
-// 								echo "<p>" . $jobPostings->getJobTitle () . "</p>";
-// 								echo "<p>" . $jobPostings->getCourse ()->getCourseCoude () . "</p>";
-// 							}
-// 							?>
+							$pm = new PersistenceTAMAS ();
+							$rm = $pm->loadDataFromStore ();
+							foreach ( $rm->getJobPosting () as $jobPostings ) {
+								echo "<p>" . $jobPostings->getJobTitle () . "</p>";
+								echo "<p>" . $jobPostings->getCourse ()->getCourseCoude () . "</p>";
+							}
+							?>
 					</div>
 				</div>
 
