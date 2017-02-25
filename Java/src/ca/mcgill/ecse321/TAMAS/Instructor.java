@@ -26,18 +26,11 @@ public class Instructor
   public Instructor(String aName, ManagementSystem aManagementSystem)
   {
     name = aName;
-    if (aManagementSystem == null || aManagementSystem.getInstructors() != null)
+    boolean didAddManagementSystem = setManagementSystem(aManagementSystem);
+    if (!didAddManagementSystem)
     {
-      throw new RuntimeException("Unable to create Instructor due to aManagementSystem");
+      throw new RuntimeException("Unable to create instructor due to managementSystem");
     }
-    managementSystem = aManagementSystem;
-    courses = new ArrayList<Course>();
-  }
-
-  public Instructor(String aName)
-  {
-    name = aName;
-    managementSystem = new ManagementSystem(this);
     courses = new ArrayList<Course>();
   }
 
@@ -91,6 +84,25 @@ public class Instructor
   {
     int index = courses.indexOf(aCourse);
     return index;
+  }
+
+  public boolean setManagementSystem(ManagementSystem aManagementSystem)
+  {
+    boolean wasSet = false;
+    if (aManagementSystem == null)
+    {
+      return wasSet;
+    }
+
+    ManagementSystem existingManagementSystem = managementSystem;
+    managementSystem = aManagementSystem;
+    if (existingManagementSystem != null && !existingManagementSystem.equals(aManagementSystem))
+    {
+      existingManagementSystem.removeInstructor(this);
+    }
+    managementSystem.addInstructor(this);
+    wasSet = true;
+    return wasSet;
   }
 
   public static int minimumNumberOfCourses()
@@ -167,12 +179,9 @@ public class Instructor
 
   public void delete()
   {
-    ManagementSystem existingManagementSystem = managementSystem;
-    managementSystem = null;
-    if (existingManagementSystem != null)
-    {
-      existingManagementSystem.delete();
-    }
+    ManagementSystem placeholderManagementSystem = managementSystem;
+    this.managementSystem = null;
+    placeholderManagementSystem.removeInstructor(this);
     for(int i=courses.size(); i > 0; i--)
     {
       Course aCourse = courses.get(i - 1);

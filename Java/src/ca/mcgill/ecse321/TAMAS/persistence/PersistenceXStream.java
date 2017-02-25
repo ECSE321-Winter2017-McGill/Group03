@@ -36,7 +36,7 @@ public abstract class PersistenceXStream {
                 e.printStackTrace();
                 System.exit(1);
             }
-            rm = new ManagementSystem(instructor);
+            rm = new ManagementSystem();
             saveToXMLwithXStream(rm);
         }
         return rm;

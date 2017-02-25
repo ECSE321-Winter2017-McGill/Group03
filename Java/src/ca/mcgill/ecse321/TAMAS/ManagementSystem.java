@@ -15,7 +15,7 @@ public class ManagementSystem
 
   //ManagementSystem Associations
   private List<Course> courses;
-  private Instructor instructors;
+  private List<Instructor> instructors;
   private List<Applicant> applicants;
   private List<JobPosting> jobPostings;
 
@@ -23,22 +23,10 @@ public class ManagementSystem
   // CONSTRUCTOR
   //------------------------
 
-  public ManagementSystem(Instructor aInstructors)
+  public ManagementSystem()
   {
     courses = new ArrayList<Course>();
-    if (aInstructors == null || aInstructors.getManagementSystem() != null)
-    {
-      throw new RuntimeException("Unable to create ManagementSystem due to aInstructors");
-    }
-    instructors = aInstructors;
-    applicants = new ArrayList<Applicant>();
-    jobPostings = new ArrayList<JobPosting>();
-  }
-
-  public ManagementSystem(String aNameForInstructors)
-  {
-    courses = new ArrayList<Course>();
-    instructors = new Instructor(aNameForInstructors, this);
+    instructors = new ArrayList<Instructor>();
     applicants = new ArrayList<Applicant>();
     jobPostings = new ArrayList<JobPosting>();
   }
@@ -77,9 +65,34 @@ public class ManagementSystem
     return index;
   }
 
-  public Instructor getInstructors()
+  public Instructor getInstructor(int index)
   {
-    return instructors;
+    Instructor aInstructor = instructors.get(index);
+    return aInstructor;
+  }
+
+  public List<Instructor> getInstructors()
+  {
+    List<Instructor> newInstructors = Collections.unmodifiableList(instructors);
+    return newInstructors;
+  }
+
+  public int numberOfInstructors()
+  {
+    int number = instructors.size();
+    return number;
+  }
+
+  public boolean hasInstructors()
+  {
+    boolean has = instructors.size() > 0;
+    return has;
+  }
+
+  public int indexOfInstructor(Instructor aInstructor)
+  {
+    int index = instructors.indexOf(aInstructor);
+    return index;
   }
 
   public Applicant getApplicant(int index)
@@ -210,6 +223,78 @@ public class ManagementSystem
     else 
     {
       wasAdded = addCourseAt(aCourse, index);
+    }
+    return wasAdded;
+  }
+
+  public static int minimumNumberOfInstructors()
+  {
+    return 0;
+  }
+
+  public Instructor addInstructor(String aName)
+  {
+    return new Instructor(aName, this);
+  }
+
+  public boolean addInstructor(Instructor aInstructor)
+  {
+    boolean wasAdded = false;
+    if (instructors.contains(aInstructor)) { return false; }
+    ManagementSystem existingManagementSystem = aInstructor.getManagementSystem();
+    boolean isNewManagementSystem = existingManagementSystem != null && !this.equals(existingManagementSystem);
+    if (isNewManagementSystem)
+    {
+      aInstructor.setManagementSystem(this);
+    }
+    else
+    {
+      instructors.add(aInstructor);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeInstructor(Instructor aInstructor)
+  {
+    boolean wasRemoved = false;
+    //Unable to remove aInstructor, as it must always have a managementSystem
+    if (!this.equals(aInstructor.getManagementSystem()))
+    {
+      instructors.remove(aInstructor);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+
+  public boolean addInstructorAt(Instructor aInstructor, int index)
+  {  
+    boolean wasAdded = false;
+    if(addInstructor(aInstructor))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfInstructors()) { index = numberOfInstructors() - 1; }
+      instructors.remove(aInstructor);
+      instructors.add(index, aInstructor);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveInstructorAt(Instructor aInstructor, int index)
+  {
+    boolean wasAdded = false;
+    if(instructors.contains(aInstructor))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfInstructors()) { index = numberOfInstructors() - 1; }
+      instructors.remove(aInstructor);
+      instructors.add(index, aInstructor);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addInstructorAt(aInstructor, index);
     }
     return wasAdded;
   }
@@ -387,12 +472,13 @@ public class ManagementSystem
       courses.remove(aCourse);
     }
     
-    Instructor existingInstructors = instructors;
-    instructors = null;
-    if (existingInstructors != null)
+    while (instructors.size() > 0)
     {
-      existingInstructors.delete();
+      Instructor aInstructor = instructors.get(instructors.size() - 1);
+      aInstructor.delete();
+      instructors.remove(aInstructor);
     }
+    
     while (applicants.size() > 0)
     {
       Applicant aApplicant = applicants.get(applicants.size() - 1);
