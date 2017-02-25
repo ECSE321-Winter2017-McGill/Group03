@@ -132,13 +132,12 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 
 						<br> <br> <br>
 							<?php
-// 							$pm = new PersistenceTAMAS ();
-// 							$rm = $pm->loadDataFromStore ();
-// 							foreach ( $rm->getJobPosting () as $jobPostings ) {
-// 								echo "<p>" . $jobPostings->getJobTitle () . "</p>";
-// 								echo "<p>" . $jobPostings->getCourse ()->getCourseCoude () . "</p>";
-// 							}
-// 							?>
+							$pm = new PersistenceTAMAS ();
+							$rm = $pm->loadDataFromStore ();
+							foreach ( $rm->getJobPostings () as $jobPostings ) {
+								echo "<p>" . $jobPostings->getJobTitle () . " " . $jobPostings->getCourse ()->getCourseCoude () . "</p>";
+							}
+							?>
 					</div>
 				</div>
 

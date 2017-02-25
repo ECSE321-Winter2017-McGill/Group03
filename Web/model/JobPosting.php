@@ -203,81 +203,55 @@ class JobPosting
     return $wasSet;
   }
 
-  public function isNumberOfApplicationsValid()
-  {
-    $isValid = $this->numberOfApplications() >= self::minimumNumberOfApplications() && $this->numberOfApplications() <= self::maximumNumberOfApplications();
-    return $isValid;
-  }
-
   public static function minimumNumberOfApplications()
   {
-    return 1;
-  }
-
-  public static function maximumNumberOfApplications()
-  {
-    return 3;
-  }
-
-  public function addApplicationVia($aApplicationStatus, $aApplicant)
-  {
-    if ($this->numberOfApplications() >= self::maximumNumberOfApplications())
-    {
-      return null;
-    }
-    else
-    {
-      return new Application($aApplicationStatus, $this, $aApplicant);
-    }
+    return 0;
   }
 
   public function addApplication($aApplication)
   {
     $wasAdded = false;
     if ($this->indexOfApplication($aApplication) !== -1) { return false; }
-    if ($this->numberOfApplications() >= self::maximumNumberOfApplications())
+    $this->applications[] = $aApplication;
+    if ($aApplication->indexOfJobPosting($this) != -1)
     {
-      return $wasAdded;
-    }
-
-    $existingJobPosting = $aApplication->getJobPosting();
-    $isNewJobPosting = $existingJobPosting != null && $this !== $existingJobPosting;
-
-    if ($isNewJobPosting && $existingJobPosting->numberOfApplications() <= self::minimumNumberOfApplications())
-    {
-      return $wasAdded;
-    }
-
-    if ($isNewJobPosting)
-    {
-      $aApplication->setJobPosting($this);
+      $wasAdded = true;
     }
     else
     {
-      $this->applications[] = $aApplication;
+      $wasAdded = $aApplication->addJobPosting($this);
+      if (!$wasAdded)
+      {
+        array_pop($this->applications);
+      }
     }
-    $wasAdded = true;
     return $wasAdded;
   }
 
   public function removeApplication($aApplication)
   {
     $wasRemoved = false;
-    //Unable to remove aApplication, as it must always have a jobPosting
-    if ($this === $aApplication->getJobPosting())
+    if ($this->indexOfApplication($aApplication) == -1)
     {
       return $wasRemoved;
     }
 
-    //jobPosting already at minimum (1)
-    if ($this->numberOfApplications() <= self::minimumNumberOfApplications())
+    $oldIndex = $this->indexOfApplication($aApplication);
+    unset($this->applications[$oldIndex]);
+    if ($aApplication->indexOfJobPosting($this) == -1)
     {
-      return $wasRemoved;
+      $wasRemoved = true;
     }
-
-    unset($this->applications[$this->indexOfApplication($aApplication)]);
+    else
+    {
+      $wasRemoved = $aApplication->removeJobPosting($this);
+      if (!$wasRemoved)
+      {
+        $this->applications[$oldIndex] = $aApplication;
+        ksort($this->applications);
+      }
+    }
     $this->applications = array_values($this->applications);
-    $wasRemoved = true;
     return $wasRemoved;
   }
 
@@ -326,9 +300,18 @@ class JobPosting
     $placeholderCourse = $this->course;
     $this->course = null;
     $placeholderCourse->removeJobPosting($this);
-    foreach ($this->applications as $aApplication)
+    $copyOfApplications = $this->applications;
+    $this->applications = array();
+    foreach ($copyOfApplications as $aApplication)
     {
-      $aApplication->delete();
+      if ($aApplication->numberOfJobPostings() <= Application::minimumNumberOfJobPostings())
+      {
+        $aApplication->delete();
+      }
+      else
+      {
+        $aApplication->removeJobPosting($this);
+      }
     }
   }
 

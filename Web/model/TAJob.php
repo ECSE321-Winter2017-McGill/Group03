@@ -16,9 +16,9 @@ class TAJob extends OfferedJob
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct($aDescription, $aCourse, $aApplicant, $aAppointmentHour)
+  public function __construct($aOfferDescription, $aCourse, $aApplicant, $aAppointmentHour)
   {
-    parent::__construct($aDescription, $aCourse, $aApplicant);
+    parent::__construct($aOfferDescription, $aCourse, $aApplicant);
     $this->appointmentHour = $aAppointmentHour;
   }
 

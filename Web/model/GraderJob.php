@@ -13,9 +13,9 @@ class GraderJob extends OfferedJob
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct($aDescription, $aCourse, $aApplicant)
+  public function __construct($aOfferDescription, $aCourse, $aApplicant)
   {
-    parent::__construct($aDescription, $aCourse, $aApplicant);
+    parent::__construct($aOfferDescription, $aCourse, $aApplicant);
   }
 
   //------------------------
