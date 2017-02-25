@@ -6,19 +6,17 @@ class ManagementSystem{
 
   1 <@>- * Course courses;
 
-  1 <@>- 1 Department department;
+  1 <@>- 1 Instructor instructors;
 
   1 <@>- 1..* Applicant applicants;
-
+  
+  1 <@>- * JobPosting;
+  
 }
 
-
-
-class Department{
-
+class Instructor{
+  String name;
 }
-
-
 
 class Course{
 
@@ -28,7 +26,7 @@ class Course{
 
   1 <@>- * JobPosting jobPosting;
 
-  * courses -- 1 Department;
+  * courses -- 1 Instructor;
 
   1 <@>- * OfferedJob;
 
@@ -107,15 +105,17 @@ class Applicant{
   String option2;
   
   String option3;
+  
+  Integer totalAppointmentHours;
 }
 
 
 
-associationClass Application{
+class Application{
 
-  1..3 JobPosting;
+  * -- 1..3 JobPosting;
 
-  * Applicant;
+  0..3 -- * Applicant;
 
   String applicationStatus;
 
@@ -127,9 +127,9 @@ associationClass Application{
 
 class OfferedJob{
 
-  abstract;
-
-  String description;
+  String offerDescription;
+  
+  job{ TA{} GRADER{} }
 
 }
 
