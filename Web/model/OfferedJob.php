@@ -10,7 +10,12 @@ class OfferedJob
   //------------------------
 
   //OfferedJob Attributes
-  private $description;
+  private $offerDescription;
+
+  //OfferedJob State Machines
+  private static $JobTA = 1;
+  private static $JobGRADER = 2;
+  private $job;
 
   //OfferedJob Associations
   private $course;
@@ -20,9 +25,9 @@ class OfferedJob
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct($aDescription, $aCourse, $aApplicant)
+  public function __construct($aOfferDescription, $aCourse, $aApplicant)
   {
-    $this->description = $aDescription;
+    $this->offerDescription = $aOfferDescription;
     $didAddCourse = $this->setCourse($aCourse);
     if (!$didAddCourse)
     {
@@ -33,23 +38,55 @@ class OfferedJob
     {
       throw new Exception("Unable to create offeredJob due to applicant");
     }
+    $this->setJob(self::$JobTA);
   }
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public function setDescription($aDescription)
+  public function setOfferDescription($aOfferDescription)
   {
     $wasSet = false;
-    $this->description = $aDescription;
+    $this->offerDescription = $aOfferDescription;
     $wasSet = true;
     return $wasSet;
   }
 
-  public function getDescription()
+  public function getOfferDescription()
   {
-    return $this->description;
+    return $this->offerDescription;
+  }
+
+  public function getJobFullName()
+  {
+    $answer = $this->getJob();
+    return $answer;
+  }
+
+  public function getJob()
+  {
+    if ($this->job == self::$JobTA) { return "JobTA"; }
+    elseif ($this->job == self::$JobGRADER) { return "JobGRADER"; }
+    return null;
+  }
+
+  public function setJob($aJob)
+  {
+    if ($aJob == "JobTA" || $aJob == self::$JobTA)
+    {
+      $this->job = self::$JobTA;
+      return true;
+    }
+    elseif ($aJob == "JobGRADER" || $aJob == self::$JobGRADER)
+    {
+      $this->job = self::$JobGRADER;
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
 
   public function getCourse()

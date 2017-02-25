@@ -24,6 +24,7 @@ class Course
   private $courseComponents;
   private $courseJobAllocation;
   private $jobPosting;
+  private $instructor;
   private $offeredJobs;
   private $managementSystem;
 
@@ -31,7 +32,7 @@ class Course
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct($aSemester = null, $aCourseCoude = null, $aNumTutorial = null, $aNumLab = null, $aNumStudent = null, $aCredit = null, $aHourRequiredTa = null, $aHourRequiredGrader = null, $aBudgetCalculated = null, $aCourseJobAllocation = null, $aManagementSystem = null)
+  public function __construct($aSemester = null, $aCourseCoude = null, $aNumTutorial = null, $aNumLab = null, $aNumStudent = null, $aCredit = null, $aHourRequiredTa = null, $aHourRequiredGrader = null, $aBudgetCalculated = null, $aCourseJobAllocation = null, $aInstructor = null, $aManagementSystem = null)
   {
     if (func_num_args() == 0) { return; }
 
@@ -51,6 +52,11 @@ class Course
     }
     $this->courseJobAllocation = $aCourseJobAllocation;
     $this->jobPosting = array();
+    $didAddInstructor = $this->setInstructor($aInstructor);
+    if (!$didAddInstructor)
+    {
+      throw new Exception("Unable to create course due to instructor");
+    }
     $this->offeredJobs = array();
     $didAddManagementSystem = $this->setManagementSystem($aManagementSystem);
     if (!$didAddManagementSystem)
@@ -58,7 +64,7 @@ class Course
       throw new Exception("Unable to create course due to managementSystem");
     }
   }
-  public static function newInstance($aSemester, $aCourseCoude, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $aManagementSystem)
+  public static function newInstance($aSemester, $aCourseCoude, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $aInstructor, $aManagementSystem)
   {
     $thisInstance = new Course();
     $thisInstance->semester = $aSemester;
@@ -72,7 +78,8 @@ class Course
     $thisInstance->budgetCalculated = $aBudgetCalculated;
     $this->courseComponents = array();
     $thisInstance->courseJobAllocation = new Allocation($thisInstance);
-    $this->jobPosting = array();
+    $this->jobPosting = array();$this->instructors = array();
+    $this->instructors[] = $aInstructor;
     $this->offeredJobs = array();$this->managementSystems = array();
     $this->managementSystems[] = $aManagementSystem;
     return $thisInstance;
@@ -286,6 +293,11 @@ class Course
     return $index;
   }
 
+  public function getInstructor()
+  {
+    return $this->instructor;
+  }
+
   public function getOfferedJob_index($index)
   {
     $aOfferedJob = $this->offeredJobs[$index];
@@ -478,14 +490,33 @@ class Course
     return $wasAdded;
   }
 
+  public function setInstructor($aInstructor)
+  {
+    $wasSet = false;
+    if ($aInstructor == null)
+    {
+      return $wasSet;
+    }
+    
+    $existingInstructor = $this->instructor;
+    $this->instructor = $aInstructor;
+    if ($existingInstructor != null && $existingInstructor != $aInstructor)
+    {
+      $existingInstructor->removeCourse($this);
+    }
+    $this->instructor->addCourse($this);
+    $wasSet = true;
+    return $wasSet;
+  }
+
   public static function minimumNumberOfOfferedJobs()
   {
     return 0;
   }
 
-  public function addOfferedJobVia($aDescription, $aApplicant)
+  public function addOfferedJobVia($aOfferDescription, $aApplicant)
   {
-    return new OfferedJob($aDescription, $this, $aApplicant);
+    return new OfferedJob($aOfferDescription, $this, $aApplicant);
   }
 
   public function addOfferedJob($aOfferedJob)
@@ -599,6 +630,9 @@ class Course
       $this->jobPosting = array_values($this->jobPosting);
     }
     
+    $placeholderInstructor = $this->instructor;
+    $this->instructor = null;
+    $placeholderInstructor->removeCourse($this);
     while (count($this->offeredJobs) > 0)
     {
       $aOfferedJob = $this->offeredJobs[count($this->offeredJobs) - 1];

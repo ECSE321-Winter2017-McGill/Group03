@@ -11,18 +11,40 @@ class ManagementSystem
 
   //ManagementSystem Associations
   private $courses;
+  private $instructors;
   private $applicants;
-  private $jobPosting;
+  private $jobPostings;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct()
+  public function __construct($aInstructors = null)
   {
+    if (func_num_args() == 0) { return; }
+
     $this->courses = array();
+    if ($aInstructors == null || $aInstructors->getManagementSystem() != null)
+    {
+      throw new Exception("Unable to create ManagementSystem due to aInstructors");
+    }
+    $this->instructors = $aInstructors;
     $this->applicants = array();
-    $this->jobPosting = array();
+    $this->jobPostings = array();
+  }
+  public static function newInstance($aNameForInstructors)
+  {
+    $thisInstance = new ManagementSystem();
+    $this->courses = array();
+    $thisInstance->instructors = new Instructor($aNameForInstructors, $thisInstance);
+    $thisInstance->applicants = array();
+    $didAddApplicants = $thisInstance->setApplicants($allApplicants);
+    if (!$didAddApplicants)
+    {
+      throw new Exception("Unable to create ManagementSystem, must have at least 1 applicants");
+    }
+    $this->jobPostings = array();
+    return $thisInstance;
   }
 
   //------------------------
@@ -70,6 +92,11 @@ class ManagementSystem
     return $index;
   }
 
+  public function getInstructors()
+  {
+    return $this->instructors;
+  }
+
   public function getApplicant_index($index)
   {
     $aApplicant = $this->applicants[$index];
@@ -113,25 +140,25 @@ class ManagementSystem
 
   public function getJobPosting_index($index)
   {
-    $aJobPosting = $this->jobPosting[$index];
+    $aJobPosting = $this->jobPostings[$index];
     return $aJobPosting;
   }
 
-  public function getJobPosting()
+  public function getJobPostings()
   {
-    $newJobPosting = $this->jobPosting;
-    return $newJobPosting;
+    $newJobPostings = $this->jobPostings;
+    return $newJobPostings;
   }
 
-  public function numberOfJobPosting()
+  public function numberOfJobPostings()
   {
-    $number = count($this->jobPosting);
+    $number = count($this->jobPostings);
     return $number;
   }
 
-  public function hasJobPosting()
+  public function hasJobPostings()
   {
-    $has = $this->numberOfJobPosting() > 0;
+    $has = $this->numberOfJobPostings() > 0;
     return $has;
   }
 
@@ -139,7 +166,7 @@ class ManagementSystem
   {
     $wasFound = false;
     $index = 0;
-    foreach($this->jobPosting as $jobPosting)
+    foreach($this->jobPostings as $jobPosting)
     {
       if ($jobPosting->equals($aJobPosting))
       {
@@ -157,9 +184,9 @@ class ManagementSystem
     return 0;
   }
 
-  public function addCourseVia($aSemester, $aCourseCoude, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $aCourseJobAllocation)
+  public function addCourseVia($aSemester, $aCourseCoude, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $aCourseJobAllocation, $aInstructor)
   {
-    return new Course($aSemester, $aCourseCoude, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $aCourseJobAllocation, $this);
+    return new Course($aSemester, $aCourseCoude, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $aCourseJobAllocation, $aInstructor, $this);
   }
 
   public function addCourse($aCourse)
@@ -236,9 +263,9 @@ class ManagementSystem
     return 1;
   }
 
-  public function addApplicantVia($aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aPreferredCourse, $aMajor, $aYear, $aOption1, $aOption2, $aOption3, $aAllocation)
+  public function addApplicantVia($aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aPreferredCourse, $aMajor, $aYear, $aOption1, $aOption2, $aOption3, $aTotalAppointmentHours, $aAllocation)
   {
-    return new Applicant($aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aPreferredCourse, $aMajor, $aYear, $aOption1, $aOption2, $aOption3, $aAllocation, $this);
+    return new Applicant($aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aPreferredCourse, $aMajor, $aYear, $aOption1, $aOption2, $aOption3, $aTotalAppointmentHours, $aAllocation, $this);
   }
 
   public function addApplicant($aApplicant)
@@ -318,7 +345,7 @@ class ManagementSystem
     return $wasAdded;
   }
 
-  public static function minimumNumberOfJobPosting()
+  public static function minimumNumberOfJobPostings()
   {
     return 0;
   }
@@ -340,7 +367,7 @@ class ManagementSystem
     }
     else
     {
-      $this->jobPosting[] = $aJobPosting;
+      $this->jobPostings[] = $aJobPosting;
     }
     $wasAdded = true;
     return $wasAdded;
@@ -352,8 +379,8 @@ class ManagementSystem
     //Unable to remove aJobPosting, as it must always have a managementSystem
     if ($this !== $aJobPosting->getManagementSystem())
     {
-      unset($this->jobPosting[$this->indexOfJobPosting($aJobPosting)]);
-      $this->jobPosting = array_values($this->jobPosting);
+      unset($this->jobPostings[$this->indexOfJobPosting($aJobPosting)]);
+      $this->jobPostings = array_values($this->jobPostings);
       $wasRemoved = true;
     }
     return $wasRemoved;
@@ -365,9 +392,9 @@ class ManagementSystem
     if($this->addJobPosting($aJobPosting))
     {
       if($index < 0 ) { $index = 0; }
-      if($index > $this->numberOfJobPosting()) { $index = $this->numberOfJobPosting() - 1; }
-      array_splice($this->jobPosting, $this->indexOfJobPosting($aJobPosting), 1);
-      array_splice($this->jobPosting, $index, 0, array($aJobPosting));
+      if($index > $this->numberOfJobPostings()) { $index = $this->numberOfJobPostings() - 1; }
+      array_splice($this->jobPostings, $this->indexOfJobPosting($aJobPosting), 1);
+      array_splice($this->jobPostings, $index, 0, array($aJobPosting));
       $wasAdded = true;
     }
     return $wasAdded;
@@ -379,9 +406,9 @@ class ManagementSystem
     if($this->indexOfJobPosting($aJobPosting) !== -1)
     {
       if($index < 0 ) { $index = 0; }
-      if($index > $this->numberOfJobPosting()) { $index = $this->numberOfJobPosting() - 1; }
-      array_splice($this->jobPosting, $this->indexOfJobPosting($aJobPosting), 1);
-      array_splice($this->jobPosting, $index, 0, array($aJobPosting));
+      if($index > $this->numberOfJobPostings()) { $index = $this->numberOfJobPostings() - 1; }
+      array_splice($this->jobPostings, $this->indexOfJobPosting($aJobPosting), 1);
+      array_splice($this->jobPostings, $index, 0, array($aJobPosting));
       $wasAdded = true;
     } 
     else 
@@ -406,6 +433,12 @@ class ManagementSystem
       $this->courses = array_values($this->courses);
     }
     
+    $existingInstructors = $this->instructors;
+    $this->instructors = null;
+    if ($existingInstructors != null)
+    {
+      $existingInstructors->delete();
+    }
     while (count($this->applicants) > 0)
     {
       $aApplicant = $this->applicants[count($this->applicants) - 1];
@@ -414,12 +447,12 @@ class ManagementSystem
       $this->applicants = array_values($this->applicants);
     }
     
-    while (count($this->jobPosting) > 0)
+    while (count($this->jobPostings) > 0)
     {
-      $aJobPosting = $this->jobPosting[count($this->jobPosting) - 1];
+      $aJobPosting = $this->jobPostings[count($this->jobPostings) - 1];
       $aJobPosting->delete();
-      unset($this->jobPosting[$this->indexOfJobPosting($aJobPosting)]);
-      $this->jobPosting = array_values($this->jobPosting);
+      unset($this->jobPostings[$this->indexOfJobPosting($aJobPosting)]);
+      $this->jobPostings = array_values($this->jobPostings);
     }
     
   }

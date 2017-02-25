@@ -28,10 +28,10 @@ class Allocation
     $this->course = $aCourse;
     $this->applicants = array();
   }
-  public static function newInstance($aSemesterForCourse, $aCourseCoudeForCourse, $aNumTutorialForCourse, $aNumLabForCourse, $aNumStudentForCourse, $aCreditForCourse, $aHourRequiredTaForCourse, $aHourRequiredGraderForCourse, $aBudgetCalculatedForCourse, $aManagementSystemForCourse)
+  public static function newInstance($aSemesterForCourse, $aCourseCoudeForCourse, $aNumTutorialForCourse, $aNumLabForCourse, $aNumStudentForCourse, $aCreditForCourse, $aHourRequiredTaForCourse, $aHourRequiredGraderForCourse, $aBudgetCalculatedForCourse, $aInstructorForCourse, $aManagementSystemForCourse)
   {
     $thisInstance = new Allocation();
-    $thisInstance->course = new Course($aSemesterForCourse, $aCourseCoudeForCourse, $aNumTutorialForCourse, $aNumLabForCourse, $aNumStudentForCourse, $aCreditForCourse, $aHourRequiredTaForCourse, $aHourRequiredGraderForCourse, $aBudgetCalculatedForCourse, $thisInstance, $aManagementSystemForCourse);
+    $thisInstance->course = new Course($aSemesterForCourse, $aCourseCoudeForCourse, $aNumTutorialForCourse, $aNumLabForCourse, $aNumStudentForCourse, $aCreditForCourse, $aHourRequiredTaForCourse, $aHourRequiredGraderForCourse, $aBudgetCalculatedForCourse, $thisInstance, $aInstructorForCourse, $aManagementSystemForCourse);
     $this->applicants = array();
     return $thisInstance;
   }
@@ -91,9 +91,9 @@ class Allocation
     return 0;
   }
 
-  public function addApplicantVia($aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aPreferredCourse, $aMajor, $aYear, $aOption1, $aOption2, $aOption3, $aManagementSystem)
+  public function addApplicantVia($aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aPreferredCourse, $aMajor, $aYear, $aOption1, $aOption2, $aOption3, $aTotalAppointmentHours, $aManagementSystem)
   {
-    return new Applicant($aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aPreferredCourse, $aMajor, $aYear, $aOption1, $aOption2, $aOption3, $this, $aManagementSystem);
+    return new Applicant($aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aPreferredCourse, $aMajor, $aYear, $aOption1, $aOption2, $aOption3, $aTotalAppointmentHours, $this, $aManagementSystem);
   }
 
   public function addApplicant($aApplicant)
