@@ -6,7 +6,7 @@ class ManagementSystem{
 
   1 <@>- * Course courses;
 
-  1 <@>- 1 Instructor instructors;
+  1 <@>- * Instructor instructors;
 
   1 <@>- 1..* Applicant applicants;
   
