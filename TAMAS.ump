@@ -6,16 +6,18 @@ class ManagementSystem{
 
   1 <@>- * Course courses;
 
-  1 <@>- 1 Department department;
+  1 <@>- 1 Instroctor instroctors;
 
   1 <@>- 1..* Applicant applicants;
+
+  1 <@>- * JobPosting jobPosting;
 
 }
 
 
 
-class Department{
-
+class Instroctor{
+  Sting name;
 }
 
 
@@ -28,7 +30,7 @@ class Course{
 
   1 <@>- * JobPosting jobPosting;
 
-  * courses -- 1 Department;
+  * courses -- 1 Instroctor;
 
   1 <@>- * OfferedJob;
 
