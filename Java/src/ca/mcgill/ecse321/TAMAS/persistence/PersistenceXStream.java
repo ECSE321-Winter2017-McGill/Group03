@@ -7,25 +7,24 @@ import java.io.IOException;
 
 import com.thoughtworks.xstream.XStream;
 
-import ca.mcgill.ecse321.TAMAS.Course;
+import ca.mcgill.ecse321.TAMAS.JobPosting;
 import ca.mcgill.ecse321.TAMAS.ManagementSystem;
 
 public abstract class PersistenceXStream {
 
     private static XStream xstream = new XStream();
     private static String filename = "data.xml";
-    private static String instructor = "Daniel Varro";
 
     public static ManagementSystem initializeModelManager(String fileName) {
         // Initialization for persistence
-    	ManagementSystem rm;
+    	ManagementSystem ms;
         setFilename(fileName);
-        setAlias("courseinfo", Course.class);
+        setAlias("jobInfo", JobPosting.class);
 
         // load model if exists, create otherwise
         File file = new File(fileName);
         if (file.exists()) {
-            rm = (ManagementSystem) loadFromXMLwithXStream();
+            ms = (ManagementSystem) loadFromXMLwithXStream();
         } 
         
         else {
@@ -36,10 +35,10 @@ public abstract class PersistenceXStream {
                 e.printStackTrace();
                 System.exit(1);
             }
-            rm = new ManagementSystem();
-            saveToXMLwithXStream(rm);
+            ms = new ManagementSystem();
+            saveToXMLwithXStream(ms);
         }
-        return rm;
+        return ms;
 
     }
 

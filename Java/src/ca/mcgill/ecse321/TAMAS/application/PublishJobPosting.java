@@ -5,7 +5,7 @@ import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 import ca.mcgill.ecse321.TAMAS.view.PublishJobPostingPage;
 
 public class PublishJobPosting {
-	private static String fileName = "output/publishjob.xml";
+	private static String fileName = "output/publishjobPosting.xml";
 
 	public static void main(String[] args) {
 		

@@ -19,9 +19,9 @@
         <jobInfo id="8">
           <jobTitle>TA</jobTitle>
           <submissionDeadline id="9">2017-02-28</submissionDeadline>
-          <perferredExperience>qqweqwe</perferredExperience>
-          <numNeeded>22</numNeeded>
-          <hourRate>11.0</hourRate>
+          <perferredExperience>werwer</perferredExperience>
+          <numNeeded>12</numNeeded>
+          <hourRate>12.0</hourRate>
           <managementSystem reference="1"/>
           <course reference="3"/>
           <applications id="10"/>
@@ -55,10 +55,10 @@
       <jobPosting id="18">
         <jobInfo id="19">
           <jobTitle>TA</jobTitle>
-          <submissionDeadline id="20">2017-02-28</submissionDeadline>
-          <perferredExperience>qqweqwe</perferredExperience>
-          <numNeeded>22</numNeeded>
-          <hourRate>11.0</hourRate>
+          <submissionDeadline id="20">2017-03-29</submissionDeadline>
+          <perferredExperience> ,m ,</perferredExperience>
+          <numNeeded>9</numNeeded>
+          <hourRate>8.0</hourRate>
           <managementSystem reference="1"/>
           <course reference="14"/>
           <applications id="21"/>

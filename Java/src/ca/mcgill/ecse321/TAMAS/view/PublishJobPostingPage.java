@@ -1,6 +1,9 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
 import java.awt.Color;
+import java.sql.Time;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 
 import javax.swing.GroupLayout;
@@ -16,7 +19,11 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
 
+import ca.mcgill.ecse321.TAMAS.Allocation;
+import ca.mcgill.ecse321.TAMAS.Instructor;
 import ca.mcgill.ecse321.TAMAS.ManagementSystem;
+import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
+import ca.mcgill.ecse321.TAMAS.controller.TAMAScontroller;
 
 public class PublishJobPostingPage extends JFrame {
 
@@ -41,22 +48,24 @@ public class PublishJobPostingPage extends JFrame {
 	private JLabel hourlyRateLabel;
 	private JTextField hourlyRateTextField;
 	
-	private JButton createCourse;
+	private JButton createJobPosting;
 	
 	private String error = null;
 	private JLabel errorMessage;
 	
-	private ManagementSystem rm;
+	private ManagementSystem ms;
+	
+	private int selectedJobList = -1;
 	/** Creates new form ParticipantPage */
-	public PublishJobPostingPage(ManagementSystem rm) {
-	    this.rm = rm;
+	public PublishJobPostingPage(ManagementSystem ms) {
+	    this.ms = ms;
 	    initComponents();
 	}
 
 	/** Creates new form ParticipantPage 
 	 * @return */
-	public void ParticipantRegistration(ManagementSystem rm) {
-	    this.rm = rm;
+	public void ParticipantRegistration(ManagementSystem ms) {
+	    this.ms = ms;
 	    initComponents();
 	}
 	
@@ -132,7 +141,7 @@ public class PublishJobPostingPage extends JFrame {
 	    hourlyRateLabel = new JLabel();
 	    hourlyRateTextField = new JTextField();
 	    
-	    createCourse = new JButton();
+	    createJobPosting = new JButton();
 	    
 	    courseLabel.setText("Select a course:");
 	    jobLabel.setText("Job Title");
@@ -140,7 +149,7 @@ public class PublishJobPostingPage extends JFrame {
 	    preferredExperienceLabel.setText("Select the preferred experience");
 	    numberofEmployeesLabel.setText("Select the number of positions:");
 	    hourlyRateLabel.setText("Set the hourly rate");
-	    createCourse.setText("Create new job:");
+	    createJobPosting.setText("Create new job:");
 	    
 	    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	    setTitle("Publish Job Posting");
@@ -157,13 +166,13 @@ public class PublishJobPostingPage extends JFrame {
 	            .addComponent(errorMessage)
 	            .addGroup(layout.createSequentialGroup()
 	            .addGroup(layout.createParallelGroup()
-	                .addComponent(courseLabel, 200, 350, 500)
+	                .addComponent(courseLabel, 200, 350, 800)
 	                .addComponent(jobLabel)
 	                .addComponent(deadline)
 	                .addComponent(preferredExperienceLabel)
 	                .addComponent(numberofEmployeesLabel)
 	                .addComponent(hourlyRateLabel)
-	                .addComponent(createCourse)
+	                .addComponent(createJobPosting)
 	                )
 	            .addGroup(layout.createParallelGroup()
 		                .addComponent(courseList, 200, 200, 400)
@@ -197,15 +206,65 @@ public class PublishJobPostingPage extends JFrame {
 	            .addGroup(layout.createParallelGroup()
 		                .addComponent(hourlyRateLabel)
 		                .addComponent(hourlyRateTextField))
-	            .addComponent(createCourse)
+	            .addComponent(createJobPosting)
 	            );
 
 	    pack();
-//	    addParticipantButton.addActionListener(new java.awt.event.ActionListener() {
-//	        public void actionPerformed(java.awt.event.ActionEvent evt) {
-//	            addParticipantButtonActionPerformed();
-//	        }
-//	    });
+	    
+	    
+	    jobList.addActionListener(new java.awt.event.ActionListener() {
+	        public void actionPerformed(java.awt.event.ActionEvent evt) {
+	            JComboBox<String> cb = (JComboBox<String>) evt.getSource();
+	            selectedJobList = cb.getSelectedIndex();
+	        }
+	    });
+	    
+	    createJobPosting.addActionListener(new java.awt.event.ActionListener() {
+	        public void actionPerformed(java.awt.event.ActionEvent evt) {
+	            createJobPostingButtonActionPerformed();
+	        }
+	    });
+	}
+	
+	private void createJobPostingButtonActionPerformed() {
+	    // call the controller
+	    TAMAScontroller tc = new TAMAScontroller(ms);
+	    Instructor prof = new Instructor("Daniel Varro", ms);
+	    
+	    
+	    String semester = "ECSE321";
+	    String courseCoude = "1233";
+	    int numTutorial = 2;
+	    int numLab = 3;
+	    int numStudent = 100;
+	    int credit = 3;
+	    int hourRequiredTa = 75;
+	    int hourRequiredGrader = 20;
+	    double budgetCalculated = 300;
+	    Allocation allocation = new Allocation(semester, courseCoude, numTutorial, numLab, numStudent, credit, hourRequiredTa, hourRequiredGrader, budgetCalculated, prof, ms);
+
+	    int numEmployees = Integer.parseInt(numberofEmployeesTextField.getText());
+	    int hourlyRate = Integer.parseInt(hourlyRateTextField.getText());
+	    // JSpinner actually returns a date and time
+	    // force the same date for start and end time to ensure that only the times differ
+//	    Calendar calendar = Calendar.getInstance();
+//	    calendar.setTime((Date) startTimeSpinner.getValue());
+//	    calendar.set(2000, 1, 1);
+//	    Time startTime = new Time(calendar.getTime().getTime());
+//	    calendar.setTime((Date) endTimeSpinner.getValue());
+//	    calendar.set(2000, 1, 1);
+//	    Time endTime = new Time(calendar.getTime().getTime());
+	    
+	    error = null;
+	    try {
+	    	tc.createJob(jobList.getSelectedItem().toString(), (java.sql.Date) deadlineDate.getModel().getValue(), preferredExperienceTextField.getText(), numEmployees, hourlyRate, allocation.getCourse());
+	    }
+	    catch (InvalidInputException e) {
+	    	error = e.getMessage();
+	    }
+	    
+	    // update visuals
+	    //refreshData();
 	}
 
 }
