@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
 import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Properties;
 
 import javax.swing.GroupLayout;
@@ -45,20 +47,14 @@ public class PublishJobPostingPage extends JFrame {
 	
 	private String error = null;
 	private JLabel errorMessage;
-	
 	private ManagementSystem rm;
 	/** Creates new form ParticipantPage */
 	public PublishJobPostingPage(ManagementSystem rm) {
 	    this.rm = rm;
+
 	    initComponents();
 	}
 
-	/** Creates new form ParticipantPage 
-	 * @return */
-	public void ParticipantRegistration(ManagementSystem rm) {
-	    this.rm = rm;
-	    initComponents();
-	}
 	
 	// can also disable submit if string is empty
 	private void refreshData() {
@@ -142,7 +138,7 @@ public class PublishJobPostingPage extends JFrame {
 	    hourlyRateLabel.setText("Set the hourly rate");
 	    createCourse.setText("Create new job:");
 	    
-	    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+	    setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 	    setTitle("Publish Job Posting");
 	    
 	    // layout
@@ -201,11 +197,22 @@ public class PublishJobPostingPage extends JFrame {
 	            );
 
 	    pack();
+	    addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+            	backToMain();
+            }
+        });
 //	    addParticipantButton.addActionListener(new java.awt.event.ActionListener() {
 //	        public void actionPerformed(java.awt.event.ActionEvent evt) {
 //	            addParticipantButtonActionPerformed();
 //	        }
 //	    });
+	}
+	private void backToMain(){
+    	new MainPage().setVisible(true);
 	}
 
 }
