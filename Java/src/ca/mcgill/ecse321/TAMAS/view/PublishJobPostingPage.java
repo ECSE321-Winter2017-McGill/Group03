@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import java.util.Properties;
 
 import javax.swing.GroupLayout;
@@ -47,6 +51,7 @@ public class PublishJobPostingPage extends JFrame {
 	
 	private String error = null;
 	private JLabel errorMessage;
+//<<<<<<< HEAD
 	
 	private ManagementSystem ms;
 	
@@ -58,10 +63,12 @@ public class PublishJobPostingPage extends JFrame {
 	    initComponents();
 	}
 
-	public void ParticipantRegistration(ManagementSystem ms) {
-	    this.ms = ms;
-	    initComponents();
-	}
+//	public void ParticipantRegistration(ManagementSystem ms) {
+//	    this.ms = ms;
+//
+//	    initComponents();
+//	}
+
 	
 	
 	
@@ -115,7 +122,7 @@ public class PublishJobPostingPage extends JFrame {
 	    hourlyRateLabel.setText("Set the hourly rate");
 	    createJobPosting.setText("Create new job:");
 	    
-	    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+	    setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 	    setTitle("Publish Job Posting");
 	    
 	    // layout
@@ -174,6 +181,15 @@ public class PublishJobPostingPage extends JFrame {
 	            );
 
 	    pack();
+	    addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+            	backToMain();
+            }
+        });
+//<<<<<<< HEAD
 	    
 	    
 	    jobList.addActionListener(new java.awt.event.ActionListener() {
@@ -207,6 +223,8 @@ public class PublishJobPostingPage extends JFrame {
 		    }
 		    // this is needed because the size of the window changes depending on whether an error message is shown or not
 		    pack();
+		    
+		    
 		}
 	
 	private void createJobPostingButtonActionPerformed() {
@@ -250,6 +268,11 @@ public class PublishJobPostingPage extends JFrame {
 	    }
 
 	    refreshData();
+	
+	    }
+	
+	private void backToMain(){
+    	new MainPage().setVisible(true);
 	}
 
 }
