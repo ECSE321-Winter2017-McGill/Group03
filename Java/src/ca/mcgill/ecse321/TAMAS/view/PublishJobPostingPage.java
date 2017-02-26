@@ -35,19 +35,14 @@ public class PublishJobPostingPage extends JFrame {
 	private JComboBox<String> courseList;
 	private JLabel jobLabel;
 	private JComboBox<String> jobList;
-	
 	private JLabel deadline;
 	private JDatePickerImpl deadlineDate;
-	
 	private JLabel preferredExperienceLabel;
 	private JTextField preferredExperienceTextField;
-	
 	private JLabel numberofEmployeesLabel;
 	private JTextField numberofEmployeesTextField;
-	
 	private JLabel hourlyRateLabel;
 	private JTextField hourlyRateTextField;
-	
 	private JButton createJobPosting;
 	
 	private String error = null;
@@ -55,55 +50,25 @@ public class PublishJobPostingPage extends JFrame {
 	
 	private ManagementSystem ms;
 	
+	private int selectedCourseList = -1;
 	private int selectedJobList = -1;
-	/** Creates new form ParticipantPage */
+	
 	public PublishJobPostingPage(ManagementSystem ms) {
 	    this.ms = ms;
 	    initComponents();
 	}
 
-	/** Creates new form ParticipantPage 
-	 * @return */
 	public void ParticipantRegistration(ManagementSystem ms) {
 	    this.ms = ms;
 	    initComponents();
 	}
 	
-	// can also disable submit if string is empty
-	private void refreshData() {
-	    // error
-	    errorMessage.setText(error);
-	    if (error == null || error.length() == 0) {
-	        // participant
-	        participantNameTextField.setText("");
-	    }
-	    // this is needed because the size of the window changes depending on whether an error message is shown or not
-	    pack();
-	}
 	
-//	private void addParticipantButtonActionPerformed() {
-//	    // call the controller
-//	    EventRegistrationController erc = new EventRegistrationController(rm);
-//	    error = null;
-//	    try {
-//	        erc.createParticipant(participantNameTextField.getText());
-//	    } catch (InvalidInputException e) {
-//	        error = e.getMessage();
-//	    }
-//	    // update visuals
-//	    refreshData();
-//	}
+	
 	
 	private void initComponents() {
-	    // elements for participant
-//	    participantNameTextField = new JTextField();
-//	    participantNameLabel = new JLabel();
-//	    addParticipantButton = new JButton();
-
-	    // global settings and listeners
-	    
-
-	    
+	    // global settings and listeners  
+		
 	    
 	 // elements for error message
 	    errorMessage = new JLabel();
@@ -111,13 +76,13 @@ public class PublishJobPostingPage extends JFrame {
 	    
 		courseLabel = new JLabel();
 	    courseList = new JComboBox<String>(new String[0]);
-	    courseList.addItem(" ");
+	    courseList.addItem("");
 	    courseList.addItem("ECSE 321");
 	    courseList.addItem("COMP 250");
 	    courseList.addItem("COMP 251");
 	    jobLabel = new JLabel();
 	    jobList = new JComboBox<String>(new String[0]);
-	    jobList.addItem(" ");
+	    jobList.addItem("");
 	    jobList.addItem("TA");
 	    jobList.addItem("Grader");
 	    
@@ -130,8 +95,7 @@ public class PublishJobPostingPage extends JFrame {
 	    p.put("text.year", "Year");
 	    JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 	    deadlineDate = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-	    
-	    
+	      
 	    preferredExperienceLabel = new JLabel();
 	    preferredExperienceTextField = new JTextField();
 	    
@@ -166,7 +130,7 @@ public class PublishJobPostingPage extends JFrame {
 	            .addComponent(errorMessage)
 	            .addGroup(layout.createSequentialGroup()
 	            .addGroup(layout.createParallelGroup()
-	                .addComponent(courseLabel, 200, 350, 800)
+	                .addComponent(courseLabel, 200, 350, 1000)
 	                .addComponent(jobLabel)
 	                .addComponent(deadline)
 	                .addComponent(preferredExperienceLabel)
@@ -175,14 +139,14 @@ public class PublishJobPostingPage extends JFrame {
 	                .addComponent(createJobPosting)
 	                )
 	            .addGroup(layout.createParallelGroup()
-		                .addComponent(courseList, 200, 200, 400)
+		                .addComponent(courseList, 200, 350, 1000)
 		                .addComponent(jobList)
 		                .addComponent(deadlineDate)
 		                .addComponent(preferredExperienceTextField)
 		                .addComponent(numberofEmployeesTextField)
 		                .addComponent(hourlyRateTextField))
 	            ));
-	    //layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {createCourse, participantNameTextField});
+	    layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {createJobPosting});
 
 	    layout.setVerticalGroup(
 	            layout.createSequentialGroup()
@@ -226,14 +190,33 @@ public class PublishJobPostingPage extends JFrame {
 	    });
 	}
 	
+	// can also disable submit if string is empty
+		private void refreshData() {
+		    // error
+		    errorMessage.setText(error);
+		    if (error == null || error.length() == 0) {
+		        
+		    	selectedCourseList = -1;
+		    	courseList.setSelectedIndex(selectedCourseList);
+		    	selectedJobList = -1;
+		    	jobList.setSelectedIndex(selectedJobList);
+		    	deadlineDate.getModel().setValue(null);
+		    	preferredExperienceTextField.setText("");
+		    	numberofEmployeesTextField.setText("");
+		    	hourlyRateTextField.setText("");
+		    }
+		    // this is needed because the size of the window changes depending on whether an error message is shown or not
+		    pack();
+		}
+	
 	private void createJobPostingButtonActionPerformed() {
 	    // call the controller
 	    TAMAScontroller tc = new TAMAScontroller(ms);
 	    Instructor prof = new Instructor("Daniel Varro", ms);
 	    
 	    
-	    String semester = "ECSE321";
-	    String courseCoude = "1233";
+	    String semester = "Fall";
+	    String courseCoude = courseList.getSelectedItem().toString();
 	    int numTutorial = 2;
 	    int numLab = 3;
 	    int numStudent = 100;
@@ -241,20 +224,23 @@ public class PublishJobPostingPage extends JFrame {
 	    int hourRequiredTa = 75;
 	    int hourRequiredGrader = 20;
 	    double budgetCalculated = 300;
+	    int numEmployees;
+		int hourlyRate;
 	    Allocation allocation = new Allocation(semester, courseCoude, numTutorial, numLab, numStudent, credit, hourRequiredTa, hourRequiredGrader, budgetCalculated, prof, ms);
-
-	    int numEmployees = Integer.parseInt(numberofEmployeesTextField.getText());
-	    int hourlyRate = Integer.parseInt(hourlyRateTextField.getText());
-	    // JSpinner actually returns a date and time
-	    // force the same date for start and end time to ensure that only the times differ
-//	    Calendar calendar = Calendar.getInstance();
-//	    calendar.setTime((Date) startTimeSpinner.getValue());
-//	    calendar.set(2000, 1, 1);
-//	    Time startTime = new Time(calendar.getTime().getTime());
-//	    calendar.setTime((Date) endTimeSpinner.getValue());
-//	    calendar.set(2000, 1, 1);
-//	    Time endTime = new Time(calendar.getTime().getTime());
+	    if (numberofEmployeesTextField.getText().equals("")) {
+	    	numEmployees = -1;
+	    }
+	    else {
+	    	numEmployees = Integer.parseInt(numberofEmployeesTextField.getText());
+	    }
 	    
+	    if (hourlyRateTextField.getText().equals("")) {
+	    	hourlyRate = -1;
+	    }
+	    else {
+	    	hourlyRate = Integer.parseInt(hourlyRateTextField.getText());
+	    }
+
 	    error = null;
 	    try {
 	    	tc.createJob(jobList.getSelectedItem().toString(), (java.sql.Date) deadlineDate.getModel().getValue(), preferredExperienceTextField.getText(), numEmployees, hourlyRate, allocation.getCourse());
@@ -262,9 +248,8 @@ public class PublishJobPostingPage extends JFrame {
 	    catch (InvalidInputException e) {
 	    	error = e.getMessage();
 	    }
-	    
-	    // update visuals
-	    //refreshData();
+
+	    refreshData();
 	}
 
 }

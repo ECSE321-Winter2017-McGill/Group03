@@ -17,21 +17,23 @@ public class TAMAScontroller {
 	
 	public void createJob(String jobPosition, Date deadlineDate, String exp, int numberEmployees, int hourlyRate, Course aCourse) throws InvalidInputException {
 		String error = "";
-		
-		if (jobPosition == null) {
-			error += "Must specify a position!";
+		if (jobPosition.equals("")) {
+			error += "Must specify a job position! ";
 		}
 		if (deadlineDate == null) {
-			error += "Must specify a date!";
+			error += "Must specify a date! ";
 		}
 		if (exp == null || exp.trim().length() == 0) {
-			error += "Must specify preferred experience!";
+			error += "Must specify preferred experience! ";
 		}
-		if (numberEmployees == 0) {
-			error += "Must specify how many workers!";
+		if (numberEmployees == -1) {
+			error += "Must specify how many workers! ";
+		}
+		if (hourlyRate == -1) {
+			error += "Must specify hourly wage! ";
 		}
 		if (error.length() > 0) {
-			throw new InvalidInputException (error);
+			throw new InvalidInputException(error);
 		}
 		
 		JobPosting jp = new JobPosting(jobPosition, deadlineDate, exp, numberEmployees, hourlyRate, ms, aCourse);
