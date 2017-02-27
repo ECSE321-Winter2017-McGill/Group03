@@ -37,8 +37,8 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 				<ul class="nav" id="side-menu">
 					<li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i>
 							Dashboard</a></li>
-					<li><a href="jobPostings.php"><i class="fa fa-dashboard fa-fw"></i>
-							Add Job Postings</a></li>
+					<li><a href="viewAllJObPostings.php"><i class="fa fa-dashboard fa-fw"></i>
+							All Job Postings</a></li>
 					<!-- 					<li><a href="courses.php"><i class="fa fa-dashboard fa-fw"></i> Job -->
 					<!-- 							Postings</a></li> -->
 				</ul>
@@ -126,18 +126,18 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 							</p>
 							<p>
 								<input class="btn btn-sm btn-info btn-flat pull-left"
-									type="submit" value='New Job Posting'>
+									type="submit" value='Publish'>
 						
 						</form>
 
 						<br> <br> <br>
 							<?php
-							$pm = new PersistenceTAMAS ();
-							$rm = $pm->loadDataFromStore ();
-							foreach ( $rm->getJobPostings () as $jobPostings ) {
-								echo "<p>" . $jobPostings->getJobTitle () . " " . $jobPostings->getCourse ()->getCourseCoude () . "</p>";
-							}
-							?>
+// 							$pm = new PersistenceTAMAS ();
+// 							$rm = $pm->loadDataFromStore ();
+// 							foreach ( $rm->getJobPostings () as $jobPostings ) {
+// 								echo "<p>" . $jobPostings->getJobTitle () . " " . $jobPostings->getCourse ()->getCourseCoude () . "</p>";
+// 							}
+// 							?>
 					</div>
 				</div>
 

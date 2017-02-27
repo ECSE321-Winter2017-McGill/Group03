@@ -42,7 +42,7 @@ class Controller {
 			try {
 				$pm = new PersistenceTAMAS (); // new persistence manager
 				$rm = $pm->loadDataFromStore (); // get TAMAS management system
-				$co = new Course ( "winter 2017", $c, 1, 1, 100, 3, 3, 3, 100.00, new Allocation (), new Instructor ( "test", $rm ), $rm ); // create a fake course
+				$co = new Course ( "winter 2017", $c, 1, 1, 100, 60, 60, 60, 100.00, new Allocation (), new Instructor ( "test", $rm ), $rm ); // create a fake course
 				$jp = new JobPosting ( $jt, $dl, $pe, $nn, $hr, $rm, $co ); // create a jobposting
 				$rm->addJobPosting ( $jp ); // add job posting
 				$pm->writeDataToStore ( $rm ); // store data to file
