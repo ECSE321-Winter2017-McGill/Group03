@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_login_"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="ca.mcgill.ecse321.tamas_mobile.Login_Activity"
+    tools:showIn="@layout/activity_login_"
+    android:background="@drawable/loginpage">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/logInError"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <ImageView
+            android:layout_width="120dp"
+            app:srcCompat="@drawable/mcgilllogo"
+            android:layout_below="@+id/linearLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:id="@+id/imageView"
+            android:layout_height="50dp"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:text="Log in to manage your job applications"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Header"
+            android:textSize="24sp"
+            android:textColor="@android:color/background_light"
+            android:textStyle="normal|italic"
+            android:textAlignment="center" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/username"
+            android:hint="username (default: student)"
+            android:textColorHint="@android:color/background_dark"
+
+            android:textAlignment="center" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/password"
+            android:hint="password (default: password)"
+            android:textColorHint="@android:color/background_dark"
+            android:textAlignment="center" />
+
+        <Button
+            android:text="Sign in"
+            android:layout_height="wrap_content"
+            android:id="@+id/login_button"
+            android:textStyle="normal|bold"
+            android:background="#cc0000"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:textColor="@android:color/background_light"
+            android:layout_width="250dp"
+            android:onClick="login" />
+    </LinearLayout>
+
+</RelativeLayout>

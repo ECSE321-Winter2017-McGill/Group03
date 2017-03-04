@@ -31,6 +31,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- <meta http-equiv="refresh" content="0; url=index.php" /> -->
+ <meta http-equiv="refresh" content="1; url=../index.php" /> 
 </head>
 </html>
