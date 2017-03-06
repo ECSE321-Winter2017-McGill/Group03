@@ -148,7 +148,7 @@ public class PublishJobPostingPage extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				backToMain();
+				backToAllJobs();
 			}
 		});
 		// <<<<<<< HEAD
@@ -160,7 +160,7 @@ public class PublishJobPostingPage extends JFrame {
 				selectedCourseList = cb.getSelectedIndex();
 			}
 		});
-		
+
 		jobList.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				@SuppressWarnings("unchecked")
@@ -250,6 +250,8 @@ public class PublishJobPostingPage extends JFrame {
 			try {
 				tc.createJob(jobList.getSelectedItem().toString(), (java.sql.Date) deadlineDate.getModel().getValue(),
 						preferredExperienceTextField.getText(), numEmployees, hourlyRate, allocation.getCourse());
+				backToAllJobs();
+				dispose();
 			} catch (InvalidInputException e) {
 				error += e.getMessage();
 			}
@@ -257,8 +259,8 @@ public class PublishJobPostingPage extends JFrame {
 		refreshData();
 	}
 
-	private void backToMain() {
-		new MainPage().setVisible(true);
+	private void backToAllJobs() {
+		new AllJobPostings(ms).setVisible(true);
 	}
 
 }

@@ -26,6 +26,7 @@ public class MainPage extends JFrame {
 	}
 
 	private void initComponents() {
+		
 		// TODO Auto-generated method stub
 		addJobPosting = new JButton("Add Job Posting");
 		addJobPosting.setPreferredSize(new Dimension(300,150));
@@ -45,7 +46,8 @@ public class MainPage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
-				new PublishJobPostingPage(ms).setVisible(true);
+//				new PublishJobPostingPage(ms).setVisible(true);
+				new AllJobPostings(ms).setVisible(true);
 				dispose();
 			}
 		});
