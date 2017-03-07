@@ -30,6 +30,7 @@ public abstract class PersistenceXStream {
         
         else {
             try {
+            	file.getParentFile().mkdirs(); 
                 file.createNewFile();
             } 
             catch (Exception e) {
