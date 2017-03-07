@@ -15,12 +15,13 @@
 </head>
 
 <body dir="ltr" class="body">
-        <?php
+    <?php
         session_start ();
     ?>
     <div id="fullPage">
         <div id="brandingWrapper" class="float">
-            <div id="branding" class="illustrationClass"></div>
+            <div id="branding" class="illustrationClass">
+            </div>
         </div>
         <div id="contentWrapper" class="float">
                                     <p>
@@ -52,16 +53,16 @@
                                         <input id="passwordInput" name="password" type="password" tabindex="2" class="text fullWidth" placeholder="Default Pasword: password"
                                             autocomplete="off">
                                     </div>
-                                    <input type="submit" id="submitButton" class="submit" value="Log in" </div>
+                                    <input type="submit" id="submitButton" class="submit" value="Log in" /></div>
                             </form>
                             <span class="error">
                             <?php
                             if (isset ( $_SESSION ['loginError'] ) && !empty ( $_SESSION ['loginError'] )) {//display error messages.
                                 echo "*" . $_SESSION ['loginError'];
                             }
-            ?>
-            </span>
-                        </p
+            				?>
+            				</span>
+                        
                             </div>
 
                             <div id="introduction" class="groupMargin">
