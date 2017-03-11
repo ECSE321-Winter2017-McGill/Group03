@@ -6,8 +6,6 @@ require_once __DIR__ . '\..\model\Course.php';
 require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 <html lang="en">
 
-<head>
-
 
 <head>
 <meta charset="utf-8">
@@ -58,27 +56,25 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 
 						<form action="addJobPosting.php" method="post">
 							<label>Select a course:</label>			<?php
-							if (isset ( $_SESSION ['errorCourse'] ) && ! empty ( $_SESSION ['errorCourse'] )) {
-								echo "*" . $_SESSION ["errorCourse"];
-							}
-							?>
+																	   if (isset ( $_SESSION ['errorCourse'] ) && ! empty ( $_SESSION ['errorCourse'] )) {
+																		   echo "*" . $_SESSION ["errorCourse"];
+																	   }
+                                                                       ?>
 							<select name="courses" class="form-control" id="">
 								<option value="COMP 251">COMP 251</option>
 								<option value="ECSE 321">ECSE 321</option>
 								<option value="ECSE 211">ECSE 211</option>
-
 							</select> <br>
 							<p>
 								<label>Job Title: </label><?php
-								if (isset ( $_SESSION ['errorJobTitle'] ) && ! empty ( $_SESSION ['errorJobTitle'] )) {
-									echo "*" . $_SESSION ["errorJobTitle"];
-								}
-								?>
+														  if (isset ( $_SESSION ['errorJobTitle'] ) && ! empty ( $_SESSION ['errorJobTitle'] )) {
+															  echo "*" . $_SESSION ["errorJobTitle"];
+														  }
+                                                          ?>
 								<select name="jobTitle" class="form-control" id="">
 									<option value="TA">TA</option>
 									<option value="Grader">Grader</option>
 								</select>
-
 							</p>
 
 							<p>
@@ -89,7 +85,7 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 			if (isset ( $_SESSION ['errorDeadLine'] ) && ! empty ( $_SESSION ['errorDeadLine'] )) {
 				echo "*" . $_SESSION ["errorDeadLine"];
 			}
-			?>
+            ?>
 			</span>
 							</p>
 							<div>
@@ -100,7 +96,7 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 			if (isset ( $_SESSION ['errorPerferredExperience'] ) && ! empty ( $_SESSION ['errorPerferredExperience'] )) {
 				echo "*" . $_SESSION ["errorPerferredExperience"];
 			}
-			?>
+            ?>
 			</span>
 							</div>
 
@@ -111,7 +107,7 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 			if (isset ( $_SESSION ['errorNumberNeeded'] ) && ! empty ( $_SESSION ['errorNumberNeeded'] )) {
 				echo "*" . $_SESSION ["errorNumberNeeded"];
 			}
-			?>
+            ?>
 			</span>
 							</p>
 							<p>
@@ -121,31 +117,26 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 			if (isset ( $_SESSION ['errorHourlyRate'] ) && ! empty ( $_SESSION ['errorHourlyRate'] )) {
 				echo "*" . $_SESSION ["errorHourlyRate"];
 			}
-			?>
+            ?>
 			</span>
 							</p>
 							<p>
 								<input class="btn btn-sm btn-info btn-flat pull-left"
 									type="submit" value='Publish'>
-						
 						</form>
 
 						<br> <br> <br>
 							<?php
-// 							$pm = new PersistenceTAMAS ();
-// 							$rm = $pm->loadDataFromStore ();
-// 							foreach ( $rm->getJobPostings () as $jobPostings ) {
-// 								echo "<p>" . $jobPostings->getJobTitle () . " " . $jobPostings->getCourse ()->getCourseCoude () . "</p>";
-// 							}
-// 							?>
+							// 							$pm = new PersistenceTAMAS ();
+							// 							$rm = $pm->loadDataFromStore ();
+							// 							foreach ( $rm->getJobPostings () as $jobPostings ) {
+							// 								echo "<p>" . $jobPostings->getJobTitle () . " " . $jobPostings->getCourse ()->getCourseCoude () . "</p>";
+							// 							}
+							// 							?>
 					</div>
 				</div>
-
-
 			</div>
-
 		</div>
 	</div>
 </body>
-
 </html>

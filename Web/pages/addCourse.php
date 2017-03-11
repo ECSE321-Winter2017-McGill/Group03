@@ -11,7 +11,8 @@ $_SESSION ["errorCourse"] = "";
 
 try {
 	$c->createJobPosting ( $_POST ['jobTitle'], $_POST ['deadLine'], $_POST ['perferredExperience'], $_POST ['numberNeeded'], $_POST ['hourlyRate'], $_POST ['courses'] );
-} catch ( Exception $e ) {
+}
+catch ( Exception $e ) {
 	$errors = explode ( "@", $e->getMessage () );
 	foreach ( $errors as $error ) {
 		if (substr ( $error, 0, 1 ) == "1") {
@@ -38,6 +39,8 @@ try {
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="refresh" content="0; url=jobPostings.php" />
+	<meta http-equiv="refresh" content="0; url=jobPostings.php" />
 </head>
+<body>
+</body>
 </html>
