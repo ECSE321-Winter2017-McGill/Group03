@@ -36,20 +36,6 @@ catch ( Exception $e ) { // catch exceptions
 		}
 	}
 }
+if ($flag==0)
+    echo "success";
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<?php
-
-	if ($flag==0)
-		echo '<meta http-equiv="refresh" content="0; url=viewAllJObPostings.php" />';
-	else
-		echo '<meta http-equiv="refresh" content="0; url=jobPostings.php" />';
-    ?>
-
-	<!-- <meta http-equiv="refresh" content="0; url=viewAllJObPostings.php" /> -->
-</head>
-<body>
-</body>
-</html>
