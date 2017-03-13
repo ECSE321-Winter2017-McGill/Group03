@@ -38,7 +38,7 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 					<li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i>
 							Dashboard</a></li>
 					<li><a href="viewAllJObPostings.php"><i class="fa fa-dashboard fa-fw"></i>
-							All Job Postings</a></li>
+							View Job Postings</a></li>
 				</ul>
 			</div>
 		</div>
