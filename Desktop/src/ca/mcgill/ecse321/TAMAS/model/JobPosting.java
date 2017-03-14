@@ -5,7 +5,7 @@ package ca.mcgill.ecse321.TAMAS.model;
 import java.sql.Date;
 import java.util.*;
 
-// line 67 "../../../../TAMAS.ump"
+// line 67 "../../../../../TAMAS.ump"
 public class JobPosting
 {
 
@@ -201,47 +201,37 @@ public class JobPosting
     return 0;
   }
 
+  public Application addApplication(String aApplicationStatus)
+  {
+    return new Application(aApplicationStatus, this);
+  }
+
   public boolean addApplication(Application aApplication)
   {
     boolean wasAdded = false;
     if (applications.contains(aApplication)) { return false; }
-    applications.add(aApplication);
-    if (aApplication.indexOfJobPosting(this) != -1)
+    JobPosting existingJobPosting = aApplication.getJobPosting();
+    boolean isNewJobPosting = existingJobPosting != null && !this.equals(existingJobPosting);
+    if (isNewJobPosting)
     {
-      wasAdded = true;
+      aApplication.setJobPosting(this);
     }
     else
     {
-      wasAdded = aApplication.addJobPosting(this);
-      if (!wasAdded)
-      {
-        applications.remove(aApplication);
-      }
+      applications.add(aApplication);
     }
+    wasAdded = true;
     return wasAdded;
   }
 
   public boolean removeApplication(Application aApplication)
   {
     boolean wasRemoved = false;
-    if (!applications.contains(aApplication))
+    //Unable to remove aApplication, as it must always have a jobPosting
+    if (!this.equals(aApplication.getJobPosting()))
     {
-      return wasRemoved;
-    }
-
-    int oldIndex = applications.indexOf(aApplication);
-    applications.remove(oldIndex);
-    if (aApplication.indexOfJobPosting(this) == -1)
-    {
+      applications.remove(aApplication);
       wasRemoved = true;
-    }
-    else
-    {
-      wasRemoved = aApplication.removeJobPosting(this);
-      if (!wasRemoved)
-      {
-        applications.add(oldIndex,aApplication);
-      }
     }
     return wasRemoved;
   }
@@ -286,18 +276,10 @@ public class JobPosting
     Course placeholderCourse = course;
     this.course = null;
     placeholderCourse.removeJobPosting(this);
-    ArrayList<Application> copyOfApplications = new ArrayList<Application>(applications);
-    applications.clear();
-    for(Application aApplication : copyOfApplications)
+    for(int i=applications.size(); i > 0; i--)
     {
-      if (aApplication.numberOfJobPostings() <= Application.minimumNumberOfJobPostings())
-      {
-        aApplication.delete();
-      }
-      else
-      {
-        aApplication.removeJobPosting(this);
-      }
+      Application aApplication = applications.get(i - 1);
+      aApplication.delete();
     }
   }
 

@@ -29,7 +29,7 @@ import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 public class PublishJobPostingPage extends JFrame {
 
 	private static final long serialVersionUID = -3813819647258555349L;
-
+	private String userName;
 	// attributes for GUI elements
 	private JLabel courseLabel;
 	private JComboBox<String> courseList;
@@ -54,8 +54,9 @@ public class PublishJobPostingPage extends JFrame {
 	private int selectedCourseList = -1;
 	private int selectedJobList = -1;
 
-	public PublishJobPostingPage(ManagementSystem ms) {
+	public PublishJobPostingPage(ManagementSystem ms,String userName) {
 		this.ms = ms;
+		this.userName=userName;
 		initComponents();
 		refreshData();
 	}
@@ -204,7 +205,9 @@ public class PublishJobPostingPage extends JFrame {
 
 		int numEmployees;
 		double hourlyRate;
-		Course course = new Course("", "", 0, 0, 0, 0, 0, 0, 0.0, prof, ms);
+//		String aSemester, String aCourseCoude, int aNumTutorial, int aNumLab, int aNumStudent, int aCredit, int aHourRequiredTa, int aHourRequiredGrader, double aBudgetCalculated, Instructor aInstructor, ManagementSystem aManagementSystem)
+		  
+		Course course = new Course("Winter 2017", courseList.getSelectedItem().toString(), 1, 1, 100, 3,60, 60, 10000.0, prof, ms);
 		Allocation allocation = new Allocation(course);
 
 		if (selectedCourseList < 0) {
@@ -260,7 +263,7 @@ public class PublishJobPostingPage extends JFrame {
 	}
 
 	private void backToAllJobs() {
-		new AllJobPostings(ms).setVisible(true);
+		new AllJobPostings(ms,userName).setVisible(true);
 	}
 
 }

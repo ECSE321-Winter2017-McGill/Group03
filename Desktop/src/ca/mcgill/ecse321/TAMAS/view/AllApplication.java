@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
-import ca.mcgill.ecse321.TAMAS.model.JobPosting;
+import ca.mcgill.ecse321.TAMAS.model.Applicant;
+import ca.mcgill.ecse321.TAMAS.model.Application;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
@@ -18,36 +19,44 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class AllJobPostings extends JFrame {
+public class AllApplication extends JFrame {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5884843490851166108L;
+	private static final long serialVersionUID = 5797257474418419821L;
+
 	private ManagementSystem ms;
 	private static String filename = "output/data.xml";
 
 	private String userName;
-	public AllJobPostings(ManagementSystem ms,String userName) {
+
+	public AllApplication(ManagementSystem ms, String userName) {
+		this.userName = userName;
 		this.ms = ms;
-		this.userName=userName;
 		initComponents();
 	}
 
 	private void initComponents() {
 		// get table data ready;
-		String[] columnNames = { "Job Title", "Course ID", "Hour Required TA", "Hourly Rate", "Experience",
-				"Submission Dead Line" };
-		String[][] data = new String[ms.numberOfJobPostings()][6];
+		String[] columnNames = { "Job Title", "Course ID", "Application Status"};
+		String[][] data = new String[ms.numberOfJobPostings()][3];
 		int i = 0;
-		for (JobPosting jp : ms.getJobPostings()) {
-			data[i][0] = jp.getJobTitle();
-			data[i][1] = jp.getCourse().getCourseCoude();
-			data[i][2] = "" + jp.getCourse().getHourRequiredTa();
-			data[i][3] = "" + jp.getHourRate();
-			data[i][4] = jp.getPerferredExperience();
-			data[i][5] = jp.getSubmissionDeadline().toString();
-			i++;
+		Applicant me = null;
+		System.out.println(ms.numberOfApplicants());
+		for (Applicant at : ms.getApplicants()) {
+			System.out.println(at.getName());
+			if (at.getName().equals(userName))
+				me = at;
+		}
+		if (me != null) {
+			for (Application an:me.getApplications()) {
+				data[i][0] = an.getJobPosting().getJobTitle();
+				data[i][1] = an.getJobPosting().getCourse().getCourseCoude();
+				data[i][2] = an.getApplicationStatus();
+				i++;
+			}
+		}else{
 		}
 
 		// get table itself ready;
@@ -58,11 +67,11 @@ public class AllJobPostings extends JFrame {
 		JPanel butPane = new JPanel();
 
 		// get the rest of frame ready;
-		JButton addJobPosting = new JButton("Add A New Job Posting");
+		JButton addJobPosting = new JButton("App For a Job");
 		butPane.add(addJobPosting);
 
 		// get frame ready;
-		setTitle("View All Job Postings");
+		setTitle("View All Application");
 		BorderLayout layout = new BorderLayout();
 		Container pane = getContentPane();
 		pane.setLayout(layout);
@@ -76,7 +85,7 @@ public class AllJobPostings extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(filename);
-				new PublishJobPostingPage(ms,userName).setVisible(true);
+				new ApplyForJob(ms,userName).setVisible(true);
 				dispose();
 			}
 		});

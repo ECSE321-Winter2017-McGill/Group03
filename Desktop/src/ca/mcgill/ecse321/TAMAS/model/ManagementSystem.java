@@ -5,7 +5,7 @@ package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 import java.sql.Date;
 
-// line 5 "../../../../TAMAS.ump"
+// line 5 "../../../../../TAMAS.ump"
 public class ManagementSystem
 {
 
