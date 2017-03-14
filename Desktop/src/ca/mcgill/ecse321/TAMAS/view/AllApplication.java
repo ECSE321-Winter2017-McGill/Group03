@@ -40,7 +40,7 @@ public class AllApplication extends JFrame {
 	private void initComponents() {
 		// get table data ready;
 		String[] columnNames = { "Job Title", "Course ID", "Application Status"};
-		String[][] data = new String[ms.numberOfJobPostings()][3];
+		String[][] data = new String[3][3];
 		int i = 0;
 		Applicant me = null;
 		System.out.println(ms.numberOfApplicants());
