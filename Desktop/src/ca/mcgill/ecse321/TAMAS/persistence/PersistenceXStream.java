@@ -30,11 +30,12 @@ public abstract class PersistenceXStream {
         
         else {
             try {
+            	file.getParentFile().mkdirs(); 
                 file.createNewFile();
             } 
-            catch (IOException e) {
+            catch (Exception e) {
                 e.printStackTrace();
-                System.exit(1);
+                //System.exit(1);
             }
             ms = new ManagementSystem();
             saveToXMLwithXStream(ms);

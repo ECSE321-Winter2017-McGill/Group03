@@ -3,13 +3,13 @@
 
 package ca.mcgill.ecse321.TAMAS.model;
 
-// line 146 "../../../../TAMAS.ump"
+// line 146 "../../../../../TAMAS.ump"
 public class GraderJob extends OfferedJob
 {
 
   //------------------------
   // MEMBER VARIABLES
-	
+  //------------------------
 
   //------------------------
   // CONSTRUCTOR

@@ -18,24 +18,26 @@ import javax.swing.WindowConstants;
 
 import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.controller.TamasController;
+import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 
-public class JobApplicationPage extends JFrame {
+public class ApplyForJob extends JFrame {
 
 	private static final long serialVersionUID = 5816868540239806192L;
-
+	private String userName;
 	// Basic information
 	private JLabel formTitle;
 	private JLabel errorMessage;
-
+	private JLabel jobPostingLabel;
 	private JLabel nameLabel;
-	private JTextField nameTextField;
+	private JLabel nameTextField;
 	private JLabel idLabel;
 	private JTextField idTextField;
 	private JLabel majorLabel;
 	private JTextField majorTextField;
 	private JLabel isUndergradLabel;
 	private JComboBox<String> isUndergradToggleList;
+	private JComboBox<String> jobPostingList;
 	private JLabel yearLabel;
 	private JComboBox<String> yearToggleList;
 
@@ -67,8 +69,9 @@ public class JobApplicationPage extends JFrame {
 
 	private ManagementSystem ms;
 
-	public JobApplicationPage(ManagementSystem ms) {
+	public ApplyForJob(ManagementSystem ms, String userName) {
 		this.ms = ms;
+		this.userName = userName;
 		initComponents();
 		refreshData();
 	}
@@ -80,9 +83,13 @@ public class JobApplicationPage extends JFrame {
 
 		errorMessage = new JLabel();
 		errorMessage.setForeground(Color.RED);
-
+		jobPostingLabel = new JLabel("Availabe Job Postings:");
+		jobPostingList = new JComboBox<String>();
+		for (JobPosting jp : ms.getJobPostings()) {
+			jobPostingList.addItem(jp.getJobTitle() + " " + jp.getCourse().getCourseCoude());
+		}
 		nameLabel = new JLabel("Name:");
-		nameTextField = new JTextField();
+		nameTextField = new JLabel(userName);
 		idLabel = new JLabel("McGill ID:");
 		idTextField = new JTextField();
 		majorLabel = new JLabel("Major:");
@@ -127,7 +134,8 @@ public class JobApplicationPage extends JFrame {
 
 		choiceMessage2 = new JLabel("Please select a third choice if already applied for 2 positions");
 		choiceMessage2.setForeground(Color.BLACK);
-
+		
+		// TODO: choices are hard coded.
 		firstChoiceLabel = new JLabel("First Choice");
 
 		firstChoiceToggleList = new JComboBox<String>(new String[0]);
@@ -199,19 +207,22 @@ public class JobApplicationPage extends JFrame {
 				.addComponent(choiceMessage1).addComponent(choiceMessage2)
 
 				.addGroup(layout.createSequentialGroup()
-						.addGroup(layout.createParallelGroup().addComponent(nameLabel).addComponent(idLabel)
-								.addComponent(majorLabel).addComponent(isUndergradLabel).addComponent(yearLabel)
-								.addComponent(pastExperienceLabel).addComponent(firstChoiceLabel)
-								.addComponent(secondChoiceLabel).addComponent(thirdChoiceLabel))
-						.addGroup(layout.createParallelGroup().addComponent(nameTextField).addComponent(nameTextField)
-								.addComponent(idTextField).addComponent(majorTextField)
-								.addComponent(isUndergradToggleList).addComponent(yearToggleList)
-								.addComponent(pastExperienceTextArea).addComponent(firstChoiceToggleList)
-								.addComponent(secondChoiceToggleList).addComponent(thirdChoiceToggleList)
-								.addComponent(submitButton))));
+						.addGroup(layout.createParallelGroup().addComponent(jobPostingLabel).addComponent(nameLabel)
+								.addComponent(idLabel).addComponent(majorLabel).addComponent(isUndergradLabel)
+								.addComponent(yearLabel).addComponent(pastExperienceLabel)
+								.addComponent(firstChoiceLabel).addComponent(secondChoiceLabel)
+								.addComponent(thirdChoiceLabel))
+						.addGroup(
+								layout.createParallelGroup().addComponent(jobPostingLabel).addComponent(jobPostingList)
+										.addComponent(nameLabel).addComponent(nameTextField).addComponent(idTextField)
+										.addComponent(majorTextField).addComponent(isUndergradToggleList)
+										.addComponent(yearToggleList).addComponent(pastExperienceTextArea)
+										.addComponent(firstChoiceToggleList).addComponent(secondChoiceToggleList)
+										.addComponent(thirdChoiceToggleList).addComponent(submitButton))));
 
 		layout.setVerticalGroup(layout.createSequentialGroup().addComponent(formTitle)
 				.addGroup(layout.createParallelGroup().addComponent(horizontalLineTop)).addComponent(errorMessage)
+				.addGroup(layout.createParallelGroup().addComponent(jobPostingLabel).addComponent(jobPostingList))
 				.addGroup(layout.createParallelGroup().addComponent(nameLabel).addComponent(nameTextField))
 				.addGroup(layout.createParallelGroup().addComponent(idLabel).addComponent(idTextField))
 				.addGroup(layout.createParallelGroup().addComponent(majorLabel).addComponent(majorTextField))
@@ -246,7 +257,6 @@ public class JobApplicationPage extends JFrame {
 		// error
 		errorMessage.setText(error);
 		if (error == null || error.length() == 0) {
-			nameTextField.setText("");
 			idTextField.setText("");
 			majorTextField.setText("");
 			pastExperienceTextArea.setText("");
@@ -333,8 +343,16 @@ public class JobApplicationPage extends JFrame {
 			}
 
 			try {
-				tc.createApplicant(name, id, major, degree, year, exp, firstChoice, secondChoice, thirdChoice,
-						totalAppointmentHours);
+				JobPosting appliedjob = null;
+				String app = jobPostingList.getSelectedItem().toString();
+				for (JobPosting jp : ms.getJobPostings()) {
+					if (app.indexOf(jp.getJobTitle()) != -1 && app.indexOf(jp.getCourse().getCourseCoude()) != -1)
+						appliedjob = jp;
+				}
+				if (appliedjob != null) {
+					tc.createApplication(appliedjob, name, id, major, degree, year, exp, firstChoice, secondChoice,
+							thirdChoice, totalAppointmentHours);
+				}
 			} catch (InvalidInputException e) {
 				error += e.getMessage();
 			}
@@ -345,7 +363,7 @@ public class JobApplicationPage extends JFrame {
 	}
 
 	private void backToMain() {
-		new MainPage().setVisible(true);
+		new AllApplication(ms, userName).setVisible(true);
 	}
 
 }

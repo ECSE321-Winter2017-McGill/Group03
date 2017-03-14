@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse321.TAMAS.model;
 
-// line 126 "../../../../TAMAS.ump"
+// line 126 "../../../../../TAMAS.ump"
 public class OfferedJob
 {
 

@@ -4,7 +4,7 @@
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 
-// line 112 "../../../../TAMAS.ump"
+// line 112 "../../../../../TAMAS.ump"
 public class Application
 {
 
@@ -16,21 +16,20 @@ public class Application
   private String applicationStatus;
 
   //Application Associations
-  private List<JobPosting> jobPostings;
+  private JobPosting jobPosting;
   private List<Applicant> applicants;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Application(String aApplicationStatus, JobPosting... allJobPostings)
+  public Application(String aApplicationStatus, JobPosting aJobPosting)
   {
     applicationStatus = aApplicationStatus;
-    jobPostings = new ArrayList<JobPosting>();
-    boolean didAddJobPostings = setJobPostings(allJobPostings);
-    if (!didAddJobPostings)
+    boolean didAddJobPosting = setJobPosting(aJobPosting);
+    if (!didAddJobPosting)
     {
-      throw new RuntimeException("Unable to create Application, must have 1 to 3 jobPostings");
+      throw new RuntimeException("Unable to create application due to jobPosting");
     }
     applicants = new ArrayList<Applicant>();
   }
@@ -52,34 +51,9 @@ public class Application
     return applicationStatus;
   }
 
-  public JobPosting getJobPosting(int index)
+  public JobPosting getJobPosting()
   {
-    JobPosting aJobPosting = jobPostings.get(index);
-    return aJobPosting;
-  }
-
-  public List<JobPosting> getJobPostings()
-  {
-    List<JobPosting> newJobPostings = Collections.unmodifiableList(jobPostings);
-    return newJobPostings;
-  }
-
-  public int numberOfJobPostings()
-  {
-    int number = jobPostings.size();
-    return number;
-  }
-
-  public boolean hasJobPostings()
-  {
-    boolean has = jobPostings.size() > 0;
-    return has;
-  }
-
-  public int indexOfJobPosting(JobPosting aJobPosting)
-  {
-    int index = jobPostings.indexOf(aJobPosting);
-    return index;
+    return jobPosting;
   }
 
   public Applicant getApplicant(int index)
@@ -112,148 +86,23 @@ public class Application
     return index;
   }
 
-  public boolean isNumberOfJobPostingsValid()
-  {
-    boolean isValid = numberOfJobPostings() >= minimumNumberOfJobPostings() && numberOfJobPostings() <= maximumNumberOfJobPostings();
-    return isValid;
-  }
-
-  public static int minimumNumberOfJobPostings()
-  {
-    return 1;
-  }
-
-  public static int maximumNumberOfJobPostings()
-  {
-    return 3;
-  }
-
-  public boolean addJobPosting(JobPosting aJobPosting)
-  {
-    boolean wasAdded = false;
-    if (jobPostings.contains(aJobPosting)) { return false; }
-    if (numberOfJobPostings() >= maximumNumberOfJobPostings())
-    {
-      return wasAdded;
-    }
-
-    jobPostings.add(aJobPosting);
-    if (aJobPosting.indexOfApplication(this) != -1)
-    {
-      wasAdded = true;
-    }
-    else
-    {
-      wasAdded = aJobPosting.addApplication(this);
-      if (!wasAdded)
-      {
-        jobPostings.remove(aJobPosting);
-      }
-    }
-    return wasAdded;
-  }
-
-  public boolean removeJobPosting(JobPosting aJobPosting)
-  {
-    boolean wasRemoved = false;
-    if (!jobPostings.contains(aJobPosting))
-    {
-      return wasRemoved;
-    }
-
-    if (numberOfJobPostings() <= minimumNumberOfJobPostings())
-    {
-      return wasRemoved;
-    }
-
-    int oldIndex = jobPostings.indexOf(aJobPosting);
-    jobPostings.remove(oldIndex);
-    if (aJobPosting.indexOfApplication(this) == -1)
-    {
-      wasRemoved = true;
-    }
-    else
-    {
-      wasRemoved = aJobPosting.removeApplication(this);
-      if (!wasRemoved)
-      {
-        jobPostings.add(oldIndex,aJobPosting);
-      }
-    }
-    return wasRemoved;
-  }
-
-  public boolean setJobPostings(JobPosting... newJobPostings)
+  public boolean setJobPosting(JobPosting aJobPosting)
   {
     boolean wasSet = false;
-    ArrayList<JobPosting> verifiedJobPostings = new ArrayList<JobPosting>();
-    for (JobPosting aJobPosting : newJobPostings)
-    {
-      if (verifiedJobPostings.contains(aJobPosting))
-      {
-        continue;
-      }
-      verifiedJobPostings.add(aJobPosting);
-    }
-
-    if (verifiedJobPostings.size() != newJobPostings.length || verifiedJobPostings.size() < minimumNumberOfJobPostings() || verifiedJobPostings.size() > maximumNumberOfJobPostings())
+    if (aJobPosting == null)
     {
       return wasSet;
     }
 
-    ArrayList<JobPosting> oldJobPostings = new ArrayList<JobPosting>(jobPostings);
-    jobPostings.clear();
-    for (JobPosting aNewJobPosting : verifiedJobPostings)
+    JobPosting existingJobPosting = jobPosting;
+    jobPosting = aJobPosting;
+    if (existingJobPosting != null && !existingJobPosting.equals(aJobPosting))
     {
-      jobPostings.add(aNewJobPosting);
-      if (oldJobPostings.contains(aNewJobPosting))
-      {
-        oldJobPostings.remove(aNewJobPosting);
-      }
-      else
-      {
-        aNewJobPosting.addApplication(this);
-      }
+      existingJobPosting.removeApplication(this);
     }
-
-    for (JobPosting anOldJobPosting : oldJobPostings)
-    {
-      anOldJobPosting.removeApplication(this);
-    }
+    jobPosting.addApplication(this);
     wasSet = true;
     return wasSet;
-  }
-
-  public boolean addJobPostingAt(JobPosting aJobPosting, int index)
-  {  
-    boolean wasAdded = false;
-    if(addJobPosting(aJobPosting))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfJobPostings()) { index = numberOfJobPostings() - 1; }
-      jobPostings.remove(aJobPosting);
-      jobPostings.add(index, aJobPosting);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveJobPostingAt(JobPosting aJobPosting, int index)
-  {
-    boolean wasAdded = false;
-    if(jobPostings.contains(aJobPosting))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfJobPostings()) { index = numberOfJobPostings() - 1; }
-      jobPostings.remove(aJobPosting);
-      jobPostings.add(index, aJobPosting);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addJobPostingAt(aJobPosting, index);
-    }
-    return wasAdded;
   }
 
   public static int minimumNumberOfApplicants()
@@ -340,12 +189,9 @@ public class Application
 
   public void delete()
   {
-    ArrayList<JobPosting> copyOfJobPostings = new ArrayList<JobPosting>(jobPostings);
-    jobPostings.clear();
-    for(JobPosting aJobPosting : copyOfJobPostings)
-    {
-      aJobPosting.removeApplication(this);
-    }
+    JobPosting placeholderJobPosting = jobPosting;
+    this.jobPosting = null;
+    placeholderJobPosting.removeApplication(this);
     ArrayList<Applicant> copyOfApplicants = new ArrayList<Applicant>(applicants);
     applicants.clear();
     for(Applicant aApplicant : copyOfApplicants)
@@ -359,7 +205,8 @@ public class Application
   {
     String outputString = "";
     return super.toString() + "["+
-            "applicationStatus" + ":" + getApplicationStatus()+ "]"
+            "applicationStatus" + ":" + getApplicationStatus()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "jobPosting = "+(getJobPosting()!=null?Integer.toHexString(System.identityHashCode(getJobPosting())):"null")
      + outputString;
   }
 }

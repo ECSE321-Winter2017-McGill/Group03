@@ -21,11 +21,14 @@ public class MainPage extends JFrame {
 	private JButton applyForJob;
 	private static String fileName = "output/data.xml";
 
-	public MainPage() {
+	private String userName;
+	public MainPage(String userName) {
 		initComponents();
+		this.userName=userName;
 	}
 
 	private void initComponents() {
+		
 		// TODO Auto-generated method stub
 		addJobPosting = new JButton("Add Job Posting");
 		addJobPosting.setPreferredSize(new Dimension(300,150));
@@ -45,7 +48,7 @@ public class MainPage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
-				new PublishJobPostingPage(ms).setVisible(true);
+				new AllJobPostings(ms,userName).setVisible(true);
 				dispose();
 			}
 		});
@@ -54,13 +57,13 @@ public class MainPage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
-				new JobApplicationPage(ms).setVisible(true);
+				new AllApplication(ms,userName).setVisible(true);
 				dispose();
 			}
 		});
 	}
 
 	public void backToMain() {
-		new MainPage().setVisible(true);
+		new MainPage(userName).setVisible(true);
 	}
 }

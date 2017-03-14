@@ -7,7 +7,6 @@ import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
 import ca.mcgill.ecse321.TAMAS.model.Course;
-import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
@@ -15,7 +14,6 @@ import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 public class TamasController {
 
 	private ManagementSystem ms = new ManagementSystem();
-	private Instructor prof = new Instructor("Daniel Varro", ms);
 
 	public TamasController(ManagementSystem ms) {
 		this.ms = ms;
@@ -53,8 +51,35 @@ public class TamasController {
 
 	}
 
+	public void createApplication(JobPosting jp, String name, int id, String major, boolean isUndergrad, String year,
+			String exp, String firstChoice, String secondChoice, String thirdChoice, int totalAppointmentHour)
+			throws InvalidInputException {
 
-	public void createApplicant(String name, int id, String major, boolean isUndergrad, String year, String exp,
+		String error = "";
+		Applicant ap = createApplicant(name, id, major, isUndergrad, year, exp, firstChoice, secondChoice, thirdChoice,
+				totalAppointmentHour);
+
+		System.out.println("create");
+		System.out.println(ap.numberOfApplications());
+		if (ap.getApplications().size() < 3) {
+			Application application = new Application("submitted", jp);
+			ap.addApplication(application);
+		}
+
+		else {
+
+			error += "You cannot submit more applications! ";
+		}
+
+		if (error.length() > 0) {
+			throw new InvalidInputException(error);
+		}
+
+		PersistenceXStream.saveToXMLwithXStream(ms);
+
+	}
+
+	private Applicant createApplicant(String name, int id, String major, boolean isUndergrad, String year, String exp,
 			String firstChoice, String secondChoice, String thirdChoice, int totalAppointmentHour)
 			throws InvalidInputException {
 		String error = "";
@@ -79,56 +104,30 @@ public class TamasController {
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
-
-		Applicant this_applicant = new Applicant(0, "", "", true, "", "", "", "", "", 0, ms);
+		Applicant this_applicant = null;
 		boolean found = false;
 		List<Applicant> allApplicants = ms.getApplicants();
-		if (allApplicants.size() > 1) {
+		if (allApplicants.size() != 0) {
 
 			for (int i = 0; i < allApplicants.size(); i++) {
 				Applicant anApplicant = allApplicants.get(i);
-
-				if ((anApplicant.getName().equals(name)) && (anApplicant.getStudentID() == id)) {
-
+				if ((anApplicant.getName().equals(name))) {
 					this_applicant = anApplicant;
 					found = true;
 					break;
 				}
 			}
-
 			if (found == false) {
-
-				this_applicant = ms.addApplicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice,
-						thirdChoice, totalAppointmentHour);
+				this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice,
+						thirdChoice, totalAppointmentHour, ms);
 			}
 
+		} else {
+			this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice,
+					thirdChoice, totalAppointmentHour, ms);
 		}
-
-		else {
-			this_applicant = ms.addApplicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice,
-					thirdChoice, totalAppointmentHour);
-		}
-
-		Date date = new Date(0);
-		Course course = new Course("", "", 0, 0, 0, 0, 0, 0, 0.0, prof, ms);
-
-		JobPosting jobPosting = new JobPosting("", date, "", 0, 0.0, ms, course);
-
-		if (this_applicant.getApplications().size() < 3) {
-			Application application = new Application("submitted", jobPosting);
-			this_applicant.addApplication(application);
-		}
-
-		else {
-
-			error += "You cannot submit more applications! ";
-		}
-
-		if (error.length() > 0) {
-			throw new InvalidInputException(error);
-		}
-
 		PersistenceXStream.saveToXMLwithXStream(ms);
+		return this_applicant;
 
 	}
 
