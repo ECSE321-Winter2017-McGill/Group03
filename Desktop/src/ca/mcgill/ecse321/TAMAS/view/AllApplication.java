@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.TAMAS.view;
 
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
+import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
@@ -29,34 +30,47 @@ public class AllApplication extends JFrame {
 	private ManagementSystem ms;
 	private static String filename = "output/data.xml";
 
-	private String userName;
+	private Object user;
 
-	public AllApplication(ManagementSystem ms, String userName) {
-		this.userName = userName;
+	public AllApplication(ManagementSystem ms, Object user) {
+		this.user = user;
 		this.ms = ms;
 		initComponents();
 	}
 
 	private void initComponents() {
 		// get table data ready;
-		String[] columnNames = { "Job Title", "Course ID", "Application Status"};
-		String[][] data = new String[3][3];
+		String[] columnNames = { "Applicant Name", "Job Title", "Course ID", "Application Status" };
+		String[][] data = new String[ms.numberOfApplicants()*3][4];
+
 		int i = 0;
-		Applicant me = null;
-		System.out.println(ms.numberOfApplicants());
-		for (Applicant at : ms.getApplicants()) {
-			System.out.println(at.getName());
-			if (at.getName().equals(userName))
-				me = at;
-		}
-		if (me != null) {
-			for (Application an:me.getApplications()) {
-				data[i][0] = an.getJobPosting().getJobTitle();
-				data[i][1] = an.getJobPosting().getCourse().getCourseCoude();
-				data[i][2] = an.getApplicationStatus();
+
+		// Applicant me = user;
+		// System.out.println(ms.numberOfApplicants());
+		// for (Applicant at : ms.getApplicants()) {
+		// System.out.println(at.getName());
+		// if (at.getName().equals(userName))
+		// me = at;
+		// }
+		if (user.getClass().equals(Applicant.class)) {
+			Applicant me = (Applicant) user;
+			for (Application an : me.getApplications()) {
+				data[i][0] = me.getName();
+				data[i][1] = an.getJobPosting().getJobTitle();
+				data[i][2] = an.getJobPosting().getCourse().getCourseCoude();
+				data[i][3] = an.getApplicationStatus();
 				i++;
 			}
-		}else{
+		} else {
+			for (Applicant an : ms.getApplicants()) {
+				for (Application ap : an.getApplications()) {
+					data[i][0] = an.getName();
+					data[i][1] = ap.getJobPosting().getJobTitle();
+					data[i][2] = ap.getJobPosting().getCourse().getCourseCoude();
+					data[i][3] = ap.getApplicationStatus();
+					i++;
+				}
+			}
 		}
 
 		// get table itself ready;
@@ -76,7 +90,11 @@ public class AllApplication extends JFrame {
 		Container pane = getContentPane();
 		pane.setLayout(layout);
 		pane.add(scrollPane, BorderLayout.PAGE_START);
-		pane.add(butPane, BorderLayout.CENTER);
+		if (user.getClass().equals(Instructor.class)) {
+
+		} else {
+			pane.add(butPane, BorderLayout.CENTER);
+		}
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		pack();
 		setVisible(true);
@@ -85,7 +103,7 @@ public class AllApplication extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(filename);
-				new ApplyForJob(ms,userName).setVisible(true);
+				new ApplyForJob(ms, user).setVisible(true);
 				dispose();
 			}
 		});
@@ -98,6 +116,6 @@ public class AllApplication extends JFrame {
 	}
 
 	private void backToMain() {
-		new MainPage(userName).setVisible(true);
+		new MainPage(user).setVisible(true);
 	}
 }

@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -18,19 +19,21 @@ import javax.swing.WindowConstants;
 
 import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.controller.TamasController;
+import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 
 public class ApplyForJob extends JFrame {
 
 	private static final long serialVersionUID = 5816868540239806192L;
-	private String userName;
+	private Object user;
 	// Basic information
 	private JLabel formTitle;
 	private JLabel errorMessage;
 	private JLabel jobPostingLabel;
 	private JLabel nameLabel;
-	private JLabel nameTextField;
+	private JLabel namefield;
+	private JTextField nameText;
 	private JLabel idLabel;
 	private JTextField idTextField;
 	private JLabel majorLabel;
@@ -69,9 +72,11 @@ public class ApplyForJob extends JFrame {
 
 	private ManagementSystem ms;
 
-	public ApplyForJob(ManagementSystem ms, String userName) {
+	private String name;
+
+	public ApplyForJob(ManagementSystem ms, Object user) {
 		this.ms = ms;
-		this.userName = userName;
+		this.user = user;
 		initComponents();
 		refreshData();
 	}
@@ -89,7 +94,14 @@ public class ApplyForJob extends JFrame {
 			jobPostingList.addItem(jp.getJobTitle() + " " + jp.getCourse().getCourseCoude());
 		}
 		nameLabel = new JLabel("Name:");
-		nameTextField = new JLabel(userName);
+		if (user.getClass().equals(Applicant.class)) {
+			Applicant a = (Applicant) user;
+			namefield = new JLabel(a.getName());
+			name = a.getName();
+		} else {
+			nameText = new JTextField();
+		}
+
 		idLabel = new JLabel("McGill ID:");
 		idTextField = new JTextField();
 		majorLabel = new JLabel("Major:");
@@ -198,6 +210,20 @@ public class ApplyForJob extends JFrame {
 		horizontalLineMiddle1 = new JSeparator();
 		horizontalLineMiddle2 = new JSeparator();
 
+		if (user.getClass().equals(Applicant.class)) {
+			addlayout(namefield);
+		} else {
+			addlayout(nameText);
+		}
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				backToMain();
+			}
+		});
+	}
+
+	private void addlayout(Component o) {
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -214,7 +240,7 @@ public class ApplyForJob extends JFrame {
 								.addComponent(thirdChoiceLabel))
 						.addGroup(
 								layout.createParallelGroup().addComponent(jobPostingLabel).addComponent(jobPostingList)
-										.addComponent(nameLabel).addComponent(nameTextField).addComponent(idTextField)
+										.addComponent(nameLabel).addComponent(o).addComponent(idTextField)
 										.addComponent(majorTextField).addComponent(isUndergradToggleList)
 										.addComponent(yearToggleList).addComponent(pastExperienceTextArea)
 										.addComponent(firstChoiceToggleList).addComponent(secondChoiceToggleList)
@@ -223,7 +249,7 @@ public class ApplyForJob extends JFrame {
 		layout.setVerticalGroup(layout.createSequentialGroup().addComponent(formTitle)
 				.addGroup(layout.createParallelGroup().addComponent(horizontalLineTop)).addComponent(errorMessage)
 				.addGroup(layout.createParallelGroup().addComponent(jobPostingLabel).addComponent(jobPostingList))
-				.addGroup(layout.createParallelGroup().addComponent(nameLabel).addComponent(nameTextField))
+				.addGroup(layout.createParallelGroup().addComponent(nameLabel).addComponent(o))
 				.addGroup(layout.createParallelGroup().addComponent(idLabel).addComponent(idTextField))
 				.addGroup(layout.createParallelGroup().addComponent(majorLabel).addComponent(majorTextField))
 				.addGroup(layout.createParallelGroup().addComponent(horizontalLineMiddle1))
@@ -245,12 +271,6 @@ public class ApplyForJob extends JFrame {
 		);
 
 		pack();
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				backToMain();
-			}
-		});
 	}
 
 	private void refreshData() {
@@ -279,11 +299,15 @@ public class ApplyForJob extends JFrame {
 
 	private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
 
+		if (user.getClass().equals(Applicant.class)) {
+
+		} else {
+			name = nameText.getText();
+		}
 		int totalAppointmentHours = 45;
 		TamasController tc = new TamasController(ms);
 
 		error = "";
-		String name = nameTextField.getText();
 		int id;
 		String major = majorTextField.getText();
 		boolean degree = true;
@@ -363,7 +387,7 @@ public class ApplyForJob extends JFrame {
 	}
 
 	private void backToMain() {
-		new AllApplication(ms, userName).setVisible(true);
+		new AllApplication(ms, user).setVisible(true);
 	}
 
 }

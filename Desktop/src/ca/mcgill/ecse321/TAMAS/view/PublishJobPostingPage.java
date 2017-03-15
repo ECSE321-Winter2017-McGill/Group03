@@ -54,9 +54,10 @@ public class PublishJobPostingPage extends JFrame {
 	private int selectedCourseList = -1;
 	private int selectedJobList = -1;
 
-	public PublishJobPostingPage(ManagementSystem ms,String userName) {
+	private Object user;
+	public PublishJobPostingPage(ManagementSystem ms,Object user) {
 		this.ms = ms;
-		this.userName=userName;
+		this.user=user;
 		initComponents();
 		refreshData();
 	}
@@ -263,7 +264,7 @@ public class PublishJobPostingPage extends JFrame {
 	}
 
 	private void backToAllJobs() {
-		new AllJobPostings(ms,userName).setVisible(true);
+		new AllJobPostings(ms,user).setVisible(true);
 	}
 
 }

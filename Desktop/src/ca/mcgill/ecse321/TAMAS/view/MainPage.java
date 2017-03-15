@@ -9,6 +9,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import ca.mcgill.ecse321.TAMAS.model.Applicant;
+import ca.mcgill.ecse321.TAMAS.model.Department;
+import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
@@ -19,45 +22,61 @@ public class MainPage extends JFrame {
 	private static final long serialVersionUID = 3144791873613255242L;
 	private JButton addJobPosting;
 	private JButton applyForJob;
+	private JButton addCourse;
 	private static String fileName = "output/data.xml";
 
 	private String userName;
-	public MainPage(String userName) {
-		initComponents();
-		this.userName=userName;
+
+	private Object user;
+
+	public MainPage(Object user) {
+		this.user = user;
+
+		initComponents(user);
+
 	}
 
-	private void initComponents() {
-		
-		// TODO Auto-generated method stub
-		addJobPosting = new JButton("Add Job Posting");
-		addJobPosting.setPreferredSize(new Dimension(300,150));
-		applyForJob = new JButton("Apply For Job");
-		applyForJob.setPreferredSize(new Dimension(300,150));
+	private void initComponents(Object role) {
+		addCourse = new JButton("Courses");
+		addCourse.setPreferredSize(new Dimension(300, 150));
+		addJobPosting = new JButton("Job Postings");
+		addJobPosting.setPreferredSize(new Dimension(300, 150));
+		applyForJob = new JButton("Applications");
+		applyForJob.setPreferredSize(new Dimension(300, 150));
 		setTitle("Welcome Page");
 		BorderLayout layout = new BorderLayout();
 		Container pane = getContentPane();
 		pane.setLayout(layout);
-		pane.add(addJobPosting, BorderLayout.PAGE_START);
-		pane.add(applyForJob, BorderLayout.PAGE_END);
+
+		if (role.getClass().equals(Instructor.class)) {
+			pane.add(addJobPosting, BorderLayout.PAGE_START);
+			pane.add(applyForJob, BorderLayout.PAGE_END);
+		} else if (role.getClass().equals(Applicant.class)) {
+			pane.add(addJobPosting, BorderLayout.PAGE_START);
+			pane.add(applyForJob, BorderLayout.PAGE_END);
+		} else {
+			pane.add(addJobPosting, BorderLayout.PAGE_START);
+			pane.add(addCourse);
+			pane.add(applyForJob, BorderLayout.PAGE_END);
+		}
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
-		
-		
+
 		addJobPosting.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
-				new AllJobPostings(ms,userName).setVisible(true);
+				new AllJobPostings(ms, user).setVisible(true);
 				dispose();
 			}
 		});
-		
-		applyForJob.addActionListener(new ActionListener(){
+
+		applyForJob.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
-				new AllApplication(ms,userName).setVisible(true);
+				new AllApplication(ms, user).setVisible(true);
 				dispose();
 			}
 		});
