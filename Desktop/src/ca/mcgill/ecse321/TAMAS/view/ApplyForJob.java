@@ -146,7 +146,8 @@ public class ApplyForJob extends JFrame {
 
 		choiceMessage2 = new JLabel("Please select a third choice if already applied for 2 positions");
 		choiceMessage2.setForeground(Color.BLACK);
-
+		
+		// TODO: choices are hard coded.
 		firstChoiceLabel = new JLabel("First Choice");
 
 		firstChoiceToggleList = new JComboBox<String>(new String[0]);
