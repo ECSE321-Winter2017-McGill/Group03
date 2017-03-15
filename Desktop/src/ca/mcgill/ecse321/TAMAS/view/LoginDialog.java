@@ -11,11 +11,18 @@ import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import ca.mcgill.ecse321.TAMAS.model.Applicant;
+import ca.mcgill.ecse321.TAMAS.model.Department;
+import ca.mcgill.ecse321.TAMAS.model.Instructor;
+import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
+import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
+
 public class LoginDialog extends JFrame {
 	/**
 	* 
 	*/
-	private HashMap<String,String> loginInfo=new HashMap<>();
+	private static String fileName = "output/data.xml";
+	private HashMap<String, String> loginInfo = new HashMap<>();
 	private static final long serialVersionUID = -4375840286920173785L;
 	private JTextField tfUsername;
 	private JPasswordField pfPassword;
@@ -50,30 +57,26 @@ public class LoginDialog extends JFrame {
 		cs.gridwidth = 1;
 		panel.add(lbPassword, cs);
 
-		
 		pfPassword = new JPasswordField(20);
 		cs.gridx = 1;
 		cs.gridy = 1;
 		cs.gridwidth = 2;
 		panel.add(pfPassword, cs);
 		panel.setBorder(new LineBorder(Color.GRAY));
-		
+
 		usernameHint = new JLabel("test      ");
 		usernameHint.setForeground(Color.BLACK);
 		cs.gridx = 1;
 		cs.gridy = 2;
 		cs.gridwidth = 1;
 		panel.add(usernameHint, cs);
-		
+
 		passwordHint = new JLabel("password");
 		passwordHint.setForeground(Color.BLACK);
 		cs.gridx = 2;
 		cs.gridy = 2;
 		cs.gridwidth = 1;
 		panel.add(passwordHint, cs);
-
-		
-
 
 		btnLogin = new JButton("Login");
 
@@ -85,7 +88,7 @@ public class LoginDialog extends JFrame {
 							"Hi " + getUsername() + "! You have successfully logged in.", "Login",
 							JOptionPane.INFORMATION_MESSAGE);
 					succeeded = true;
-					new MainPage(getUsername()).setVisible(true);
+					new MainPage(getUserRole()).setVisible(true);
 					dispose();
 				} else {
 					JOptionPane.showMessageDialog(LoginDialog.this, "Invalid username or password", "Login",
@@ -120,8 +123,8 @@ public class LoginDialog extends JFrame {
 		loginInfo.put("test", "password");
 		loginInfo.put("jackson", "pwd");
 		loginInfo.put("t", "p");
-		if(loginInfo.containsKey(username)){
-			if(loginInfo.get(username).equals(password))
+		if (loginInfo.containsKey(username)) {
+			if (loginInfo.get(username).equals(password))
 				return true;
 		}
 		return false;
@@ -137,5 +140,22 @@ public class LoginDialog extends JFrame {
 
 	public boolean isSucceeded() {
 		return succeeded;
+	}
+
+	private Object getUserRole() {
+		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
+
+		for (Instructor i : ms.getInstructors()) {
+			if (i.getName() != null)
+				if (this.getUsername().equals(i.getName()))
+					return i;
+		}
+		for (Applicant i : ms.getApplicants()) {
+			if (i.getName() != null)
+				if (this.getUsername().equals(i.getName()))
+					return i;
+		}
+		return new Department();
+
 	}
 }
