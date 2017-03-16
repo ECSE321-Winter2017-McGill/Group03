@@ -2,7 +2,9 @@ package ca.mcgill.ecse321.TAMAS.view;
 
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
+import ca.mcgill.ecse321.TAMAS.model.Course;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
+import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
@@ -13,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -41,17 +45,8 @@ public class AllApplication extends JFrame {
 	private void initComponents() {
 		// get table data ready;
 		String[] columnNames = { "Applicant Name", "Job Title", "Course ID", "Application Status" };
-		String[][] data = new String[ms.numberOfApplicants()*3][4];
-
+		String[][] data = new String[ms.numberOfApplicants() * 3][4];
 		int i = 0;
-
-		// Applicant me = user;
-		// System.out.println(ms.numberOfApplicants());
-		// for (Applicant at : ms.getApplicants()) {
-		// System.out.println(at.getName());
-		// if (at.getName().equals(userName))
-		// me = at;
-		// }
 		if (user.getClass().equals(Applicant.class)) {
 			Applicant me = (Applicant) user;
 			for (Application an : me.getApplications()) {
@@ -60,6 +55,23 @@ public class AllApplication extends JFrame {
 				data[i][2] = an.getJobPosting().getCourse().getCourseCoude();
 				data[i][3] = an.getApplicationStatus();
 				i++;
+			}
+		} else if (user.getClass().equals(Instructor.class)) {
+			Instructor in = (Instructor) user;
+			List<Course> co = in.getCourses();
+			List<JobPosting> jp = new ArrayList<>();
+			for (Course c : co) {
+				jp.addAll(c.getJobPosting());
+			}
+			for (JobPosting j : jp) {
+				List<Application> an = j.getApplications();
+				for (Application ap : an) {
+					data[i][0] = ap.getApplicant().getName();
+					data[i][1] = ap.getJobPosting().getJobTitle();
+					data[i][2] = ap.getJobPosting().getCourse().getCourseCoude();
+					data[i][3] = ap.getApplicationStatus();
+					i++;
+				}
 			}
 		} else {
 			for (Applicant an : ms.getApplicants()) {

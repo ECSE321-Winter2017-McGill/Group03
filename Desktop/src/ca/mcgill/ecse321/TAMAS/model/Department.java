@@ -1,13 +1,12 @@
 package ca.mcgill.ecse321.TAMAS.model;
 
 public class Department {
-	private final String name="Department";
+
+	private final String name="department";
 	public Department() {
-		
-		// TODO Auto-generated constructor stub
 	}
+
 	public String getName(){
 		return this.name;
 	}
-
 }

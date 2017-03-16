@@ -2,7 +2,6 @@
 /*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
-import java.util.*;
 
 // line 112 "../../../../../TAMAS.ump"
 public class Application
@@ -17,13 +16,13 @@ public class Application
 
   //Application Associations
   private JobPosting jobPosting;
-  private List<Applicant> applicants;
+  private Applicant applicant;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Application(String aApplicationStatus, JobPosting aJobPosting)
+  public Application(String aApplicationStatus, JobPosting aJobPosting, Applicant aApplicant)
   {
     applicationStatus = aApplicationStatus;
     boolean didAddJobPosting = setJobPosting(aJobPosting);
@@ -31,7 +30,11 @@ public class Application
     {
       throw new RuntimeException("Unable to create application due to jobPosting");
     }
-    applicants = new ArrayList<Applicant>();
+    boolean didAddApplicant = setApplicant(aApplicant);
+    if (!didAddApplicant)
+    {
+      throw new RuntimeException("Unable to create application due to applicant");
+    }
   }
 
   //------------------------
@@ -56,34 +59,9 @@ public class Application
     return jobPosting;
   }
 
-  public Applicant getApplicant(int index)
+  public Applicant getApplicant()
   {
-    Applicant aApplicant = applicants.get(index);
-    return aApplicant;
-  }
-
-  public List<Applicant> getApplicants()
-  {
-    List<Applicant> newApplicants = Collections.unmodifiableList(applicants);
-    return newApplicants;
-  }
-
-  public int numberOfApplicants()
-  {
-    int number = applicants.size();
-    return number;
-  }
-
-  public boolean hasApplicants()
-  {
-    boolean has = applicants.size() > 0;
-    return has;
-  }
-
-  public int indexOfApplicant(Applicant aApplicant)
-  {
-    int index = applicants.indexOf(aApplicant);
-    return index;
+    return applicant;
   }
 
   public boolean setJobPosting(JobPosting aJobPosting)
@@ -105,86 +83,35 @@ public class Application
     return wasSet;
   }
 
-  public static int minimumNumberOfApplicants()
+  public boolean setApplicant(Applicant aApplicant)
   {
-    return 0;
-  }
-
-  public boolean addApplicant(Applicant aApplicant)
-  {
-    boolean wasAdded = false;
-    if (applicants.contains(aApplicant)) { return false; }
-    applicants.add(aApplicant);
-    if (aApplicant.indexOfApplication(this) != -1)
+    boolean wasSet = false;
+    //Must provide applicant to application
+    if (aApplicant == null)
     {
-      wasAdded = true;
+      return wasSet;
     }
-    else
+
+    //applicant already at maximum (3)
+    if (aApplicant.numberOfApplications() >= Applicant.maximumNumberOfApplications())
     {
-      wasAdded = aApplicant.addApplication(this);
-      if (!wasAdded)
+      return wasSet;
+    }
+    
+    Applicant existingApplicant = applicant;
+    applicant = aApplicant;
+    if (existingApplicant != null && !existingApplicant.equals(aApplicant))
+    {
+      boolean didRemove = existingApplicant.removeApplication(this);
+      if (!didRemove)
       {
-        applicants.remove(aApplicant);
+        applicant = existingApplicant;
+        return wasSet;
       }
     }
-    return wasAdded;
-  }
-
-  public boolean removeApplicant(Applicant aApplicant)
-  {
-    boolean wasRemoved = false;
-    if (!applicants.contains(aApplicant))
-    {
-      return wasRemoved;
-    }
-
-    int oldIndex = applicants.indexOf(aApplicant);
-    applicants.remove(oldIndex);
-    if (aApplicant.indexOfApplication(this) == -1)
-    {
-      wasRemoved = true;
-    }
-    else
-    {
-      wasRemoved = aApplicant.removeApplication(this);
-      if (!wasRemoved)
-      {
-        applicants.add(oldIndex,aApplicant);
-      }
-    }
-    return wasRemoved;
-  }
-
-  public boolean addApplicantAt(Applicant aApplicant, int index)
-  {  
-    boolean wasAdded = false;
-    if(addApplicant(aApplicant))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfApplicants()) { index = numberOfApplicants() - 1; }
-      applicants.remove(aApplicant);
-      applicants.add(index, aApplicant);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveApplicantAt(Applicant aApplicant, int index)
-  {
-    boolean wasAdded = false;
-    if(applicants.contains(aApplicant))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfApplicants()) { index = numberOfApplicants() - 1; }
-      applicants.remove(aApplicant);
-      applicants.add(index, aApplicant);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addApplicantAt(aApplicant, index);
-    }
-    return wasAdded;
+    applicant.addApplication(this);
+    wasSet = true;
+    return wasSet;
   }
 
   public void delete()
@@ -192,12 +119,9 @@ public class Application
     JobPosting placeholderJobPosting = jobPosting;
     this.jobPosting = null;
     placeholderJobPosting.removeApplication(this);
-    ArrayList<Applicant> copyOfApplicants = new ArrayList<Applicant>(applicants);
-    applicants.clear();
-    for(Applicant aApplicant : copyOfApplicants)
-    {
-      aApplicant.removeApplication(this);
-    }
+    Applicant placeholderApplicant = applicant;
+    this.applicant = null;
+    placeholderApplicant.removeApplication(this);
   }
 
 
@@ -206,7 +130,8 @@ public class Application
     String outputString = "";
     return super.toString() + "["+
             "applicationStatus" + ":" + getApplicationStatus()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "jobPosting = "+(getJobPosting()!=null?Integer.toHexString(System.identityHashCode(getJobPosting())):"null")
+            "  " + "jobPosting = "+(getJobPosting()!=null?Integer.toHexString(System.identityHashCode(getJobPosting())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "applicant = "+(getApplicant()!=null?Integer.toHexString(System.identityHashCode(getApplicant())):"null")
      + outputString;
   }
 }

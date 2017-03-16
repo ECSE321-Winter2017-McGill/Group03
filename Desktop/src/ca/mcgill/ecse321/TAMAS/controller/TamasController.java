@@ -62,7 +62,7 @@ public class TamasController {
 		System.out.println("create");
 		System.out.println(ap.numberOfApplications());
 		if (ap.getApplications().size() < 3) {
-			Application application = new Application("submitted", jp);
+			Application application = new Application("submitted", jp, ap);
 			ap.addApplication(application);
 		}
 

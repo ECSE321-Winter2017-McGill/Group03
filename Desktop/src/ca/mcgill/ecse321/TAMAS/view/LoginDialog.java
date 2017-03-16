@@ -69,23 +69,32 @@ public class LoginDialog extends JFrame {
 		cs.gridx = 1;
 		cs.gridy = 2;
 		cs.gridwidth = 1;
-		panel.add(usernameHint, cs);
+		// panel.add(usernameHint, cs);
 
 		passwordHint = new JLabel("password");
 		passwordHint.setForeground(Color.BLACK);
 		cs.gridx = 2;
 		cs.gridy = 2;
 		cs.gridwidth = 1;
-		panel.add(passwordHint, cs);
+		// panel.add(passwordHint, cs);
 
 		btnLogin = new JButton("Login");
 
 		btnLogin.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				if (authenticate(getUsername(), getPassword())) {
+				Object user = getUserRole();
+				if (user != null) {
+					String type = "";
+					if (user.getClass().equals(Instructor.class))
+						type += " Instructor ";
+					else if (user.getClass().equals(Department.class))
+						type += " Department ";
+					else if (user.getClass().equals(Applicant.class))
+						type += " Applicant ";
+
 					JOptionPane.showMessageDialog(LoginDialog.this,
-							"Hi " + getUsername() + "! You have successfully logged in.", "Login",
+							"Hi" + type + getUsername() + "! You have successfully logged in.", "Login",
 							JOptionPane.INFORMATION_MESSAGE);
 					succeeded = true;
 					new MainPage(getUserRole()).setVisible(true);
@@ -120,9 +129,9 @@ public class LoginDialog extends JFrame {
 
 	protected boolean authenticate(String username, String password) {
 		// TODO Auto-generated method stub
-		loginInfo.put("test", "password");
-		loginInfo.put("jackson", "pwd");
-		loginInfo.put("t", "p");
+		loginInfo.put("i", "i");
+		loginInfo.put("d", "d");
+		loginInfo.put("s", "s");
 		if (loginInfo.containsKey(username)) {
 			if (loginInfo.get(username).equals(password))
 				return true;
@@ -155,7 +164,10 @@ public class LoginDialog extends JFrame {
 				if (this.getUsername().equals(i.getName()))
 					return i;
 		}
-		return new Department();
+		if (this.getUsername().equals("d") || this.getUsername().equals("department")) {
+			return new Department();
+		}
+		return null;
 
 	}
 }

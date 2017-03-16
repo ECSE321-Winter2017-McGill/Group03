@@ -49,14 +49,15 @@ public class MainPage extends JFrame {
 		pane.setLayout(layout);
 
 		if (role.getClass().equals(Instructor.class)) {
-			pane.add(addJobPosting, BorderLayout.PAGE_START);
+			pane.add(addCourse, BorderLayout.PAGE_START);
+			pane.add(addJobPosting);
 			pane.add(applyForJob, BorderLayout.PAGE_END);
 		} else if (role.getClass().equals(Applicant.class)) {
 			pane.add(addJobPosting, BorderLayout.PAGE_START);
 			pane.add(applyForJob, BorderLayout.PAGE_END);
 		} else {
-			pane.add(addJobPosting, BorderLayout.PAGE_START);
-			pane.add(addCourse);
+			pane.add(addCourse, BorderLayout.PAGE_START);
+			pane.add(addJobPosting);
 			pane.add(applyForJob, BorderLayout.PAGE_END);
 		}
 
@@ -79,6 +80,16 @@ public class MainPage extends JFrame {
 				new AllApplication(ms, user).setVisible(true);
 				dispose();
 			}
+		});
+		addCourse.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
+				new AllCourses(ms, user).setVisible(true);
+				dispose();
+			}
+
 		});
 	}
 
