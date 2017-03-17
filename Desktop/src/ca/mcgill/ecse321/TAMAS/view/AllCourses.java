@@ -40,17 +40,8 @@ public class AllCourses extends JFrame {
 	private void initComponents() {
 		// get table data ready;
 
-		// private String semester;
-		// private String courseCoude;
-		// private int numTutorial;
-		// private int numLab;
-		// private int numStudent;
-		// private int credit;
-		// private int hourRequiredTa;
-		// private int hourRequiredGrader;
-		// private double budgetCalculated;
 		String[] columnNames = { "Instructor Name", "Semester", "Course ID", "Hour Required Ta" };
-		String[][] data = new String[ms.numberOfApplicants() * 3][4];
+		String[][] data = new String[ms.numberOfCourses() + 1][4];
 
 		int i = 0;
 		if (user.getClass().equals(Instructor.class)) {

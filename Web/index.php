@@ -72,7 +72,7 @@
                             <br />
 
                             <p>
-                                Make sure you have internet connection, log in database and some CSS needs internet.
+                                Make sure you have internet connection, log in database and some CSS/JS needs internet.
                             </p>
                         </div>
                     </div>
