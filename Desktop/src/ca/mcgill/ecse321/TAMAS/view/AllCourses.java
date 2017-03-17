@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
-import ca.mcgill.ecse321.TAMAS.model.Applicant;
-import ca.mcgill.ecse321.TAMAS.model.Application;
 import ca.mcgill.ecse321.TAMAS.model.Course;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
@@ -41,18 +39,18 @@ public class AllCourses extends JFrame {
 
 	private void initComponents() {
 		// get table data ready;
-		
-//		  private String semester;
-//		  private String courseCoude;
-//		  private int numTutorial;
-//		  private int numLab;
-//		  private int numStudent;
-//		  private int credit;
-//		  private int hourRequiredTa;
-//		  private int hourRequiredGrader;
-//		  private double budgetCalculated;
+
+		// private String semester;
+		// private String courseCoude;
+		// private int numTutorial;
+		// private int numLab;
+		// private int numStudent;
+		// private int credit;
+		// private int hourRequiredTa;
+		// private int hourRequiredGrader;
+		// private double budgetCalculated;
 		String[] columnNames = { "Instructor Name", "Semester", "Course ID", "Hour Required Ta" };
-		String[][] data = new String[ms.numberOfApplicants()*3][4];
+		String[][] data = new String[ms.numberOfApplicants() * 3][4];
 
 		int i = 0;
 		if (user.getClass().equals(Instructor.class)) {
@@ -61,7 +59,7 @@ public class AllCourses extends JFrame {
 				data[i][0] = me.getName();
 				data[i][1] = an.getSemester();
 				data[i][2] = an.getCourseCoude();
-				data[i][3] = ""+an.getHourRequiredTa();
+				data[i][3] = "" + an.getHourRequiredTa();
 				i++;
 			}
 		} else {
@@ -70,7 +68,7 @@ public class AllCourses extends JFrame {
 					data[i][0] = an.getName();
 					data[i][1] = ap.getSemester();
 					data[i][2] = ap.getCourseCoude();
-					data[i][3] = ""+ap.getHourRequiredTa();
+					data[i][3] = "" + ap.getHourRequiredTa();
 					i++;
 				}
 			}
@@ -106,7 +104,7 @@ public class AllCourses extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(filename);
-				new ApplyForJob(ms, user).setVisible(true);
+				new AddCourse(ms, user).setVisible(true);
 				dispose();
 			}
 		});

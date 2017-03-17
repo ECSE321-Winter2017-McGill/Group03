@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
-import ca.mcgill.ecse321.TAMAS.model.Department;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;

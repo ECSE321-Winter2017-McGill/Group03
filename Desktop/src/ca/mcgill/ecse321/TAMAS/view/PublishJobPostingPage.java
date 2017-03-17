@@ -29,7 +29,6 @@ import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 public class PublishJobPostingPage extends JFrame {
 
 	private static final long serialVersionUID = -3813819647258555349L;
-	private String userName;
 	// attributes for GUI elements
 	private JLabel courseLabel;
 	private JComboBox<String> courseList;

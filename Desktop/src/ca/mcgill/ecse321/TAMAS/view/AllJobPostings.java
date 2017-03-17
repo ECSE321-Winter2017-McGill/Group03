@@ -1,7 +1,6 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
-import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
