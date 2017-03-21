@@ -9,6 +9,7 @@ public class TamasApplication {
 		LoginDialog login = new LoginDialog();
 		login.setVisible(true);
 
+		
 		// Show hints for loggin in
 		LoginHint lg = new LoginHint();
 		lg.setVisible(true);
