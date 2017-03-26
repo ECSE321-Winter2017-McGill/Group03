@@ -26,7 +26,7 @@
           <course reference="3"/>
           <applications id="10">
             <ca.mcgill.ecse321.TAMAS.model.Application id="11">
-              <applicationStatus>submitted</applicationStatus>
+              <applicationStatus>accpeted</applicationStatus>
               <jobPosting reference="8"/>
               <applicant id="12">
                 <studentID>2</studentID>
@@ -47,7 +47,7 @@
               </applicant>
             </ca.mcgill.ecse321.TAMAS.model.Application>
             <ca.mcgill.ecse321.TAMAS.model.Application id="16">
-              <applicationStatus>submitted</applicationStatus>
+              <applicationStatus>accpeted</applicationStatus>
               <jobPosting reference="8"/>
               <applicant id="17">
                 <studentID>2</studentID>
@@ -66,20 +66,40 @@
                 </applications>
               </applicant>
             </ca.mcgill.ecse321.TAMAS.model.Application>
+            <ca.mcgill.ecse321.TAMAS.model.Application id="21">
+              <applicationStatus>accpeted</applicationStatus>
+              <jobPosting reference="8"/>
+              <applicant id="22">
+                <studentID>123</studentID>
+                <name>borui</name>
+                <previousExperience>sdffs</previousExperience>
+                <isUnderGraduated>true</isUnderGraduated>
+                <major>asdf</major>
+                <year>U0</year>
+                <firstChoice>ECSE 321</firstChoice>
+                <totalAppointmentHours>45</totalAppointmentHours>
+                <allocations id="23"/>
+                <offeredJobs id="24"/>
+                <managementSystem reference="1"/>
+                <applications id="25">
+                  <ca.mcgill.ecse321.TAMAS.model.Application reference="21"/>
+                </applications>
+              </applicant>
+            </ca.mcgill.ecse321.TAMAS.model.Application>
           </applications>
         </jobInfo>
       </jobPosting>
-      <instructor id="21">
+      <instructor id="26">
         <name>Daniel Varro</name>
         <managementSystem reference="1"/>
-        <courses id="22">
+        <courses id="27">
           <ca.mcgill.ecse321.TAMAS.model.Course reference="3"/>
         </courses>
       </instructor>
-      <offeredJobs id="23"/>
+      <offeredJobs id="28"/>
       <managementSystem reference="1"/>
     </ca.mcgill.ecse321.TAMAS.model.Course>
-    <ca.mcgill.ecse321.TAMAS.model.Course id="24">
+    <ca.mcgill.ecse321.TAMAS.model.Course id="29">
       <semester>Winter 2017</semester>
       <courseCoude>ECSE 321</courseCoude>
       <numTutorial>1</numTutorial>
@@ -89,44 +109,45 @@
       <hourRequiredTa>60</hourRequiredTa>
       <hourRequiredGrader>60</hourRequiredGrader>
       <budgetCalculated>10000.0</budgetCalculated>
-      <courseComponents id="25"/>
-      <courseJobAllocation id="26">
-        <course reference="24"/>
-        <applicants id="27"/>
+      <courseComponents id="30"/>
+      <courseJobAllocation id="31">
+        <course reference="29"/>
+        <applicants id="32"/>
       </courseJobAllocation>
-      <jobPosting id="28">
-        <jobInfo id="29">
+      <jobPosting id="33">
+        <jobInfo id="34">
           <jobTitle>TA</jobTitle>
-          <submissionDeadline id="30">2017-03-07</submissionDeadline>
+          <submissionDeadline id="35">2017-03-07</submissionDeadline>
           <perferredExperience>a</perferredExperience>
           <numNeeded>2</numNeeded>
           <hourRate>2.0</hourRate>
           <managementSystem reference="1"/>
-          <course reference="24"/>
-          <applications id="31"/>
+          <course reference="29"/>
+          <applications id="36"/>
         </jobInfo>
       </jobPosting>
-      <instructor id="32">
+      <instructor id="37">
         <name>i</name>
         <managementSystem reference="1"/>
-        <courses id="33">
-          <ca.mcgill.ecse321.TAMAS.model.Course reference="24"/>
+        <courses id="38">
+          <ca.mcgill.ecse321.TAMAS.model.Course reference="29"/>
         </courses>
       </instructor>
-      <offeredJobs id="34"/>
+      <offeredJobs id="39"/>
       <managementSystem reference="1"/>
     </ca.mcgill.ecse321.TAMAS.model.Course>
   </courses>
-  <instructors id="35">
-    <ca.mcgill.ecse321.TAMAS.model.Instructor reference="21"/>
-    <ca.mcgill.ecse321.TAMAS.model.Instructor reference="32"/>
+  <instructors id="40">
+    <ca.mcgill.ecse321.TAMAS.model.Instructor reference="26"/>
+    <ca.mcgill.ecse321.TAMAS.model.Instructor reference="37"/>
   </instructors>
-  <applicants id="36">
+  <applicants id="41">
     <ca.mcgill.ecse321.TAMAS.model.Applicant reference="12"/>
     <ca.mcgill.ecse321.TAMAS.model.Applicant reference="17"/>
+    <ca.mcgill.ecse321.TAMAS.model.Applicant reference="22"/>
   </applicants>
-  <jobPostings id="37">
+  <jobPostings id="42">
     <jobInfo reference="8"/>
-    <jobInfo reference="29"/>
+    <jobInfo reference="34"/>
   </jobPostings>
 </ca.mcgill.ecse321.TAMAS.model.ManagementSystem>
