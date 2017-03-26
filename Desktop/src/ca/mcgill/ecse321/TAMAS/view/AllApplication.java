@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
+import ca.mcgill.ecse321.TAMAS.controller.TamasController;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
 import ca.mcgill.ecse321.TAMAS.model.Course;
@@ -16,9 +17,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -35,17 +38,24 @@ public class AllApplication extends JFrame {
 	private static String filename = "output/data.xml";
 
 	private Object user;
-
+	private int selectedApplication;
+	private HashMap<String, Application> applicationMap = new HashMap<String, Application>();
+    private TamasController tm;
+    private String[][] data;
+    private JTable table;
+    
 	public AllApplication(ManagementSystem ms, Object user) {
 		this.user = user;
 		this.ms = ms;
+		tm = new TamasController(ms);
+		data = new String[ms.numberOfApplicants() * 3][4];
 		initComponents();
 	}
 
 	private void initComponents() {
 		// get table data ready;
 		String[] columnNames = { "Applicant Name", "Job Title", "Course ID", "Application Status" };
-		String[][] data = new String[ms.numberOfApplicants() * 3][4];
+		
 		int i = 0;
 		if (user.getClass().equals(Applicant.class)) {
 			Applicant me = (Applicant) user;
@@ -86,16 +96,31 @@ public class AllApplication extends JFrame {
 		}
 
 		// get table itself ready;
-		final JTable table = new JTable(data, columnNames);
+		table = new JTable(data, columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(700, 100));
 		table.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(table);
 		JPanel butPane = new JPanel();
+		JPanel comPane = new JPanel();
 
 		// get the rest of frame ready;
 		JButton addJobPosting = new JButton("App For a Job");
-		butPane.add(addJobPosting);
-
+		final JComboBox allApplication = new JComboBox<String>();
+		for (Applicant an : ms.getApplicants()) {
+			for (Application ap : an.getApplications()) {
+				String appDescription = an.getName() + " " + ap.getJobPosting().getJobTitle() 
+						+ " " + ap.getJobPosting().getCourse().getCourseCoude();
+				allApplication.addItem(appDescription);
+				applicationMap.put(appDescription,ap);
+			}
+		}
+		JButton acceptApplication = new JButton("accept");
+		JButton rejectApplication = new JButton("reject");
+	    comPane.add(allApplication);
+	    comPane.add(acceptApplication);
+		comPane.add(rejectApplication);
+	    butPane.add(addJobPosting);
+        
 		// get frame ready;
 		setTitle("View All Application");
 		BorderLayout layout = new BorderLayout();
@@ -103,13 +128,15 @@ public class AllApplication extends JFrame {
 		pane.setLayout(layout);
 		pane.add(scrollPane, BorderLayout.PAGE_START);
 		if (user.getClass().equals(Instructor.class)) {
-
+			
 		} else {
-			pane.add(butPane, BorderLayout.CENTER);
+			pane.add(comPane, BorderLayout.CENTER);
+			pane.add(butPane, BorderLayout.PAGE_END);
 		}
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		pack();
 		setVisible(true);
+		
 		// add actions listeners
 		addJobPosting.addActionListener(new ActionListener() {
 			@Override
@@ -119,6 +146,37 @@ public class AllApplication extends JFrame {
 				dispose();
 			}
 		});
+		
+		allApplication.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+		        JComboBox<String> cb = (JComboBox<String>) e.getSource();
+		        selectedApplication = cb.getSelectedIndex();
+			}
+		});
+	
+		acceptApplication.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+		        String appDescription = allApplication.getItemAt(selectedApplication).toString();
+				Application selectedApp = applicationMap.get(appDescription);
+			    tm.acceptApplication(selectedApp);
+			    dispose();
+			    initComponents();
+			}
+		});
+		
+		rejectApplication.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 String appDescription = allApplication.getItemAt(selectedApplication).toString();	
+				 Application selectedApp = applicationMap.get(appDescription);
+				 tm.rejectApplication(selectedApp);
+				 dispose();
+				 initComponents();	
+			}
+		});
+		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
