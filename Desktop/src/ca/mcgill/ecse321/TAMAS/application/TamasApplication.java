@@ -13,6 +13,6 @@ public class TamasApplication {
 		// Show hints for loggin in
 		LoginHint lg = new LoginHint();
 		lg.setVisible(true);
-        //
+        /////////
 	}
 }
