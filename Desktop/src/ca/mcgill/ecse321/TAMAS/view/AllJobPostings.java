@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
+import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
@@ -27,10 +28,11 @@ public class AllJobPostings extends JFrame {
 	private ManagementSystem ms;
 	private static String filename = "output/data.xml";
 
-	private String userName;
-	public AllJobPostings(ManagementSystem ms,String userName) {
+	private Object user;
+
+	public AllJobPostings(ManagementSystem ms, Object user) {
 		this.ms = ms;
-		this.userName=userName;
+		this.user = user;
 		initComponents();
 	}
 
@@ -67,7 +69,10 @@ public class AllJobPostings extends JFrame {
 		Container pane = getContentPane();
 		pane.setLayout(layout);
 		pane.add(scrollPane, BorderLayout.PAGE_START);
-		pane.add(butPane, BorderLayout.CENTER);
+		if (user.getClass().equals(Applicant.class)) {
+		} else {
+			pane.add(butPane, BorderLayout.CENTER);
+		}
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		pack();
 		setVisible(true);
@@ -76,7 +81,7 @@ public class AllJobPostings extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(filename);
-				new PublishJobPostingPage(ms,userName).setVisible(true);
+				new PublishJobPostingPage(ms, user).setVisible(true);
 				dispose();
 			}
 		});
@@ -89,6 +94,6 @@ public class AllJobPostings extends JFrame {
 	}
 
 	private void backToMain() {
-		new MainPage(userName).setVisible(true);
+		new MainPage(user).setVisible(true);
 	}
 }

@@ -113,7 +113,7 @@ class Application{
 
   * -- 1 JobPosting;
 
-  0..3 -- * Applicant;
+  0..3 -- 1 Applicant;
 
   String applicationStatus;
 

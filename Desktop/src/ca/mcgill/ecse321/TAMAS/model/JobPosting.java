@@ -201,9 +201,9 @@ public class JobPosting
     return 0;
   }
 
-  public Application addApplication(String aApplicationStatus)
+  public Application addApplication(String aApplicationStatus, Applicant aApplicant)
   {
-    return new Application(aApplicationStatus, this);
+    return new Application(aApplicationStatus, this, aApplicant);
   }
 
   public boolean addApplication(Application aApplication)

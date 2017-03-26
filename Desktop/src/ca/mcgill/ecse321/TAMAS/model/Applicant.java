@@ -501,6 +501,18 @@ public class Applicant
     return 3;
   }
 
+  public Application addApplication(String aApplicationStatus, JobPosting aJobPosting)
+  {
+    if (numberOfApplications() >= maximumNumberOfApplications())
+    {
+      return null;
+    }
+    else
+    {
+      return new Application(aApplicationStatus, aJobPosting, this);
+    }
+  }
+
   public boolean addApplication(Application aApplication)
   {
     boolean wasAdded = false;
@@ -510,86 +522,30 @@ public class Applicant
       return wasAdded;
     }
 
-    applications.add(aApplication);
-    if (aApplication.indexOfApplicant(this) != -1)
+    Applicant existingApplicant = aApplication.getApplicant();
+    boolean isNewApplicant = existingApplicant != null && !this.equals(existingApplicant);
+    if (isNewApplicant)
     {
-      wasAdded = true;
+      aApplication.setApplicant(this);
     }
     else
     {
-      wasAdded = aApplication.addApplicant(this);
-      if (!wasAdded)
-      {
-        applications.remove(aApplication);
-      }
+      applications.add(aApplication);
     }
+    wasAdded = true;
     return wasAdded;
   }
 
   public boolean removeApplication(Application aApplication)
   {
     boolean wasRemoved = false;
-    if (!applications.contains(aApplication))
+    //Unable to remove aApplication, as it must always have a applicant
+    if (!this.equals(aApplication.getApplicant()))
     {
-      return wasRemoved;
-    }
-
-    int oldIndex = applications.indexOf(aApplication);
-    applications.remove(oldIndex);
-    if (aApplication.indexOfApplicant(this) == -1)
-    {
+      applications.remove(aApplication);
       wasRemoved = true;
     }
-    else
-    {
-      wasRemoved = aApplication.removeApplicant(this);
-      if (!wasRemoved)
-      {
-        applications.add(oldIndex,aApplication);
-      }
-    }
     return wasRemoved;
-  }
-
-  public boolean setApplications(Application... newApplications)
-  {
-    boolean wasSet = false;
-    ArrayList<Application> verifiedApplications = new ArrayList<Application>();
-    for (Application aApplication : newApplications)
-    {
-      if (verifiedApplications.contains(aApplication))
-      {
-        continue;
-      }
-      verifiedApplications.add(aApplication);
-    }
-
-    if (verifiedApplications.size() != newApplications.length || verifiedApplications.size() > maximumNumberOfApplications())
-    {
-      return wasSet;
-    }
-
-    ArrayList<Application> oldApplications = new ArrayList<Application>(applications);
-    applications.clear();
-    for (Application aNewApplication : verifiedApplications)
-    {
-      applications.add(aNewApplication);
-      if (oldApplications.contains(aNewApplication))
-      {
-        oldApplications.remove(aNewApplication);
-      }
-      else
-      {
-        aNewApplication.addApplicant(this);
-      }
-    }
-
-    for (Application anOldApplication : oldApplications)
-    {
-      anOldApplication.removeApplicant(this);
-    }
-    wasSet = true;
-    return wasSet;
   }
 
   public boolean addApplicationAt(Application aApplication, int index)
@@ -640,11 +596,10 @@ public class Applicant
     ManagementSystem placeholderManagementSystem = managementSystem;
     this.managementSystem = null;
     placeholderManagementSystem.removeApplicant(this);
-    ArrayList<Application> copyOfApplications = new ArrayList<Application>(applications);
-    applications.clear();
-    for(Application aApplication : copyOfApplications)
+    for(int i=applications.size(); i > 0; i--)
     {
-      aApplication.removeApplicant(this);
+      Application aApplication = applications.get(i - 1);
+      aApplication.delete();
     }
   }
 

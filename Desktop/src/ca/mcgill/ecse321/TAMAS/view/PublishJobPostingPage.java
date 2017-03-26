@@ -29,7 +29,6 @@ import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 public class PublishJobPostingPage extends JFrame {
 
 	private static final long serialVersionUID = -3813819647258555349L;
-	private String userName;
 	// attributes for GUI elements
 	private JLabel courseLabel;
 	private JComboBox<String> courseList;
@@ -54,9 +53,10 @@ public class PublishJobPostingPage extends JFrame {
 	private int selectedCourseList = -1;
 	private int selectedJobList = -1;
 
-	public PublishJobPostingPage(ManagementSystem ms,String userName) {
+	private Object user;
+	public PublishJobPostingPage(ManagementSystem ms,Object user) {
 		this.ms = ms;
-		this.userName=userName;
+		this.user=user;
 		initComponents();
 		refreshData();
 	}
@@ -263,7 +263,7 @@ public class PublishJobPostingPage extends JFrame {
 	}
 
 	private void backToAllJobs() {
-		new AllJobPostings(ms,userName).setVisible(true);
+		new AllJobPostings(ms,user).setVisible(true);
 	}
 
 }
