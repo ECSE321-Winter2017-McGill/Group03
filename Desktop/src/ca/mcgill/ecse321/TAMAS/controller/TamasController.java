@@ -7,6 +7,7 @@ import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
 import ca.mcgill.ecse321.TAMAS.model.Course;
+import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
@@ -128,6 +129,158 @@ public class TamasController {
 		}
 		PersistenceXStream.saveToXMLwithXStream(ms);
 		return this_applicant;
+
+	}
+	
+
+	public void registerApplicant(String name) throws InvalidInputException{
+		
+		String error = "";
+		
+		if (name == null || name.trim().length()==0){
+			error += "Name cannot be empty! ";
+		}
+		
+		boolean found = false;
+		List<Applicant> allApplicants = ms.getApplicants();
+		List<Instructor> allInstructors = ms.getInstructors();
+		
+		for (Applicant anApplicant: allApplicants){
+			if (anApplicant.getName().equals(name.trim())){
+				error += "This username already exists! ";
+				found = true;
+				break;
+			}
+		}
+		
+		if (found == false){
+			for (Instructor anInstructor: allInstructors){
+				if (anInstructor.getName().equals(name.trim())){
+					error += "This username already exists! ";
+					found = true;
+					break;
+				}
+			}
+		}
+		
+		error = error.trim();
+		if (error.length()>0){
+			throw new InvalidInputException(error);
+		}
+		
+		try{
+			ms.addApplicant(0, name, null, true, null, null, null, null, null, 0);
+		}
+		catch (RuntimeException e){
+			throw new InvalidInputException(e.getMessage());
+		}
+
+		PersistenceXStream.saveToXMLwithXStream(ms);
+	}
+	
+	public void registerInstructor(String name) throws InvalidInputException{
+		
+		String error = "";
+
+		if (name == null || name.trim().length()==0){
+			error += "Name cannot be empty! ";
+		}
+		
+		boolean found = false;
+		List<Applicant> allApplicants = ms.getApplicants();
+		List<Instructor> allInstructors = ms.getInstructors();
+		
+		for (Applicant anApplicant: allApplicants){
+			if (anApplicant.getName().equals(name.trim())){
+				error += "This username already exists! ";
+				found = true;
+				break;
+			}
+		}
+		
+		if (found == false){
+			for (Instructor anInstructor: allInstructors){
+				if (anInstructor.getName().equals(name.trim())){
+					error += "This username already exists! ";
+					found = true;
+					break;
+				}
+			}
+		}
+		
+		error = error.trim();
+		if (error.length()>0){
+			throw new InvalidInputException(error);
+		}
+		
+		try{
+			ms.addInstructor(name);
+		}
+		catch (RuntimeException e){
+			throw new InvalidInputException(e.getMessage());
+		}
+		
+		PersistenceXStream.saveToXMLwithXStream(ms);
+
+                }
+
+	public void createCourse(String aSemester, String aCourseCode, int aNumTutorial, int aNumLab, int aNumStudent, int aCredit, int aHourRequiredTa, 
+			int aHourRequiredGrader, double aBudgetCalculated, Instructor aInstructor, ManagementSystem aManagementSystem) throws InvalidInputException {
+		String error = "";
+		if (aSemester == null) {
+			error += "Please specify a semester.";
+		}
+		if (aCourseCode.equals("")) {
+			error += "Please specify the course code! ";
+		}
+		if (aInstructor.equals("")) {
+			error += "Please specify the instructor! ";
+		}
+		if (aNumTutorial < 0) {
+			error += "Must specify the number of tutorial! ";
+		}
+		if (aNumLab < 0) {
+			error += "Must specify the numebr of lab! ";
+		}
+		if (aNumStudent < 0) {
+			error += "Must specify the maximum number of students! ";
+		}
+		if (aCredit < 0) {
+			error += "Must specify the number of credits! ";
+		}
+		if (aHourRequiredTa < 0) {
+			error += "Must specify the hourly wage for TA! ";
+		}
+		if (aHourRequiredGrader < 0) {
+			error += "Must specify the hourly wage for Grader! ";
+		}
+	/*	if (aBudgetCalculated < 0) {
+			error += "Must specify the calculated budget! ";
+		}*/
+		error = error.trim();
+
+		if (error.length() > 0) {
+			throw new InvalidInputException(error);
+		}
+		ms.addCourse(new Course(aSemester, aCourseCode, aNumTutorial, aNumLab, aNumStudent,
+				aCredit, aHourRequiredTa, 
+				aHourRequiredGrader, aBudgetCalculated, 
+				aInstructor,ms));
+		PersistenceXStream.saveToXMLwithXStream(ms);
+	}
+	
+	public void acceptApplication(Application application){
+		if  (application.getApplicationStatus().equals("submitted")) {
+		application.setApplicationStatus("accpeted");
+		PersistenceXStream.saveToXMLwithXStream(ms);
+		}
+	}
+	
+	public void rejectApplication(Application application){
+		if  (application.getApplicationStatus().equals("submitted")) {
+			application.setApplicationStatus("rejected");
+			PersistenceXStream.saveToXMLwithXStream(ms);
+		}
 
 	}
 

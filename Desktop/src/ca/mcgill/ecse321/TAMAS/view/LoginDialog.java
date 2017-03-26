@@ -64,19 +64,19 @@ public class LoginDialog extends JFrame {
 		panel.add(pfPassword, cs);
 		panel.setBorder(new LineBorder(Color.GRAY));
 
-		usernameHint = new JLabel("test      ");
-		usernameHint.setForeground(Color.BLACK);
-		cs.gridx = 1;
-		cs.gridy = 2;
-		cs.gridwidth = 1;
-		// panel.add(usernameHint, cs);
-
-		passwordHint = new JLabel("password");
-		passwordHint.setForeground(Color.BLACK);
-		cs.gridx = 2;
-		cs.gridy = 2;
-		cs.gridwidth = 1;
-		// panel.add(passwordHint, cs);
+//		usernameHint = new JLabel("test      ");
+//		usernameHint.setForeground(Color.BLACK);
+//		cs.gridx = 1;
+//		cs.gridy = 2;
+//		cs.gridwidth = 1;
+//		// panel.add(usernameHint, cs);
+//
+//		passwordHint = new JLabel("password");
+//		passwordHint.setForeground(Color.BLACK);
+//		cs.gridx = 2;
+//		cs.gridy = 2;
+//		cs.gridwidth = 1;
+//		// panel.add(passwordHint, cs);
 
 		btnLogin = new JButton("Login");
 
@@ -109,11 +109,11 @@ public class LoginDialog extends JFrame {
 				}
 			}
 		});
-		btnCancel = new JButton("Cancel");
+		btnCancel = new JButton("Register");
 		btnCancel.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				toRegisterPage();
 			}
 		});
 		JPanel bp = new JPanel();
@@ -169,5 +169,10 @@ public class LoginDialog extends JFrame {
 		}
 		return null;
 
+	}
+	
+	private void toRegisterPage(){
+		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
+		new RegisterPage(ms).setVisible(true);
 	}
 }
