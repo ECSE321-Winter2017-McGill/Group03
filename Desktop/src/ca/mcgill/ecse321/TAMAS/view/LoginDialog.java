@@ -109,11 +109,11 @@ public class LoginDialog extends JFrame {
 				}
 			}
 		});
-		btnCancel = new JButton("Cancel");
+		btnCancel = new JButton("Register");
 		btnCancel.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				toRegisterPage();
 			}
 		});
 		JPanel bp = new JPanel();
@@ -169,5 +169,10 @@ public class LoginDialog extends JFrame {
 		}
 		return null;
 
+	}
+	
+	private void toRegisterPage(){
+		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
+		new RegisterPage(ms).setVisible(true);
 	}
 }

@@ -120,12 +120,47 @@
   <instructors id="35">
     <ca.mcgill.ecse321.TAMAS.model.Instructor reference="21"/>
     <ca.mcgill.ecse321.TAMAS.model.Instructor reference="32"/>
+    <ca.mcgill.ecse321.TAMAS.model.Instructor id="36">
+      <name>Instructor</name>
+      <managementSystem reference="1"/>
+      <courses id="37"/>
+    </ca.mcgill.ecse321.TAMAS.model.Instructor>
+    <ca.mcgill.ecse321.TAMAS.model.Instructor id="38">
+      <name>Applicant</name>
+      <managementSystem reference="1"/>
+      <courses id="39"/>
+    </ca.mcgill.ecse321.TAMAS.model.Instructor>
+    <ca.mcgill.ecse321.TAMAS.model.Instructor id="40">
+      <name>abc</name>
+      <managementSystem reference="1"/>
+      <courses id="41"/>
+    </ca.mcgill.ecse321.TAMAS.model.Instructor>
   </instructors>
-  <applicants id="36">
+  <applicants id="42">
     <ca.mcgill.ecse321.TAMAS.model.Applicant reference="12"/>
     <ca.mcgill.ecse321.TAMAS.model.Applicant reference="17"/>
+    <ca.mcgill.ecse321.TAMAS.model.Applicant id="43">
+      <studentID>0</studentID>
+      <name>qwe</name>
+      <isUnderGraduated>true</isUnderGraduated>
+      <totalAppointmentHours>0</totalAppointmentHours>
+      <allocations id="44"/>
+      <offeredJobs id="45"/>
+      <managementSystem reference="1"/>
+      <applications id="46"/>
+    </ca.mcgill.ecse321.TAMAS.model.Applicant>
+    <ca.mcgill.ecse321.TAMAS.model.Applicant id="47">
+      <studentID>0</studentID>
+      <name>hello</name>
+      <isUnderGraduated>true</isUnderGraduated>
+      <totalAppointmentHours>0</totalAppointmentHours>
+      <allocations id="48"/>
+      <offeredJobs id="49"/>
+      <managementSystem reference="1"/>
+      <applications id="50"/>
+    </ca.mcgill.ecse321.TAMAS.model.Applicant>
   </applicants>
-  <jobPostings id="37">
+  <jobPostings id="51">
     <jobInfo reference="8"/>
     <jobInfo reference="29"/>
   </jobPostings>

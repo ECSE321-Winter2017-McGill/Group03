@@ -7,6 +7,7 @@ import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
 import ca.mcgill.ecse321.TAMAS.model.Course;
+import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
@@ -129,6 +130,96 @@ public class TamasController {
 		PersistenceXStream.saveToXMLwithXStream(ms);
 		return this_applicant;
 
+	}
+	
+	public void registerApplicant(String name) throws InvalidInputException{
+		
+		String error = "";
+		
+		if (name == null || name.trim().length()==0){
+			error += "Name cannot be empty! ";
+		}
+		
+		boolean found = false;
+		List<Applicant> allApplicants = ms.getApplicants();
+		List<Instructor> allInstructors = ms.getInstructors();
+		
+		for (Applicant anApplicant: allApplicants){
+			if (anApplicant.getName().equals(name.trim())){
+				error += "This username already exists! ";
+				found = true;
+				break;
+			}
+		}
+		
+		if (found == false){
+			for (Instructor anInstructor: allInstructors){
+				if (anInstructor.getName().equals(name.trim())){
+					error += "This username already exists! ";
+					found = true;
+					break;
+				}
+			}
+		}
+		
+		error = error.trim();
+		if (error.length()>0){
+			throw new InvalidInputException(error);
+		}
+		
+		try{
+			ms.addApplicant(0, name, null, true, null, null, null, null, null, 0);
+		}
+		catch (RuntimeException e){
+			throw new InvalidInputException(e.getMessage());
+		}
+
+		PersistenceXStream.saveToXMLwithXStream(ms);
+	}
+	
+	public void registerInstructor(String name) throws InvalidInputException{
+		
+		String error = "";
+
+		if (name == null || name.trim().length()==0){
+			error += "Name cannot be empty! ";
+		}
+		
+		boolean found = false;
+		List<Applicant> allApplicants = ms.getApplicants();
+		List<Instructor> allInstructors = ms.getInstructors();
+		
+		for (Applicant anApplicant: allApplicants){
+			if (anApplicant.getName().equals(name.trim())){
+				error += "This username already exists! ";
+				found = true;
+				break;
+			}
+		}
+		
+		if (found == false){
+			for (Instructor anInstructor: allInstructors){
+				if (anInstructor.getName().equals(name.trim())){
+					error += "This username already exists! ";
+					found = true;
+					break;
+				}
+			}
+		}
+		
+		error = error.trim();
+		if (error.length()>0){
+			throw new InvalidInputException(error);
+		}
+		
+		try{
+			ms.addInstructor(name);
+		}
+		catch (RuntimeException e){
+			throw new InvalidInputException(e.getMessage());
+		}
+		
+		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 
 }
