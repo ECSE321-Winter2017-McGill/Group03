@@ -39,7 +39,7 @@ public class AllJobPostings extends JFrame {
 	private void initComponents() {
 		// get table data ready;
 		String[] columnNames = { "Job Title", "Course ID", "Hour Required TA", "Hourly Rate", "Experience",
-				"Submission Dead Line" };
+				"Submission Deadline" };
 		String[][] data = new String[ms.numberOfJobPostings()][6];
 		int i = 0;
 		for (JobPosting jp : ms.getJobPostings()) {

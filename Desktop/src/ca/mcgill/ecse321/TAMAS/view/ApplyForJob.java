@@ -27,20 +27,21 @@ public class ApplyForJob extends JFrame {
 
 	private static final long serialVersionUID = 5816868540239806192L;
 	private Object user;
+	
 	// Basic information
 	private JLabel formTitle;
 	private JLabel errorMessage;
 	private JLabel jobPostingLabel;
 	private JLabel nameLabel;
-	private JLabel namefield;
-	private JTextField nameText;
+	private JLabel nameFieldLabel;
+	private JTextField nameTextField;
 	private JLabel idLabel;
 	private JTextField idTextField;
 	private JLabel majorLabel;
 	private JTextField majorTextField;
 	private JLabel isUndergradLabel;
 	private JComboBox<String> isUndergradToggleList;
-	private JComboBox<String> jobPostingList;
+	private JComboBox<String> jobPostingToggleList;
 	private JLabel yearLabel;
 	private JComboBox<String> yearToggleList;
 
@@ -65,6 +66,7 @@ public class ApplyForJob extends JFrame {
 	private Integer selectedThirdChoice = -1;
 
 	private JButton submitButton;
+	private JButton cancelButton;
 
 	private JSeparator horizontalLineTop;
 	private JSeparator horizontalLineMiddle1;
@@ -89,17 +91,17 @@ public class ApplyForJob extends JFrame {
 		errorMessage = new JLabel();
 		errorMessage.setForeground(Color.RED);
 		jobPostingLabel = new JLabel("Availabe Job Postings:");
-		jobPostingList = new JComboBox<String>();
+		jobPostingToggleList = new JComboBox<String>();
 		for (JobPosting jp : ms.getJobPostings()) {
-			jobPostingList.addItem(jp.getJobTitle() + " " + jp.getCourse().getCourseCoude());
+			jobPostingToggleList.addItem(jp.getJobTitle() + " " + jp.getCourse().getCourseCoude());
 		}
 		nameLabel = new JLabel("Name:");
-		if (user.getClass().equals(Applicant.class)) {
+		if (user.getClass().equals(Applicant.class)) {  // 
 			Applicant a = (Applicant) user;
-			namefield = new JLabel(a.getName());
+			nameFieldLabel = new JLabel(a.getName());
 			name = a.getName();
 		} else {
-			nameText = new JTextField();
+			nameTextField = new JTextField();
 		}
 
 		idLabel = new JLabel("McGill ID:");
@@ -194,7 +196,7 @@ public class ApplyForJob extends JFrame {
 				selectedThirdChoice = cb.getSelectedIndex();
 			}
 		});
-		;
+		
 
 		submitButton = new JButton("Submit");
 		submitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -202,8 +204,14 @@ public class ApplyForJob extends JFrame {
 				submitButtonActionPerformed(evt);
 			}
 		});
+		
+		cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				cancelButtonActionPerformed(evt);
+			}
+		});
 
-		setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		setTitle("Job Application");
 
 		horizontalLineTop = new JSeparator();
@@ -211,16 +219,16 @@ public class ApplyForJob extends JFrame {
 		horizontalLineMiddle2 = new JSeparator();
 
 		if (user.getClass().equals(Applicant.class)) {
-			addlayout(namefield);
+			addlayout(nameFieldLabel);
 		} else {
-			addlayout(nameText);
+			addlayout(nameTextField);
 		}
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				backToMain();
-			}
-		});
+//		addWindowListener(new WindowAdapter() {
+//			@Override
+//			public void windowClosing(WindowEvent e) {
+//				backToMain();
+//			}
+//		});
 	}
 
 	private void addlayout(Component o) {
@@ -228,49 +236,96 @@ public class ApplyForJob extends JFrame {
 		getContentPane().setLayout(layout);
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
-		layout.setHorizontalGroup(layout.createParallelGroup().addComponent(formTitle).addComponent(errorMessage)
-				.addComponent(horizontalLineTop).addComponent(horizontalLineMiddle1).addComponent(horizontalLineMiddle2)
-				.addComponent(choiceMessage1).addComponent(choiceMessage2)
+		layout.setHorizontalGroup(layout.createParallelGroup()
+				.addComponent(formTitle)
+				.addComponent(errorMessage)
+				.addComponent(horizontalLineTop)
+				.addComponent(horizontalLineMiddle1)
+				.addComponent(horizontalLineMiddle2)
+				.addComponent(choiceMessage1)
+				.addComponent(choiceMessage2)
 
 				.addGroup(layout.createSequentialGroup()
-						.addGroup(layout.createParallelGroup().addComponent(jobPostingLabel).addComponent(nameLabel)
-								.addComponent(idLabel).addComponent(majorLabel).addComponent(isUndergradLabel)
-								.addComponent(yearLabel).addComponent(pastExperienceLabel)
-								.addComponent(firstChoiceLabel).addComponent(secondChoiceLabel)
-								.addComponent(thirdChoiceLabel))
+						.addGroup(layout.createParallelGroup()
+								.addComponent(jobPostingLabel)
+								.addComponent(nameLabel)
+								.addComponent(idLabel)
+								.addComponent(majorLabel)
+								.addComponent(isUndergradLabel)
+								.addComponent(yearLabel)
+								.addComponent(pastExperienceLabel)
+								.addComponent(firstChoiceLabel)
+								.addComponent(secondChoiceLabel)
+								.addComponent(thirdChoiceLabel)
+								.addComponent(cancelButton))
 						.addGroup(
-								layout.createParallelGroup().addComponent(jobPostingLabel).addComponent(jobPostingList)
-										.addComponent(nameLabel).addComponent(o).addComponent(idTextField)
-										.addComponent(majorTextField).addComponent(isUndergradToggleList)
-										.addComponent(yearToggleList).addComponent(pastExperienceTextArea)
-										.addComponent(firstChoiceToggleList).addComponent(secondChoiceToggleList)
-										.addComponent(thirdChoiceToggleList).addComponent(submitButton))));
+								layout.createParallelGroup()
+								.addComponent(jobPostingToggleList)
+								.addComponent(nameLabel)
+								.addComponent(o)
+								.addComponent(idTextField)
+								.addComponent(majorTextField)
+								.addComponent(isUndergradToggleList)
+								.addComponent(yearToggleList)
+								.addComponent(pastExperienceTextArea)
+								.addComponent(firstChoiceToggleList)
+								.addComponent(secondChoiceToggleList)
+								.addComponent(thirdChoiceToggleList)
+								.addComponent(submitButton))));
+										
 
-		layout.setVerticalGroup(layout.createSequentialGroup().addComponent(formTitle)
-				.addGroup(layout.createParallelGroup().addComponent(horizontalLineTop)).addComponent(errorMessage)
-				.addGroup(layout.createParallelGroup().addComponent(jobPostingLabel).addComponent(jobPostingList))
-				.addGroup(layout.createParallelGroup().addComponent(nameLabel).addComponent(o))
-				.addGroup(layout.createParallelGroup().addComponent(idLabel).addComponent(idTextField))
-				.addGroup(layout.createParallelGroup().addComponent(majorLabel).addComponent(majorTextField))
-				.addGroup(layout.createParallelGroup().addComponent(horizontalLineMiddle1))
+		layout.setVerticalGroup(layout.createSequentialGroup()
+				.addComponent(formTitle)
+				.addGroup(layout.createParallelGroup()
+						.addComponent(horizontalLineTop))
+				.addComponent(errorMessage)
+				.addGroup(layout.createParallelGroup()
+						.addComponent(jobPostingLabel)
+						.addComponent(jobPostingToggleList))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(nameLabel)
+						.addComponent(o))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(idLabel)
+						.addComponent(idTextField))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(majorLabel)
+						.addComponent(majorTextField))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(horizontalLineMiddle1))
 				.addGroup(
-						layout.createParallelGroup().addComponent(isUndergradLabel).addComponent(isUndergradToggleList))
-				.addGroup(layout.createParallelGroup().addComponent(yearLabel).addComponent(yearToggleList))
-				.addGroup(layout.createParallelGroup().addComponent(pastExperienceLabel)
+						layout.createParallelGroup()
+						.addComponent(isUndergradLabel)
+						.addComponent(isUndergradToggleList))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(yearLabel)
+						.addComponent(yearToggleList))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(pastExperienceLabel)
 						.addComponent(pastExperienceTextArea))
-				.addGroup(layout.createParallelGroup().addComponent(horizontalLineMiddle2)).addComponent(choiceMessage1)
+				.addGroup(layout.createParallelGroup()
+						.addComponent(horizontalLineMiddle2))
+				.addComponent(choiceMessage1)
 				.addComponent(choiceMessage2)
 				.addGroup(
-						layout.createParallelGroup().addComponent(firstChoiceLabel).addComponent(firstChoiceToggleList))
-				.addGroup(layout.createParallelGroup().addComponent(secondChoiceLabel)
+						layout.createParallelGroup()
+						.addComponent(firstChoiceLabel)
+						.addComponent(firstChoiceToggleList))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(secondChoiceLabel)
 						.addComponent(secondChoiceToggleList))
 				.addGroup(
-						layout.createParallelGroup().addComponent(thirdChoiceLabel).addComponent(thirdChoiceToggleList))
-				.addGroup(layout.createParallelGroup().addComponent(submitButton))
+						layout.createParallelGroup()
+						.addComponent(thirdChoiceLabel)
+						.addComponent(thirdChoiceToggleList))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(cancelButton)
+						.addComponent(submitButton))
 
 		);
 
 		pack();
+		setResizable(false);
 	}
 
 	private void refreshData() {
@@ -296,13 +351,13 @@ public class ApplyForJob extends JFrame {
 
 		pack();
 	}
-
+	
 	private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
 
 		if (user.getClass().equals(Applicant.class)) {
 
 		} else {
-			name = nameText.getText();
+			name = nameTextField.getText();
 		}
 		int totalAppointmentHours = 45;
 		TamasController tc = new TamasController(ms);
@@ -316,14 +371,18 @@ public class ApplyForJob extends JFrame {
 		if (name.equals("")) {
 			error += "Name cannot be empty!";
 		}
+		
 		if (idTextField.getText().equals("")) {
 			id = -1;
-		} else if (!idTextField.getText().matches("[0-9]+")) {
+		} 
+		else if (!idTextField.getText().matches("[0-9]+")) {
 			id = -1;
-		} else {
+		} 
+		else {
 			id = Integer.parseInt(idTextField.getText());
 		}
 
+		
 		if (id < 0) {
 			error += "ID is invalid!";
 		}
@@ -368,7 +427,7 @@ public class ApplyForJob extends JFrame {
 
 			try {
 				JobPosting appliedjob = null;
-				String app = jobPostingList.getSelectedItem().toString();
+				String app = jobPostingToggleList.getSelectedItem().toString();
 				for (JobPosting jp : ms.getJobPostings()) {
 					if (app.indexOf(jp.getJobTitle()) != -1 && app.indexOf(jp.getCourse().getCourseCoude()) != -1)
 						appliedjob = jp;
@@ -386,6 +445,11 @@ public class ApplyForJob extends JFrame {
 		refreshData();
 	}
 
+	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		backToMain();
+		setVisible(false);
+	}
+	
 	private void backToMain() {
 		new AllApplication(ms, user).setVisible(true);
 	}
