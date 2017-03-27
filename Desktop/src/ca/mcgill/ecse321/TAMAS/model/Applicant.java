@@ -4,7 +4,7 @@
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 
-// line 83 "../../../../../TAMAS.ump"
+// line 87 "../../../../../TAMAS.ump"
 public class Applicant
 {
 

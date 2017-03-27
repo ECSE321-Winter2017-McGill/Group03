@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse321.TAMAS.model;
 
-// line 55 "../../../../../TAMAS.ump"
+// line 61 "../../../../../TAMAS.ump"
 public class CourseComponent
 {
 

@@ -20,34 +20,26 @@ public class TamasController {
 		this.ms = ms;
 	}
 
-	public void createJob(String jobPosition, Date deadlineDate, String exp, int numberEmployees, double hourlyRate,
-			Course aCourse) throws InvalidInputException {
+	public void createJobPosting(String jobPosition, Date deadlineDate, String exp, double hourlyRate, Course aCourse) throws InvalidInputException {
 		String error = "";
-		if (aCourse == null) {
-			error += "Please select a course.";
-		}
-		if (jobPosition.equals("")) {
-			error += "Must specify a job position! ";
-		}
+		
 		if (deadlineDate == null) {
-			error += "Must specify a date! ";
+			error += "Please specify a date! ";
 		}
 		if (exp == null || exp.trim().length() == 0) {
-			error += "Must specify preferred experience! ";
-		}
-		if (numberEmployees < 0) {
-			error += "Must specify number of positions hiring! ";
+			error += "Please specify preferred experience! ";
 		}
 		if (hourlyRate < 0) {
-			error += "Must specify hourly wage! ";
+			error += "Please specify hourly wage! ";
 		}
+		
 		error = error.trim();
 
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
 
-		ms.addJobPosting(jobPosition, deadlineDate, exp, numberEmployees, hourlyRate, aCourse);
+		ms.addJobPosting(jobPosition, deadlineDate, exp, hourlyRate, aCourse);
 		PersistenceXStream.saveToXMLwithXStream(ms);
 
 	}
@@ -63,7 +55,7 @@ public class TamasController {
 		System.out.println("create");
 		System.out.println(ap.numberOfApplications());
 		if (ap.getApplications().size() < 3) {
-			Application application = new Application("submitted", jp, ap);
+			Application application = new Application("Submitted", jp, ap);
 			ap.addApplication(application);
 		}
 
@@ -97,14 +89,13 @@ public class TamasController {
 		if (exp == null || exp.trim().length() == 0) {
 			error += "Past experience cannot be empty!";
 		}
-		if (firstChoice == null || firstChoice.trim().length() == 0) {
-			error += "First Choice cannnot be empty.";
-		}
+
 
 		error = error.trim();
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
+		
 		Applicant this_applicant = null;
 		boolean found = false;
 		List<Applicant> allApplicants = ms.getApplicants();
@@ -169,6 +160,7 @@ public class TamasController {
 		}
 		
 		try{
+			// TODO:  Create a real applicant to test
 			ms.addApplicant(0, name, null, true, null, null, null, null, null, 0);
 		}
 		catch (RuntimeException e){
@@ -224,61 +216,71 @@ public class TamasController {
 
                 }
 
-	public void createCourse(String aSemester, String aCourseCode, int aNumTutorial, int aNumLab, int aNumStudent, int aCredit, int aHourRequiredTa, 
-			int aHourRequiredGrader, double aBudgetCalculated, Instructor aInstructor, ManagementSystem aManagementSystem) throws InvalidInputException {
+	public void createCourse(String semester, String courseName, String courseCode, int credit, int maxStudent, String instructorName, int numLab, 
+			int numTutorial, int numTaNeeded, int numGraderNeeded, int hourRequiredTa, int hourRequiredGrader, ManagementSystem aManagementSystem) throws InvalidInputException {
 		String error = "";
-		if (aSemester == null) {
-			error += "Please specify a semester.";
+
+		if (courseName == null || courseName.trim().length() == 0) {
+			error += "Please specify the course name! ";
 		}
-		if (aCourseCode.equals("")) {
+		if (courseCode == null || courseCode.trim().length() == 0) {
 			error += "Please specify the course code! ";
 		}
-		if (aInstructor.equals("")) {
+		if (credit < 0) {
+			error += "Please specify the number of credits in the correct format! ";
+		}
+		if (maxStudent < 0) {
+			error += "Please specify the maximum number of students in the correct format! ";
+		}
+		if (instructorName == null || instructorName.trim().length() == 0) {
 			error += "Please specify the instructor! ";
 		}
-		if (aNumTutorial < 0) {
-			error += "Must specify the number of tutorial! ";
+		if (numLab < 0) {
+			error += "Please specify the numebr of lab sessions in the correct format! ";
 		}
-		if (aNumLab < 0) {
-			error += "Must specify the numebr of lab! ";
+		if (numTutorial < 0) {
+			error += "Please specify the number of tutorial in the correct format! ";
 		}
-		if (aNumStudent < 0) {
-			error += "Must specify the maximum number of students! ";
+		if (numTaNeeded < 0) {
+			error += "Please specify the number of TA needed in the correct format! ";
 		}
-		if (aCredit < 0) {
-			error += "Must specify the number of credits! ";
+		if (numGraderNeeded < 0) {
+			error += "Please specify the number of Grader needed in the correct format! ";
 		}
-		if (aHourRequiredTa < 0) {
-			error += "Must specify the hourly wage for TA! ";
+		if (hourRequiredTa < 0) {
+			error += "Please specify the TA appointment hour in the correct format! ";
 		}
-		if (aHourRequiredGrader < 0) {
-			error += "Must specify the hourly wage for Grader! ";
+		if (hourRequiredGrader < 0) {
+			error += "Please specify the Grader appointment hour in the correct format! ";
 		}
-	/*	if (aBudgetCalculated < 0) {
-			error += "Must specify the calculated budget! ";
-		}*/
+
+		
+		Instructor instructor = new Instructor (instructorName,aManagementSystem);
+		
 		error = error.trim();
 
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
-		ms.addCourse(new Course(aSemester, aCourseCode, aNumTutorial, aNumLab, aNumStudent,
-				aCredit, aHourRequiredTa, 
-				aHourRequiredGrader, aBudgetCalculated, 
-				aInstructor,ms));
+		
+		// TODO: HOW TO CALCULATE BUDGET
+		double budgetCalculated = (18*hourRequiredTa*numTaNeeded)+(15*hourRequiredGrader*numGraderNeeded);
+		
+		ms.addCourse(new Course(semester, courseName, courseCode, numTutorial, numLab, maxStudent,
+				credit, numTaNeeded, numGraderNeeded, hourRequiredTa, hourRequiredGrader, budgetCalculated, instructor,ms));
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 	
 	public void acceptApplication(Application application){
-		if  (application.getApplicationStatus().equals("submitted")) {
-		application.setApplicationStatus("accpeted");
+		if  (application.getApplicationStatus().equals("Submitted")) {
+		application.setApplicationStatus("Accpeted");
 		PersistenceXStream.saveToXMLwithXStream(ms);
 		}
 	}
 	
 	public void rejectApplication(Application application){
-		if  (application.getApplicationStatus().equals("submitted")) {
-			application.setApplicationStatus("rejected");
+		if  (application.getApplicationStatus().equals("Submitted")) {
+			application.setApplicationStatus("Rejected");
 			PersistenceXStream.saveToXMLwithXStream(ms);
 		}
 

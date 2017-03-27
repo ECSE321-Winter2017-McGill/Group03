@@ -27,6 +27,8 @@ public class RegisterPage extends JFrame{
 	private JLabel errorMessage;
 	private String error = null;
 	
+	private JLabel reminder;
+	
 	//Choose registration type
 	private JLabel typeLabel;
 	private JComboBox<String> typeToggleList;
@@ -38,6 +40,7 @@ public class RegisterPage extends JFrame{
 	
 	//Register button
 	private JButton registerButton;
+	private JButton cancelButton;
 	
 	private ManagementSystem ms;
 	private static String fileName = "output/data.xml";
@@ -53,6 +56,9 @@ public class RegisterPage extends JFrame{
 		errorMessage = new JLabel ("");
 		errorMessage.setForeground(Color.RED);
 		
+		
+		reminder = new JLabel("Please select \"Applicant\" if you are a student");
+		
 		typeLabel = new JLabel ("Instructor/Applicant: ");
 		typeLabel.setForeground(Color.BLACK);
 		
@@ -67,7 +73,7 @@ public class RegisterPage extends JFrame{
 			}
 		});		
 		
-		usernameLabel = new JLabel("username: ");
+		usernameLabel = new JLabel("Username: ");
 		usernameLabel.setForeground(Color.BLACK);
 		usernameTextField = new JTextField();
 		usernameTextField.setForeground(Color.BLACK);
@@ -80,11 +86,17 @@ public class RegisterPage extends JFrame{
 				registerButtonActionPerformed(evt);
 			}	
 		});
+		
+		cancelButton= new JButton("Cancel");
+		cancelButton.addActionListener(new java.awt.event.ActionListener(){		
+			public void actionPerformed(java.awt.event.ActionEvent evt){
+				cancelButtonActionPerformed(evt);
+			}	
+		});
 
 		setTitle("Register");
 		
 		JSeparator horizontalLineTop = new JSeparator();
-		JSeparator horizontalLineMiddle1 = new JSeparator();
 
 
 		GroupLayout layout = new GroupLayout(getContentPane());
@@ -95,17 +107,17 @@ public class RegisterPage extends JFrame{
 				layout.createParallelGroup()
 				.addComponent(errorMessage)
 				.addComponent(horizontalLineTop)
-				.addComponent(horizontalLineMiddle1)
-				
 
 				.addGroup(layout.createSequentialGroup()
 						.addGroup(layout.createParallelGroup()
+								.addComponent(reminder)
 								.addComponent(typeLabel)
 								.addComponent(usernameLabel)
+								.addComponent(cancelButton)
 								)
 						.addGroup(layout.createParallelGroup()
 								.addComponent(typeToggleList)
-								.addComponent(usernameTextField)
+								.addComponent(usernameTextField,100,100,100)
 								.addComponent(registerButton)
 								)
 						)
@@ -115,6 +127,8 @@ public class RegisterPage extends JFrame{
 				layout.createSequentialGroup()
 				.addComponent(errorMessage)
 				.addGroup(layout.createParallelGroup()
+						.addComponent(reminder))
+				.addGroup(layout.createParallelGroup()
 						.addComponent(typeLabel)
 						.addComponent(typeToggleList)
 						)
@@ -123,12 +137,10 @@ public class RegisterPage extends JFrame{
 						)
 				.addGroup(layout.createParallelGroup()
 						.addComponent(usernameLabel)
-						.addComponent(usernameTextField)
+						.addComponent(usernameTextField,23,23,23)
 						)
 				.addGroup(layout.createParallelGroup()
-						.addComponent(horizontalLineMiddle1)
-						)
-				.addGroup(layout.createParallelGroup()
+						.addComponent(cancelButton)
 						.addComponent(registerButton)
 						)
 				
@@ -159,10 +171,6 @@ public class RegisterPage extends JFrame{
 			error += "Please select a type! ";
 		}
 		
-		if (username == null || username.trim().length()==0){
-			error += "Please enter a username! ";
-		}
-
 		if (error.length()==0){
 			TamasController tc = new TamasController(ms);
 			// Instructor 
@@ -180,8 +188,10 @@ public class RegisterPage extends JFrame{
 		}
 		
 		refreshData();
-		
 	}
 	
-
+	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt){
+		setVisible(false);
+	}
+	
 }

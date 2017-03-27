@@ -15,11 +15,14 @@ public class Course
 
   //Course Attributes
   private String semester;
-  private String courseCoude;
+  private String courseName;
+  private String courseCode;
   private int numTutorial;
   private int numLab;
   private int numStudent;
   private int credit;
+  private int numTaNeeded;
+  private int numGraderNeeded;
   private int hourRequiredTa;
   private int hourRequiredGrader;
   private double budgetCalculated;
@@ -36,14 +39,17 @@ public class Course
   // CONSTRUCTOR
   //------------------------
 
-  public Course(String aSemester, String aCourseCoude, int aNumTutorial, int aNumLab, int aNumStudent, int aCredit, int aHourRequiredTa, int aHourRequiredGrader, double aBudgetCalculated, Instructor aInstructor, ManagementSystem aManagementSystem)
+  public Course(String aSemester, String aCourseName, String aCourseCode, int aNumTutorial, int aNumLab, int aNumStudent, int aCredit, int aNumTaNeeded, int aNumGraderNeeded, int aHourRequiredTa, int aHourRequiredGrader, double aBudgetCalculated, Instructor aInstructor, ManagementSystem aManagementSystem)
   {
     semester = aSemester;
-    courseCoude = aCourseCoude;
+    courseName = aCourseName;
+    courseCode = aCourseCode;
     numTutorial = aNumTutorial;
     numLab = aNumLab;
     numStudent = aNumStudent;
     credit = aCredit;
+    numTaNeeded = aNumTaNeeded;
+    numGraderNeeded = aNumGraderNeeded;
     hourRequiredTa = aHourRequiredTa;
     hourRequiredGrader = aHourRequiredGrader;
     budgetCalculated = aBudgetCalculated;
@@ -74,10 +80,18 @@ public class Course
     return wasSet;
   }
 
-  public boolean setCourseCoude(String aCourseCoude)
+  public boolean setCourseName(String aCourseName)
   {
     boolean wasSet = false;
-    courseCoude = aCourseCoude;
+    courseName = aCourseName;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setCourseCode(String aCourseCode)
+  {
+    boolean wasSet = false;
+    courseCode = aCourseCode;
     wasSet = true;
     return wasSet;
   }
@@ -114,6 +128,22 @@ public class Course
     return wasSet;
   }
 
+  public boolean setNumTaNeeded(int aNumTaNeeded)
+  {
+    boolean wasSet = false;
+    numTaNeeded = aNumTaNeeded;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setNumGraderNeeded(int aNumGraderNeeded)
+  {
+    boolean wasSet = false;
+    numGraderNeeded = aNumGraderNeeded;
+    wasSet = true;
+    return wasSet;
+  }
+
   public boolean setHourRequiredTa(int aHourRequiredTa)
   {
     boolean wasSet = false;
@@ -143,9 +173,14 @@ public class Course
     return semester;
   }
 
-  public String getCourseCoude()
+  public String getCourseName()
   {
-    return courseCoude;
+    return courseName;
+  }
+
+  public String getCourseCode()
+  {
+    return courseCode;
   }
 
   public int getNumTutorial()
@@ -166,6 +201,16 @@ public class Course
   public int getCredit()
   {
     return credit;
+  }
+
+  public int getNumTaNeeded()
+  {
+    return numTaNeeded;
+  }
+
+  public int getNumGraderNeeded()
+  {
+    return numGraderNeeded;
   }
 
   public int getHourRequiredTa()
@@ -398,9 +443,9 @@ public class Course
     return 0;
   }
 
-  public JobPosting addJobPosting(String aJobTitle, Date aSubmissionDeadline, String aPerferredExperience, int aNumNeeded, double aHourRate, ManagementSystem aManagementSystem)
+  public JobPosting addJobPosting(String aJobTitle, Date aSubmissionDeadline, String aPerferredExperience, double aHourRate, ManagementSystem aManagementSystem)
   {
-    return new JobPosting(aJobTitle, aSubmissionDeadline, aPerferredExperience, aNumNeeded, aHourRate, aManagementSystem, this);
+    return new JobPosting(aJobTitle, aSubmissionDeadline, aPerferredExperience, aHourRate, aManagementSystem, this);
   }
 
   public boolean addJobPosting(JobPosting aJobPosting)
@@ -619,11 +664,14 @@ public class Course
     String outputString = "";
     return super.toString() + "["+
             "semester" + ":" + getSemester()+ "," +
-            "courseCoude" + ":" + getCourseCoude()+ "," +
+            "courseName" + ":" + getCourseName()+ "," +
+            "courseCode" + ":" + getCourseCode()+ "," +
             "numTutorial" + ":" + getNumTutorial()+ "," +
             "numLab" + ":" + getNumLab()+ "," +
             "numStudent" + ":" + getNumStudent()+ "," +
             "credit" + ":" + getCredit()+ "," +
+            "numTaNeeded" + ":" + getNumTaNeeded()+ "," +
+            "numGraderNeeded" + ":" + getNumGraderNeeded()+ "," +
             "hourRequiredTa" + ":" + getHourRequiredTa()+ "," +
             "hourRequiredGrader" + ":" + getHourRequiredGrader()+ "," +
             "budgetCalculated" + ":" + getBudgetCalculated()+ "]" + System.getProperties().getProperty("line.separator") +
