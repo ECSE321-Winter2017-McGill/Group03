@@ -96,7 +96,7 @@ public class ApplyForJob extends JFrame {
 				jobPostingToggleList.addItem(jp.getJobTitle() + " for " + jp.getCourse().getCourseCode());
 			}
 		}
-		jobPostingToggleList.addActionListener(new java.awt.event.ActionListener(){
+		jobPostingToggleList.addActionListener(new java.awt.event.ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -104,9 +104,9 @@ public class ApplyForJob extends JFrame {
 				JComboBox<String> cb = (JComboBox<String>) arg0.getSource();
 				selectedJobPosting = cb.getSelectedIndex();
 			}
-			
+
 		});
-		
+
 		nameLabel = new JLabel("Name:");
 		nameLabel.setForeground(Color.BLACK);
 		if (user.getClass().equals(Applicant.class)) { //
@@ -173,9 +173,7 @@ public class ApplyForJob extends JFrame {
 		firstChoiceLabel = new JLabel("First Choice");
 
 		firstChoiceToggleList = new JComboBox<String>(new String[0]);
-		firstChoiceToggleList.addItem("ECSE 321");
-		firstChoiceToggleList.addItem("ECSE 250");
-		firstChoiceToggleList.addItem("ECSE 251");
+		firstChoiceToggleList.addItem(" ");
 
 		firstChoiceToggleList.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -189,9 +187,6 @@ public class ApplyForJob extends JFrame {
 		secondChoiceLabel = new JLabel("Second Choice");
 
 		secondChoiceToggleList = new JComboBox<String>(new String[0]);
-		secondChoiceToggleList.addItem("ECSE 321");
-		secondChoiceToggleList.addItem("ECSE 250");
-		secondChoiceToggleList.addItem("ECSE 251");
 
 		secondChoiceToggleList.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,10 +200,12 @@ public class ApplyForJob extends JFrame {
 		thirdChoiceLabel = new JLabel("Third Choice");
 
 		thirdChoiceToggleList = new JComboBox<String>(new String[0]);
-		thirdChoiceToggleList.addItem("ECSE 321");
-		thirdChoiceToggleList.addItem("ECSE 250");
-		thirdChoiceToggleList.addItem("ECSE 251");
-
+		for (JobPosting jp : ms.getJobPostings()) {
+			String d = jp.getJobTitle() + " " + jp.getCourse().getCourseCode();
+			firstChoiceToggleList.addItem(d);
+			secondChoiceToggleList.addItem(d);
+			thirdChoiceToggleList.addItem(d);
+		}
 		thirdChoiceToggleList.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				@SuppressWarnings("unchecked")
@@ -300,7 +297,6 @@ public class ApplyForJob extends JFrame {
 		// error
 		errorMessage.setText(error);
 		if (error == null || error.length() == 0) {
-			nameTextField.setText("");
 			idTextField.setText("");
 			majorTextField.setText("");
 			pastExperienceTextArea.setText("");
