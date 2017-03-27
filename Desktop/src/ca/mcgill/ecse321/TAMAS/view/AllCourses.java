@@ -11,8 +11,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -94,7 +92,6 @@ public class AllCourses extends JFrame {
 			buttomPane.add(backButton);
 			pane.add(buttomPane, BorderLayout.CENTER);
 		}
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		pack();
 		setVisible(true);
 		// add actions listeners

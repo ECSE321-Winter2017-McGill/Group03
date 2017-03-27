@@ -1,20 +1,14 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 
-import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
@@ -23,6 +17,10 @@ import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 
 public class RegisterPage extends JFrame{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -765105219779249925L;
 	//UI elements
 	private JLabel errorMessage;
 	private String error = null;
@@ -43,8 +41,6 @@ public class RegisterPage extends JFrame{
 	private JButton cancelButton;
 	
 	private ManagementSystem ms;
-	private static String fileName = "output/data.xml";
-	
 	public RegisterPage(ManagementSystem ms){
 		this.ms = ms;
 		initComponents();
@@ -68,7 +64,8 @@ public class RegisterPage extends JFrame{
 		typeToggleList.addItem("Applicant");
 		typeToggleList.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-		        JComboBox<String> cb = (JComboBox<String>) evt.getSource();
+		        @SuppressWarnings("unchecked")
+				JComboBox<String> cb = (JComboBox<String>) evt.getSource();
 		        selectedType = cb.getSelectedIndex();
 			}
 		});		

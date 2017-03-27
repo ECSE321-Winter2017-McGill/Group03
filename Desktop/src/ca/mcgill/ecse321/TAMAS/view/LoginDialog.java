@@ -28,8 +28,6 @@ public class LoginDialog extends JFrame {
 	private JPasswordField pfPassword;
 	private JLabel lbUsername;
 	private JLabel lbPassword;
-	private JLabel passwordHint;
-	private JLabel usernameHint;
 	private JButton btnLogin;
 	private JButton btnCancel;
 	private boolean succeeded;
@@ -63,20 +61,6 @@ public class LoginDialog extends JFrame {
 		cs.gridwidth = 2;
 		panel.add(pfPassword, cs);
 		panel.setBorder(new LineBorder(Color.GRAY));
-
-//		usernameHint = new JLabel("test      ");
-//		usernameHint.setForeground(Color.BLACK);
-//		cs.gridx = 1;
-//		cs.gridy = 2;
-//		cs.gridwidth = 1;
-//		// panel.add(usernameHint, cs);
-//
-//		passwordHint = new JLabel("password");
-//		passwordHint.setForeground(Color.BLACK);
-//		cs.gridx = 2;
-//		cs.gridy = 2;
-//		cs.gridwidth = 1;
-//		// panel.add(passwordHint, cs);
 
 		btnLogin = new JButton("Login");
 

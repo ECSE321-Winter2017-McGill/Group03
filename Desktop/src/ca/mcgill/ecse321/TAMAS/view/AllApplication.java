@@ -14,8 +14,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,11 +21,9 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.WindowConstants;
 
 public class AllApplication extends JFrame {
 
@@ -131,7 +127,7 @@ public class AllApplication extends JFrame {
 
 		// get the rest of frame ready;
 		JButton applyJobButton = new JButton("Apply For a Job");
-		final JComboBox allApplication = new JComboBox<String>();
+		final JComboBox<String> allApplication = new JComboBox<String>();
 		for (Applicant anApplicant : ms.getApplicants()) {
 			for (Application aApplication : anApplicant.getApplications()) {
 				String appDescription = anApplicant.getName() + " (" + aApplication.getJobPosting().getJobTitle() 
@@ -170,7 +166,6 @@ public class AllApplication extends JFrame {
 			commandPane.add(rejectAppButton);
 			pane.add(commandPane, BorderLayout.CENTER);
 		}
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		pack();
 		setVisible(true);
 		
@@ -178,9 +173,6 @@ public class AllApplication extends JFrame {
 		applyJobButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				JOptionPane.showMessageDialog(AllApplication.this,"If application deadline passed\n"
-						+ "remove the job posting from available positions");
 				
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(filename);
 				new ApplyForJob(ms, user).setVisible(true);
@@ -191,7 +183,8 @@ public class AllApplication extends JFrame {
 		allApplication.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-		        JComboBox<String> cb = (JComboBox<String>) e.getSource();
+		        @SuppressWarnings("unchecked")
+				JComboBox<String> cb = (JComboBox<String>) e.getSource();
 		        selectedApplication = cb.getSelectedIndex();
 			}
 		});

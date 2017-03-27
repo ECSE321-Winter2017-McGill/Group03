@@ -2,9 +2,6 @@ package ca.mcgill.ecse321.TAMAS.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -266,7 +263,7 @@ public class AddCourse extends JFrame {
 		if (error == null || error.length() == 0) {
 			
 			// TODO: Remove setText for nameTextField
-//			nameTextField.setText("");
+			nameTextField.setText("");
 			codeTextField.setText("");
 			creditTextField.setText("");
 			maxStudentTextField.setText("");

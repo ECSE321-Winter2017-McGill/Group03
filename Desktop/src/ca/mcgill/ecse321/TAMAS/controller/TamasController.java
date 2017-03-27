@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.TAMAS.controller;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
@@ -16,13 +17,51 @@ public class TamasController {
 
 	private ManagementSystem ms = new ManagementSystem();
 
+	public static Date getToday() {
+
+		Calendar c = Calendar.getInstance();
+
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+
+		return c.getTime();
+	}
+
+	public static Date getDefaultDeadLine() {
+		Calendar c = Calendar.getInstance();
+		// default deadline
+		c.set(Calendar.YEAR, 2017);
+		c.set(Calendar.MONTH, 4);
+		c.set(Calendar.DAY_OF_MONTH, 6);
+
+		return c.getTime();
+	}
+
+	public static boolean isDeadlinePassed() {
+
+		return isDeadlinePassed(getDefaultDeadLine());
+	}
+
+	public static boolean isDeadlinePassed(Date deadline) {
+
+		if (deadline.before(getToday())) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 	public TamasController(ManagementSystem ms) {
 		this.ms = ms;
 	}
 
-	public void createJobPosting(String jobPosition, Date deadlineDate, String exp, double hourlyRate, Course aCourse) throws InvalidInputException {
+	public void createJobPosting(String jobPosition, Date deadlineDate, String exp, double hourlyRate, Course aCourse)
+			throws InvalidInputException {
 		String error = "";
-		
+
 		if (deadlineDate == null) {
 			error += "Please specify a date! ";
 		}
@@ -32,14 +71,14 @@ public class TamasController {
 		if (hourlyRate < 0) {
 			error += "Please specify hourly wage! ";
 		}
-		
+
 		error = error.trim();
 
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
 
-		ms.addJobPosting(jobPosition, deadlineDate, exp, hourlyRate, aCourse);
+		ms.addJobPosting(jobPosition, (java.sql.Date) deadlineDate, exp, hourlyRate, aCourse);
 		PersistenceXStream.saveToXMLwithXStream(ms);
 
 	}
@@ -90,134 +129,122 @@ public class TamasController {
 			error += "Past experience cannot be empty!";
 		}
 
+		error = error.trim();
+		if (error.length() > 0) {
+			throw new InvalidInputException(error);
+		}
+
+		Applicant this_applicant = null;
+
+		for (Applicant anApplicant : ms.getApplicants()) {
+			if ((anApplicant.getName().equals(name))) {
+				this_applicant = anApplicant;
+				PersistenceXStream.saveToXMLwithXStream(ms);
+				return anApplicant;
+			}
+		}
+
+		this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice,
+				totalAppointmentHour, ms);
+		PersistenceXStream.saveToXMLwithXStream(ms);
+		return this_applicant;
+
+	}
+
+	public void registerApplicant(String name) throws InvalidInputException {
+
+		String error = "";
+
+		if (name == null || name.trim().length() == 0) {
+			error += "Name cannot be empty! ";
+		}
+
+		boolean found = false;
+		List<Applicant> allApplicants = ms.getApplicants();
+		List<Instructor> allInstructors = ms.getInstructors();
+
+		for (Applicant anApplicant : allApplicants) {
+			if (anApplicant.getName().equals(name.trim())) {
+				error += "This username already exists! ";
+				found = true;
+				break;
+			}
+		}
+
+		if (found == false) {
+			for (Instructor anInstructor : allInstructors) {
+				if (anInstructor.getName().equals(name.trim())) {
+					error += "This username already exists! ";
+					found = true;
+					break;
+				}
+			}
+		}
 
 		error = error.trim();
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
-		
-		Applicant this_applicant = null;
-		boolean found = false;
-		List<Applicant> allApplicants = ms.getApplicants();
-		if (allApplicants.size() != 0) {
 
-			for (int i = 0; i < allApplicants.size(); i++) {
-				Applicant anApplicant = allApplicants.get(i);
-				if ((anApplicant.getName().equals(name))) {
-					this_applicant = anApplicant;
-					found = true;
-					break;
-				}
-			}
-			if (found == false) {
-				this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice,
-						thirdChoice, totalAppointmentHour, ms);
-			}
-
-		} else {
-			this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice,
-					thirdChoice, totalAppointmentHour, ms);
-		}
-		PersistenceXStream.saveToXMLwithXStream(ms);
-		return this_applicant;
-
-	}
-	
-
-	public void registerApplicant(String name) throws InvalidInputException{
-		
-		String error = "";
-		
-		if (name == null || name.trim().length()==0){
-			error += "Name cannot be empty! ";
-		}
-		
-		boolean found = false;
-		List<Applicant> allApplicants = ms.getApplicants();
-		List<Instructor> allInstructors = ms.getInstructors();
-		
-		for (Applicant anApplicant: allApplicants){
-			if (anApplicant.getName().equals(name.trim())){
-				error += "This username already exists! ";
-				found = true;
-				break;
-			}
-		}
-		
-		if (found == false){
-			for (Instructor anInstructor: allInstructors){
-				if (anInstructor.getName().equals(name.trim())){
-					error += "This username already exists! ";
-					found = true;
-					break;
-				}
-			}
-		}
-		
-		error = error.trim();
-		if (error.length()>0){
-			throw new InvalidInputException(error);
-		}
-		
-		try{
-			// TODO:  Create a real applicant to test
+		try {
+			// TODO: Create a real applicant to test
 			ms.addApplicant(0, name, null, true, null, null, null, null, null, 0);
-		}
-		catch (RuntimeException e){
+		} catch (RuntimeException e) {
 			throw new InvalidInputException(e.getMessage());
 		}
 
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
-	
-	public void registerInstructor(String name) throws InvalidInputException{
-		
+
+	public void registerInstructor(String name) throws InvalidInputException {
+
 		String error = "";
 
-		if (name == null || name.trim().length()==0){
+		if (name == null || name.trim().length() == 0) {
 			error += "Name cannot be empty! ";
 		}
-		
+
 		boolean found = false;
 		List<Applicant> allApplicants = ms.getApplicants();
 		List<Instructor> allInstructors = ms.getInstructors();
-		
-		for (Applicant anApplicant: allApplicants){
-			if (anApplicant.getName().equals(name.trim())){
+
+		for (Applicant anApplicant : allApplicants) {
+			if (anApplicant.getName().equals(name.trim())) {
 				error += "This username already exists! ";
 				found = true;
 				break;
 			}
 		}
-		
-		if (found == false){
-			for (Instructor anInstructor: allInstructors){
-				if (anInstructor.getName().equals(name.trim())){
+
+		if (found == false) {
+			for (Instructor anInstructor : allInstructors) {
+				if (anInstructor.getName().equals(name.trim())) {
 					error += "This username already exists! ";
 					found = true;
 					break;
 				}
 			}
 		}
-		
+
 		error = error.trim();
-		if (error.length()>0){
+		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
-		
-		try{
+
+		try {
 			ms.addInstructor(name);
-		}
-		catch (RuntimeException e){
+		} catch (RuntimeException e) {
 			throw new InvalidInputException(e.getMessage());
 		}
-		
+
 		PersistenceXStream.saveToXMLwithXStream(ms);
 
-                }
+	}
 
-	public void createCourse(String semester, String courseName, String courseCode, int credit, int maxStudent, String instructorName, int numLab, 
-			int numTutorial, int numTaNeeded, int numGraderNeeded, int hourRequiredTa, int hourRequiredGrader, ManagementSystem aManagementSystem) throws InvalidInputException {
+	public void createCourse(String semester, String courseName, String courseCode, int credit, int maxStudent,
+			String instructorName, int numLab, int numTutorial, int numTaNeeded, int numGraderNeeded,
+			int hourRequiredTa, int hourRequiredGrader, ManagementSystem aManagementSystem)
+			throws InvalidInputException {
 		String error = "";
 
 		if (courseName == null || courseName.trim().length() == 0) {
@@ -254,32 +281,37 @@ public class TamasController {
 			error += "Please specify the Grader appointment hour in the correct format! ";
 		}
 
-		
-		Instructor instructor = new Instructor (instructorName,aManagementSystem);
-		
+		Instructor instructor = null;
+		for (Instructor i : ms.getInstructors()) {
+			if (i.getName().equals(instructorName))
+				instructor = i;
+		}
+		if (instructor == null) {
+			instructor = new Instructor(instructorName, ms);
+		}
 		error = error.trim();
 
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
-		
+
 		// TODO: HOW TO CALCULATE BUDGET
-		double budgetCalculated = (18*hourRequiredTa*numTaNeeded)+(15*hourRequiredGrader*numGraderNeeded);
-		
-		ms.addCourse(new Course(semester, courseName, courseCode, numTutorial, numLab, maxStudent,
-				credit, numTaNeeded, numGraderNeeded, hourRequiredTa, hourRequiredGrader, budgetCalculated, instructor,ms));
+		double budgetCalculated = (18 * hourRequiredTa * numTaNeeded) + (15 * hourRequiredGrader * numGraderNeeded);
+
+		ms.addCourse(new Course(semester, courseName, courseCode, numTutorial, numLab, maxStudent, credit, numTaNeeded,
+				numGraderNeeded, hourRequiredTa, hourRequiredGrader, budgetCalculated, instructor, ms));
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
-	
-	public void acceptApplication(Application application){
-		if  (application.getApplicationStatus().equals("Submitted")) {
-		application.setApplicationStatus("Accpeted");
-		PersistenceXStream.saveToXMLwithXStream(ms);
+
+	public void acceptApplication(Application application) {
+		if (application.getApplicationStatus().equals("Submitted")) {
+			application.setApplicationStatus("Accpeted");
+			PersistenceXStream.saveToXMLwithXStream(ms);
 		}
 	}
-	
-	public void rejectApplication(Application application){
-		if  (application.getApplicationStatus().equals("Submitted")) {
+
+	public void rejectApplication(Application application) {
+		if (application.getApplicationStatus().equals("Submitted")) {
 			application.setApplicationStatus("Rejected");
 			PersistenceXStream.saveToXMLwithXStream(ms);
 		}
