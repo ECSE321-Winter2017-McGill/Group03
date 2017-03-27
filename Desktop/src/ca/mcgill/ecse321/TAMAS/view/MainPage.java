@@ -36,13 +36,14 @@ public class MainPage extends JFrame {
 	}
 
 	private void initComponents(Object role) {
-		addCourse = new JButton("Courses");
+		addCourse = new JButton("View all Courses");
 		addCourse.setPreferredSize(new Dimension(300, 150));
-		addJobPosting = new JButton("Job Postings");
+		addJobPosting = new JButton("View all Job Postings");
 		addJobPosting.setPreferredSize(new Dimension(300, 150));
-		applyForJob = new JButton("Applications");
+		applyForJob = new JButton("View all Applications");
 		applyForJob.setPreferredSize(new Dimension(300, 150));
 		setTitle("Welcome Page");
+		
 		BorderLayout layout = new BorderLayout();
 		Container pane = getContentPane();
 		pane.setLayout(layout);

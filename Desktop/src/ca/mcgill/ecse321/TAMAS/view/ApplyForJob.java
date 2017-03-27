@@ -48,7 +48,7 @@ public class ApplyForJob extends JFrame {
 	// Past experience
 	private JLabel pastExperienceLabel;
 	private JTextArea pastExperienceTextArea;
-
+	private JLabel choiceMessage0;
 	private JLabel choiceMessage1;
 	private JLabel choiceMessage2;
 	private JLabel firstChoiceLabel;
@@ -59,6 +59,7 @@ public class ApplyForJob extends JFrame {
 	private JComboBox<String> thirdChoiceToggleList;
 
 	private String error = null;
+	private Integer selectedJobPosting = -1;
 	private Integer selectedDegree = -1;
 	private Integer selectedYear = -1;
 	private Integer selectedFirstChoice = -1;
@@ -74,7 +75,7 @@ public class ApplyForJob extends JFrame {
 
 	private ManagementSystem ms;
 
-	private String name;
+	
 
 	public ApplyForJob(ManagementSystem ms, Object user) {
 		this.ms = ms;
@@ -85,33 +86,37 @@ public class ApplyForJob extends JFrame {
 
 	public void initComponents() {
 
-		formTitle = new JLabel("Apply for Job");
+		formTitle = new JLabel("Application");
 		formTitle.setFont(new Font("Georgia", Font.BOLD, 22));
 
 		errorMessage = new JLabel();
 		errorMessage.setForeground(Color.RED);
-		jobPostingLabel = new JLabel("Availabe Job Postings:");
+		jobPostingLabel = new JLabel("Availabe Positions:");
+		jobPostingLabel.setForeground(Color.BLACK);
 		jobPostingToggleList = new JComboBox<String>();
 		for (JobPosting jp : ms.getJobPostings()) {
-			jobPostingToggleList.addItem(jp.getJobTitle() + " " + jp.getCourse().getCourseCoude());
+			jobPostingToggleList.addItem(jp.getJobTitle() + " for " + jp.getCourse().getCourseCode());
 		}
 		nameLabel = new JLabel("Name:");
+		nameLabel.setForeground(Color.BLACK);
 		if (user.getClass().equals(Applicant.class)) {  // 
 			Applicant a = (Applicant) user;
 			nameFieldLabel = new JLabel(a.getName());
-			name = a.getName();
+			nameFieldLabel.setForeground(Color.BLACK);
 		} else {
 			nameTextField = new JTextField();
 		}
 
 		idLabel = new JLabel("McGill ID:");
+		idLabel.setForeground(Color.BLACK);
 		idTextField = new JTextField();
 		majorLabel = new JLabel("Major:");
+		majorLabel.setForeground(Color.BLACK);
 		majorTextField = new JTextField();
 
 		isUndergradLabel = new JLabel("Undergrad/Grad");
+		isUndergradLabel.setForeground(Color.BLACK);
 		isUndergradToggleList = new JComboBox<String>(new String[0]);
-
 		isUndergradToggleList.addItem("Undergraduate");
 		isUndergradToggleList.addItem("Graduate");
 		isUndergradToggleList.addActionListener(new java.awt.event.ActionListener() {
@@ -121,15 +126,15 @@ public class ApplyForJob extends JFrame {
 				selectedDegree = cb.getSelectedIndex();
 			}
 		});
-		;
 
 		yearLabel = new JLabel("Year:");
+		yearLabel.setForeground(Color.BLACK);
 		yearToggleList = new JComboBox<String>(new String[0]);
 
-		yearToggleList.addItem("U0");
-		yearToggleList.addItem("U1");
-		yearToggleList.addItem("U2");
-		yearToggleList.addItem("U3 or more");
+		yearToggleList.addItem("Year 0");
+		yearToggleList.addItem("Year 1");
+		yearToggleList.addItem("Year 2");
+		yearToggleList.addItem("Year 3 or more");
 		yearToggleList.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				@SuppressWarnings("unchecked")
@@ -140,9 +145,13 @@ public class ApplyForJob extends JFrame {
 		;
 
 		pastExperienceLabel = new JLabel("Past Experience");
+		pastExperienceLabel.setForeground(Color.BLACK);
 		pastExperienceTextArea = new JTextArea(5, 20);
 		pastExperienceTextArea.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
 
+		choiceMessage0 = new JLabel("Please select this position as your first choice if you are applying for 1 position");
+		choiceMessage0.setForeground(Color.BLACK);
+				
 		choiceMessage1 = new JLabel("Please select a second choice if already applied for 1 position");
 		choiceMessage1.setForeground(Color.BLACK);
 
@@ -198,14 +207,14 @@ public class ApplyForJob extends JFrame {
 		});
 		
 
-		submitButton = new JButton("Submit");
+		submitButton = new JButton("  Submit  ");
 		submitButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				submitButtonActionPerformed(evt);
 			}
 		});
 		
-		cancelButton = new JButton("Cancel");
+		cancelButton = new JButton("  Cancel  ");
 		cancelButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				cancelButtonActionPerformed(evt);
@@ -213,6 +222,7 @@ public class ApplyForJob extends JFrame {
 		});
 
 		setTitle("Job Application");
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		horizontalLineTop = new JSeparator();
 		horizontalLineMiddle1 = new JSeparator();
@@ -223,12 +233,7 @@ public class ApplyForJob extends JFrame {
 		} else {
 			addlayout(nameTextField);
 		}
-//		addWindowListener(new WindowAdapter() {
-//			@Override
-//			public void windowClosing(WindowEvent e) {
-//				backToMain();
-//			}
-//		});
+
 	}
 
 	private void addlayout(Component o) {
@@ -242,6 +247,7 @@ public class ApplyForJob extends JFrame {
 				.addComponent(horizontalLineTop)
 				.addComponent(horizontalLineMiddle1)
 				.addComponent(horizontalLineMiddle2)
+				.addComponent(choiceMessage0)
 				.addComponent(choiceMessage1)
 				.addComponent(choiceMessage2)
 
@@ -305,6 +311,7 @@ public class ApplyForJob extends JFrame {
 						.addComponent(pastExperienceTextArea))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(horizontalLineMiddle2))
+				.addComponent(choiceMessage0)
 				.addComponent(choiceMessage1)
 				.addComponent(choiceMessage2)
 				.addGroup(
@@ -336,6 +343,8 @@ public class ApplyForJob extends JFrame {
 			majorTextField.setText("");
 			pastExperienceTextArea.setText("");
 
+			selectedJobPosting = -1;
+			jobPostingToggleList.setSelectedIndex(selectedJobPosting);
 			selectedDegree = -1;
 			isUndergradToggleList.setSelectedIndex(selectedDegree);
 			selectedYear = -1;
@@ -354,74 +363,71 @@ public class ApplyForJob extends JFrame {
 	
 	private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
 
-		if (user.getClass().equals(Applicant.class)) {
 
-		} else {
-			name = nameTextField.getText();
-		}
+		// TODO: Change the appointment hour after we have the allocation
 		int totalAppointmentHours = 45;
+		
 		TamasController tc = new TamasController(ms);
 
 		error = "";
-		int id;
-		String major = majorTextField.getText();
-		boolean degree = true;
-		String exp = pastExperienceTextArea.getText();
-
-		if (name.equals("")) {
-			error += "Name cannot be empty!";
+		
+		if (selectedJobPosting < 0){
+			error += "Please select an available position.";
 		}
 		
-		if (idTextField.getText().equals("")) {
-			id = -1;
-		} 
-		else if (!idTextField.getText().matches("[0-9]+")) {
-			id = -1;
-		} 
-		else {
-			id = Integer.parseInt(idTextField.getText());
-		}
-
-		
-		if (id < 0) {
-			error += "ID is invalid!";
-		}
-
-		if (major.equals("")) {
-			error += "Major cannot be empty!";
-		}
-
 		if (selectedDegree < 0) {
 			error += "Please select either Undergraduate or Graduate.";
-		} else if (selectedDegree == 2) {
-			degree = false;
-		}
+		} 
 
 		if (selectedYear < 0) {
 			error += "Please select your year.";
 		}
 
-		if (exp.equals("")) {
-			error += "Past experience cannot be empty!";
-		}
-
 		if (selectedFirstChoice < 0) {
 			error += "Please select your first choice.";
 		}
+		
 
-		if (error.length() == 0) {
+		if (error.trim().length() == 0) {
+			String name = null;
+			if (user.getClass().equals(Applicant.class)) {
+				Applicant a = (Applicant) user;
+				name = a.getName();
+			} else {
+				name = nameTextField.getText();
+			}
+			
+			int id;
+			if (idTextField.getText().equals("")) {
+				id = -1;
+			} 
+			else if (!idTextField.getText().matches("[0-9]+")) {
+				id = -1;
+			} 
+			else {
+				id = Integer.parseInt(idTextField.getText());
+			}
+			
+			String major = majorTextField.getText();
+			
+			boolean isUndergrad = true;
+			if (selectedDegree == 1) {
+				isUndergrad = false;
+			} 
+			
 			String year = (String) yearToggleList.getSelectedItem();
+			String exp = pastExperienceTextArea.getText();
 			String firstChoice = null;
 			String secondChoice = null;
 			String thirdChoice = null;
 
 			firstChoice = (String) firstChoiceToggleList.getSelectedItem();
 
-			if (selectedSecondChoice > 0) {
+			if (selectedSecondChoice != -1) {
 				secondChoice = (String) secondChoiceToggleList.getSelectedItem();
 			}
 
-			if (selectedThirdChoice > 0) {
+			if (selectedThirdChoice != -1) {
 				thirdChoice = (String) thirdChoiceToggleList.getSelectedItem();
 			}
 
@@ -429,11 +435,11 @@ public class ApplyForJob extends JFrame {
 				JobPosting appliedjob = null;
 				String app = jobPostingToggleList.getSelectedItem().toString();
 				for (JobPosting jp : ms.getJobPostings()) {
-					if (app.indexOf(jp.getJobTitle()) != -1 && app.indexOf(jp.getCourse().getCourseCoude()) != -1)
+					if (app.indexOf(jp.getJobTitle()) != -1 && app.indexOf(jp.getCourse().getCourseCode()) != -1)
 						appliedjob = jp;
 				}
 				if (appliedjob != null) {
-					tc.createApplication(appliedjob, name, id, major, degree, year, exp, firstChoice, secondChoice,
+					tc.createApplication(appliedjob, name, id, major, isUndergrad, year, exp, firstChoice, secondChoice,
 							thirdChoice, totalAppointmentHours);
 				}
 			} catch (InvalidInputException e) {
@@ -446,11 +452,11 @@ public class ApplyForJob extends JFrame {
 	}
 
 	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		backToMain();
+		backToAllApp();
 		setVisible(false);
 	}
 	
-	private void backToMain() {
+	private void backToAllApp() {
 		new AllApplication(ms, user).setVisible(true);
 	}
 

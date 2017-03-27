@@ -31,8 +31,10 @@ class Course{
   1 <@>- * OfferedJob;
 
   String semester;
+  
+  String courseName;
 
-  String courseCoude;
+  String courseCode;
 
   Integer numTutorial;
 
@@ -41,6 +43,10 @@ class Course{
   Integer numStudent;
 
   Integer credit;
+  
+  Integer numTaNeeded;
+  
+  Integer numGraderNeeded;
 
   Integer hourRequiredTa;
 
@@ -71,8 +77,6 @@ class JobPosting{
   Date submissionDeadline;
 
   String perferredExperience;
-
-  Integer numNeeded;
 
   Double hourRate;
 

@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
+import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Course;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
@@ -40,41 +41,39 @@ public class AllCourses extends JFrame {
 	private void initComponents() {
 		// get table data ready;
 
-		String[] columnNames = { "Instructor Name", "Semester", "Course ID", "Hour Required Ta" };
-		String[][] data = new String[ms.numberOfCourses() + 1][4];
+		String[] columnNames = { "Semester", "Course Code", "Course Name", "Credit", "Instructor",
+				"Number of TA", "Number of Grader", "Num of Tutorials", "Num of Labs"};
+		String[][] data = new String[ms.numberOfCourses() + 1][9];
 
 		int i = 0;
-		if (user.getClass().equals(Instructor.class)) {
-			Instructor me = (Instructor) user;
-			for (Course an : me.getCourses()) {
-				data[i][0] = me.getName();
-				data[i][1] = an.getSemester();
-				data[i][2] = an.getCourseCoude();
-				data[i][3] = "" + an.getHourRequiredTa();
+		for (Instructor anInstructor : ms.getInstructors()) {
+			for (Course aCourse : anInstructor.getCourses()) {
+				data[i][0] = aCourse.getSemester();
+				data[i][1] = aCourse.getCourseCode();
+				data[i][2] = aCourse.getCourseName();
+				data[i][3] = "" + aCourse.getCredit() + " credits";
+				data[i][4] = anInstructor.getName();
+				data[i][5] = "" + aCourse.getNumTaNeeded();
+				data[i][6] = "" + aCourse.getNumGraderNeeded();
+				data[i][7] = "" + aCourse.getNumTutorial() + " / week";
+				data[i][8] = "" + aCourse.getNumLab() + " / week";
+
 				i++;
 			}
-		} else {
-			for (Instructor an : ms.getInstructors()) {
-				for (Course ap : an.getCourses()) {
-					data[i][0] = an.getName();
-					data[i][1] = ap.getSemester();
-					data[i][2] = ap.getCourseCoude();
-					data[i][3] = "" + ap.getHourRequiredTa();
-					i++;
-				}
-			}
 		}
+		
 
 		// get table itself ready;
 		final JTable table = new JTable(data, columnNames);
-		table.setPreferredScrollableViewportSize(new Dimension(700, 100));
+		table.setPreferredScrollableViewportSize(new Dimension(1200, 100));
 		table.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(table);
-		JPanel butPane = new JPanel();
+		JPanel buttomPane = new JPanel();
 
 		// get the rest of frame ready;
-		JButton addJobPosting = new JButton("Add a new Course");
-		butPane.add(addJobPosting);
+		JButton addCourse = new JButton("Add a new Course");
+		JButton backButton = new JButton("Back");
+
 
 		// get frame ready;
 		setTitle("View All Course");
@@ -83,15 +82,23 @@ public class AllCourses extends JFrame {
 		pane.setLayout(layout);
 		pane.add(scrollPane, BorderLayout.PAGE_START);
 		if (user.getClass().equals(Instructor.class)) {
-
-		} else {
-			pane.add(butPane, BorderLayout.CENTER);
+			buttomPane.add(backButton);
+			pane.add(buttomPane, BorderLayout.CENTER);
+		} 
+		else if (user.getClass().equals(Applicant.class)){
+			buttomPane.add(backButton);
+			pane.add(buttomPane, BorderLayout.CENTER);
+		}
+		else {
+			buttomPane.add(addCourse);
+			buttomPane.add(backButton);
+			pane.add(buttomPane, BorderLayout.CENTER);
 		}
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		pack();
 		setVisible(true);
 		// add actions listeners
-		addJobPosting.addActionListener(new ActionListener() {
+		addCourse.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(filename);
@@ -99,12 +106,15 @@ public class AllCourses extends JFrame {
 				dispose();
 			}
 		});
-		addWindowListener(new WindowAdapter() {
+		
+		backButton.addActionListener(new ActionListener() {
 			@Override
-			public void windowClosing(WindowEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				backToMain();
+				setVisible(false);
 			}
 		});
+		
 	}
 
 	private void backToMain() {
