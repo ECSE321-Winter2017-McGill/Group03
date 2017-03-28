@@ -14,16 +14,16 @@ class Applicant
   private $name;
   private $previousExperience;
   private $isUnderGraduated;
-  private $preferredCourse;
   private $major;
   private $year;
-  private $option1;
-  private $option2;
-  private $option3;
+  private $firstChoice;
+  private $secondChoice;
+  private $thirdChoice;
+  private $evaluation;
   private $totalAppointmentHours;
 
   //Applicant Associations
-  private $allocation;
+  private $allocations;
   private $offeredJobs;
   private $managementSystem;
   private $applications;
@@ -32,24 +32,20 @@ class Applicant
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct($aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aPreferredCourse, $aMajor, $aYear, $aOption1, $aOption2, $aOption3, $aTotalAppointmentHours, $aAllocation, $aManagementSystem)
+  public function __construct($aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aMajor, $aYear, $aFirstChoice, $aSecondChoice, $aThirdChoice, $aEvaluation, $aTotalAppointmentHours, $aManagementSystem)
   {
     $this->studentID = $aStudentID;
     $this->name = $aName;
     $this->previousExperience = $aPreviousExperience;
     $this->isUnderGraduated = $aIsUnderGraduated;
-    $this->preferredCourse = $aPreferredCourse;
     $this->major = $aMajor;
     $this->year = $aYear;
-    $this->option1 = $aOption1;
-    $this->option2 = $aOption2;
-    $this->option3 = $aOption3;
+    $this->firstChoice = $aFirstChoice;
+    $this->secondChoice = $aSecondChoice;
+    $this->thirdChoice = $aThirdChoice;
+    $this->evaluation = $aEvaluation;
     $this->totalAppointmentHours = $aTotalAppointmentHours;
-    $didAddAllocation = $this->setAllocation($aAllocation);
-    if (!$didAddAllocation)
-    {
-      throw new Exception("Unable to create applicant due to allocation");
-    }
+    $this->allocations = array();
     $this->offeredJobs = array();
     $didAddManagementSystem = $this->setManagementSystem($aManagementSystem);
     if (!$didAddManagementSystem)
@@ -95,14 +91,6 @@ class Applicant
     return $wasSet;
   }
 
-  public function setPreferredCourse($aPreferredCourse)
-  {
-    $wasSet = false;
-    $this->preferredCourse = $aPreferredCourse;
-    $wasSet = true;
-    return $wasSet;
-  }
-
   public function setMajor($aMajor)
   {
     $wasSet = false;
@@ -119,26 +107,34 @@ class Applicant
     return $wasSet;
   }
 
-  public function setOption1($aOption1)
+  public function setFirstChoice($aFirstChoice)
   {
     $wasSet = false;
-    $this->option1 = $aOption1;
+    $this->firstChoice = $aFirstChoice;
     $wasSet = true;
     return $wasSet;
   }
 
-  public function setOption2($aOption2)
+  public function setSecondChoice($aSecondChoice)
   {
     $wasSet = false;
-    $this->option2 = $aOption2;
+    $this->secondChoice = $aSecondChoice;
     $wasSet = true;
     return $wasSet;
   }
 
-  public function setOption3($aOption3)
+  public function setThirdChoice($aThirdChoice)
   {
     $wasSet = false;
-    $this->option3 = $aOption3;
+    $this->thirdChoice = $aThirdChoice;
+    $wasSet = true;
+    return $wasSet;
+  }
+
+  public function setEvaluation($aEvaluation)
+  {
+    $wasSet = false;
+    $this->evaluation = $aEvaluation;
     $wasSet = true;
     return $wasSet;
   }
@@ -171,11 +167,6 @@ class Applicant
     return $this->isUnderGraduated;
   }
 
-  public function getPreferredCourse()
-  {
-    return $this->preferredCourse;
-  }
-
   public function getMajor()
   {
     return $this->major;
@@ -186,19 +177,24 @@ class Applicant
     return $this->year;
   }
 
-  public function getOption1()
+  public function getFirstChoice()
   {
-    return $this->option1;
+    return $this->firstChoice;
   }
 
-  public function getOption2()
+  public function getSecondChoice()
   {
-    return $this->option2;
+    return $this->secondChoice;
   }
 
-  public function getOption3()
+  public function getThirdChoice()
   {
-    return $this->option3;
+    return $this->thirdChoice;
+  }
+
+  public function getEvaluation()
+  {
+    return $this->evaluation;
   }
 
   public function getTotalAppointmentHours()
@@ -211,9 +207,45 @@ class Applicant
     return $this->isUnderGraduated;
   }
 
-  public function getAllocation()
+  public function getAllocation_index($index)
   {
-    return $this->allocation;
+    $aAllocation = $this->allocations[$index];
+    return $aAllocation;
+  }
+
+  public function getAllocations()
+  {
+    $newAllocations = $this->allocations;
+    return $newAllocations;
+  }
+
+  public function numberOfAllocations()
+  {
+    $number = count($this->allocations);
+    return $number;
+  }
+
+  public function hasAllocations()
+  {
+    $has = $this->numberOfAllocations() > 0;
+    return $has;
+  }
+
+  public function indexOfAllocation($aAllocation)
+  {
+    $wasFound = false;
+    $index = 0;
+    foreach($this->allocations as $allocation)
+    {
+      if ($allocation->equals($aAllocation))
+      {
+        $wasFound = true;
+        break;
+      }
+      $index += 1;
+    }
+    $index = $wasFound ? $index : -1;
+    return $index;
   }
 
   public function getOfferedJob_index($index)
@@ -303,23 +335,88 @@ class Applicant
     return $index;
   }
 
-  public function setAllocation($aAllocation)
+  public static function minimumNumberOfAllocations()
   {
-    $wasSet = false;
-    if ($aAllocation == null)
+    return 0;
+  }
+
+  public function addAllocation($aAllocation)
+  {
+    $wasAdded = false;
+    if ($this->indexOfAllocation($aAllocation) !== -1) { return false; }
+    $this->allocations[] = $aAllocation;
+    if ($aAllocation->indexOfApplicant($this) != -1)
     {
-      return $wasSet;
+      $wasAdded = true;
     }
-    
-    $existingAllocation = $this->allocation;
-    $this->allocation = $aAllocation;
-    if ($existingAllocation != null && $existingAllocation != $aAllocation)
+    else
     {
-      $existingAllocation->removeApplicant($this);
+      $wasAdded = $aAllocation->addApplicant($this);
+      if (!$wasAdded)
+      {
+        array_pop($this->allocations);
+      }
     }
-    $this->allocation->addApplicant($this);
-    $wasSet = true;
-    return $wasSet;
+    return $wasAdded;
+  }
+
+  public function removeAllocation($aAllocation)
+  {
+    $wasRemoved = false;
+    if ($this->indexOfAllocation($aAllocation) == -1)
+    {
+      return $wasRemoved;
+    }
+
+    $oldIndex = $this->indexOfAllocation($aAllocation);
+    unset($this->allocations[$oldIndex]);
+    if ($aAllocation->indexOfApplicant($this) == -1)
+    {
+      $wasRemoved = true;
+    }
+    else
+    {
+      $wasRemoved = $aAllocation->removeApplicant($this);
+      if (!$wasRemoved)
+      {
+        $this->allocations[$oldIndex] = $aAllocation;
+        ksort($this->allocations);
+      }
+    }
+    $this->allocations = array_values($this->allocations);
+    return $wasRemoved;
+  }
+
+  public function addAllocationAt($aAllocation, $index)
+  {  
+    $wasAdded = false;
+    if($this->addAllocation($aAllocation))
+    {
+      if($index < 0 ) { $index = 0; }
+      if($index > $this->numberOfAllocations()) { $index = $this->numberOfAllocations() - 1; }
+      array_splice($this->allocations, $this->indexOfAllocation($aAllocation), 1);
+      array_splice($this->allocations, $index, 0, array($aAllocation));
+      $wasAdded = true;
+    }
+    return $wasAdded;
+  }
+
+  public function addOrMoveAllocationAt($aAllocation, $index)
+  {
+    $wasAdded = false;
+    if($this->indexOfAllocation($aAllocation) !== -1)
+    {
+      if($index < 0 ) { $index = 0; }
+      if($index > $this->numberOfAllocations()) { $index = $this->numberOfAllocations() - 1; }
+      array_splice($this->allocations, $this->indexOfAllocation($aAllocation), 1);
+      array_splice($this->allocations, $index, 0, array($aAllocation));
+      $wasAdded = true;
+    } 
+    else 
+    {
+      $wasAdded = $this->addAllocationAt($aAllocation, $index);
+    }
+    return $wasAdded;
   }
 
   public static function minimumNumberOfOfferedJobs()
@@ -452,6 +549,18 @@ class Applicant
     return 3;
   }
 
+  public function addApplicationVia($aApplicationStatus, $aJobPosting)
+  {
+    if ($this->numberOfApplications() >= self::maximumNumberOfApplications())
+    {
+      return null;
+    }
+    else
+    {
+      return new Application($aApplicationStatus, $aJobPosting, $this);
+    }
+  }
+
   public function addApplication($aApplication)
   {
     $wasAdded = false;
@@ -461,90 +570,31 @@ class Applicant
       return $wasAdded;
     }
 
-    $this->applications[] = $aApplication;
-    if ($aApplication->indexOfApplicant($this) != -1)
+    $existingApplicant = $aApplication->getApplicant();
+    $isNewApplicant = $existingApplicant != null && $this !== $existingApplicant;
+    if ($isNewApplicant)
     {
-      $wasAdded = true;
+      $aApplication->setApplicant($this);
     }
     else
     {
-      $wasAdded = $aApplication->addApplicant($this);
-      if (!$wasAdded)
-      {
-        array_pop($this->applications);
-      }
+      $this->applications[] = $aApplication;
     }
+    $wasAdded = true;
     return $wasAdded;
   }
 
   public function removeApplication($aApplication)
   {
     $wasRemoved = false;
-    if ($this->indexOfApplication($aApplication) == -1)
+    //Unable to remove aApplication, as it must always have a applicant
+    if ($this !== $aApplication->getApplicant())
     {
-      return $wasRemoved;
-    }
-
-    $oldIndex = $this->indexOfApplication($aApplication);
-    unset($this->applications[$oldIndex]);
-    if ($aApplication->indexOfApplicant($this) == -1)
-    {
+      unset($this->applications[$this->indexOfApplication($aApplication)]);
+      $this->applications = array_values($this->applications);
       $wasRemoved = true;
     }
-    else
-    {
-      $wasRemoved = $aApplication->removeApplicant($this);
-      if (!$wasRemoved)
-      {
-        $this->applications[$oldIndex] = $aApplication;
-        ksort($this->applications);
-      }
-    }
-    $this->applications = array_values($this->applications);
     return $wasRemoved;
-  }
-
-  public function setApplications($newApplications)
-  {
-    $wasSet = false;
-    $verifiedApplications = array();
-    foreach ($newApplications as $aApplication)
-    {
-      if (array_search($aApplication,$verifiedApplications) !== false)
-      {
-        continue;
-      }
-      $verifiedApplications[] = $aApplication;
-    }
-
-    if (count($verifiedApplications) != count($newApplications) || count($verifiedApplications) > self::maximumNumberOfApplications())
-    {
-      return $wasSet;
-    }
-
-    $oldApplications = $this->applications;
-    $this->applications = array();
-    foreach ($verifiedApplications as $aNewApplication)
-    {
-      $this->applications[] = $aNewApplication;
-      $removeIndex = array_search($aNewApplication,$oldApplications);
-      if ($removeIndex !== false)
-      {
-        unset($oldApplications[$removeIndex]);
-        $oldApplications = array_values($oldApplications);
-      }
-      else
-      {
-        $aNewApplication->addApplicant($this);
-      }
-    }
-
-    foreach ($oldApplications as $anOldApplication)
-    {
-      $anOldApplication->removeApplicant($this);
-    }
-    $wasSet = true;
-    return $wasSet;
   }
 
   public function addApplicationAt($aApplication, $index)
@@ -586,9 +636,12 @@ class Applicant
 
   public function delete()
   {
-    $placeholderAllocation = $this->allocation;
-    $this->allocation = null;
-    $placeholderAllocation->removeApplicant($this);
+    $copyOfAllocations = $this->allocations;
+    $this->allocations = array();
+    foreach ($copyOfAllocations as $aAllocation)
+    {
+      $aAllocation->removeApplicant($this);
+    }
     foreach ($this->offeredJobs as $aOfferedJob)
     {
       $aOfferedJob->delete();
@@ -596,11 +649,9 @@ class Applicant
     $placeholderManagementSystem = $this->managementSystem;
     $this->managementSystem = null;
     $placeholderManagementSystem->removeApplicant($this);
-    $copyOfApplications = $this->applications;
-    $this->applications = array();
-    foreach ($copyOfApplications as $aApplication)
+    foreach ($this->applications as $aApplication)
     {
-      $aApplication->removeApplicant($this);
+      $aApplication->delete();
     }
   }
 

@@ -20,25 +20,15 @@ class Instructor
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct($aName = null, $aManagementSystem = null)
+  public function __construct($aName, $aManagementSystem)
   {
-    if (func_num_args() == 0) { return; }
-
     $this->name = $aName;
-    if ($aManagementSystem == null || $aManagementSystem->getInstructors() != null)
+    $didAddManagementSystem = $this->setManagementSystem($aManagementSystem);
+    if (!$didAddManagementSystem)
     {
-      throw new Exception("Unable to create Instructor due to aManagementSystem");
+      throw new Exception("Unable to create instructor due to managementSystem");
     }
-    $this->managementSystem = $aManagementSystem;
     $this->courses = array();
-  }
-  public static function newInstance($aName)
-  {
-    $thisInstance = new Instructor();
-    $thisInstance->name = $aName;
-    $thisInstance->managementSystem = new ManagementSystem($thisInstance);
-    $this->courses = array();
-    return $thisInstance;
   }
 
   //------------------------
@@ -104,14 +94,33 @@ class Instructor
     return $index;
   }
 
+  public function setManagementSystem($aManagementSystem)
+  {
+    $wasSet = false;
+    if ($aManagementSystem == null)
+    {
+      return $wasSet;
+    }
+    
+    $existingManagementSystem = $this->managementSystem;
+    $this->managementSystem = $aManagementSystem;
+    if ($existingManagementSystem != null && $existingManagementSystem != $aManagementSystem)
+    {
+      $existingManagementSystem->removeInstructor($this);
+    }
+    $this->managementSystem->addInstructor($this);
+    $wasSet = true;
+    return $wasSet;
+  }
+
   public static function minimumNumberOfCourses()
   {
     return 0;
   }
 
-  public function addCourseVia($aSemester, $aCourseCoude, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $aCourseJobAllocation, $aManagementSystem)
+  public function addCourseVia($aSemester, $aCourseName, $aCourseCode, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aNumTaNeeded, $aNumGraderNeeded, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $aManagementSystem)
   {
-    return new Course($aSemester, $aCourseCoude, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $aCourseJobAllocation, $this, $aManagementSystem);
+    return new Course($aSemester, $aCourseName, $aCourseCode, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aNumTaNeeded, $aNumGraderNeeded, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $this, $aManagementSystem);
   }
 
   public function addCourse($aCourse)
@@ -184,12 +193,9 @@ class Instructor
 
   public function delete()
   {
-    $existingManagementSystem = $this->managementSystem;
+    $placeholderManagementSystem = $this->managementSystem;
     $this->managementSystem = null;
-    if ($existingManagementSystem != null)
-    {
-      $existingManagementSystem->delete();
-    }
+    $placeholderManagementSystem->removeInstructor($this);
     foreach ($this->courses as $aCourse)
     {
       $aCourse->delete();

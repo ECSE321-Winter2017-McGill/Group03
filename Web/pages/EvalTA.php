@@ -2,6 +2,7 @@
 include ('session.php');
 require_once __DIR__ . '\..\model\ManagementSystem.php';
 require_once __DIR__ . '\..\model\JobPosting.php';
+require_once __DIR__ . '\..\model\Applicant.php';
 require_once __DIR__ . '\..\model\Course.php';
 require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php';
 $pm = new PersistenceTAMAS ();
@@ -15,7 +16,7 @@ $rm = $pm->loadDataFromStore ();
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>View All Job Postings</title>
+<title>TA Evaluaion</title>
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <link rel="stylesheet"
@@ -56,70 +57,88 @@ $rm = $pm->loadDataFromStore ();
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">View All Job Postings</h1>
+					<h1 class="page-header">TA Evaluaion</h1>
 				</div>
 			</div>
 			<div class="row">
 				<div class="box box-info col-lg-12">
 					<div class="box-header with-border"></div>
 					<div class="box-body">
-						<div class="table-responsive">
+						<div class="mydiv">
+						<label>Choose a TA: </label> <br />
+						<form id="evalTa">
+							<select name="TAs" class="form-control" id="">
+								<option value="TA-COMP 251-TA1">TA-COMP 251-TA1</option>
+								<option value="TA-COMP 251-TA2">TA-COMP 251-TA2</option>
+								<option value="TA-ECSE 221-TA1">TA-ECSE 221-TA1</option>
+								<option value="TA-ECSE 221-TA2">TA-ECSE 221-TA2</option>
+							</select> <br /> <label>Write Evaluation here</label>
+							<textarea class="form-control" name="evaluation"></textarea>
+							<span class="error">
+                            <?php
+																												if (isset ( $_SESSION ['errorEvaluation'] ) && ! empty ( $_SESSION ['errorEvaluation'] )) {
+																													echo "*" . $_SESSION ["errorEvaluation"];
+																												}
+																												?>
+                        </span> <br /> <input
+								class="btn btn-sm btn-info btn-flat pull-left" type="submit"
+								value='Submit' /> <br />
 
+						</form>
+						</div>
+						</br>
 							<table id="myTable" class="table no-margin">
 								<thead>
 									<tr>
-										<th data-field="fruit" data-sortable="true">Job Title</th>
-										<th>Course ID</th>
-										<th>Hour Required TA</th>
-										<th>Hourly Rate</th>
-										<th>Perferred Experience</th>
-										<th>Submission Dead Line</th>
+										<th>TA Name</th>
+										<th>Evaluation</th>
 									</tr>
 								</thead>
 								<tbody>
                                     <?php
 																																				
-																																				foreach ( $rm->getJobPostings () as $jobPostings ) {
+																																				foreach ( $rm->getApplicants()as $app ) {
 																																					echo "<tr>";
-																																					if ($jobPostings->getJobTitle () == "TA")
-																																						echo "<td>" . "<span class='label label-info'>" . "TA" . "</span> " . " </td>";
-																																					else
-																																						echo "<td>" . "<span class='label label-success'>" . "Grader" . "</span> " . " </td>";
-																																					echo "<td>" . $jobPostings->getCourse ()->getCourseCode () . " </td>";
-																																					echo "<td>" . $jobPostings->getCourse ()->getHourRequiredTa () . " </td>";
-																																					echo "<td>" . $jobPostings->getHourRate () . " </td>";
-																																					echo "<td>" . $jobPostings->getPerferredExperience () . " </td>";
-																																					echo "<td>" . $jobPostings->getSubmissionDeadline () . " </td>";
+																																					echo "<td>" . "<span class='label label-success'>" . $app->getName() . "</span> " . " </td>";
+																																					echo "<td>" . $app->getEvaluation() . " </td>";
+																													
 																																					echo "</tr>";
 																																				}
 																																				?>
                                 </tbody>
 							</table>
-							<script>
+						
+						<p>
+							<br />
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<script>
+
+    $("#evalTa").submit(function(e) {
+    var url = "addEvalTA.php";
+    $.ajax({
+           type: "POST",
+           url: url,
+           data: $("#evalTa").serialize(),
+           success: function(data)
+           {
+               if (data.search("success") != -1) {
+                   window.location.replace('EvalTA.php');
+               }
+           }
+         });
+     $("#mydiv").load(location.href + " #mydiv");
+    });
+    </script>
+    							<script>
 $(document).ready(function(){
     $('#myTable').dataTable();
 });
                             </script>
-						</div>
 
-						<span class="error">
-                            <?php
-																												// $vars = get_object_vars ( $rm );
-																												// echo empty($vars);
-																												if (isset ( $_SESSION ['error'] ) && ! empty ( $_SESSION ['error'] )) {
-																													echo "*" . $_SESSION ["error"];
-																												}
-																												?>
-                        </span>
-					</div>
-					<a class="btn btn-info" href="jobPostings.php">Add a Job Posting</a>
-					<br />
-					<p>
-						<br />
-					</p>
-				</div>
-			</div>
-		</div>
-	</div>
 </body>
 </html>

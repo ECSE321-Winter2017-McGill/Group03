@@ -33,8 +33,8 @@ include ('session.php');
 							Dashboard</a></li>
 					<li><a href="viewAlljobPostings.php"><i class="fa fa-dashboard fa-fw"></i>
 							View Job Postings</a></li>
-					<li><a href="viewAllApplications.php"><i class="fa fa-dashboard fa-fw"></i>
-							View Applications</a></li>
+					<li><a href="EvalTA.php"><i class="fa fa-dashboard fa-fw"></i>
+							TA Evaluaion</a></li>
 				</ul>
 			</div>
 		</div>

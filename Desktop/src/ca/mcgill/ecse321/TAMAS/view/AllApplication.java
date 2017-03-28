@@ -21,6 +21,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -38,10 +39,10 @@ public class AllApplication extends JFrame {
 	private Object user;
 	private int selectedApplication;
 	private HashMap<String, Application> applicationMap = new HashMap<String, Application>();
-    private TamasController tm;
-    private String[][] data;
-    private JTable table;
-    
+	private TamasController tm;
+	private String[][] data;
+	private JTable table;
+
 	public AllApplication(ManagementSystem ms, Object user) {
 		this.user = user;
 		this.ms = ms;
@@ -53,20 +54,19 @@ public class AllApplication extends JFrame {
 	private void initComponents() {
 		// get table data ready;
 		String[] columnNames = { "Applicant Name", "U/G", "Job Title", "Course Code", "Application Status" };
-		
+
 		int i = 0;
 		if (user.getClass().equals(Applicant.class)) {
 			Applicant me = (Applicant) user;
 			for (Application myApplication : me.getApplications()) {
 				data[i][0] = me.getName();
-				
-				if (me.getIsUnderGraduated()==true){
+
+				if (me.getIsUnderGraduated() == true) {
 					data[i][1] = "Und";
-				}
-				else{
+				} else {
 					data[i][1] = "Grad";
 				}
-				
+
 				data[i][2] = myApplication.getJobPosting().getJobTitle();
 				data[i][3] = myApplication.getJobPosting().getCourse().getCourseCode();
 				data[i][4] = myApplication.getApplicationStatus();
@@ -79,18 +79,17 @@ public class AllApplication extends JFrame {
 			for (Course aCourse : myCourses) {
 				relatedJobPosting.addAll(aCourse.getJobPosting());
 			}
-			for (JobPosting aJobPosting: relatedJobPosting) {
+			for (JobPosting aJobPosting : relatedJobPosting) {
 				List<Application> allApplication = aJobPosting.getApplications();
 				for (Application aApplication : allApplication) {
 					data[i][0] = aApplication.getApplicant().getName();
-					
-					if (aApplication.getApplicant().getIsUnderGraduated()==true){
+
+					if (aApplication.getApplicant().getIsUnderGraduated() == true) {
 						data[i][1] = "Und";
-					}
-					else{
+					} else {
 						data[i][1] = "Grad";
 					}
-					
+
 					data[i][2] = aApplication.getJobPosting().getJobTitle();
 					data[i][3] = aApplication.getJobPosting().getCourse().getCourseCode();
 					data[i][4] = aApplication.getApplicationStatus();
@@ -101,14 +100,13 @@ public class AllApplication extends JFrame {
 			for (Applicant anApplicant : ms.getApplicants()) {
 				for (Application aApplication : anApplicant.getApplications()) {
 					data[i][0] = anApplicant.getName();
-					
-					if (anApplicant.getIsUnderGraduated()==true){
+
+					if (anApplicant.getIsUnderGraduated() == true) {
 						data[i][1] = "Und";
-					}
-					else{
+					} else {
 						data[i][1] = "Grad";
 					}
-					
+
 					data[i][2] = aApplication.getJobPosting().getJobTitle();
 					data[i][3] = aApplication.getJobPosting().getCourse().getCourseCode();
 					data[i][4] = aApplication.getApplicationStatus();
@@ -130,19 +128,19 @@ public class AllApplication extends JFrame {
 		final JComboBox<String> allApplication = new JComboBox<String>();
 		for (Applicant anApplicant : ms.getApplicants()) {
 			for (Application aApplication : anApplicant.getApplications()) {
-				String appDescription = anApplicant.getName() + " (" + aApplication.getJobPosting().getJobTitle() 
+				String appDescription = anApplicant.getName() + " (" + aApplication.getJobPosting().getJobTitle()
 						+ " for " + aApplication.getJobPosting().getCourse().getCourseCode() + ")";
 				allApplication.addItem(appDescription);
-				applicationMap.put(appDescription,aApplication);
+				applicationMap.put(appDescription, aApplication);
 			}
 		}
 		JButton acceptAppButton = new JButton("Accept");
 		JButton rejectAppButton = new JButton("Reject");
 		JButton backButton = new JButton("Back");
-		        
+
 		// get frame ready;
 		setTitle("View All Application");
-		
+
 		BorderLayout layout = new BorderLayout();
 		Container pane = getContentPane();
 		pane.setLayout(layout);
@@ -150,17 +148,15 @@ public class AllApplication extends JFrame {
 		if (user.getClass().equals(Instructor.class)) {
 			buttomPane.add(backButton);
 			pane.add(buttomPane, BorderLayout.PAGE_END);
-		} 
-		else if (user.getClass().equals(Applicant.class)){
-		    buttomPane.add(applyJobButton);
-		    buttomPane.add(backButton);
+		} else if (user.getClass().equals(Applicant.class)) {
+			buttomPane.add(applyJobButton);
+			buttomPane.add(backButton);
 			pane.add(buttomPane, BorderLayout.PAGE_END);
-		}
-		else {
-		    buttomPane.add(applyJobButton);
-		    buttomPane.add(backButton);
+		} else {
+			buttomPane.add(applyJobButton);
+			buttomPane.add(backButton);
 			pane.add(buttomPane, BorderLayout.PAGE_END);
-			
+
 			commandPane.add(allApplication);
 			commandPane.add(acceptAppButton);
 			commandPane.add(rejectAppButton);
@@ -168,57 +164,52 @@ public class AllApplication extends JFrame {
 		}
 		pack();
 		setVisible(true);
-		
+
 		// add actions listeners
 		applyJobButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(filename);
 				new ApplyForJob(ms, user).setVisible(true);
 				dispose();
 			}
 		});
-		
+
 		allApplication.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-		        @SuppressWarnings("unchecked")
+				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>) e.getSource();
-		        selectedApplication = cb.getSelectedIndex();
+				selectedApplication = cb.getSelectedIndex();
 			}
 		});
-	
+
 		acceptAppButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-		        String appDescription = allApplication.getItemAt(selectedApplication).toString();
+				String appDescription = allApplication.getItemAt(selectedApplication).toString();
 				Application selectedApp = applicationMap.get(appDescription);
-			    tm.acceptApplication(selectedApp);
-			    dispose();
-			    initComponents();
+				if (!tm.acceptApplication(selectedApp)) {
+					JOptionPane.showMessageDialog(AllApplication.this,
+							"You cannot change the status after it has been set");
+				}
+				dispose();
+				initComponents();
 			}
 		});
-		
+
 		rejectAppButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 String appDescription = allApplication.getItemAt(selectedApplication).toString();	
-				 Application selectedApp = applicationMap.get(appDescription);
-				 tm.rejectApplication(selectedApp);
-				 dispose();
-				 initComponents();	
-			}
-		});
-		
-		rejectAppButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				 String appDescription = allApplication.getItemAt(selectedApplication).toString();	
-				 Application selectedApp = applicationMap.get(appDescription);
-				 tm.rejectApplication(selectedApp);
-				 dispose();
-				 initComponents();	
+				String appDescription = allApplication.getItemAt(selectedApplication).toString();
+				Application selectedApp = applicationMap.get(appDescription);
+				if (!tm.rejectApplication(selectedApp)) {
+					JOptionPane.showMessageDialog(AllApplication.this,
+							"You cannot change the status after it has been set");
+				}
+				dispose();
+				initComponents();
 			}
 		});
 
@@ -229,8 +220,7 @@ public class AllApplication extends JFrame {
 				setVisible(false);
 			}
 		});
-		
-		
+
 	}
 
 	private void backToMain() {
