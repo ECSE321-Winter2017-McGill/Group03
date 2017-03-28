@@ -5,7 +5,7 @@ package ca.mcgill.ecse321.TAMAS.model;
 import java.sql.Date;
 import java.util.*;
 
-// line 67 "../../../../../TAMAS.ump"
+// line 73 "../../../../../TAMAS.ump"
 public class JobPosting
 {
 
@@ -17,7 +17,6 @@ public class JobPosting
   private String jobTitle;
   private Date submissionDeadline;
   private String perferredExperience;
-  private int numNeeded;
   private double hourRate;
 
   //JobPosting Associations
@@ -29,12 +28,11 @@ public class JobPosting
   // CONSTRUCTOR
   //------------------------
 
-  public JobPosting(String aJobTitle, Date aSubmissionDeadline, String aPerferredExperience, int aNumNeeded, double aHourRate, ManagementSystem aManagementSystem, Course aCourse)
+  public JobPosting(String aJobTitle, Date aSubmissionDeadline, String aPerferredExperience, double aHourRate, ManagementSystem aManagementSystem, Course aCourse)
   {
     jobTitle = aJobTitle;
     submissionDeadline = aSubmissionDeadline;
     perferredExperience = aPerferredExperience;
-    numNeeded = aNumNeeded;
     hourRate = aHourRate;
     boolean didAddManagementSystem = setManagementSystem(aManagementSystem);
     if (!didAddManagementSystem)
@@ -77,14 +75,6 @@ public class JobPosting
     return wasSet;
   }
 
-  public boolean setNumNeeded(int aNumNeeded)
-  {
-    boolean wasSet = false;
-    numNeeded = aNumNeeded;
-    wasSet = true;
-    return wasSet;
-  }
-
   public boolean setHourRate(double aHourRate)
   {
     boolean wasSet = false;
@@ -106,11 +96,6 @@ public class JobPosting
   public String getPerferredExperience()
   {
     return perferredExperience;
-  }
-
-  public int getNumNeeded()
-  {
-    return numNeeded;
   }
 
   public double getHourRate()
@@ -201,9 +186,9 @@ public class JobPosting
     return 0;
   }
 
-  public Application addApplication(String aApplicationStatus)
+  public Application addApplication(String aApplicationStatus, Applicant aApplicant)
   {
-    return new Application(aApplicationStatus, this);
+    return new Application(aApplicationStatus, this, aApplicant);
   }
 
   public boolean addApplication(Application aApplication)
@@ -290,7 +275,6 @@ public class JobPosting
     return super.toString() + "["+
             "jobTitle" + ":" + getJobTitle()+ "," +
             "perferredExperience" + ":" + getPerferredExperience()+ "," +
-            "numNeeded" + ":" + getNumNeeded()+ "," +
             "hourRate" + ":" + getHourRate()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "submissionDeadline" + "=" + (getSubmissionDeadline() != null ? !getSubmissionDeadline().equals(this)  ? getSubmissionDeadline().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "managementSystem = "+(getManagementSystem()!=null?Integer.toHexString(System.identityHashCode(getManagementSystem())):"null") + System.getProperties().getProperty("line.separator") +

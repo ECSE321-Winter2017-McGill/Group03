@@ -160,9 +160,9 @@ public class ManagementSystem
     return 0;
   }
 
-  public Course addCourse(String aSemester, String aCourseCoude, int aNumTutorial, int aNumLab, int aNumStudent, int aCredit, int aHourRequiredTa, int aHourRequiredGrader, double aBudgetCalculated, Instructor aInstructor)
+  public Course addCourse(String aSemester, String aCourseName, String aCourseCode, int aNumTutorial, int aNumLab, int aNumStudent, int aCredit, int aNumTaNeeded, int aNumGraderNeeded, int aHourRequiredTa, int aHourRequiredGrader, double aBudgetCalculated, Instructor aInstructor)
   {
-    return new Course(aSemester, aCourseCoude, aNumTutorial, aNumLab, aNumStudent, aCredit, aHourRequiredTa, aHourRequiredGrader, aBudgetCalculated, aInstructor, this);
+    return new Course(aSemester, aCourseName, aCourseCode, aNumTutorial, aNumLab, aNumStudent, aCredit, aNumTaNeeded, aNumGraderNeeded, aHourRequiredTa, aHourRequiredGrader, aBudgetCalculated, aInstructor, this);
   }
 
   public boolean addCourse(Course aCourse)
@@ -396,9 +396,9 @@ public class ManagementSystem
     return 0;
   }
 
-  public JobPosting addJobPosting(String aJobTitle, Date aSubmissionDeadline, String aPerferredExperience, int aNumNeeded, double aHourRate, Course aCourse)
+  public JobPosting addJobPosting(String aJobTitle, Date aSubmissionDeadline, String aPerferredExperience, double aHourRate, Course aCourse)
   {
-    return new JobPosting(aJobTitle, aSubmissionDeadline, aPerferredExperience, aNumNeeded, aHourRate, this, aCourse);
+    return new JobPosting(aJobTitle, aSubmissionDeadline, aPerferredExperience, aHourRate, this, aCourse);
   }
 
   public boolean addJobPosting(JobPosting aJobPosting)

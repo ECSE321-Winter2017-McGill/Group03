@@ -1,4 +1,4 @@
-namespace ca.mcgill.ecse321.TAMAS;
+namespace ca.mcgill.ecse321.TAMAS.model;
 
   
 
@@ -31,8 +31,10 @@ class Course{
   1 <@>- * OfferedJob;
 
   String semester;
+  
+  String courseName;
 
-  String courseCoude;
+  String courseCode;
 
   Integer numTutorial;
 
@@ -41,6 +43,10 @@ class Course{
   Integer numStudent;
 
   Integer credit;
+  
+  Integer numTaNeeded;
+  
+  Integer numGraderNeeded;
 
   Integer hourRequiredTa;
 
@@ -71,8 +77,6 @@ class JobPosting{
   Date submissionDeadline;
 
   String perferredExperience;
-
-  Integer numNeeded;
 
   Double hourRate;
 
@@ -111,9 +115,9 @@ class Applicant{
 
 class Application{
 
-  * -- 1..3 JobPosting;
+  * -- 1 JobPosting;
 
-  0..3 -- * Applicant;
+  0..3 -- 1 Applicant;
 
   String applicationStatus;
 

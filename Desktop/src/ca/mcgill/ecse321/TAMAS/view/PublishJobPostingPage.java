@@ -1,10 +1,9 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
 import java.awt.Color;
-
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
+import java.awt.Font;
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.Properties;
 
 import javax.swing.GroupLayout;
@@ -12,75 +11,84 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
 
 import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.controller.TamasController;
-import ca.mcgill.ecse321.TAMAS.model.Allocation;
 import ca.mcgill.ecse321.TAMAS.model.Course;
-import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 
 public class PublishJobPostingPage extends JFrame {
 
 	private static final long serialVersionUID = -3813819647258555349L;
-	private String userName;
+
 	// attributes for GUI elements
+	private JLabel formTitle;
 	private JLabel courseLabel;
-	private JComboBox<String> courseList;
+	private JComboBox<String> courseToggleList;
 	private JLabel jobLabel;
-	private JComboBox<String> jobList;
+	private JComboBox<String> jobToggleList;
 	private JLabel deadline;
 	private JDatePickerImpl deadlineDate;
 	private JLabel preferredExperienceLabel;
 	private JTextField preferredExperienceTextField;
-	private JLabel numberofEmployeesLabel;
-	private JTextField numberofEmployeesTextField;
 	private JLabel hourlyRateLabel;
 	private JTextField hourlyRateTextField;
-	private JButton createJobPosting;
+	private JButton createPostingButton;
+	private JButton cancelButton;
+
+	private JSeparator horizontalLineTop;
 
 	private String error = null;
 	private JLabel errorMessage;
-	// <<<<<<< HEAD
 
 	private ManagementSystem ms;
 
-	private int selectedCourseList = -1;
-	private int selectedJobList = -1;
+	private int selectedCourse = -1;
+	private int selectedJob = -1;
 
-	public PublishJobPostingPage(ManagementSystem ms,String userName) {
+	private Object user;
+	private HashMap<String, Course> cMap = new HashMap<>();
+
+	public PublishJobPostingPage(ManagementSystem ms, Object user) {
 		this.ms = ms;
-		this.userName=userName;
+		this.user = user;
 		initComponents();
 		refreshData();
 	}
 
 	private void initComponents() {
-		// global settings and listeners
+
+		formTitle = new JLabel("Publish Job Posting");
+		formTitle.setFont(new Font("Georgia", Font.BOLD, 22));
+
+		horizontalLineTop = new JSeparator();
 
 		// elements for error message
 		errorMessage = new JLabel();
 		errorMessage.setForeground(Color.RED);
 
-		courseLabel = new JLabel();
-		courseList = new JComboBox<String>(new String[0]);
-		courseList.addItem("");
-		courseList.addItem("ECSE 321");
-		courseList.addItem("COMP 250");
-		courseList.addItem("COMP 251");
-		jobLabel = new JLabel();
-		jobList = new JComboBox<String>(new String[0]);
-		jobList.addItem("");
-		jobList.addItem("TA");
-		jobList.addItem("Grader");
+		courseLabel = new JLabel("Select a course:");
+		courseLabel.setForeground(Color.BLACK);
+		courseToggleList = new JComboBox<String>(new String[0]);
+		for (Course c : ms.getCourses()) {
+			String display = c.getCourseCode();
+			cMap.put(display, c);
+			courseToggleList.addItem(display);
+		}
 
-		deadline = new JLabel();
+		jobLabel = new JLabel("Job Title");
+		jobLabel.setForeground(Color.BLACK);
+		jobToggleList = new JComboBox<String>(new String[0]);
+		jobToggleList.addItem("TA");
+		jobToggleList.addItem("Grader");
+
+		deadline = new JLabel("Specify a deadline:");
+		deadline.setForeground(Color.BLACK);
 
 		SqlDateModel model = new SqlDateModel();
 		Properties p = new Properties();
@@ -90,26 +98,27 @@ public class PublishJobPostingPage extends JFrame {
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		deadlineDate = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 
-		preferredExperienceLabel = new JLabel();
+		preferredExperienceLabel = new JLabel("Enter the preferred experience:");
+		preferredExperienceLabel.setForeground(Color.BLACK);
 		preferredExperienceTextField = new JTextField();
 
-		numberofEmployeesLabel = new JLabel();
-		numberofEmployeesTextField = new JTextField();
-
-		hourlyRateLabel = new JLabel();
+		hourlyRateLabel = new JLabel("Set Hourly Rate:");
+		hourlyRateLabel.setForeground(Color.BLACK);
 		hourlyRateTextField = new JTextField();
 
-		createJobPosting = new JButton();
+		createPostingButton = new JButton("Publish Job Posting");
+		createPostingButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				createJobPostingButtonActionPerformed();
+			}
+		});
 
-		courseLabel.setText("Select a course:");
-		jobLabel.setText("Job Title");
-		deadline.setText("Specifiy a deadline:");
-		preferredExperienceLabel.setText("Enter the preferred experience");
-		numberofEmployeesLabel.setText("Enter the number of positions:");
-		hourlyRateLabel.setText("Set the hourly rate");
-		createJobPosting.setText("Publish Job Posting");
-
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		cancelButton = new JButton("  Cancel  ");
+		cancelButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				cancelButtonActionPerformed(evt);
+			}
+		});
 		setTitle("Publish Job Posting");
 
 		// layout
@@ -118,63 +127,47 @@ public class PublishJobPostingPage extends JFrame {
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
 
-		layout.setHorizontalGroup(
-				// error message is added here
-				layout.createParallelGroup().addComponent(errorMessage)
-						.addGroup(layout.createSequentialGroup()
-								.addGroup(layout.createParallelGroup().addComponent(courseLabel, 200, 350, 1000)
-										.addComponent(jobLabel).addComponent(deadline)
-										.addComponent(preferredExperienceLabel).addComponent(numberofEmployeesLabel)
-										.addComponent(hourlyRateLabel).addComponent(createJobPosting))
-								.addGroup(layout.createParallelGroup().addComponent(courseList, 200, 350, 1000)
-										.addComponent(jobList).addComponent(deadlineDate)
-										.addComponent(preferredExperienceTextField)
-										.addComponent(numberofEmployeesTextField).addComponent(hourlyRateTextField))));
-		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] { createJobPosting });
+		layout.setHorizontalGroup(layout.createParallelGroup().addComponent(formTitle).addComponent(errorMessage)
+				.addComponent(horizontalLineTop)
 
-		layout.setVerticalGroup(layout.createSequentialGroup()
-				// error message is added here
-				.addComponent(errorMessage)
-				.addGroup(layout.createParallelGroup().addComponent(courseLabel).addComponent(courseList))
-				.addGroup(layout.createParallelGroup().addComponent(jobLabel).addComponent(jobList))
+				.addGroup(layout.createSequentialGroup()
+						.addGroup(layout.createParallelGroup().addComponent(courseLabel, 200, 250, 500)
+								.addComponent(jobLabel).addComponent(deadline).addComponent(preferredExperienceLabel)
+								.addComponent(hourlyRateLabel).addComponent(cancelButton))
+						.addGroup(layout.createParallelGroup().addComponent(courseToggleList, 200, 250, 500)
+								.addComponent(jobToggleList).addComponent(deadlineDate)
+								.addComponent(preferredExperienceTextField).addComponent(hourlyRateTextField)
+								.addComponent(createPostingButton))));
+
+		layout.setVerticalGroup(layout.createSequentialGroup().addComponent(formTitle)
+				.addGroup(layout.createParallelGroup().addComponent(horizontalLineTop)).addComponent(errorMessage)
+				.addGroup(layout.createParallelGroup().addComponent(courseLabel).addComponent(courseToggleList))
+				.addGroup(layout.createParallelGroup().addComponent(jobLabel).addComponent(jobToggleList))
 				.addGroup(layout.createParallelGroup().addComponent(deadline).addComponent(deadlineDate))
 				.addGroup(layout.createParallelGroup().addComponent(preferredExperienceLabel)
-						.addComponent(preferredExperienceTextField))
-				.addGroup(layout.createParallelGroup().addComponent(numberofEmployeesLabel)
-						.addComponent(numberofEmployeesTextField))
-				.addGroup(layout.createParallelGroup().addComponent(hourlyRateLabel).addComponent(hourlyRateTextField))
-				.addComponent(createJobPosting));
+						.addComponent(preferredExperienceTextField, 23, 23, 23))
+				.addGroup(layout.createParallelGroup().addComponent(hourlyRateLabel).addComponent(hourlyRateTextField,
+						23, 23, 23))
+				.addGroup(layout.createParallelGroup().addComponent(createPostingButton).addComponent(cancelButton)));
 
 		pack();
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				backToAllJobs();
-			}
-		});
-		// <<<<<<< HEAD
 
-		courseList.addActionListener(new java.awt.event.ActionListener() {
+		courseToggleList.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>) evt.getSource();
-				selectedCourseList = cb.getSelectedIndex();
+				selectedCourse = cb.getSelectedIndex();
+
 			}
 		});
-
-		jobList.addActionListener(new java.awt.event.ActionListener() {
+		jobToggleList.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>) evt.getSource();
-				selectedJobList = cb.getSelectedIndex();
+				selectedJob = cb.getSelectedIndex();
 			}
 		});
 
-		createJobPosting.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				createJobPostingButtonActionPerformed();
-			}
-		});
 	}
 
 	// can also disable submit if string is empty
@@ -182,13 +175,15 @@ public class PublishJobPostingPage extends JFrame {
 		// error
 		errorMessage.setText(error);
 		if (error == null || error.length() == 0) {
-			selectedCourseList = -1;
-			courseList.setSelectedIndex(selectedCourseList);
-			selectedJobList = -1;
-			jobList.setSelectedIndex(selectedJobList);
+			selectedCourse = -1;
+			courseToggleList.setSelectedIndex(selectedCourse);
+
+			selectedJob = -1;
+			jobToggleList.setSelectedIndex(selectedJob);
+
 			deadlineDate.getModel().setValue(null);
+
 			preferredExperienceTextField.setText("");
-			numberofEmployeesTextField.setText("");
 			hourlyRateTextField.setText("");
 		}
 		// this is needed because the size of the window changes depending on
@@ -199,60 +194,45 @@ public class PublishJobPostingPage extends JFrame {
 
 	private void createJobPostingButtonActionPerformed() {
 		// call the controller
-		Instructor prof = new Instructor("Daniel Varro", ms);
+
+		// Instructor prof = new Instructor("Daniel Varro", ms);
+		// Course course = new Course("Winter 2017", "Intro to
+		// SE",courseToggleList.getSelectedItem().toString(), 1, 1, 100, 3, 1,
+		// 1, 60, 60, 10000.0, prof, ms);
+		// Allocation allocation = new Allocation(course);
 
 		error = "";
 
-		int numEmployees;
 		double hourlyRate;
-//		String aSemester, String aCourseCoude, int aNumTutorial, int aNumLab, int aNumStudent, int aCredit, int aHourRequiredTa, int aHourRequiredGrader, double aBudgetCalculated, Instructor aInstructor, ManagementSystem aManagementSystem)
-		  
-		Course course = new Course("Winter 2017", courseList.getSelectedItem().toString(), 1, 1, 100, 3,60, 60, 10000.0, prof, ms);
-		Allocation allocation = new Allocation(course);
 
-		if (selectedCourseList < 0) {
-			error += "Please select a course. ";
+		if (selectedCourse < 0) {
+			error += "Please select a course.";
 		}
 
-		if (selectedJobList < 0) {
+		if (selectedJob < 0) {
 			error += "Please select a Job Title.";
 		}
-		if ((java.sql.Date) deadlineDate.getModel().getValue() == null) {
-			error += "Please specify a date.";
-		}
 
-		if (numberofEmployeesTextField.getText().equals("")) {
-			numEmployees = -1;
-			error += "Please specify the number of positions!";
-		}
-
-		else if (!numberofEmployeesTextField.getText().matches("[0-9]+")) {
-			numEmployees = -1;
-			error += "Please enter only string for number of position.";
-		}
-
-		else {
-			numEmployees = Integer.parseInt(numberofEmployeesTextField.getText());
-		}
-
-		if (hourlyRateTextField.getText().equals("")) {
-			hourlyRate = -1.0;
-			error += "Please specify the hour rate!";
-		} else {
-			try {
-				hourlyRate = Double.parseDouble(hourlyRateTextField.getText());
-			} catch (NumberFormatException e) {
-				hourlyRate = -1.0;
-			}
-
-		}
-
-		if (error.length() == 0) {
+		if (error.trim().length() == 0) {
 			// call the controller
 			TamasController tc = new TamasController(ms);
+
+			Date deadline = (java.sql.Date) deadlineDate.getModel().getValue();
+
+			if (hourlyRateTextField.getText().equals("")) {
+				hourlyRate = -1.0;
+			} else {
+				try {
+					hourlyRate = Double.parseDouble(hourlyRateTextField.getText());
+				} catch (NumberFormatException e) {
+					System.out.print(e.getMessage());
+					hourlyRate = -1.0;
+				}
+			}
 			try {
-				tc.createJob(jobList.getSelectedItem().toString(), (java.sql.Date) deadlineDate.getModel().getValue(),
-						preferredExperienceTextField.getText(), numEmployees, hourlyRate, allocation.getCourse());
+				tc.createJobPosting(jobToggleList.getSelectedItem().toString(), deadline,
+						preferredExperienceTextField.getText(), hourlyRate,
+						cMap.get((String) courseToggleList.getSelectedItem()));
 				backToAllJobs();
 				dispose();
 			} catch (InvalidInputException e) {
@@ -262,8 +242,13 @@ public class PublishJobPostingPage extends JFrame {
 		refreshData();
 	}
 
+	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		backToAllJobs();
+		setVisible(false);
+	}
+
 	private void backToAllJobs() {
-		new AllJobPostings(ms,userName).setVisible(true);
+		new AllJobPostings(ms, user).setVisible(true);
 	}
 
 }
