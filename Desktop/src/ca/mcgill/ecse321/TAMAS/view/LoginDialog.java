@@ -42,19 +42,19 @@ public class LoginDialog extends JFrame {
 		cs.gridy = 0;
 		cs.gridwidth = 1;
 		panel.add(lbUsername, cs);
-
+		cs = new GridBagConstraints();
 		tfUsername = new JTextField(20);
 		cs.gridx = 1;
 		cs.gridy = 0;
 		cs.gridwidth = 2;
 		panel.add(tfUsername, cs);
-
+		cs = new GridBagConstraints();
 		lbPassword = new JLabel("Password: ");
 		cs.gridx = 0;
 		cs.gridy = 1;
 		cs.gridwidth = 1;
 		panel.add(lbPassword, cs);
-
+		cs = new GridBagConstraints();
 		pfPassword = new JPasswordField(20);
 		cs.gridx = 1;
 		cs.gridy = 1;
@@ -154,8 +154,8 @@ public class LoginDialog extends JFrame {
 		return null;
 
 	}
-	
-	private void toRegisterPage(){
+
+	private void toRegisterPage() {
 		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
 		new RegisterPage(ms).setVisible(true);
 	}
