@@ -17,23 +17,14 @@ class Allocation
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct($aCourse = null)
+  public function __construct($aCourse)
   {
-    if (func_num_args() == 0) { return; }
-
-    if ($aCourse == null || $aCourse->getCourseJobAllocation() != null)
+    $didAddCourse = $this->setCourse($aCourse);
+    if (!$didAddCourse)
     {
-      throw new Exception("Unable to create Allocation due to aCourse");
+      throw new Exception("Unable to create courseJobAllocation due to course");
     }
-    $this->course = $aCourse;
     $this->applicants = array();
-  }
-  public static function newInstance($aSemesterForCourse, $aCourseCoudeForCourse, $aNumTutorialForCourse, $aNumLabForCourse, $aNumStudentForCourse, $aCreditForCourse, $aHourRequiredTaForCourse, $aHourRequiredGraderForCourse, $aBudgetCalculatedForCourse, $aInstructorForCourse, $aManagementSystemForCourse)
-  {
-    $thisInstance = new Allocation();
-    $thisInstance->course = new Course($aSemesterForCourse, $aCourseCoudeForCourse, $aNumTutorialForCourse, $aNumLabForCourse, $aNumStudentForCourse, $aCreditForCourse, $aHourRequiredTaForCourse, $aHourRequiredGraderForCourse, $aBudgetCalculatedForCourse, $thisInstance, $aInstructorForCourse, $aManagementSystemForCourse);
-    $this->applicants = array();
-    return $thisInstance;
   }
 
   //------------------------
@@ -86,44 +77,83 @@ class Allocation
     return $index;
   }
 
+  public function setCourse($aNewCourse)
+  {
+    $wasSet = false;
+    if ($aNewCourse == null)
+    {
+      //Unable to setCourse to null, as courseJobAllocation must always be associated to a course
+      return $wasSet;
+    }
+    
+    $existingCourseJobAllocation = $aNewCourse->getCourseJobAllocation();
+    if ($existingCourseJobAllocation != null && $this != $existingCourseJobAllocation)
+    {
+      //Unable to setCourse, the current course already has a courseJobAllocation, which would be orphaned if it were re-assigned
+      return $wasSet;
+    }
+    
+    $anOldCourse = $this->course;
+    $this->course = $aNewCourse;
+    $this->course->setCourseJobAllocation($this);
+    
+    if ($anOldCourse != null)
+    {
+      $anOldCourse->setCourseJobAllocation(null);
+    }
+    $wasSet = true;
+    return $wasSet;
+  }
+
   public static function minimumNumberOfApplicants()
   {
     return 0;
-  }
-
-  public function addApplicantVia($aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aPreferredCourse, $aMajor, $aYear, $aOption1, $aOption2, $aOption3, $aTotalAppointmentHours, $aManagementSystem)
-  {
-    return new Applicant($aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aPreferredCourse, $aMajor, $aYear, $aOption1, $aOption2, $aOption3, $aTotalAppointmentHours, $this, $aManagementSystem);
   }
 
   public function addApplicant($aApplicant)
   {
     $wasAdded = false;
     if ($this->indexOfApplicant($aApplicant) !== -1) { return false; }
-    $existingAllocation = $aApplicant->getAllocation();
-    $isNewAllocation = $existingAllocation != null && $this !== $existingAllocation;
-    if ($isNewAllocation)
+    $this->applicants[] = $aApplicant;
+    if ($aApplicant->indexOfAllocation($this) != -1)
     {
-      $aApplicant->setAllocation($this);
+      $wasAdded = true;
     }
     else
     {
-      $this->applicants[] = $aApplicant;
+      $wasAdded = $aApplicant->addAllocation($this);
+      if (!$wasAdded)
+      {
+        array_pop($this->applicants);
+      }
     }
-    $wasAdded = true;
     return $wasAdded;
   }
 
   public function removeApplicant($aApplicant)
   {
     $wasRemoved = false;
-    //Unable to remove aApplicant, as it must always have a allocation
-    if ($this !== $aApplicant->getAllocation())
+    if ($this->indexOfApplicant($aApplicant) == -1)
     {
-      unset($this->applicants[$this->indexOfApplicant($aApplicant)]);
-      $this->applicants = array_values($this->applicants);
+      return $wasRemoved;
+    }
+
+    $oldIndex = $this->indexOfApplicant($aApplicant);
+    unset($this->applicants[$oldIndex]);
+    if ($aApplicant->indexOfAllocation($this) == -1)
+    {
       $wasRemoved = true;
     }
+    else
+    {
+      $wasRemoved = $aApplicant->removeAllocation($this);
+      if (!$wasRemoved)
+      {
+        $this->applicants[$oldIndex] = $aApplicant;
+        ksort($this->applicants);
+      }
+    }
+    $this->applicants = array_values($this->applicants);
     return $wasRemoved;
   }
 
@@ -170,11 +200,13 @@ class Allocation
     $this->course = null;
     if ($existingCourse != null)
     {
-      $existingCourse->delete();
+      $existingCourse->setCourseJobAllocation(null);
     }
-    foreach ($this->applicants as $aApplicant)
+    $copyOfApplicants = $this->applicants;
+    $this->applicants = array();
+    foreach ($copyOfApplicants as $aApplicant)
     {
-      $aApplicant->delete();
+      $aApplicant->removeAllocation($this);
     }
   }
 

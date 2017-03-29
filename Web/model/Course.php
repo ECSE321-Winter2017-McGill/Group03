@@ -11,18 +11,21 @@ class Course
 
   //Course Attributes
   private $semester;
-  private $courseCoude;
+  private $courseName;
+  private $courseCode;
   private $numTutorial;
   private $numLab;
   private $numStudent;
   private $credit;
+  private $numTaNeeded;
+  private $numGraderNeeded;
   private $hourRequiredTa;
   private $hourRequiredGrader;
   private $budgetCalculated;
 
   //Course Associations
   private $courseComponents;
-  private $courseJobAllocation;
+  public $courseJobAllocation; //until PHP 5.3 (setAccessible)
   private $jobPosting;
   private $instructor;
   private $offeredJobs;
@@ -32,25 +35,21 @@ class Course
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct($aSemester = null, $aCourseCoude = null, $aNumTutorial = null, $aNumLab = null, $aNumStudent = null, $aCredit = null, $aHourRequiredTa = null, $aHourRequiredGrader = null, $aBudgetCalculated = null, $aCourseJobAllocation = null, $aInstructor = null, $aManagementSystem = null)
+  public function __construct($aSemester, $aCourseName, $aCourseCode, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aNumTaNeeded, $aNumGraderNeeded, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $aInstructor, $aManagementSystem)
   {
-    if (func_num_args() == 0) { return; }
-
     $this->semester = $aSemester;
-    $this->courseCoude = $aCourseCoude;
+    $this->courseName = $aCourseName;
+    $this->courseCode = $aCourseCode;
     $this->numTutorial = $aNumTutorial;
     $this->numLab = $aNumLab;
     $this->numStudent = $aNumStudent;
     $this->credit = $aCredit;
+    $this->numTaNeeded = $aNumTaNeeded;
+    $this->numGraderNeeded = $aNumGraderNeeded;
     $this->hourRequiredTa = $aHourRequiredTa;
     $this->hourRequiredGrader = $aHourRequiredGrader;
     $this->budgetCalculated = $aBudgetCalculated;
     $this->courseComponents = array();
-    if ($aCourseJobAllocation == null || $aCourseJobAllocation->getCourse() != null)
-    {
-      throw new Exception("Unable to create Course due to aCourseJobAllocation");
-    }
-    $this->courseJobAllocation = $aCourseJobAllocation;
     $this->jobPosting = array();
     $didAddInstructor = $this->setInstructor($aInstructor);
     if (!$didAddInstructor)
@@ -63,26 +62,6 @@ class Course
     {
       throw new Exception("Unable to create course due to managementSystem");
     }
-  }
-  public static function newInstance($aSemester, $aCourseCoude, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $aInstructor, $aManagementSystem)
-  {
-    $thisInstance = new Course();
-    $thisInstance->semester = $aSemester;
-    $thisInstance->courseCoude = $aCourseCoude;
-    $thisInstance->numTutorial = $aNumTutorial;
-    $thisInstance->numLab = $aNumLab;
-    $thisInstance->numStudent = $aNumStudent;
-    $thisInstance->credit = $aCredit;
-    $thisInstance->hourRequiredTa = $aHourRequiredTa;
-    $thisInstance->hourRequiredGrader = $aHourRequiredGrader;
-    $thisInstance->budgetCalculated = $aBudgetCalculated;
-    $this->courseComponents = array();
-    $thisInstance->courseJobAllocation = new Allocation($thisInstance);
-    $this->jobPosting = array();$this->instructors = array();
-    $this->instructors[] = $aInstructor;
-    $this->offeredJobs = array();$this->managementSystems = array();
-    $this->managementSystems[] = $aManagementSystem;
-    return $thisInstance;
   }
 
   //------------------------
@@ -97,10 +76,18 @@ class Course
     return $wasSet;
   }
 
-  public function setCourseCoude($aCourseCoude)
+  public function setCourseName($aCourseName)
   {
     $wasSet = false;
-    $this->courseCoude = $aCourseCoude;
+    $this->courseName = $aCourseName;
+    $wasSet = true;
+    return $wasSet;
+  }
+
+  public function setCourseCode($aCourseCode)
+  {
+    $wasSet = false;
+    $this->courseCode = $aCourseCode;
     $wasSet = true;
     return $wasSet;
   }
@@ -137,6 +124,22 @@ class Course
     return $wasSet;
   }
 
+  public function setNumTaNeeded($aNumTaNeeded)
+  {
+    $wasSet = false;
+    $this->numTaNeeded = $aNumTaNeeded;
+    $wasSet = true;
+    return $wasSet;
+  }
+
+  public function setNumGraderNeeded($aNumGraderNeeded)
+  {
+    $wasSet = false;
+    $this->numGraderNeeded = $aNumGraderNeeded;
+    $wasSet = true;
+    return $wasSet;
+  }
+
   public function setHourRequiredTa($aHourRequiredTa)
   {
     $wasSet = false;
@@ -166,9 +169,14 @@ class Course
     return $this->semester;
   }
 
-  public function getCourseCoude()
+  public function getCourseName()
   {
-    return $this->courseCoude;
+    return $this->courseName;
+  }
+
+  public function getCourseCode()
+  {
+    return $this->courseCode;
   }
 
   public function getNumTutorial()
@@ -189,6 +197,16 @@ class Course
   public function getCredit()
   {
     return $this->credit;
+  }
+
+  public function getNumTaNeeded()
+  {
+    return $this->numTaNeeded;
+  }
+
+  public function getNumGraderNeeded()
+  {
+    return $this->numGraderNeeded;
   }
 
   public function getHourRequiredTa()
@@ -250,6 +268,12 @@ class Course
   public function getCourseJobAllocation()
   {
     return $this->courseJobAllocation;
+  }
+
+  public function hasCourseJobAllocation()
+  {
+    $has = $this->courseJobAllocation != null;
+    return $has;
   }
 
   public function getJobPosting_index($index)
@@ -417,14 +441,41 @@ class Course
     return $wasAdded;
   }
 
+  public function setCourseJobAllocation($aNewCourseJobAllocation)
+  {
+    $wasSet = false;
+    if ($this->courseJobAllocation != null && $this->courseJobAllocation != $aNewCourseJobAllocation && $this == $this->courseJobAllocation->getCourse())
+    {
+      //Unable to setCourseJobAllocation, as existing courseJobAllocation would become an orphan
+      return $wasSet;
+    }
+    
+    $this->courseJobAllocation = $aNewCourseJobAllocation;
+    $anOldCourse = $aNewCourseJobAllocation != null ? $aNewCourseJobAllocation->getCourse() : null;
+    
+    if ($this != $anOldCourse)
+    {
+      if ($anOldCourse != null)
+      {
+        $anOldCourse->courseJobAllocation = null;
+      }
+      if ($this->courseJobAllocation != null)
+      {
+        $this->courseJobAllocation->setCourse($this);
+      }
+    }
+    $wasSet = true;
+    return $wasSet;
+  }
+
   public static function minimumNumberOfJobPosting()
   {
     return 0;
   }
 
-  public function addJobPostingVia($aJobTitle, $aSubmissionDeadline, $aPerferredExperience, $aNumNeeded, $aHourRate, $aManagementSystem)
+  public function addJobPostingVia($aJobTitle, $aSubmissionDeadline, $aPerferredExperience, $aHourRate, $aManagementSystem)
   {
-    return new JobPosting($aJobTitle, $aSubmissionDeadline, $aPerferredExperience, $aNumNeeded, $aHourRate, $aManagementSystem, $this);
+    return new JobPosting($aJobTitle, $aSubmissionDeadline, $aPerferredExperience, $aHourRate, $aManagementSystem, $this);
   }
 
   public function addJobPosting($aJobPosting)
@@ -616,12 +667,13 @@ class Course
       $this->courseComponents = array_values($this->courseComponents);
     }
     
-    $existingCourseJobAllocation = $this->courseJobAllocation;
-    $this->courseJobAllocation = null;
-    if ($existingCourseJobAllocation != null)
+    
+    if ($this->courseJobAllocation != null)
     {
-      $existingCourseJobAllocation->delete();
+        $this->courseJobAllocation->delete();
+        $this->courseJobAllocation = null;
     }
+    
     while (count($this->jobPosting) > 0)
     {
       $aJobPosting = $this->jobPosting[count($this->jobPosting) - 1];

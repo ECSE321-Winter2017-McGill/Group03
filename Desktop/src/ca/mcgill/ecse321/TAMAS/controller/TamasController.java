@@ -145,7 +145,7 @@ public class TamasController {
 		}
 
 		this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice,
-				totalAppointmentHour, ms);
+				"", totalAppointmentHour, ms);
 		PersistenceXStream.saveToXMLwithXStream(ms);
 		return this_applicant;
 
@@ -188,7 +188,7 @@ public class TamasController {
 
 		try {
 			// TODO: Create a real applicant to test
-			ms.addApplicant(0, name, null, true, null, null, null, null, null, 0);
+			ms.addApplicant(0, name, null, true, null, null, null, null, null, null, 0);
 		} catch (RuntimeException e) {
 			throw new InvalidInputException(e.getMessage());
 		}
@@ -303,18 +303,23 @@ public class TamasController {
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 
-	public void acceptApplication(Application application) {
+	public boolean acceptApplication(Application application) {
 		if (application.getApplicationStatus().equals("Submitted")) {
 			application.setApplicationStatus("Accpeted");
 			PersistenceXStream.saveToXMLwithXStream(ms);
+			return true;
 		}
+		return false;
 	}
 
-	public void rejectApplication(Application application) {
+	public boolean rejectApplication(Application application) {
 		if (application.getApplicationStatus().equals("Submitted")) {
+			
 			application.setApplicationStatus("Rejected");
 			PersistenceXStream.saveToXMLwithXStream(ms);
+			return true;
 		}
+		return false;
 
 	}
 

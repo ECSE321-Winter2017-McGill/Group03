@@ -310,9 +310,9 @@ public class ManagementSystem
     return 1;
   }
 
-  public Applicant addApplicant(int aStudentID, String aName, String aPreviousExperience, boolean aIsUnderGraduated, String aMajor, String aYear, String aFirstChoice, String aSecondChoice, String aThirdChoice, int aTotalAppointmentHours)
+  public Applicant addApplicant(int aStudentID, String aName, String aPreviousExperience, boolean aIsUnderGraduated, String aMajor, String aYear, String aFirstChoice, String aSecondChoice, String aThirdChoice, String aEvaluation, int aTotalAppointmentHours)
   {
-    Applicant aNewApplicant = new Applicant(aStudentID, aName, aPreviousExperience, aIsUnderGraduated, aMajor, aYear, aFirstChoice, aSecondChoice, aThirdChoice, aTotalAppointmentHours, this);
+    Applicant aNewApplicant = new Applicant(aStudentID, aName, aPreviousExperience, aIsUnderGraduated, aMajor, aYear, aFirstChoice, aSecondChoice, aThirdChoice, aEvaluation, aTotalAppointmentHours, this);
     return aNewApplicant;
   }
 

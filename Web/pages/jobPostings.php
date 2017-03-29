@@ -13,7 +13,8 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 <meta name="description" content="">
 <meta name="author" content="">
 <title>DashBoard</title>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <link href="../css/main.css" rel="stylesheet">
 </head>
@@ -28,8 +29,8 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 				</div>
 				<h6 class="welcome">Welcome
                             <?php
-                            echo $login_session;
-                            ?>
+																												echo $login_session;
+																												?>
                 </h6>
 				<h6 class="welcome">
 					<a href="logout.php">Sign Out</a>
@@ -37,8 +38,10 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 				<ul class="nav" id="side-menu">
 					<li><a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i>
 							Dashboard</a></li>
-					<li><a href="viewAllJObPostings.php"><i class="fa fa-dashboard fa-fw"></i>
-							View Job Postings</a></li>
+					<li><a href="viewAllJObPostings.php"><i
+							class="fa fa-dashboard fa-fw"></i> View Job Postings</a></li>
+					<li><a href="EvalTA.php"><i class="fa fa-dashboard fa-fw"></i> TA
+							Evaluaion</a></li>
 				</ul>
 			</div>
 		</div>
@@ -54,85 +57,81 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 					<div class="box-body">
 
 						<form id="addjob">
-							<label>Select a course:</label>
-                            <span class="error">
+							<label>Select a course:</label> <span class="error">
                                 <?php
-                                if (isset ( $_SESSION ['errorCourse'] ) && ! empty ( $_SESSION ['errorCourse'] )) {
-                                    echo "*" . $_SESSION ["errorCourse"];
-                                }
-                                ?>
-                            </span>
-                            <select name="courses" class="form-control" id="">
-                                <option value="COMP 251">COMP 251</option>
-                                <option value="ECSE 321">ECSE 321</option>
-                                <option value="ECSE 211">ECSE 211</option>
-                            </select>
-                            <br>
+																																if (isset ( $_SESSION ['errorCourse'] ) && ! empty ( $_SESSION ['errorCourse'] )) {
+																																	echo "*" . $_SESSION ["errorCourse"];
+																																}
+																																?>
+                            </span> <select name="courses"
+								class="form-control" id="">
+								<option value="COMP 251">COMP 251</option>
+								<option value="ECSE 321">ECSE 321</option>
+								<option value="ECSE 211">ECSE 211</option>
+							</select> <br>
 
-                            <p>
-                                <label>Job Title: </label>
-                                <span class="error">
+							<p>
+								<label>Job Title: </label> <span class="error">
                                 <?php
-                                if (isset ( $_SESSION ['errorJobTitle'] ) && ! empty ( $_SESSION ['errorJobTitle'] )) {
-                                    echo "*" . $_SESSION ["errorJobTitle"];
-                                }
-                                ?>
-                                </span>
-                            <select name="jobTitle" class="form-control" id="">
-                                <option value="TA">TA</option>
-                                <option value="Grader">Grader</option>
-                            </select>
-                            </p>
+																																if (isset ( $_SESSION ['errorJobTitle'] ) && ! empty ( $_SESSION ['errorJobTitle'] )) {
+																																	echo "*" . $_SESSION ["errorJobTitle"];
+																																}
+																																?>
+                                </span> <select name="jobTitle"
+									class="form-control" id="">
+									<option value="TA">TA</option>
+									<option value="Grader">Grader</option>
+								</select>
+							</p>
 
-                            <p>
-                                <label>Dead Line: </label>
-                                <input class="form-control"
-                                          type="date" name="deadLine"
-                                          value="<?php echo date('Y-m-d'); ?>" />
-                                <span class="error">
+							<p>
+								<label>Dead Line: </label> <input class="form-control"
+									type="date" name="deadLine"
+									value="<?php echo date('Y-m-d'); ?>" /> <span class="error">
                                     <?php
-                                    if (isset ( $_SESSION ['errorDeadLine'] ) && ! empty ( $_SESSION ['errorDeadLine'] )) {
-                                        echo "*" . $_SESSION ["errorDeadLine"];
-                                    }
-                                    ?>
+																																				if (isset ( $_SESSION ['errorDeadLine'] ) && ! empty ( $_SESSION ['errorDeadLine'] )) {
+																																					echo "*" . $_SESSION ["errorDeadLine"];
+																																				}
+																																				?>
                                 </span>
-                            </p>
-    <div>
-        <label>Perferred Experience: </label>
-        <textarea class="form-control" name="perferredExperience"></textarea>
-        <span class="error">
+							</p>
+							<div>
+								<label>Perferred Experience: </label>
+								<textarea class="form-control" name="perferredExperience"></textarea>
+								<span class="error">
             <?php
-			if (isset ( $_SESSION ['errorPerferredExperience'] ) && ! empty ( $_SESSION ['errorPerferredExperience'] )) {
-				echo "*" . $_SESSION ["errorPerferredExperience"];
-			}
-            ?>
+												if (isset ( $_SESSION ['errorPerferredExperience'] ) && ! empty ( $_SESSION ['errorPerferredExperience'] )) {
+													echo "*" . $_SESSION ["errorPerferredExperience"];
+												}
+												?>
         </span>
-    </div>
+							</div>
 
-    <p>
-        <label>Number needed: </label> <input class="form-control"
-                                              type="text" name="numberNeeded" value="" /> <span class="error">
+							<p>
+								<label>Number needed: </label> <input class="form-control"
+									type="text" name="numberNeeded" value="" /> <span class="error">
             <?php
-			if (isset ( $_SESSION ['errorNumberNeeded'] ) && ! empty ( $_SESSION ['errorNumberNeeded'] )) {
-				echo "*" . $_SESSION ["errorNumberNeeded"];
-			}
-            ?>
+												if (isset ( $_SESSION ['errorNumberNeeded'] ) && ! empty ( $_SESSION ['errorNumberNeeded'] )) {
+													echo "*" . $_SESSION ["errorNumberNeeded"];
+												}
+												?>
         </span>
-    </p>
-    <p>
-        <label>Hourly Rate: </label> <input class="form-control"
-                                            type="text" name="hourlyRate" value="" /> <span class="error">
+							</p>
+							<p>
+								<label>Hourly Rate: </label> <input class="form-control"
+									type="text" name="hourlyRate" value="" /> <span class="error">
             <?php
-			if (isset ( $_SESSION ['errorHourlyRate'] ) && ! empty ( $_SESSION ['errorHourlyRate'] )) {
-				echo "*" . $_SESSION ["errorHourlyRate"];
-			}
-            ?>
+												if (isset ( $_SESSION ['errorHourlyRate'] ) && ! empty ( $_SESSION ['errorHourlyRate'] )) {
+													echo "*" . $_SESSION ["errorHourlyRate"];
+												}
+												?>
         </span>
-    </p>
-    <p>
-        <input class="btn btn-sm btn-info btn-flat pull-left"
-               type="submit" value='Publish' />
-</form>
+							</p>
+							<p>
+								<input class="btn btn-sm btn-info btn-flat pull-left"
+									type="submit" value='Publish' />
+						
+						</form>
 
 						<br> <br> <br>
 					</div>
@@ -140,7 +139,7 @@ require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php'?>
 			</div>
 		</div>
 	</div>
-    <script>
+	<script>
 
     $("#addjob").submit(function(e) {
     var url = "addJobPosting.php";

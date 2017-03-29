@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '\..\model\ManagementSystem.php';
 require_once __DIR__ . '\..\model\Allocation.php';
+require_once __DIR__ . '\..\model\Applicant.php';
 require_once __DIR__ . '\..\persistence\PersistenceTAMAS.php';
 require_once __DIR__ . '\..\model\JobPosting.php';
 require_once __DIR__ . '\..\model\Course.php';
@@ -8,6 +9,34 @@ require_once __DIR__ . '\..\model\Instructor.php';
 require_once __DIR__ . '\..\controller\InputValidator.php';
 class Controller {
 	public function __construct() {
+	}
+	
+	// $aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aPreferredCourse,
+	// $aMajor, $aYear, $aOption1, $aOption2, $aOption3, $aTotalAppointmentHours, $aAllocation, $aManagementSystem)
+	public function writeEval($taname, $eval) {
+		$error = ""; // empty errors.
+		$ev = InputValidator::validate_input ( $eval ); // validation check
+		
+		if ($ev == null || strlen ( $ev ) == 0) { // errors
+			$error .= "@1Evaluation can not be empty! ";
+		}
+		if (strlen ( $error ) > 0) {
+			throw new Exception ( trim ( $error ) );
+		} else {
+			try {
+				$pm = new PersistenceTAMAS (); // new persistence manager
+				$rm = $pm->loadDataFromStore (); // get TAMAS management system
+				
+				$ta = new Applicant ( 260000000, $taname, "no prev exp", true, "cs", "u3", "321", "251", "206", "", 100, $rm ); // create a fake TA
+				
+				$ta->setEvaluation ( $eval );
+				$rm->addApplicant ( $ta );
+				$pm->writeDataToStore ( $rm ); // store data to file
+			} catch ( Exception $e ) {
+				echo "error";
+				throw new Exception ( trim ( $error ) ); // throw any exceptions
+			}
+		}
 	}
 	public function createJobPosting($jobTitle, $deadLine, $perferredExperience, $numNeeded, $hourlyRate, $course) {
 		$error = ""; // empty errors.
@@ -42,8 +71,10 @@ class Controller {
 			try {
 				$pm = new PersistenceTAMAS (); // new persistence manager
 				$rm = $pm->loadDataFromStore (); // get TAMAS management system
-				$co = new Course ( "winter 2017", $c, 1, 1, 100, 60, 60, 60, 100.00, new Allocation (), new Instructor ( "test", $rm ), $rm ); // create a fake course
-				$jp = new JobPosting ( $jt, $dl, $pe, $nn, $hr, $rm, $co ); // create a jobposting
+				                                 // $aSemester, $aCourseName, $aCourseCode, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aNumTaNeeded, $aNumGraderNeeded, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $aInstructor, $aManagementSystem
+				$co = new Course ( "winter 2017", $c, $c, 1, 1, 100, 60, 60, 60, 100.00, 100.00, 10000, new Instructor ( "test", $rm ), $rm ); // create a fake course
+				                                                                                                                            // $aJobTitle, $aSubmissionDeadline, $aPerferredExperience, $aHourRate, $aManagementSystem, $aCourse)
+				$jp = new JobPosting ( $jt, $dl, $pe, $hr, $rm, $co ); // create a jobposting
 				$rm->addJobPosting ( $jp ); // add job posting
 				$pm->writeDataToStore ( $rm ); // store data to file
 			} catch ( Exception $e ) {

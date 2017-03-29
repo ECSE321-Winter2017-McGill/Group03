@@ -22,6 +22,7 @@ public class Applicant
   private String firstChoice;
   private String secondChoice;
   private String thirdChoice;
+  private String evaluation;
   private int totalAppointmentHours;
 
   //Applicant Associations
@@ -34,7 +35,7 @@ public class Applicant
   // CONSTRUCTOR
   //------------------------
 
-  public Applicant(int aStudentID, String aName, String aPreviousExperience, boolean aIsUnderGraduated, String aMajor, String aYear, String aFirstChoice, String aSecondChoice, String aThirdChoice, int aTotalAppointmentHours, ManagementSystem aManagementSystem)
+  public Applicant(int aStudentID, String aName, String aPreviousExperience, boolean aIsUnderGraduated, String aMajor, String aYear, String aFirstChoice, String aSecondChoice, String aThirdChoice, String aEvaluation, int aTotalAppointmentHours, ManagementSystem aManagementSystem)
   {
     studentID = aStudentID;
     name = aName;
@@ -45,6 +46,7 @@ public class Applicant
     firstChoice = aFirstChoice;
     secondChoice = aSecondChoice;
     thirdChoice = aThirdChoice;
+    evaluation = aEvaluation;
     totalAppointmentHours = aTotalAppointmentHours;
     allocations = new ArrayList<Allocation>();
     offeredJobs = new ArrayList<OfferedJob>();
@@ -132,6 +134,14 @@ public class Applicant
     return wasSet;
   }
 
+  public boolean setEvaluation(String aEvaluation)
+  {
+    boolean wasSet = false;
+    evaluation = aEvaluation;
+    wasSet = true;
+    return wasSet;
+  }
+
   public boolean setTotalAppointmentHours(int aTotalAppointmentHours)
   {
     boolean wasSet = false;
@@ -183,6 +193,11 @@ public class Applicant
   public String getThirdChoice()
   {
     return thirdChoice;
+  }
+
+  public String getEvaluation()
+  {
+    return evaluation;
   }
 
   public int getTotalAppointmentHours()
@@ -617,6 +632,7 @@ public class Applicant
             "firstChoice" + ":" + getFirstChoice()+ "," +
             "secondChoice" + ":" + getSecondChoice()+ "," +
             "thirdChoice" + ":" + getThirdChoice()+ "," +
+            "evaluation" + ":" + getEvaluation()+ "," +
             "totalAppointmentHours" + ":" + getTotalAppointmentHours()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "managementSystem = "+(getManagementSystem()!=null?Integer.toHexString(System.identityHashCode(getManagementSystem())):"null")
      + outputString;
