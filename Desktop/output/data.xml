@@ -24,7 +24,7 @@
           <course reference="3"/>
           <applications id="8">
             <ca.mcgill.ecse321.TAMAS.model.Application id="9">
-              <applicationStatus>Submitted</applicationStatus>
+              <applicationStatus>Accpeted</applicationStatus>
               <jobPosting reference="6"/>
               <applicant id="10">
                 <studentID>1</studentID>
@@ -85,11 +85,21 @@
   <instructors id="23">
     <ca.mcgill.ecse321.TAMAS.model.Instructor reference="14"/>
     <ca.mcgill.ecse321.TAMAS.model.Instructor reference="20"/>
+    <ca.mcgill.ecse321.TAMAS.model.Instructor id="24">
+      <name>Blob</name>
+      <managementSystem reference="1"/>
+      <courses id="25"/>
+    </ca.mcgill.ecse321.TAMAS.model.Instructor>
+    <ca.mcgill.ecse321.TAMAS.model.Instructor id="26">
+      <name>i</name>
+      <managementSystem reference="1"/>
+      <courses id="27"/>
+    </ca.mcgill.ecse321.TAMAS.model.Instructor>
   </instructors>
-  <applicants id="24">
+  <applicants id="28">
     <ca.mcgill.ecse321.TAMAS.model.Applicant reference="10"/>
   </applicants>
-  <jobPostings id="25">
+  <jobPostings id="29">
     <jobInfo reference="6"/>
   </jobPostings>
 </ca.mcgill.ecse321.TAMAS.model.ManagementSystem>
