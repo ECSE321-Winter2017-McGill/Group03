@@ -1,7 +1,9 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -10,6 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
+import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
+import ca.mcgill.ecse321.TAMAS.controller.TamasController;
+import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 
 public class WriteEvaluation extends JFrame {
@@ -19,11 +24,11 @@ public class WriteEvaluation extends JFrame {
 	// attributes for GUI elements
 	private JLabel formTitle;
 
-	private JLabel jobLabel;
-	private JComboBox<String> jobToggleList;
+	private JLabel TALabel;
+	private JComboBox<String> TAToggleList;
 
-	private JLabel preferredExperienceLabel;
-	private JTextArea preferredExperienceTextField;
+	private JLabel EvalLabel;
+	private JTextArea EvalTextArea;
 
 	private JButton createPostingButton;
 	private JButton cancelButton;
@@ -35,18 +40,18 @@ public class WriteEvaluation extends JFrame {
 
 	private int selectedJob = -1;
 
+	private ManagementSystem ms;
 	private Object user;
-//	private HashMap<String, Course> cMap = new HashMap<>();
 
-	public WriteEvaluation(Object user) {
-//		this.ms = ms;
+	public WriteEvaluation(ManagementSystem ms, Object user) {
+		this.ms = ms;
 		this.user = user;
 		initComponents();
 		refreshData();
 	}
 
 	private void initComponents() {
-
+		
 		formTitle = new JLabel("TA Evaluation");
 		formTitle.setFont(new Font("Georgia", Font.BOLD, 22));
 
@@ -56,17 +61,16 @@ public class WriteEvaluation extends JFrame {
 		errorMessage = new JLabel();
 		errorMessage.setForeground(Color.RED);
 
-		jobLabel = new JLabel("Choose a TA:");
-		jobLabel.setForeground(Color.BLACK);
-		jobToggleList = new JComboBox<String>(new String[0]);
-		jobToggleList.addItem("TA-COMP-251-TA1");
-		jobToggleList.addItem("TA-COMP-251-TA2");
-		jobToggleList.addItem("TA-ECSE-221-TA1");
-		jobToggleList.addItem("TA-ECSE-221-TA2");
+		TALabel = new JLabel("Choose a TA:");
+		TALabel.setForeground(Color.BLACK);
+		TAToggleList = new JComboBox<String>(new String[0]);
+		for (int i=0; i<this.ms.getApplicants().size(); i++) {
+			TAToggleList.addItem(this.ms.getApplicants().get(i).getName());
+		}
 
-		preferredExperienceLabel = new JLabel("Write Evaluation Here:");
-		preferredExperienceLabel.setForeground(Color.BLACK);
-		preferredExperienceTextField = new JTextArea(10, 20);
+		EvalLabel = new JLabel("Write Evaluation Here:");
+		EvalLabel.setForeground(Color.BLACK);
+		EvalTextArea = new JTextArea(10, 20);
 
 		createPostingButton = new JButton("Submit");
 		createPostingButton.addActionListener(new java.awt.event.ActionListener() {
@@ -75,7 +79,7 @@ public class WriteEvaluation extends JFrame {
 			}
 		});
 
-		cancelButton = new JButton("  Cancel  ");
+		cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				cancelButtonActionPerformed(evt);
@@ -93,20 +97,24 @@ public class WriteEvaluation extends JFrame {
 				.addComponent(horizontalLineTop)
 
 				.addGroup(layout.createSequentialGroup()
-						.addGroup(layout.createParallelGroup().addComponent(jobLabel).addComponent(preferredExperienceLabel).addComponent(cancelButton))
-						.addGroup(layout.createParallelGroup().addComponent(jobToggleList).addComponent(preferredExperienceTextField)
-								.addComponent(createPostingButton))));
+						.addGroup(layout.createParallelGroup().addComponent(TALabel).addComponent(EvalLabel).addComponent(cancelButton))
+						.addGroup(layout.createParallelGroup().addComponent(TAToggleList).addComponent(EvalTextArea)
+								.addComponent(createPostingButton))
+						)
+				);
 
 
 		layout.setVerticalGroup(layout.createSequentialGroup().addComponent(formTitle)
-				.addGroup(layout.createParallelGroup().addComponent(horizontalLineTop)).addComponent(errorMessage)
-				.addGroup(layout.createParallelGroup().addComponent(jobLabel).addComponent(jobToggleList))
-				.addGroup(layout.createParallelGroup().addComponent(preferredExperienceLabel).addComponent(preferredExperienceTextField))
-				.addGroup(layout.createParallelGroup().addComponent(cancelButton).addComponent(createPostingButton)));
-
+				.addGroup(layout.createParallelGroup().addComponent(horizontalLineTop)).addComponent(errorMessage)				
+				.addGroup(layout.createParallelGroup().addComponent(TALabel).addComponent(TAToggleList))
+				.addGroup(layout.createParallelGroup().addComponent(EvalLabel).addComponent(EvalTextArea))
+				.addGroup(layout.createParallelGroup().addComponent(cancelButton).addComponent(createPostingButton))
+				);
+				
 		pack();
+		
 
-		jobToggleList.addActionListener(new java.awt.event.ActionListener() {
+		TAToggleList.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>) evt.getSource();
@@ -120,13 +128,12 @@ public class WriteEvaluation extends JFrame {
 	private void refreshData() {
 		// error
 		errorMessage.setText(error);
-		System.out.println(error);
 		if (error == null || error.length() == 0) {
 
 			selectedJob = -1;
-			jobToggleList.setSelectedIndex(selectedJob);
+			TAToggleList.setSelectedIndex(selectedJob);
 
-			preferredExperienceTextField.setText("");
+			EvalTextArea.setText("");
 		}
 		// this is needed because the size of the window changes depending on
 		// whether an error message is shown or not
@@ -137,23 +144,25 @@ public class WriteEvaluation extends JFrame {
 	private void createJobPostingButtonActionPerformed() {
 		// call the controller
 
-		// Instructor prof = new Instructor("Daniel Varro", ms);
-		// Course course = new Course("Winter 2017", "Intro to
-		// SE",courseToggleList.getSelectedItem().toString(), 1, 1, 100, 3, 1,
-		// 1, 60, 60, 10000.0, prof, ms);
-		// Allocation allocation = new Allocation(course);
-
 		error = "";
-		String blob = preferredExperienceTextField.getText();
-//		double hourlyRate;
-
+		String eval = EvalTextArea.getText();
 
 		if (selectedJob < 0) {
 			error += "Please select a TA to Evaluate. ";
 		}
 
-		if (blob==null) {
+		if (eval.length()==0) {
 			error += "Please write an evaluation! ";
+		}
+		
+		TamasController tc = new TamasController(ms);
+		if (error.trim().length() == 0) {
+			try {
+				tc.createTAEval(TAToggleList.getItemAt(selectedJob),eval);
+			}
+			catch (InvalidInputException e) {
+				error += e.getMessage();
+			}
 		}
 		refreshData();
 	}

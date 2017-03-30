@@ -98,8 +98,40 @@
   </instructors>
   <applicants id="28">
     <ca.mcgill.ecse321.TAMAS.model.Applicant reference="10"/>
+    <ca.mcgill.ecse321.TAMAS.model.Applicant id="29">
+      <studentID>0</studentID>
+      <name>blobo</name>
+      <isUnderGraduated>true</isUnderGraduated>
+      <evaluation>   </evaluation>
+      <totalAppointmentHours>0</totalAppointmentHours>
+      <allocations id="30"/>
+      <offeredJobs id="31"/>
+      <managementSystem reference="1"/>
+      <applications id="32"/>
+    </ca.mcgill.ecse321.TAMAS.model.Applicant>
+    <ca.mcgill.ecse321.TAMAS.model.Applicant id="33">
+      <studentID>0</studentID>
+      <name>chondy</name>
+      <isUnderGraduated>true</isUnderGraduated>
+      <totalAppointmentHours>0</totalAppointmentHours>
+      <allocations id="34"/>
+      <offeredJobs id="35"/>
+      <managementSystem reference="1"/>
+      <applications id="36"/>
+    </ca.mcgill.ecse321.TAMAS.model.Applicant>
+    <ca.mcgill.ecse321.TAMAS.model.Applicant id="37">
+      <studentID>0</studentID>
+      <name>LeTest</name>
+      <isUnderGraduated>true</isUnderGraduated>
+      <evaluation>    </evaluation>
+      <totalAppointmentHours>0</totalAppointmentHours>
+      <allocations id="38"/>
+      <offeredJobs id="39"/>
+      <managementSystem reference="1"/>
+      <applications id="40"/>
+    </ca.mcgill.ecse321.TAMAS.model.Applicant>
   </applicants>
-  <jobPostings id="29">
+  <jobPostings id="41">
     <jobInfo reference="6"/>
   </jobPostings>
 </ca.mcgill.ecse321.TAMAS.model.ManagementSystem>

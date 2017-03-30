@@ -58,6 +58,29 @@ public class TamasController {
 		this.ms = ms;
 	}
 
+	public void createTAEval(String name, String eval) throws InvalidInputException {
+		String error = "";
+
+		Applicant newApplicant;
+
+		if (eval.trim().length()==0) {
+			error += "A space cannot be an evaluation! ";
+		}
+		if (error.length() > 0) {
+			throw new InvalidInputException(error);
+		}
+		for (int i=0; i<this.ms.getApplicants().size(); i++) {
+			if (this.ms.getApplicants().get(i).getName().equals(name)) {
+				newApplicant = this.ms.getApplicants().get(i);
+				newApplicant.setEvaluation(eval);
+				break;
+			}
+			
+		}
+
+		PersistenceXStream.saveToXMLwithXStream(ms);
+	}
+	
 	public void createJobPosting(String jobPosition, Date deadlineDate, String exp, double hourlyRate, Course aCourse)
 			throws InvalidInputException {
 		String error = "";
@@ -144,8 +167,8 @@ public class TamasController {
 			}
 		}
 
-		this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice,
-				totalAppointmentHour, ms);
+		this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice
+				,"",totalAppointmentHour, ms);
 		PersistenceXStream.saveToXMLwithXStream(ms);
 		return this_applicant;
 
@@ -188,7 +211,7 @@ public class TamasController {
 
 		try {
 			// TODO: Create a real applicant to test
-			ms.addApplicant(0, name, null, true, null, null, null, null, null, 0);
+			ms.addApplicant(0, name, null, true, null, null, null, null, null, null, 0);
 		} catch (RuntimeException e) {
 			throw new InvalidInputException(e.getMessage());
 		}
