@@ -13,7 +13,6 @@ class JobPosting
   private $jobTitle;
   private $submissionDeadline;
   private $perferredExperience;
-  private $numNeeded;
   private $hourRate;
 
   //JobPosting Associations
@@ -25,12 +24,11 @@ class JobPosting
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct($aJobTitle, $aSubmissionDeadline, $aPerferredExperience, $aNumNeeded, $aHourRate, $aManagementSystem, $aCourse)
+  public function __construct($aJobTitle, $aSubmissionDeadline, $aPerferredExperience, $aHourRate, $aManagementSystem, $aCourse)
   {
     $this->jobTitle = $aJobTitle;
     $this->submissionDeadline = $aSubmissionDeadline;
     $this->perferredExperience = $aPerferredExperience;
-    $this->numNeeded = $aNumNeeded;
     $this->hourRate = $aHourRate;
     $didAddManagementSystem = $this->setManagementSystem($aManagementSystem);
     if (!$didAddManagementSystem)
@@ -73,14 +71,6 @@ class JobPosting
     return $wasSet;
   }
 
-  public function setNumNeeded($aNumNeeded)
-  {
-    $wasSet = false;
-    $this->numNeeded = $aNumNeeded;
-    $wasSet = true;
-    return $wasSet;
-  }
-
   public function setHourRate($aHourRate)
   {
     $wasSet = false;
@@ -102,11 +92,6 @@ class JobPosting
   public function getPerferredExperience()
   {
     return $this->perferredExperience;
-  }
-
-  public function getNumNeeded()
-  {
-    return $this->numNeeded;
   }
 
   public function getHourRate()
@@ -208,50 +193,39 @@ class JobPosting
     return 0;
   }
 
+  public function addApplicationVia($aApplicationStatus, $aApplicant)
+  {
+    return new Application($aApplicationStatus, $this, $aApplicant);
+  }
+
   public function addApplication($aApplication)
   {
     $wasAdded = false;
     if ($this->indexOfApplication($aApplication) !== -1) { return false; }
-    $this->applications[] = $aApplication;
-    if ($aApplication->indexOfJobPosting($this) != -1)
+    $existingJobPosting = $aApplication->getJobPosting();
+    $isNewJobPosting = $existingJobPosting != null && $this !== $existingJobPosting;
+    if ($isNewJobPosting)
     {
-      $wasAdded = true;
+      $aApplication->setJobPosting($this);
     }
     else
     {
-      $wasAdded = $aApplication->addJobPosting($this);
-      if (!$wasAdded)
-      {
-        array_pop($this->applications);
-      }
+      $this->applications[] = $aApplication;
     }
+    $wasAdded = true;
     return $wasAdded;
   }
 
   public function removeApplication($aApplication)
   {
     $wasRemoved = false;
-    if ($this->indexOfApplication($aApplication) == -1)
+    //Unable to remove aApplication, as it must always have a jobPosting
+    if ($this !== $aApplication->getJobPosting())
     {
-      return $wasRemoved;
-    }
-
-    $oldIndex = $this->indexOfApplication($aApplication);
-    unset($this->applications[$oldIndex]);
-    if ($aApplication->indexOfJobPosting($this) == -1)
-    {
+      unset($this->applications[$this->indexOfApplication($aApplication)]);
+      $this->applications = array_values($this->applications);
       $wasRemoved = true;
     }
-    else
-    {
-      $wasRemoved = $aApplication->removeJobPosting($this);
-      if (!$wasRemoved)
-      {
-        $this->applications[$oldIndex] = $aApplication;
-        ksort($this->applications);
-      }
-    }
-    $this->applications = array_values($this->applications);
     return $wasRemoved;
   }
 
@@ -300,18 +274,9 @@ class JobPosting
     $placeholderCourse = $this->course;
     $this->course = null;
     $placeholderCourse->removeJobPosting($this);
-    $copyOfApplications = $this->applications;
-    $this->applications = array();
-    foreach ($copyOfApplications as $aApplication)
+    foreach ($this->applications as $aApplication)
     {
-      if ($aApplication->numberOfJobPostings() <= Application::minimumNumberOfJobPostings())
-      {
-        $aApplication->delete();
-      }
-      else
-      {
-        $aApplication->removeJobPosting($this);
-      }
+      $aApplication->delete();
     }
   }
 

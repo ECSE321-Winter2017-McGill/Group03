@@ -131,7 +131,6 @@ public class TamasController {
 		}
 
 		PersistenceXStream.saveToXMLwithXStream(ms);
-
 	}
 
 	private Applicant createApplicant(String name, int id, String major, boolean isUndergrad, String year, String exp,
@@ -141,8 +140,7 @@ public class TamasController {
 
 		if (name == null || name.trim().length() == 0) {
 			error += "Name cannot be empty!";
-		}
-		if (id < 0) {
+		}		if (id < 0) {
 			error += "You must input a valid id!";
 		}
 		if (major == null || major.trim().length() == 0) {
@@ -152,8 +150,7 @@ public class TamasController {
 			error += "Past experience cannot be empty!";
 		}
 
-		error = error.trim();
-		if (error.length() > 0) {
+		error = error.trim();		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
 
@@ -169,6 +166,7 @@ public class TamasController {
 
 		this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice
 				,"",totalAppointmentHour, ms);
+
 		PersistenceXStream.saveToXMLwithXStream(ms);
 		return this_applicant;
 
@@ -326,18 +324,23 @@ public class TamasController {
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 
-	public void acceptApplication(Application application) {
+	public boolean acceptApplication(Application application) {
 		if (application.getApplicationStatus().equals("Submitted")) {
 			application.setApplicationStatus("Accpeted");
 			PersistenceXStream.saveToXMLwithXStream(ms);
+			return true;
 		}
+		return false;
 	}
 
-	public void rejectApplication(Application application) {
+	public boolean rejectApplication(Application application) {
 		if (application.getApplicationStatus().equals("Submitted")) {
+			
 			application.setApplicationStatus("Rejected");
 			PersistenceXStream.saveToXMLwithXStream(ms);
+			return true;
 		}
+		return false;
 
 	}
 

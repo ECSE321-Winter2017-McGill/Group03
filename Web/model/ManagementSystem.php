@@ -19,32 +19,12 @@ class ManagementSystem
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct($aInstructors = null)
+  public function __construct()
   {
-    if (func_num_args() == 0) { return; }
-
     $this->courses = array();
-    if ($aInstructors == null || $aInstructors->getManagementSystem() != null)
-    {
-      throw new Exception("Unable to create ManagementSystem due to aInstructors");
-    }
-    $this->instructors = $aInstructors;
+    $this->instructors = array();
     $this->applicants = array();
     $this->jobPostings = array();
-  }
-  public static function newInstance($aNameForInstructors)
-  {
-    $thisInstance = new ManagementSystem();
-    $this->courses = array();
-    $thisInstance->instructors = new Instructor($aNameForInstructors, $thisInstance);
-    $thisInstance->applicants = array();
-    $didAddApplicants = $thisInstance->setApplicants($allApplicants);
-    if (!$didAddApplicants)
-    {
-      throw new Exception("Unable to create ManagementSystem, must have at least 1 applicants");
-    }
-    $this->jobPostings = array();
-    return $thisInstance;
   }
 
   //------------------------
@@ -92,9 +72,45 @@ class ManagementSystem
     return $index;
   }
 
+  public function getInstructor_index($index)
+  {
+    $aInstructor = $this->instructors[$index];
+    return $aInstructor;
+  }
+
   public function getInstructors()
   {
-    return $this->instructors;
+    $newInstructors = $this->instructors;
+    return $newInstructors;
+  }
+
+  public function numberOfInstructors()
+  {
+    $number = count($this->instructors);
+    return $number;
+  }
+
+  public function hasInstructors()
+  {
+    $has = $this->numberOfInstructors() > 0;
+    return $has;
+  }
+
+  public function indexOfInstructor($aInstructor)
+  {
+    $wasFound = false;
+    $index = 0;
+    foreach($this->instructors as $instructor)
+    {
+      if ($instructor->equals($aInstructor))
+      {
+        $wasFound = true;
+        break;
+      }
+      $index += 1;
+    }
+    $index = $wasFound ? $index : -1;
+    return $index;
   }
 
   public function getApplicant_index($index)
@@ -184,9 +200,9 @@ class ManagementSystem
     return 0;
   }
 
-  public function addCourseVia($aSemester, $aCourseCoude, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $aCourseJobAllocation, $aInstructor)
+  public function addCourseVia($aSemester, $aCourseName, $aCourseCode, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aNumTaNeeded, $aNumGraderNeeded, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $aInstructor)
   {
-    return new Course($aSemester, $aCourseCoude, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $aCourseJobAllocation, $aInstructor, $this);
+    return new Course($aSemester, $aCourseName, $aCourseCode, $aNumTutorial, $aNumLab, $aNumStudent, $aCredit, $aNumTaNeeded, $aNumGraderNeeded, $aHourRequiredTa, $aHourRequiredGrader, $aBudgetCalculated, $aInstructor, $this);
   }
 
   public function addCourse($aCourse)
@@ -252,6 +268,79 @@ class ManagementSystem
     return $wasAdded;
   }
 
+  public static function minimumNumberOfInstructors()
+  {
+    return 0;
+  }
+
+  public function addInstructorVia($aName)
+  {
+    return new Instructor($aName, $this);
+  }
+
+  public function addInstructor($aInstructor)
+  {
+    $wasAdded = false;
+    if ($this->indexOfInstructor($aInstructor) !== -1) { return false; }
+    $existingManagementSystem = $aInstructor->getManagementSystem();
+    $isNewManagementSystem = $existingManagementSystem != null && $this !== $existingManagementSystem;
+    if ($isNewManagementSystem)
+    {
+      $aInstructor->setManagementSystem($this);
+    }
+    else
+    {
+      $this->instructors[] = $aInstructor;
+    }
+    $wasAdded = true;
+    return $wasAdded;
+  }
+
+  public function removeInstructor($aInstructor)
+  {
+    $wasRemoved = false;
+    //Unable to remove aInstructor, as it must always have a managementSystem
+    if ($this !== $aInstructor->getManagementSystem())
+    {
+      unset($this->instructors[$this->indexOfInstructor($aInstructor)]);
+      $this->instructors = array_values($this->instructors);
+      $wasRemoved = true;
+    }
+    return $wasRemoved;
+  }
+
+  public function addInstructorAt($aInstructor, $index)
+  {  
+    $wasAdded = false;
+    if($this->addInstructor($aInstructor))
+    {
+      if($index < 0 ) { $index = 0; }
+      if($index > $this->numberOfInstructors()) { $index = $this->numberOfInstructors() - 1; }
+      array_splice($this->instructors, $this->indexOfInstructor($aInstructor), 1);
+      array_splice($this->instructors, $index, 0, array($aInstructor));
+      $wasAdded = true;
+    }
+    return $wasAdded;
+  }
+
+  public function addOrMoveInstructorAt($aInstructor, $index)
+  {
+    $wasAdded = false;
+    if($this->indexOfInstructor($aInstructor) !== -1)
+    {
+      if($index < 0 ) { $index = 0; }
+      if($index > $this->numberOfInstructors()) { $index = $this->numberOfInstructors() - 1; }
+      array_splice($this->instructors, $this->indexOfInstructor($aInstructor), 1);
+      array_splice($this->instructors, $index, 0, array($aInstructor));
+      $wasAdded = true;
+    } 
+    else 
+    {
+      $wasAdded = $this->addInstructorAt($aInstructor, $index);
+    }
+    return $wasAdded;
+  }
+
   public function isNumberOfApplicantsValid()
   {
     $isValid = $this->numberOfApplicants() >= self::minimumNumberOfApplicants();
@@ -263,9 +352,9 @@ class ManagementSystem
     return 1;
   }
 
-  public function addApplicantVia($aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aPreferredCourse, $aMajor, $aYear, $aOption1, $aOption2, $aOption3, $aTotalAppointmentHours, $aAllocation)
+  public function addApplicantVia($aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aMajor, $aYear, $aFirstChoice, $aSecondChoice, $aThirdChoice, $aEvaluation, $aTotalAppointmentHours)
   {
-    return new Applicant($aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aPreferredCourse, $aMajor, $aYear, $aOption1, $aOption2, $aOption3, $aTotalAppointmentHours, $aAllocation, $this);
+    return new Applicant($aStudentID, $aName, $aPreviousExperience, $aIsUnderGraduated, $aMajor, $aYear, $aFirstChoice, $aSecondChoice, $aThirdChoice, $aEvaluation, $aTotalAppointmentHours, $this);
   }
 
   public function addApplicant($aApplicant)
@@ -350,9 +439,9 @@ class ManagementSystem
     return 0;
   }
 
-  public function addJobPostingVia($aJobTitle, $aSubmissionDeadline, $aPerferredExperience, $aNumNeeded, $aHourRate, $aCourse)
+  public function addJobPostingVia($aJobTitle, $aSubmissionDeadline, $aPerferredExperience, $aHourRate, $aCourse)
   {
-    return new JobPosting($aJobTitle, $aSubmissionDeadline, $aPerferredExperience, $aNumNeeded, $aHourRate, $this, $aCourse);
+    return new JobPosting($aJobTitle, $aSubmissionDeadline, $aPerferredExperience, $aHourRate, $this, $aCourse);
   }
 
   public function addJobPosting($aJobPosting)
@@ -433,12 +522,14 @@ class ManagementSystem
       $this->courses = array_values($this->courses);
     }
     
-    $existingInstructors = $this->instructors;
-    $this->instructors = null;
-    if ($existingInstructors != null)
+    while (count($this->instructors) > 0)
     {
-      $existingInstructors->delete();
+      $aInstructor = $this->instructors[count($this->instructors) - 1];
+      $aInstructor->delete();
+      unset($this->instructors[$this->indexOfInstructor($aInstructor)]);
+      $this->instructors = array_values($this->instructors);
     }
+    
     while (count($this->applicants) > 0)
     {
       $aApplicant = $this->applicants[count($this->applicants) - 1];
