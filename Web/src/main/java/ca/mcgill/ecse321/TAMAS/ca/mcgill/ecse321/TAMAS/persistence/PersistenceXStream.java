@@ -20,10 +20,12 @@ public abstract class PersistenceXStream {
 		ManagementSystem ms;
 		// setFilename(fileName);
 		setAlias("jobInfo", JobPosting.class);
-
+		DBmanager.writeFile("initialize model manager");
 		// load model if exists, create otherwise
 		File file = new File(fileName);
 		if (file.exists()) {
+			System.out.println("File Exists");
+
 			ms = (ManagementSystem) loadFromXMLwithXStream();
 		}
 
@@ -35,29 +37,30 @@ public abstract class PersistenceXStream {
 				e.printStackTrace();
 				// System.exit(1);
 			}
-			ms = new ManagementSystem();
+			ms = (ManagementSystem) loadFromXMLwithXStream();
 			saveToXMLwithXStream(ms);
 		}
 		return ms;
 
 	}
 
-	public static boolean saveToXMLwithXStream(Object obj) {
+	public static String saveToXMLwithXStream(Object obj) {
 		xstream.setMode(XStream.ID_REFERENCES);
 		String xml = xstream.toXML(obj); // save our xml file
-		try {
-			DBmanager.updateDB(xml);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		System.out.println(xml);
+//		try {
+//			DBmanager.updateDB(xml);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		try {
 			FileWriter writer = new FileWriter(filename);
 			writer.write(xml);
 			writer.close();
-			return true;
+			return xml;
 		} catch (IOException e) {
 			e.printStackTrace();
-			return false;
+			return "";
 		}
 	}
 

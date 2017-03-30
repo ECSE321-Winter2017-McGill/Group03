@@ -43,8 +43,14 @@
 			<systemPath>${project.basedir}/src/lib/xstream-1.4.7.jar</systemPath>
 		</dependency>
 		
-		
-				<dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql</artifactId>
+			<version>1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/lib/mysql-connector-java-5.1.40-bin.jar</systemPath>
+		</dependency>
+		<dependency>
 			<groupId>xmlpull</groupId>
 			<artifactId>xml</artifactId>
 			<version>1.4.7</version>
@@ -61,17 +67,6 @@
 			<systemPath>${project.basedir}/src/lib/xpp3_min-1.1.4c.jar</systemPath>
 		</dependency>
 		
-		
-		
-		
-		
-		<dependency>
-			<groupId>sample</groupId>
-			<artifactId>com.sample</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/lib/ca.mcgill.ecse321.TAMAS.jar</systemPath>
-		</dependency>
 		<dependency>
 
 			<groupId>org.webjars</groupId>

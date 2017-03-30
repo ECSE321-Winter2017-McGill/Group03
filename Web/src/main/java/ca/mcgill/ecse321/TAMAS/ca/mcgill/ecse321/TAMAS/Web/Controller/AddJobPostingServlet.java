@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.TAMAS.Web.Controller;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -17,10 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.thoughtworks.xstream.XStream;
+
 import ca.mcgill.ecse321.TAMAS.controller.TamasController;
 import ca.mcgill.ecse321.TAMAS.model.Course;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
+import ca.mcgill.ecse321.TAMAS.persistence.DBmanager;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
 @WebServlet(urlPatterns = "/AddJobPosting.do")
@@ -29,6 +33,7 @@ public class AddJobPostingServlet extends HttpServlet {
 	/**
 	 * 
 	 */
+	private static XStream xstream = new XStream();
 	private static final long serialVersionUID = 1L;
 	HashMap<String, Course> cmap = new HashMap<String, Course>();
 
@@ -39,16 +44,14 @@ public class AddJobPostingServlet extends HttpServlet {
 		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
 
 		String courses = "";
-		
 
-		
 		for (Course c : ms.getCourses()) {
 			String key = c.getCourseCode();
 			cmap.put(key, c);
 			courses += "<option value=" + key + ">" + key + "</option>";
 
 		}
-		
+
 		// <option value="COMP 251">COMP 251</option>
 		// <option value="ECSE 321">ECSE 321</option>
 		// <option value="ECSE 211">ECSE 211</option>
@@ -85,10 +88,18 @@ public class AddJobPostingServlet extends HttpServlet {
 		try {
 			TamasController c = new TamasController(ms);
 			c.createJobPosting(jobPosition, deadlineDate, exp, hourlyRate, aCourse);
-
+			// PersistenceXStream.saveToXMLwithXStream(ms);
+			DBmanager.updateDB(objToXML(ms));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static String objToXML(Object obj) {
+		xstream.setMode(XStream.ID_REFERENCES);
+		String xml = xstream.toXML(obj); // save our xml file
+		return xml;
+
 	}
 
 }
