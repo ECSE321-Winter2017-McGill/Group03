@@ -107,6 +107,8 @@ class Applicant{
   String secondChoice;
   
   String thirdChoice;
+
+  String evaluation;
   
   Integer totalAppointmentHours;
 }

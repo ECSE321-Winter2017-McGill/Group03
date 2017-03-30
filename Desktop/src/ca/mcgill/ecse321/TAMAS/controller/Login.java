@@ -20,7 +20,7 @@ public class Login {
 		ResultSet rs = getDB("login");
 		String name="Jackson";
 		@SuppressWarnings("unused")
-		Applicant applicant = new Applicant (123,name,null,true,"","","","","",0,ms);
+		Applicant applicant = new Applicant (123,name,null,true,"","","","","","", 0,ms);
 		
 		try {
 			while (rs.next()) {
