@@ -48,6 +48,7 @@ public class AllApplication extends JFrame {
 		this.ms = ms;
 		tm = new TamasController(ms);
 		data = new String[ms.numberOfApplicants() * 3 + 1][5];
+		System.out.println(data);
 		initComponents();
 	}
 

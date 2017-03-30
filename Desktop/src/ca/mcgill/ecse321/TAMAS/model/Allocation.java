@@ -4,7 +4,9 @@
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 
-// line 160 "../../../../../TAMAS.ump"
+
+// line 161 "../../../../../TAMAS.ump"
+
 public class Allocation
 {
 
