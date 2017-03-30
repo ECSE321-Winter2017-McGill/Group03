@@ -22,6 +22,7 @@ public class MainPage extends JFrame {
 	private JButton addJobPosting;
 	private JButton applyForJob;
 	private JButton addCourse;
+	private JButton addTAEval;
 	private static String fileName = "output/data.xml";
 
 	private String userName;
@@ -42,6 +43,11 @@ public class MainPage extends JFrame {
 		addJobPosting.setPreferredSize(new Dimension(300, 150));
 		applyForJob = new JButton("View all Applications");
 		applyForJob.setPreferredSize(new Dimension(300, 150));
+		
+		// Instructor Only
+		addTAEval = new JButton("Write a new evaluation");
+		addTAEval.setPreferredSize(new Dimension(300, 150));
+		
 		setTitle("Welcome Page");
 		
 		BorderLayout layout = new BorderLayout();
@@ -51,13 +57,14 @@ public class MainPage extends JFrame {
 		if (role.getClass().equals(Instructor.class)) {
 			pane.add(addCourse, BorderLayout.PAGE_START);
 			pane.add(addJobPosting);
-			pane.add(applyForJob, BorderLayout.PAGE_END);
+			pane.add(addTAEval, BorderLayout.PAGE_END);
 		} else if (role.getClass().equals(Applicant.class)) {
 			pane.add(addJobPosting, BorderLayout.PAGE_START);
 			pane.add(applyForJob, BorderLayout.PAGE_END);
 		} else {
 			pane.add(addCourse, BorderLayout.PAGE_START);
 			pane.add(addJobPosting);
+			pane.add(addTAEval);
 			pane.add(applyForJob, BorderLayout.PAGE_END);
 		}
 
@@ -87,6 +94,16 @@ public class MainPage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
 				new AllCourses(ms, user).setVisible(true);
+				dispose();
+			}
+
+		});
+		addTAEval.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
+				new WriteEvaluation(ms, user).setVisible(true);
 				dispose();
 			}
 
