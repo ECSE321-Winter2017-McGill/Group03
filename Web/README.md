@@ -1,4 +1,4 @@
-##Set Up Instructions:
+## Set Up Instructions:
 1. Download Eclipse for Java EE
 2. Run downloaded Eclipse, and make sure it has Maven plugin
 3. Open the Web Project
