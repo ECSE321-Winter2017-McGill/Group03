@@ -40,7 +40,7 @@ public class ViewJobPostingServlet extends HttpServlet {
 		String fileName = "output/data.xml";
 		DBmanager.writeFile(DBmanager.getDB());
 		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
-		//System.out.println("aaaaa");
+		// System.out.println("aaaaa");
 		for (JobPosting js : ms.getJobPostings()) {
 			result += "<tr>";
 			if (js.getJobTitle().equals("TA")) {
@@ -53,6 +53,7 @@ public class ViewJobPostingServlet extends HttpServlet {
 			result += "<td>" + js.getHourRate() + " </td>";
 			result += "<td>" + js.getPerferredExperience() + " </td>";
 			result += "<td>" + js.getSubmissionDeadline() + " </td>";
+			result += "</tr>";
 		}
 
 		request.setAttribute("result", result);

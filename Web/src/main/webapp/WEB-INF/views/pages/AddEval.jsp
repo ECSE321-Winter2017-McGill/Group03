@@ -53,29 +53,47 @@
 					<div class="box-header with-border"></div>
 					<div class="box-body">
 						<div class="mydiv">
-							<table id="myTable" class="table no-margin">
-								<thead>
-									<tr>
-										<th>TA Name</th>
-										<th>Evaluation</th>
-									</tr>
+							<label>Choose a TA: </label> <br />
+							<form id="evalTa">
+								<select name="TA" class="form-control" id="">
+${TAs}
+								</select> <br /> <label>Write Evaluation here</label>
+								<textarea class="form-control" name="evaluation"></textarea>
+								<span class="error"> 
+								</span> <br /> <input class="btn btn-sm btn-info btn-flat pull-left"
+									type="submit" value='Submit' /> <br />
 
-								</thead>
-								<tbody>${data}
-								</tbody>
-							</table>
-						</div>
-
+							</form>
+						
+						<br />
+</div>
 						<p>
 							<br />
 						</p>
-						<a class="btn btn-info" href="AddEval.jsp">Write an Evaluation</a>
-						<br />
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script>
+
+    $("#evalTa").submit(function(e) {
+    var url = "EvalTa.jsp";
+    $.ajax({
+           type: "POST",
+           url: url,
+           data: $("#evalTa").serialize(),
+           success: function(data)
+           {
+               //if (data.search("success") != -1) {
+               //    window.location.replace('EvalTa.jsp');
+               //}
+           }
+         });
+     //$("#mydiv").load(location.href + " #mydiv");
+    //location.reload(); 
+    });
+    </script>
 	<script>
 $(document).ready(function(){
     $('#myTable').dataTable();

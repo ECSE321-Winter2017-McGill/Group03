@@ -4,16 +4,20 @@ import java.util.Date;
 import java.util.Calendar;
 import java.util.List;
 
+import com.thoughtworks.xstream.XStream;
+
+import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
 import ca.mcgill.ecse321.TAMAS.model.Course;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
+import ca.mcgill.ecse321.TAMAS.persistence.DBmanager;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
-public class TamasController {
-
+public class TController {
+	private static XStream xstream = new XStream();
 	private ManagementSystem ms = new ManagementSystem();
 
 	public static Date getToday() {
@@ -53,14 +57,38 @@ public class TamasController {
 
 	}
 
-	public TamasController(ManagementSystem ms) {
+	public TController(ManagementSystem ms) {
 		this.ms = ms;
 	}
 
+	public void createTAEval(String name, String eval) throws InvalidInputException {
+		String error = "";
+
+		Applicant newApplicant;
+		if(eval==null||eval.length()==0){
+			error+="No Input";
+		}
+		if (eval.trim().length()==0) {
+			error += "A space cannot be an evaluation! ";
+		}
+		if (error.length() > 0) {
+			throw new InvalidInputException(error);
+		}
+		for (int i=0; i<this.ms.getApplicants().size(); i++) {
+			if (this.ms.getApplicants().get(i).getName().equals(name)) {
+				newApplicant = this.ms.getApplicants().get(i);
+				newApplicant.setEvaluation(eval);
+				break;
+			}
+			
+		}
+		DBmanager.updateDB(this.objToXML(ms));
+	}
+	
 	public void createJobPosting(String jobPosition, Date deadlineDate, String exp, double hourlyRate, Course aCourse)
 			throws InvalidInputException {
 		String error = "";
-
+		System.out.println("ccJP");
 		if (deadlineDate == null) {
 			error += "Please specify a date! ";
 		}
@@ -78,7 +106,7 @@ public class TamasController {
 		}
 
 		ms.addJobPosting(jobPosition, (java.sql.Date) deadlineDate, exp, hourlyRate, aCourse);
-		PersistenceXStream.saveToXMLwithXStream(ms);
+		DBmanager.updateDB(this.objToXML(ms));
 
 	}
 
@@ -107,7 +135,6 @@ public class TamasController {
 		}
 
 		PersistenceXStream.saveToXMLwithXStream(ms);
-
 	}
 
 	private Applicant createApplicant(String name, int id, String major, boolean isUndergrad, String year, String exp,
@@ -117,8 +144,7 @@ public class TamasController {
 
 		if (name == null || name.trim().length() == 0) {
 			error += "Name cannot be empty!";
-		}
-		if (id < 0) {
+		}		if (id < 0) {
 			error += "You must input a valid id!";
 		}
 		if (major == null || major.trim().length() == 0) {
@@ -128,8 +154,7 @@ public class TamasController {
 			error += "Past experience cannot be empty!";
 		}
 
-		error = error.trim();
-		if (error.length() > 0) {
+		error = error.trim();		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
 
@@ -143,8 +168,9 @@ public class TamasController {
 			}
 		}
 
-		this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice,
-				totalAppointmentHour, ms);
+		this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice
+				,"",totalAppointmentHour, ms);
+
 		PersistenceXStream.saveToXMLwithXStream(ms);
 		return this_applicant;
 
@@ -187,7 +213,7 @@ public class TamasController {
 
 		try {
 			// TODO: Create a real applicant to test
-			ms.addApplicant(0, name, null, true, null, null, null, null, null, 0);
+			ms.addApplicant(0, name, null, true, null, null, null, null, null, null, 0);
 		} catch (RuntimeException e) {
 			throw new InvalidInputException(e.getMessage());
 		}
@@ -302,18 +328,29 @@ public class TamasController {
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 
-	public void acceptApplication(Application application) {
+	public boolean acceptApplication(Application application) {
 		if (application.getApplicationStatus().equals("Submitted")) {
 			application.setApplicationStatus("Accpeted");
 			PersistenceXStream.saveToXMLwithXStream(ms);
+			return true;
 		}
+		return false;
 	}
 
-	public void rejectApplication(Application application) {
+	public boolean rejectApplication(Application application) {
 		if (application.getApplicationStatus().equals("Submitted")) {
+			
 			application.setApplicationStatus("Rejected");
 			PersistenceXStream.saveToXMLwithXStream(ms);
+			return true;
 		}
+		return false;
+
+	}
+	public String objToXML(Object obj) {
+		xstream.setMode(XStream.ID_REFERENCES);
+		String xml = xstream.toXML(obj); // save our xml file
+		return xml;
 
 	}
 

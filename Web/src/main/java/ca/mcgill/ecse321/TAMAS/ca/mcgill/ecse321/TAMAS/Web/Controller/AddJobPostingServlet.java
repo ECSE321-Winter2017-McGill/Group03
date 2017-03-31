@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.thoughtworks.xstream.XStream;
 
-import ca.mcgill.ecse321.TAMAS.controller.TamasController;
+import ca.mcgill.ecse321.TAMAS.controller.TController;
 import ca.mcgill.ecse321.TAMAS.model.Course;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
@@ -40,6 +40,7 @@ public class AddJobPostingServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 
 			HttpServletResponse response) throws ServletException, IOException {
+		
 		String fileName = "output/data.xml";
 		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
 
@@ -52,10 +53,6 @@ public class AddJobPostingServlet extends HttpServlet {
 
 		}
 
-		// <option value="COMP 251">COMP 251</option>
-		// <option value="ECSE 321">ECSE 321</option>
-		// <option value="ECSE 211">ECSE 211</option>
-		//
 		request.getSession().setAttribute("courses", courses);
 
 		request.getRequestDispatcher("/WEB-INF/views/pages/AddJobPosting.jsp").forward(
@@ -86,7 +83,7 @@ public class AddJobPostingServlet extends HttpServlet {
 		Course aCourse = cmap.get(cname);
 
 		try {
-			TamasController c = new TamasController(ms);
+			TController c = new TController(ms);
 			c.createJobPosting(jobPosition, deadlineDate, exp, hourlyRate, aCourse);
 			// PersistenceXStream.saveToXMLwithXStream(ms);
 			DBmanager.updateDB(objToXML(ms));

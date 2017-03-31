@@ -24,11 +24,11 @@
 			<div class="sidebar-nav navbar-collapse">
 
 				<div class="navbar-header">
-					<a class="navbar-brand" href="dashboard.php">TAMAS</a>
+					<a class="navbar-brand" href="Dashboard.do">TAMAS</a>
 				</div>
 				<h6 class="welcome">
-					Welcome
-					<?php echo $login_session; ?>
+					Welcome 
+					${name}
 				</h6>
 				<h6 class="welcome">
 					<a href="logout.php">Sign Out</a>
@@ -41,7 +41,7 @@
 					<li><a href="EvalTa.jsp"><i class="fa fa-dashboard fa-fw"></i>
 							TA Evaluaion</a></li>
 
-					<li><a href="ViewAllJobPosting.jsp"><i
+					<li><a href="viewAllApplication.jsp"><i
 							class="fa fa-dashboard fa-fw"></i> View Application</a></li>
 				</ul>
 			</div>

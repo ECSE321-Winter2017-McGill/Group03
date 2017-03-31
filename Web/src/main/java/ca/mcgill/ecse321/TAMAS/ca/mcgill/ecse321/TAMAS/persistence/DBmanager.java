@@ -21,12 +21,11 @@ public class DBmanager {
 	private static ManagementSystem ms = new ManagementSystem();
 
 	public static void writeFile(String data) {
-		System.out.println("Write");
+		System.out.println("Write1");
 		try {
 			FileWriter writer = new FileWriter("output/data.xml");
 			writer.write(data);
 			writer.close();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -51,7 +50,7 @@ public class DBmanager {
 	}
 
 	public static String getDB() {
-		System.out.println("GetDB");
+		System.out.println("GetDB1");
 		ResultSet rs = null;
 		String q = "xml";
 		try {

@@ -20,7 +20,7 @@
 				<div class="navbar-header">
 					<a class="navbar-brand" href="dashboard.php">TAMAS</a>
 				</div>
-				<h6 class="welcome">Welcome</h6>
+				<h6 class="welcome">Welcome ${name}</h6>
 				<h6 class="welcome">
 					<a href="logout.php">Sign Out</a>
 				</h6>

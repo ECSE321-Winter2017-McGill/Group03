@@ -24,11 +24,11 @@
 			<div class="sidebar-nav navbar-collapse">
 
 				<div class="navbar-header">
-					<a class="navbar-brand" href="dashboard.php">TAMAS</a>
+					<a class="navbar-brand" href="Dashboard.do">TAMAS</a>
 				</div>
 				<h6 class="welcome">
-					Welcome
-					<?php echo $login_session; ?>
+					Welcome 
+					${name}
 				</h6>
 				<h6 class="welcome">
 					<a href="logout.php">Sign Out</a>
@@ -82,8 +82,6 @@ $(document).ready(function(){
 
 						<span class="error"> ${viewAllJobPostingsError } </span>
 					</div>
-					<a class="btn btn-info" href="AddJobPosting.do">Add a Job
-						Posting</a> <br />
 					<p>
 						<br />
 					</p>

@@ -6,7 +6,7 @@ ca\mcgill\ecse321\TAMAS\model\TAJob.class
 ca\mcgill\ecse321\TAMAS\model\ManagementSystem.class
 ca\mcgill\ecse321\TAMAS\persistence\PersistenceXStream.class
 ca\mcgill\ecse321\TAMAS\Web\Controller\ViewApplicationsServlet.class
-ca\mcgill\ecse321\TAMAS\controller\Login.class
+ca\mcgill\ecse321\TAMAS\Web\Controller\EvalServlet.class
 ca\mcgill\ecse321\TAMAS\Web\Controller\LoginServlet.class
 ca\mcgill\ecse321\TAMAS\model\Applicant.class
 ca\mcgill\ecse321\TAMAS\controller\InvalidInputException.class
@@ -19,7 +19,7 @@ ca\mcgill\ecse321\TAMAS\model\OfferedJob$Job.class
 ca\mcgill\ecse321\TAMAS\Web\Controller\AddJobPostingServlet.class
 ca\mcgill\ecse321\TAMAS\model\JobPosting.class
 ca\mcgill\ecse321\TAMAS\model\Allocation.class
-ca\mcgill\ecse321\TAMAS\controller\TamasController.class
 ca\mcgill\ecse321\TAMAS\model\CourseComponent.class
+ca\mcgill\ecse321\TAMAS\controller\TController.class
 ca\mcgill\ecse321\TAMAS\Web\Controller\dashboardServlet.class
 ca\mcgill\ecse321\TAMAS\model\Department.class

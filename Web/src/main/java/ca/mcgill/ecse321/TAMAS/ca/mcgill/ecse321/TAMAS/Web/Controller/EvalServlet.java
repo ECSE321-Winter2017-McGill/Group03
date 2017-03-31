@@ -23,9 +23,9 @@ import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.DBmanager;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
-@WebServlet(urlPatterns = "/EvalTa.jsp")
+@WebServlet(urlPatterns = "/AddEval.jsp")
 
-public class EvalTAServlet extends HttpServlet {
+public class EvalServlet extends HttpServlet {
 	private static XStream xstream = new XStream();
 	HashMap<String, Applicant> map = new HashMap<String, Applicant>();
 
@@ -38,27 +38,7 @@ public class EvalTAServlet extends HttpServlet {
 
 			HttpServletResponse response) throws ServletException, IOException {
 		DBmanager.writeFile(DBmanager.getDB());
-		String fileName = "output/data.xml";
-		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
-		
-		String TAs = "";
-		String data = "";
-		for (Applicant app : ms.getApplicants()) {
-			//System.out.println(app.getName()+"eval:"+app.getEvaluation());
-			if (!app.getEvaluation().equals("")) {
-				data += "<tr>";
-				data += "<td>" + app.getName() + "</td>";
-				data += "<td>" + app.getEvaluation() + "</td>";
-				data += "</tr>";
-			}
-			String key = app.getName();
-			map.put(key, app);
-			TAs += "<option value=" + key + ">" + key + "</option>";
-		}
-		request.getSession().setAttribute("data", data);
-		request.getSession().setAttribute("TAs", TAs);
-
-		request.getRequestDispatcher("/WEB-INF/views/pages/EvalTA.jsp").forward(
+		request.getRequestDispatcher("/WEB-INF/views/pages/AddEval.jsp").forward(
 
 				request, response);
 

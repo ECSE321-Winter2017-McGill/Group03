@@ -18,7 +18,7 @@
 			<div class="sidebar-nav navbar-collapse">
 
 				<div class="navbar-header">
-					<a class="navbar-brand" href="dashboard.php">TAMAS</a>
+					<a class="navbar-brand" href="Dashboard.do">TAMAS</a>
 				</div>
 				<h6 class="welcome">Welcome
                             ${name}
