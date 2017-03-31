@@ -318,3 +318,7 @@
 0:0:0:0:0:0:0:1 - - [31/Mar/2017:01:58:18 -0400] "POST /AddJobPosting.do HTTP/1.1" 200 - http-bio-8080-exec-2 2038
 0:0:0:0:0:0:0:1 - - [31/Mar/2017:01:58:19 -0400] "GET /ViewAllJobPosting.jsp HTTP/1.1" 200 3562 http-bio-8080-exec-3 1002
 0:0:0:0:0:0:0:1 - - [31/Mar/2017:02:05:27 -0400] "GET / HTTP/1.1" 200 2231 http-bio-8080-exec-1 94
+0:0:0:0:0:0:0:1 - - [31/Mar/2017:02:36:34 -0400] "GET / HTTP/1.1" 200 2231 http-bio-8080-exec-1 87
+0:0:0:0:0:0:0:1 - - [31/Mar/2017:02:36:34 -0400] "GET /css/style.css HTTP/1.1" 304 - http-bio-8080-exec-2 5
+0:0:0:0:0:0:0:1 - - [31/Mar/2017:02:36:34 -0400] "GET /img/mclogo.png HTTP/1.1" 304 - http-bio-8080-exec-4 2
+0:0:0:0:0:0:0:1 - - [31/Mar/2017:02:36:34 -0400] "GET /img/mcimg.jpg HTTP/1.1" 304 - http-bio-8080-exec-3 1
