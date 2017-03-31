@@ -56,7 +56,7 @@ public class ViewJobPostingServlet extends HttpServlet {
 		}
 
 		request.setAttribute("result", result);
-		request.getRequestDispatcher("/WEB-INF/views/pages/viewAllJobPostings.jsp").forward(
+		request.getRequestDispatcher("/WEB-INF/views/pages/ViewAllJobPosting.jsp").forward(
 
 				request, response);
 

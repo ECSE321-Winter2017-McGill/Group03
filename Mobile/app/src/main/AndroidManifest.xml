@@ -26,5 +26,5 @@
         <activity android:name=".ViewStatus_Activity" />
         <activity android:name=".submitApplication_Activity"></activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

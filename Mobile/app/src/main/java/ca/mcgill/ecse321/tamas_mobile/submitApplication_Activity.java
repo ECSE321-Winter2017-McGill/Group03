@@ -19,13 +19,13 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.mcgill.ecse321.tamas.controller.InvalidInputException;
-import ca.mcgill.ecse321.tamas.controller.TamasController;
-import ca.mcgill.ecse321.tamas.model.Allocation;
-import ca.mcgill.ecse321.tamas.model.Applicant;
-import ca.mcgill.ecse321.tamas.model.Instructor;
-import ca.mcgill.ecse321.tamas.model.ManagementSystem;
-import ca.mcgill.ecse321.tamas.persistence.PersistenceXStream;
+import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
+import ca.mcgill.ecse321.TAMAS.controller.TamasController;
+import ca.mcgill.ecse321.TAMAS.model.Allocation;
+import ca.mcgill.ecse321.TAMAS.model.Applicant;
+import ca.mcgill.ecse321.TAMAS.model.Instructor;
+import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
+import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
 public class submitApplication_Activity extends AppCompatActivity {
 
@@ -197,16 +197,16 @@ public class submitApplication_Activity extends AppCompatActivity {
 
         TamasController controller = new TamasController(ms);
 
-                 try{
-                     if (id.getText().toString().equals("")){
-                         controller.createApplicant(name.getText().toString(),-1,major.getText().toString(),undergrad,this_year,experience.getText().toString(),selectedPreference1,selectedPreference2,selectedPreference3,0);
-                     }
-                      controller.createApplicant(name.getText().toString(),Integer.parseInt(id.getText().toString()),major.getText().toString(),undergrad,this_year,experience.getText().toString(),selectedPreference1,selectedPreference2, selectedPreference3,0);
-
-                 }
-                  catch (InvalidInputException e){
-                      error = e.getMessage();
-                  }
+//                 try{
+//                     if (id.getText().toString().equals("")){
+////                         controller.createApplicantion(name.getText().toString(),-1,major.getText().toString(),undergrad,this_year,experience.getText().toString(),selectedPreference1,selectedPreference2,selectedPreference3,0);
+//                     }
+////                      controller.createApplicant(name.getText().toString(),Integer.parseInt(id.getText().toString()),major.getText().toString(),undergrad,this_year,experience.getText().toString(),selectedPreference1,selectedPreference2, selectedPreference3,0);
+//
+//                 }
+//                  catch (InvalidInputException e){
+//                      error = e.getMessage();
+//                  }
 
         refreshData();
 

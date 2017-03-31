@@ -26,19 +26,19 @@
 				<div class="navbar-header">
 					<a class="navbar-brand" href="dashboard.php">TAMAS</a>
 				</div>
-				<h6 class="welcome">
-                    Welcome
-                </h6>
+				<h6 class="welcome">Welcome</h6>
 				<h6 class="welcome">
 					<a href="logout.php">Sign Out</a>
 				</h6>
 				<ul class="nav" id="side-menu">
-					<li><a href="Dashboard.do"><i class="fa fa-dashboard fa-fw"></i>
-							Dashboard</a></li>
-					<li><a href="ViewAllJobPosting.jsp"><i class="fa fa-dashboard fa-fw"></i>
-							View Job Postings</a></li>
+					<li><a href="Dashboard.do"><i
+							class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
+					<li><a href="ViewAllJobPosting.jsp"><i
+							class="fa fa-dashboard fa-fw"></i> View Job Postings</a></li>
 					<li><a href="EvalTa.jsp"><i class="fa fa-dashboard fa-fw"></i>
 							TA Evaluaion</a></li>
+					<li><a href="viewAllApplication.jsp"><i
+							class="fa fa-dashboard fa-fw"></i> View Application</a></li>
 				</ul>
 			</div>
 		</div>
@@ -62,15 +62,13 @@
 									<option value="TA-ECSE 221-TA2">TA-ECSE 221-TA2</option>
 								</select> <br /> <label>Write Evaluation here</label>
 								<textarea class="form-control" name="evaluation"></textarea>
-								<span class="error">
-                            <?php
+								<span class="error"> <?php
 																												if (isset ( $_SESSION ['errorEvaluation'] ) && ! empty ( $_SESSION ['errorEvaluation'] )) {
 																													echo "*" . $_SESSION ["errorEvaluation"];
 																												}
 																												?>
-                        </span> <br /> <input
-									class="btn btn-sm btn-info btn-flat pull-left" type="submit"
-									value='Submit' /> <br />
+								</span> <br /> <input class="btn btn-sm btn-info btn-flat pull-left"
+									type="submit" value='Submit' /> <br />
 
 							</form>
 						</div>
@@ -83,7 +81,7 @@
 								</tr>
 							</thead>
 							<tbody>
-                                </tbody>
+							</tbody>
 						</table>
 
 						<p>

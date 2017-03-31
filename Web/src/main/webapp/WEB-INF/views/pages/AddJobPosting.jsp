@@ -31,6 +31,8 @@
 							class="fa fa-dashboard fa-fw"></i> View Job Postings</a></li>
 					<li><a href="EvalTa.jsp"><i class="fa fa-dashboard fa-fw"></i>
 							TA Evaluaion</a></li>
+					<li><a href="viewAllApplication.jsp"><i
+							class="fa fa-dashboard fa-fw"></i> View Application</a></li>
 				</ul>
 			</div>
 		</div>
