@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
+import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.controller.TamasController;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
@@ -12,6 +13,7 @@ import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -191,9 +193,14 @@ public class AllApplication extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String appDescription = allApplication.getItemAt(selectedApplication).toString();
 				Application selectedApp = applicationMap.get(appDescription);
-				if (!tm.acceptApplication(selectedApp)) {
-					JOptionPane.showMessageDialog(AllApplication.this,
-							"You cannot change the status after it has been set");
+				try {
+					if (!tm.acceptApplication(selectedApp)) {
+						JOptionPane.showMessageDialog(AllApplication.this,
+								"You cannot change the status after it has been set");
+					}
+				} catch (HeadlessException | InvalidInputException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 				dispose();
 				initComponents();
@@ -205,9 +212,14 @@ public class AllApplication extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String appDescription = allApplication.getItemAt(selectedApplication).toString();
 				Application selectedApp = applicationMap.get(appDescription);
-				if (!tm.rejectApplication(selectedApp)) {
-					JOptionPane.showMessageDialog(AllApplication.this,
-							"You cannot change the status after it has been set");
+				try {
+					if (!tm.rejectApplication(selectedApp)) {
+						JOptionPane.showMessageDialog(AllApplication.this,
+								"You cannot change the status after it has been set");
+					}
+				} catch (HeadlessException | InvalidInputException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 				dispose();
 				initComponents();
