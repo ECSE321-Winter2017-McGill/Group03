@@ -324,16 +324,16 @@ public class TamasController {
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 
-	public boolean acceptApplication(Application application) {
+	public boolean acceptApplication(Application application) throws InvalidInputException {
 		if (application.getApplicationStatus().equals("Submitted")) {
-			application.setApplicationStatus("Accpeted");
+			application.setApplicationStatus("Accepted");
 			PersistenceXStream.saveToXMLwithXStream(ms);
 			return true;
 		}
 		return false;
 	}
 
-	public boolean rejectApplication(Application application) {
+	public boolean rejectApplication(Application application) throws InvalidInputException {
 		if (application.getApplicationStatus().equals("Submitted")) {
 			
 			application.setApplicationStatus("Rejected");
