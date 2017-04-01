@@ -26,10 +26,7 @@
 				<div class="navbar-header">
 					<a class="navbar-brand" href="Dashboard.do">TAMAS</a>
 				</div>
-				<h6 class="welcome">
-					Welcome 
-					${name}
-				</h6>
+				<h6 class="welcome">Welcome ${name}</h6>
 				<h6 class="welcome">
 					<a href="logout.php">Sign Out</a>
 				</h6>
@@ -43,6 +40,8 @@
 
 					<li><a href="viewAllApplication.jsp"><i
 							class="fa fa-dashboard fa-fw"></i> View Application</a></li>
+					<li><a href="Schedule.jsp"><i
+							class="fa fa-dashboard fa-fw"></i> TA Schedule</a></li>
 				</ul>
 			</div>
 		</div>
@@ -74,15 +73,15 @@
 								</tbody>
 							</table>
 							<script>
-$(document).ready(function(){
-    $('#myTable').dataTable();
-});
-                            </script>
+								$(document).ready(function() {
+									$('#myTable').dataTable();
+								});
+							</script>
 						</div>
 
 						<span class="error"> ${viewAllJobPostingsError } </span>
 					</div>
-					<a class="btn btn-info" href="AddJobPosting.do">Add a Job
+					<a class="btn btn-info" href="AddJobPosting.jsp">Add a Job
 						Posting</a> <br />
 					<p>
 						<br />

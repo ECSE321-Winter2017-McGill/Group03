@@ -33,11 +33,13 @@ public class EvalServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	private String evalError="";
 	protected void doGet(HttpServletRequest request,
 
 			HttpServletResponse response) throws ServletException, IOException {
+		evalError="";
 		DBmanager.writeFile(DBmanager.getDB());
+		request.setAttribute("evalError", evalError);
 		request.getRequestDispatcher("/WEB-INF/views/pages/AddEval.jsp").forward(
 
 				request, response);
@@ -47,7 +49,7 @@ public class EvalServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 
 			HttpServletResponse response) throws ServletException, IOException {
-		
+		evalError="";
 		String fileName = "output/data.xml";
 
 		String taName = request.getParameter("TA");
@@ -56,17 +58,23 @@ public class EvalServlet extends HttpServlet {
 		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
 
 		try {
+			
 			TController c = new TController(ms);
 			System.out.println(taName+"eval1:"+Eval);
 			c.createTAEval(taName, Eval);
 			System.out.println(taName+"eval2:"+Eval);
 			DBmanager.updateDB(objToXML(ms));
 		} catch (Exception e) {
+			evalError=e.getMessage();
+			System.out.println(e.getMessage());
 			
+			request.setAttribute("evalError", evalError);
+			
+			request.getRequestDispatcher("/WEB-INF/views/AddEval.jsp").forward(
+					request, response);
 			e.printStackTrace();
 		}
 	}
-
 	public static String objToXML(Object obj) {
 		xstream.setMode(XStream.ID_REFERENCES);
 		String xml = xstream.toXML(obj); // save our xml file

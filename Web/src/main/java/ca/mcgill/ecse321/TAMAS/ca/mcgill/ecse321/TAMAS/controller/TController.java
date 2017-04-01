@@ -88,14 +88,13 @@ public class TController {
 	public void createJobPosting(String jobPosition, Date deadlineDate, String exp, double hourlyRate, Course aCourse)
 			throws InvalidInputException {
 		String error = "";
-		System.out.println("ccJP");
 		if (deadlineDate == null) {
 			error += "Please specify a date! ";
 		}
 		if (exp == null || exp.trim().length() == 0) {
 			error += "Please specify preferred experience! ";
 		}
-		if (hourlyRate < 0) {
+		if (hourlyRate <= 0) {
 			error += "Please specify hourly wage! ";
 		}
 

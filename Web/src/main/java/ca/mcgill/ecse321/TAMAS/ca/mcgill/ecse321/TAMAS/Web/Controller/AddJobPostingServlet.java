@@ -27,7 +27,7 @@ import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.DBmanager;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
-@WebServlet(urlPatterns = "/AddJobPosting.do")
+@WebServlet(urlPatterns = "/AddJobPosting.jsp")
 
 public class AddJobPostingServlet extends HttpServlet {
 	/**
@@ -36,12 +36,15 @@ public class AddJobPostingServlet extends HttpServlet {
 	private static XStream xstream = new XStream();
 	private static final long serialVersionUID = 1L;
 	HashMap<String, Course> cmap = new HashMap<String, Course>();
+	private String error = "";
 
 	protected void doGet(HttpServletRequest request,
 
 			HttpServletResponse response) throws ServletException, IOException {
-		
+
 		String fileName = "output/data.xml";
+
+		//error = "";
 		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
 
 		String courses = "";
@@ -54,7 +57,7 @@ public class AddJobPostingServlet extends HttpServlet {
 		}
 
 		request.getSession().setAttribute("courses", courses);
-
+		request.setAttribute("error", error);
 		request.getRequestDispatcher("/WEB-INF/views/pages/AddJobPosting.jsp").forward(
 
 				request, response);
@@ -66,18 +69,23 @@ public class AddJobPostingServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String fileName = "output/data.xml";
 		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
-
+		error = "";
 		DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
 		String jobPosition = request.getParameter("jobTitle");
 
 		String dl = request.getParameter("deadLine");
+		Date deadlineDate = null;
+		double hourlyRate=-1.0;
+		try {
+			deadlineDate = new Date(Integer.parseInt(dl.substring(0, 3)), Integer.parseInt(dl.substring(5, 6)),
+					Integer.parseInt(dl.substring(8, 9)));
+			hourlyRate = Double.parseDouble(request.getParameter("hourlyRate"));
 
-		Date deadlineDate = new Date(Integer.parseInt(dl.substring(0, 3)), Integer.parseInt(dl.substring(5, 6)),
-				Integer.parseInt(dl.substring(8, 9)));
-
+		} catch (Exception e) {
+			error = "Non Valid Date";
+		}
 		String exp = request.getParameter("perferredExperience");
-		double hourlyRate = Double.parseDouble(request.getParameter("hourlyRate"));
-
+		
 		String cname = request.getParameter("course");
 		System.out.println(cname);
 		Course aCourse = cmap.get(cname);
@@ -88,7 +96,16 @@ public class AddJobPostingServlet extends HttpServlet {
 			// PersistenceXStream.saveToXMLwithXStream(ms);
 			DBmanager.updateDB(objToXML(ms));
 		} catch (Exception e) {
-			e.printStackTrace();
+			
+			error = e.getMessage();
+			System.out.println(error);
+			request.setAttribute("error", error);
+
+			request.getRequestDispatcher("/WEB-INF/views/pages/AddJobPosting.jsp").forward(
+
+					request, response);
+
+			//e.printStackTrace();
 		}
 	}
 

@@ -33,6 +33,8 @@
 							TA Evaluaion</a></li>
 					<li><a href="viewAllApplication.jsp"><i
 							class="fa fa-dashboard fa-fw"></i> View Application</a></li>
+					<li><a href="Schedule.jsp"><i
+							class="fa fa-dashboard fa-fw"></i> TA Schedule</a></li>
 				</ul>
 			</div>
 		</div>
@@ -82,27 +84,25 @@
 								<input class="btn btn-sm btn-info btn-flat pull-left"
 									type="submit" value='Publish' />
 						</form>
-
-						<br> <br> <br>
+						<br> <br>
+						<span class="error"> ${error} </span><br> <br>
 					</div>
+
 				</div>
 			</div>
 		</div>
 	</div>
 	<script>
 		$("#addjob").submit(function(e) {
-			var url = "AddJobPosting.do";
+			var url = "AddJobPosting.jsp";
 			$.ajax({
 				type : "POST",
 				url : url,
 				data : $("#addjob").serialize(),
 				success : function(data) {
-					if (data.search("success") != -1) {
-						window.location.replace('viewAllJobPostings.php');
-					}
 				}
 			});
-			$("#mydiv").load(location.href + " #mydiv");
+			//$("#mydiv").load(location.href + " #mydiv");
 		});
 	</script>
 </body>

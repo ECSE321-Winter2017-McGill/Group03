@@ -20,21 +20,21 @@
 				<div class="navbar-header">
 					<a class="navbar-brand" href="Dashboard.do">TAMAS</a>
 				</div>
-				<h6 class="welcome">Welcome
-                            ${name}
-                        </h6>
+				<h6 class="welcome">Welcome ${name}</h6>
 				<h6 class="welcome">
 					<a href="logout.php">Sign Out</a>
 				</h6>
 				<ul class="nav" id="side-menu">
-					<li><a href="Dashboard.do"><i class="fa fa-dashboard fa-fw"></i>
-							Dashboard</a></li>
-					<li><a href="ViewAllJobPosting.jsp"><i class="fa fa-dashboard fa-fw"></i>
-							View Job Postings</a></li>
+					<li><a href="Dashboard.do"><i
+							class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
+					<li><a href="ViewAllJobPosting.jsp"><i
+							class="fa fa-dashboard fa-fw"></i> View Job Postings</a></li>
 					<li><a href="EvalTa.jsp"><i class="fa fa-dashboard fa-fw"></i>
 							TA Evaluaion</a></li>
 					<li><a href="viewAllApplication.jsp"><i
 							class="fa fa-dashboard fa-fw"></i> View Application</a></li>
+					<li><a href="Schedule.jsp"><i
+							class="fa fa-dashboard fa-fw"></i> TA Schedule</a></li>
 				</ul>
 			</div>
 		</div>
@@ -109,7 +109,8 @@
 				<a href="javascript:void(0)"
 					class="btn btn-sm btn-info btn-flat pull-left">Add New Courses</a>
 				<a href="javascript:void(0)"
-					class="btn btn-sm btn-default btn-flat pull-right">View All Courses</a>
+					class="btn btn-sm btn-default btn-flat pull-right">View All
+					Courses</a>
 			</div>
 		</div>
 	</div>

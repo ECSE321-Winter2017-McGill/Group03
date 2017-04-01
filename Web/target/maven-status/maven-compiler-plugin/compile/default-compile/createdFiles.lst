@@ -13,6 +13,7 @@ ca\mcgill\ecse321\TAMAS\controller\InvalidInputException.class
 ca\mcgill\ecse321\TAMAS\persistence\DBmanager.class
 ca\mcgill\ecse321\TAMAS\Web\Controller\ViewJobPostingServlet.class
 ca\mcgill\ecse321\TAMAS\model\Application.class
+ca\mcgill\ecse321\TAMAS\Web\Controller\ScheduleServlet.class
 ca\mcgill\ecse321\TAMAS\model\OfferedJob.class
 ca\mcgill\ecse321\TAMAS\model\GraderJob.class
 ca\mcgill\ecse321\TAMAS\model\OfferedJob$Job.class
