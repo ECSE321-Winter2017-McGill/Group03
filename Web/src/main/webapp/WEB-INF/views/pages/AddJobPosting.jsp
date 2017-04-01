@@ -22,7 +22,7 @@
 				</div>
 				<h6 class="welcome">Welcome ${name}</h6>
 				<h6 class="welcome">
-					<a href="logout.php">Sign Out</a>
+					<a href="logout.do">Sign Out</a>
 				</h6>
 				<ul class="nav" id="side-menu">
 					<li><a href="Dashboard.do"><i

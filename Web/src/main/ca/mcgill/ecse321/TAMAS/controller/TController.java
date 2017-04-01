@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.thoughtworks.xstream.XStream;
 
-import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
 import ca.mcgill.ecse321.TAMAS.model.Course;
