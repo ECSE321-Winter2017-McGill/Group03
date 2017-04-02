@@ -61,30 +61,47 @@ public class ViewEvaluation extends JFrame{
 		
 		if (user.getClass().equals(Applicant.class)) {
 			Applicant me = (Applicant) user;
-			
 			allAppName = new ArrayList<String>();
-			allAppName.add(me.getName());
-			allApplicant.addItem(me.getName());
+
+			for(Application app: me.getApplications()){
+				if (app.getApplicationStatus().equals("accepted")){
+				    if (app.getJobPosting().getJobTitle().equals("TA")){
+						allAppName.add(me.getName());
+						allApplicant.addItem(me.getName());
+
+				    }
+				}	
+			}
 		}
 		
 		else if (user.getClass().equals(Instructor.class)) {
 			Instructor me = (Instructor) user;
 			allAppName = new ArrayList<String>();
-		
-			for (Applicant ap: this.ms.getApplicants()){		
-				   String applicantName = ap.getName();
-				   allAppName.add(applicantName);
-   		   		   allApplicant.addItem(applicantName);
-			   }
+		    
+		    for (Course c: me.getCourses()){
+		    	for (JobPosting jp: c.getJobPosting()){
+		    		for (Application app: jp.getApplications()){
+		    			if (app.getApplicationStatus().equals("accepted")){
+					        if (app.getJobPosting().getJobTitle().equals("TA")){
+					        	allAppName.add(app.getApplicant().getName());
+		   		   		   		allApplicant.addItem(app.getApplicant().getName());
+					       }
+		    			}
+		    		}
+		    	}
+		    }
 		}
 		else{
 			allAppName = new ArrayList<String>();
-			
 			for (Applicant ap: this.ms.getApplicants()){
-	    		 String applicantName = ap.getName();
-				allAppName.add(applicantName);
-	   		    allApplicant.addItem(applicantName);
-			}
+				for(Application app: ap.getApplications())
+					if (app.getApplicationStatus().equals("accepted")){
+			             if (app.getJobPosting().getJobTitle().equals("TA")){
+			             	allAppName.add(ap.getName());
+   		   		   	    	allApplicant.addItem(ap.getName());
+			       }
+    			}
+    		}
 		}
 		
 		// get frame ready;
