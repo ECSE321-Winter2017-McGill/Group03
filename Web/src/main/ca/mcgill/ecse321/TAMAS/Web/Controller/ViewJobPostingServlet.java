@@ -49,7 +49,7 @@ public class ViewJobPostingServlet extends HttpServlet {
 				result += "<td><span class='label label-success'> Grader</span></td>";
 			}
 			result += "<td>" + js.getCourse().getCourseCode() + " </td>";
-			result += "<td>" + js.getCourse().getHourRequiredTa() + " </td>";
+			result += "<td>" + js.getCourse().getTutorialHour()+ " </td>";
 			result += "<td>" + js.getHourRate() + " </td>";
 			result += "<td>" + js.getPerferredExperience() + " </td>";
 			result += "<td>" + js.getSubmissionDeadline() + " </td>";

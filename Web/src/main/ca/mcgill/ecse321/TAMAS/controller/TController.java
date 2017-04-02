@@ -8,6 +8,7 @@ import com.thoughtworks.xstream.XStream;
 
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
+import ca.mcgill.ecse321.TAMAS.model.Application.Status;
 import ca.mcgill.ecse321.TAMAS.model.Course;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
@@ -64,26 +65,26 @@ public class TController {
 		String error = "";
 
 		Applicant newApplicant;
-		if(eval==null||eval.length()==0){
-			error+="No Input";
+		if (eval == null || eval.length() == 0) {
+			error += "No Input";
 		}
-		if (eval.trim().length()==0) {
+		if (eval.trim().length() == 0) {
 			error += "A space cannot be an evaluation! ";
 		}
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
-		for (int i=0; i<this.ms.getApplicants().size(); i++) {
+		for (int i = 0; i < this.ms.getApplicants().size(); i++) {
 			if (this.ms.getApplicants().get(i).getName().equals(name)) {
 				newApplicant = this.ms.getApplicants().get(i);
 				newApplicant.setEvaluation(eval);
 				break;
 			}
-			
+
 		}
 		DBmanager.updateDB(this.objToXML(ms));
 	}
-	
+
 	public void createJobPosting(String jobPosition, Date deadlineDate, String exp, double hourlyRate, Course aCourse)
 			throws InvalidInputException {
 		String error = "";
@@ -119,7 +120,7 @@ public class TController {
 		System.out.println("create");
 		System.out.println(ap.numberOfApplications());
 		if (ap.getApplications().size() < 3) {
-			Application application = new Application("Submitted", jp, ap);
+			Application application = new Application(jp, ap);
 			ap.addApplication(application);
 		}
 
@@ -142,7 +143,8 @@ public class TController {
 
 		if (name == null || name.trim().length() == 0) {
 			error += "Name cannot be empty!";
-		}		if (id < 0) {
+		}
+		if (id < 0) {
 			error += "You must input a valid id!";
 		}
 		if (major == null || major.trim().length() == 0) {
@@ -152,7 +154,8 @@ public class TController {
 			error += "Past experience cannot be empty!";
 		}
 
-		error = error.trim();		if (error.length() > 0) {
+		error = error.trim();
+		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
 
@@ -166,8 +169,8 @@ public class TController {
 			}
 		}
 
-		this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice
-				,"",totalAppointmentHour, ms);
+		this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice,
+				"", totalAppointmentHour, ms);
 
 		PersistenceXStream.saveToXMLwithXStream(ms);
 		return this_applicant;
@@ -265,9 +268,9 @@ public class TController {
 	}
 
 	public void createCourse(String semester, String courseName, String courseCode, int credit, int maxStudent,
-			String instructorName, int numLab, int numTutorial, int numTaNeeded, int numGraderNeeded,
-			int hourRequiredTa, int hourRequiredGrader, ManagementSystem aManagementSystem)
-			throws InvalidInputException {
+			String instructorName, int numGraderNeeded, int numLab, int numTutorial, int labHour, int tutorialHour,
+			int totalGraderHour) throws InvalidInputException {
+
 		String error = "";
 
 		if (courseName == null || courseName.trim().length() == 0) {
@@ -285,66 +288,97 @@ public class TController {
 		if (instructorName == null || instructorName.trim().length() == 0) {
 			error += "Please specify the instructor! ";
 		}
+		if (labHour < 0) {
+			error += "Please specify a correct lab hour! ";
+		}
+		if (tutorialHour < 0) {
+			error += "Please specify a correct tutorial hour! ";
+		}
 		if (numLab < 0) {
 			error += "Please specify the numebr of lab sessions in the correct format! ";
 		}
 		if (numTutorial < 0) {
-			error += "Please specify the number of tutorial in the correct format! ";
+			error += "Please specify the number of tutorials in the correct format! ";
 		}
-		if (numTaNeeded < 0) {
-			error += "Please specify the number of TA needed in the correct format! ";
-		}
+
 		if (numGraderNeeded < 0) {
 			error += "Please specify the number of Grader needed in the correct format! ";
 		}
-		if (hourRequiredTa < 0) {
-			error += "Please specify the TA appointment hour in the correct format! ";
-		}
-		if (hourRequiredGrader < 0) {
+
+		if (totalGraderHour < 0) {
 			error += "Please specify the Grader appointment hour in the correct format! ";
 		}
 
 		Instructor instructor = null;
+
 		for (Instructor i : ms.getInstructors()) {
-			if (i.getName().equals(instructorName))
+			if (i.getName().equals(instructorName)) {
 				instructor = i;
+				break;
+			}
 		}
+
+		// TODO: consider modifying this
 		if (instructor == null) {
 			instructor = new Instructor(instructorName, ms);
 		}
+
 		error = error.trim();
 
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
 
-		// TODO: HOW TO CALCULATE BUDGET
-		double budgetCalculated = (18 * hourRequiredTa * numTaNeeded) + (15 * hourRequiredGrader * numGraderNeeded);
+		// Required total TA working hours of a course
+		int hourRequiredTa = numLab * labHour + numTutorial * tutorialHour;
 
-		ms.addCourse(new Course(semester, courseName, courseCode, numTutorial, numLab, maxStudent, credit, numTaNeeded,
-				numGraderNeeded, hourRequiredTa, hourRequiredGrader, budgetCalculated, instructor, ms));
+		// The total number of TA needed for a course = ceil(total hours/max
+		// working hours of a TA)
+		// This gives the minimum number of TA needed
+		double temp = (numLab * labHour + numTutorial * tutorialHour) / 180;
+		int numTaNeeded = (int) Math.ceil(temp);
+
+		// TODO: HOW TO CALCULATE BUDGET
+		double budgetCalculated = (18 * hourRequiredTa) + (15 * totalGraderHour);
+
+		Course newCourse = new Course(semester, courseName, courseCode.trim(), numTutorial, numLab, maxStudent, credit,
+				numTaNeeded, numGraderNeeded, labHour, tutorialHour, totalGraderHour, budgetCalculated, instructor, ms);
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 
-	public boolean acceptApplication(Application application) {
-		if (application.getApplicationStatus().equals("Submitted")) {
-			application.setApplicationStatus("Accpeted");
-			PersistenceXStream.saveToXMLwithXStream(ms);
+	public boolean applicationAccepted(Application application) {
+		if (application.getStatus().equals(Status.SELECTED)) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean rejectApplication(Application application) {
-		if (application.getApplicationStatus().equals("Submitted")) {
-			
-			application.setApplicationStatus("Rejected");
-			PersistenceXStream.saveToXMLwithXStream(ms);
+	public boolean applicationRejected(Application application) {
+		if (application.getStatus().equals(Status.REJECTED)) {
 			return true;
 		}
 		return false;
+	}
+
+	public void acceptApplication(Application application) throws InvalidInputException {
+		if (application.getStatus().equals(Status.PENDING)) {
+			application.setStatus(Status.SELECTED);
+			PersistenceXStream.saveToXMLwithXStream(ms);
+		} else {
+			throw new InvalidInputException("This applicant has already been processed");
+		}
 
 	}
+
+	public void rejectApplication(Application application) throws InvalidInputException {
+		if (application.getStatus().equals(Status.PENDING)) {
+			application.setStatus(Status.REJECTED);
+			PersistenceXStream.saveToXMLwithXStream(ms);
+		} else {
+			throw new InvalidInputException("This applicant has already been processed");
+		}
+	}
+
 	public String objToXML(Object obj) {
 		xstream.setMode(XStream.ID_REFERENCES);
 		String xml = xstream.toXML(obj); // save our xml file

@@ -100,8 +100,8 @@ public class DDBmanager extends AsyncTask<Parameters, Void, String> {
 		} catch (Exception e) {
 			System.err.println("Got an exception! ");
 			System.err.println(e.getMessage());
-			return "";
+			return getDB();
 		}
-		return "success";
+		return getDB();
 	}
 }

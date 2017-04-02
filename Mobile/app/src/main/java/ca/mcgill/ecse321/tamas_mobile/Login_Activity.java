@@ -45,7 +45,8 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
         refreshData();
         // 0-> getDB,1-> updataDB
         // DO NOT PASS IN (... , null ,1 )!  This will kill our database.
-        Parameters p=new Parameters(getApplicationContext(),null,0);
+        ManagementSystem ms=(ManagementSystem)loadFromXML();
+        Parameters p=new Parameters(getApplicationContext(),ms,1);
         asyncTask.delegate = this;
         asyncTask.execute(p);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -90,12 +91,16 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
         xstream.alias("jobInfo", JobPosting.class);
         String filePath = getFilesDir().getPath().toString() + "/data.xml";
         File f=new File(filePath);
+        if(f.exists()){
         try {
             FileReader fileReader = new FileReader(f); // load our xml
             return xstream.fromXML(fileReader);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
+        }
+        }else{
+            return new ManagementSystem();
         }
     }
 

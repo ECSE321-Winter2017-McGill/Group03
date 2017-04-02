@@ -50,7 +50,7 @@ public class ViewApplicationsServlet extends HttpServlet {
 				}
 				result += "<td>" + apt.getJobPosting().getJobTitle() + " </td>";
 				result += "<td>" + apt.getJobPosting().getCourse().getCourseCode() + " </td>";
-				String s = apt.getApplicationStatus();
+				String s = apt.getStatus().toString();
 				if (s.equals("Submitted")) {
 					result += "<td><span class='label label-info'>" + "Submitted" + "</span></td>";
 				} else if (s.equals("Accpeted")||s.equals("Accepted")) {

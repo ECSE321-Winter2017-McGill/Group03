@@ -1,5 +1,5 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
+/*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
@@ -160,9 +160,9 @@ public class ManagementSystem
     return 0;
   }
 
-  public Course addCourse(String aSemester, String aCourseName, String aCourseCode, int aNumTutorial, int aNumLab, int aNumStudent, int aCredit, int aNumTaNeeded, int aNumGraderNeeded, int aHourRequiredTa, int aHourRequiredGrader, double aBudgetCalculated, Instructor aInstructor)
+  public Course addCourse(String aSemester, String aCourseName, String aCourseCode, int aNumTutorial, int aNumLab, int aNumStudent, int aCredit, int aNumTaNeeded, int aNumGraderNeeded, int aLabHour, int aTutorialHour, int aTotalGraderHour, double aBudgetCalculated, Instructor aInstructor)
   {
-    return new Course(aSemester, aCourseName, aCourseCode, aNumTutorial, aNumLab, aNumStudent, aCredit, aNumTaNeeded, aNumGraderNeeded, aHourRequiredTa, aHourRequiredGrader, aBudgetCalculated, aInstructor, this);
+    return new Course(aSemester, aCourseName, aCourseCode, aNumTutorial, aNumLab, aNumStudent, aCredit, aNumTaNeeded, aNumGraderNeeded, aLabHour, aTutorialHour, aTotalGraderHour, aBudgetCalculated, aInstructor, this);
   }
 
   public boolean addCourse(Course aCourse)
@@ -472,6 +472,7 @@ public class ManagementSystem
       courses.remove(aCourse);
     }
     
+      
     while (instructors.size() > 0)
     {
       Instructor aInstructor = instructors.get(instructors.size() - 1);
@@ -479,6 +480,7 @@ public class ManagementSystem
       instructors.remove(aInstructor);
     }
     
+      
     while (applicants.size() > 0)
     {
       Applicant aApplicant = applicants.get(applicants.size() - 1);
@@ -486,6 +488,7 @@ public class ManagementSystem
       applicants.remove(aApplicant);
     }
     
+      
     while (jobPostings.size() > 0)
     {
       JobPosting aJobPosting = jobPostings.get(jobPostings.size() - 1);
@@ -493,6 +496,7 @@ public class ManagementSystem
       jobPostings.remove(aJobPosting);
     }
     
+      
   }
 
 }

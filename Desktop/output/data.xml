@@ -1,22 +1,22 @@
 <ca.mcgill.ecse321.TAMAS.model.ManagementSystem id="1">
   <courses id="2">
     <ca.mcgill.ecse321.TAMAS.model.Course id="3">
-      <semester>Winter3000</semester>
-      <courseName>ECSE</courseName>
-      <courseCode>23232</courseCode>
-      <numTutorial>0</numTutorial>
-      <numLab>0</numLab>
-      <numStudent>1</numStudent>
-      <credit>10</credit>
-      <numTaNeeded>0</numTaNeeded>
-      <numGraderNeeded>0</numGraderNeeded>
-      <hourRequiredTa>0</hourRequiredTa>
+      <semester>Winter 2017</semester>
+      <courseName>Design Project 1</courseName>
+      <courseCode>ECSE456</courseCode>
+      <numTutorial>5</numTutorial>
+      <numLab>1</numLab>
+      <numStudent>170</numStudent>
+      <credit>3</credit>
+      <numTaNeeded>10</numTaNeeded>
+      <numGraderNeeded>2</numGraderNeeded>
+      <hourRequiredTa>180</hourRequiredTa>
       <hourRequiredGrader>0</hourRequiredGrader>
-      <budgetCalculated>0.0</budgetCalculated>
+      <budgetCalculated>32400.0</budgetCalculated>
       <courseComponents id="4"/>
       <jobPosting id="5"/>
       <instructor id="6">
-        <name>Gates</name>
+        <name>Mr.Chang</name>
         <managementSystem reference="1"/>
         <courses id="7">
           <ca.mcgill.ecse321.TAMAS.model.Course reference="3"/>
@@ -25,59 +25,39 @@
       <offeredJobs id="8"/>
       <managementSystem reference="1"/>
     </ca.mcgill.ecse321.TAMAS.model.Course>
-    <ca.mcgill.ecse321.TAMAS.model.Course id="9">
-      <semester>Winter 2017</semester>
-      <courseName>Design Porject 1</courseName>
-      <courseCode>ECSE456</courseCode>
-      <numTutorial>10</numTutorial>
-      <numLab>1</numLab>
-      <numStudent>170</numStudent>
-      <credit>3</credit>
-      <numTaNeeded>21</numTaNeeded>
-      <numGraderNeeded>2</numGraderNeeded>
-      <hourRequiredTa>180</hourRequiredTa>
-      <hourRequiredGrader>180</hourRequiredGrader>
-      <budgetCalculated>73440.0</budgetCalculated>
-      <courseComponents id="10"/>
-      <jobPosting id="11"/>
-      <instructor id="12">
-        <name>Me</name>
-        <managementSystem reference="1"/>
-        <courses id="13">
-          <ca.mcgill.ecse321.TAMAS.model.Course reference="9"/>
-        </courses>
-      </instructor>
-      <offeredJobs id="14"/>
-      <managementSystem reference="1"/>
-    </ca.mcgill.ecse321.TAMAS.model.Course>
   </courses>
-  <instructors id="15">
+  <instructors id="9">
     <ca.mcgill.ecse321.TAMAS.model.Instructor reference="6"/>
-    <ca.mcgill.ecse321.TAMAS.model.Instructor reference="12"/>
   </instructors>
-  <applicants id="16">
+  <applicants id="10">
+    <ca.mcgill.ecse321.TAMAS.model.Applicant id="11">
+      <studentID>0</studentID>
+      <name>newAPP</name>
+      <isUnderGraduated>true</isUnderGraduated>
+      <totalAppointmentHours>0</totalAppointmentHours>
+      <allocations id="12"/>
+      <managementSystem reference="1"/>
+      <applications id="13"/>
+    </ca.mcgill.ecse321.TAMAS.model.Applicant>
+    <ca.mcgill.ecse321.TAMAS.model.Applicant id="14">
+      <studentID>0</studentID>
+      <name>NEWAPP@@@</name>
+      <isUnderGraduated>true</isUnderGraduated>
+      <evaluation>you are very good</evaluation>
+      <totalAppointmentHours>0</totalAppointmentHours>
+      <allocations id="15"/>
+      <managementSystem reference="1"/>
+      <applications id="16"/>
+    </ca.mcgill.ecse321.TAMAS.model.Applicant>
     <ca.mcgill.ecse321.TAMAS.model.Applicant id="17">
       <studentID>0</studentID>
-      <name>abc</name>
+      <name>hello</name>
       <isUnderGraduated>true</isUnderGraduated>
-      <evaluation> you are nice</evaluation>
       <totalAppointmentHours>0</totalAppointmentHours>
       <allocations id="18"/>
-      <offeredJobs id="19"/>
       <managementSystem reference="1"/>
-      <applications id="20"/>
-    </ca.mcgill.ecse321.TAMAS.model.Applicant>
-    <ca.mcgill.ecse321.TAMAS.model.Applicant id="21">
-      <studentID>0</studentID>
-      <name>ccc</name>
-      <isUnderGraduated>true</isUnderGraduated>
-      <evaluation>asdfasdf</evaluation>
-      <totalAppointmentHours>0</totalAppointmentHours>
-      <allocations id="22"/>
-      <offeredJobs id="23"/>
-      <managementSystem reference="1"/>
-      <applications id="24"/>
+      <applications id="19"/>
     </ca.mcgill.ecse321.TAMAS.model.Applicant>
   </applicants>
-  <jobPostings id="25"/>
+  <jobPostings id="20"/>
 </ca.mcgill.ecse321.TAMAS.model.ManagementSystem>
