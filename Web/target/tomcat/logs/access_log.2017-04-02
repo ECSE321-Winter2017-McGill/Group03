@@ -1,0 +1,10 @@
+0:0:0:0:0:0:0:1 - - [02/Apr/2017:16:39:11 -0400] "GET /img/mclogo.png HTTP/1.1" 200 5916 http-bio-8080-exec-2 3
+0:0:0:0:0:0:0:1 - - [02/Apr/2017:16:39:11 -0400] "GET / HTTP/1.1" 200 2101 http-bio-8080-exec-1 1441
+0:0:0:0:0:0:0:1 - - [02/Apr/2017:16:39:11 -0400] "GET /css/style.css HTTP/1.1" 200 7424 http-bio-8080-exec-4 2
+0:0:0:0:0:0:0:1 - - [02/Apr/2017:16:39:12 -0400] "GET /img/mcimg.jpg HTTP/1.1" 200 13090657 http-bio-8080-exec-5 490
+0:0:0:0:0:0:0:1 - - [02/Apr/2017:16:39:13 -0400] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8080-exec-6 7
+0:0:0:0:0:0:0:1 - - [02/Apr/2017:16:39:24 -0400] "POST /login.do HTTP/1.1" 200 3912 http-bio-8080-exec-7 2787
+0:0:0:0:0:0:0:1 - - [02/Apr/2017:16:39:24 -0400] "GET /css/main.css HTTP/1.1" 200 1484 http-bio-8080-exec-3 2
+0:0:0:0:0:0:0:1 - - [02/Apr/2017:16:39:24 -0400] "GET /css/bootstrap.min.css HTTP/1.1" 200 121200 http-bio-8080-exec-8 3
+0:0:0:0:0:0:0:1 - - [02/Apr/2017:16:39:32 -0400] "GET /ViewAllJobPosting.jsp HTTP/1.1" 200 2911 http-bio-8080-exec-9 2662
+0:0:0:0:0:0:0:1 - - [02/Apr/2017:16:39:32 -0400] "GET /ViewAllJobPosting.jsp HTTP/1.1" 200 2911 http-bio-8080-exec-10 668

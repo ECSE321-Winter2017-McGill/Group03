@@ -328,7 +328,7 @@ public class TController {
 
 	public boolean acceptApplication(Application application) {
 		if (application.getApplicationStatus().equals("Submitted")) {
-			application.setApplicationStatus("Accpeted");
+			application.setApplicationStatus("Accepted");
 			PersistenceXStream.saveToXMLwithXStream(ms);
 			return true;
 		}
