@@ -81,7 +81,7 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("sss"+f.exists());
+        //System.out.println("sss"+f.exists());
     }
     public Object loadFromXML() {
         XStream xstream = new XStream();
@@ -89,12 +89,17 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
         xstream.alias("jobInfo", JobPosting.class);
         String filePath = getFilesDir().getPath().toString() + "/data.xml";
         File f=new File(filePath);
-        try {
-            FileReader fileReader = new FileReader(f); // load our xml
-            return xstream.fromXML(fileReader);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+        if(f.exists()) {
+            try {
+
+                FileReader fileReader = new FileReader(f); // load our xml
+                return xstream.fromXML(fileReader);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }else{
+            return new ManagementSystem();
         }
     }
 
@@ -130,7 +135,6 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
                 if (username.getText().toString().equals(anApplicant.getName())) {
                     found = true;
                     Intent loginIntent = new Intent(Login_Activity.this, Dashboard_Activity.class);
-
                     loginIntent.putExtra("username", username.getText().toString());
                     Login_Activity.this.startActivity(loginIntent);
                     break;

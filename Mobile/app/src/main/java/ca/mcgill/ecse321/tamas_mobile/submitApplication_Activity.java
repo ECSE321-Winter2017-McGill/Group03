@@ -32,7 +32,6 @@ import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
-import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
 public class submitApplication_Activity extends AppCompatActivity {
 
@@ -267,12 +266,16 @@ public class submitApplication_Activity extends AppCompatActivity {
         xstream.alias("jobInfo", JobPosting.class);
         String filePath = getFilesDir().getPath().toString() + "/data.xml";
         File f=new File(filePath);
-        try {
-            FileReader fileReader = new FileReader(f); // load our xml
-            return xstream.fromXML(fileReader);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+        if(f.exists()) {
+            try {
+                FileReader fileReader = new FileReader(f); // load our xml
+                return xstream.fromXML(fileReader);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }else{
+            return new ManagementSystem();
         }
     }
 }

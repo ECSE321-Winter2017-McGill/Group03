@@ -33,7 +33,6 @@ public class Register_Activity extends AppCompatActivity implements AsyncRespons
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_);
         refreshData();
-        Parameters p=new Parameters(getApplicationContext(),null,0);
 
     }
 
@@ -66,6 +65,7 @@ public class Register_Activity extends AppCompatActivity implements AsyncRespons
                         System.out.println("HHD");
                         Parameters p2 = new Parameters(getApplicationContext(), ms, 1);
                         asyncTask=new DDBmanager();
+                        asyncTask.delegate = this;
                         asyncTask.execute(p2);
 //                        ms=(ManagementSystem)loadFromXML();
 //                        System.out.println("HHD2");
@@ -98,12 +98,16 @@ public class Register_Activity extends AppCompatActivity implements AsyncRespons
         xstream.alias("jobInfo", JobPosting.class);
         String filePath = getFilesDir().getPath().toString() + "/data.xml";
         File f=new File(filePath);
-        try {
-            FileReader fileReader = new FileReader(f); // load our xml
-            return xstream.fromXML(fileReader);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+        if(f.exists()) {
+            try {
+                FileReader fileReader = new FileReader(f); // load our xml
+                return xstream.fromXML(fileReader);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }else{
+            return new ManagementSystem();
         }
     }
 
