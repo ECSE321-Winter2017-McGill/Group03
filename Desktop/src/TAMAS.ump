@@ -20,15 +20,11 @@ class Instructor{
 
 class Course{
 
-  1 <@>- * CourseComponent courseComponents;
-
   1 <@>- 0..1 Allocation courseJobAllocation; 
 
   1 <@>- * JobPosting jobPosting;
 
   * courses -- 1 Instructor;
-
-  1 <@>- * OfferedJob;
 
   String semester;
   
@@ -48,26 +44,15 @@ class Course{
   
   Integer numGraderNeeded;
 
-  Integer hourRequiredTa;
+  Integer labHour;
+  
+  Integer tutorialHour;
 
-  Integer hourRequiredGrader;
+  Integer totalGraderHour;
 
   Double budgetCalculated;
 
 }
-
-
-
-class CourseComponent{
-
-  String hour;
-
-  String sessionCode;
-
-  component {TUTORIAL{} LAB{}}
-
-}
-
 
 
 class JobPosting{
@@ -87,8 +72,6 @@ class JobPosting{
 class Applicant{
 
   * -- * Allocation;
-
-  1 -- 0..3 OfferedJob offeredJobs;
 
   Integer studentID;
 
@@ -115,49 +98,20 @@ class Applicant{
 }
 
 
-
 class Application{
+
+  status {  SELECTED{} REJECTED{} PENDING{} OFFER_ACCEPTED{} OFFER_DECLINED{} } 
 
   * -- 1 JobPosting;
 
   0..3 -- 1 Applicant;
-
-  String applicationStatus;
-
-}
-
-
-
-
-
-class OfferedJob{
-
-  String offerDescription;
-  
-  job{ TA{} GRADER{} }
-
-}
-
-
-
-class TAJob{
-
-   isA OfferedJob;
-
-   Integer appointmentHour;
-	
-}
-
-
-
-class GraderJob{
-
-   isA OfferedJob;
 
 }
 
 
 
 class Allocation{
+  	allocationStatus { INITIAL{} INSTRUCTOR_APPROVED{} FINAL_APPROVAL{} } 
+
 
 }

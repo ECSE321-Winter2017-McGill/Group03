@@ -1,11 +1,9 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
+/*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 
-
-// line 119 "../../../../../TAMAS.ump"
-
+// line 101 "../../../../../TAMAS.ump"
 public class Application
 {
 
@@ -13,8 +11,9 @@ public class Application
   // MEMBER VARIABLES
   //------------------------
 
-  //Application Attributes
-  private String applicationStatus;
+  //Application State Machines
+  public enum Status { SELECTED, REJECTED, PENDING, OFFER_ACCEPTED, OFFER_DECLINED }
+  private Status status;
 
   //Application Associations
   private JobPosting jobPosting;
@@ -24,9 +23,8 @@ public class Application
   // CONSTRUCTOR
   //------------------------
 
-  public Application(String aApplicationStatus, JobPosting aJobPosting, Applicant aApplicant)
+  public Application(JobPosting aJobPosting, Applicant aApplicant)
   {
-    applicationStatus = aApplicationStatus;
     boolean didAddJobPosting = setJobPosting(aJobPosting);
     if (!didAddJobPosting)
     {
@@ -37,23 +35,28 @@ public class Application
     {
       throw new RuntimeException("Unable to create application due to applicant");
     }
+    setStatus(Status.SELECTED);
   }
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public boolean setApplicationStatus(String aApplicationStatus)
+  public String getStatusFullName()
   {
-    boolean wasSet = false;
-    applicationStatus = aApplicationStatus;
-    wasSet = true;
-    return wasSet;
+    String answer = status.toString();
+    return answer;
   }
 
-  public String getApplicationStatus()
+  public Status getStatus()
   {
-    return applicationStatus;
+    return status;
+  }
+
+  public boolean setStatus(Status aStatus)
+  {
+    status = aStatus;
+    return true;
   }
 
   public JobPosting getJobPosting()
@@ -126,14 +129,4 @@ public class Application
     placeholderApplicant.removeApplication(this);
   }
 
-
-  public String toString()
-  {
-    String outputString = "";
-    return super.toString() + "["+
-            "applicationStatus" + ":" + getApplicationStatus()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "jobPosting = "+(getJobPosting()!=null?Integer.toHexString(System.identityHashCode(getJobPosting())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "applicant = "+(getApplicant()!=null?Integer.toHexString(System.identityHashCode(getApplicant())):"null")
-     + outputString;
-  }
 }

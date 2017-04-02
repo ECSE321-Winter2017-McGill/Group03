@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -168,6 +169,7 @@ public class RegisterPage extends JFrame{
 			error += "Please select a type! ";
 		}
 		
+		
 		if (error.length()==0){
 			TamasController tc = new TamasController(ms);
 			// Instructor 
@@ -181,13 +183,31 @@ public class RegisterPage extends JFrame{
 			catch (InvalidInputException e){
 				error += e.getMessage();
 			}
+			
+			if (error.trim().length()==0){
+				int selectedOption = JOptionPane.showConfirmDialog(null, 
+		                "Registration Completed.\n"
+		                + "Registration Page will be closed", 
+		                "", 
+		                JOptionPane.OK_CANCEL_OPTION); 
+				if (selectedOption == JOptionPane.OK_OPTION) {
+					new LoginDialog().setVisible(true);
+					new LoginHint().setVisible(true);
+					setVisible(false);
+				}
+			}
+
 
 		}
 		
+		
 		refreshData();
+		
+
 	}
 	
 	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt){
+		new LoginDialog().setVisible(true);
 		setVisible(false);
 	}
 	

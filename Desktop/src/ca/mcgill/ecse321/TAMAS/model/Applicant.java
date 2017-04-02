@@ -1,10 +1,10 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
+/*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 
-// line 87 "../../../../../TAMAS.ump"
+// line 72 "../../../../../TAMAS.ump"
 public class Applicant
 {
 
@@ -27,7 +27,6 @@ public class Applicant
 
   //Applicant Associations
   private List<Allocation> allocations;
-  private List<OfferedJob> offeredJobs;
   private ManagementSystem managementSystem;
   private List<Application> applications;
 
@@ -49,7 +48,6 @@ public class Applicant
     evaluation = aEvaluation;
     totalAppointmentHours = aTotalAppointmentHours;
     allocations = new ArrayList<Allocation>();
-    offeredJobs = new ArrayList<OfferedJob>();
     boolean didAddManagementSystem = setManagementSystem(aManagementSystem);
     if (!didAddManagementSystem)
     {
@@ -240,36 +238,6 @@ public class Applicant
     return index;
   }
 
-  public OfferedJob getOfferedJob(int index)
-  {
-    OfferedJob aOfferedJob = offeredJobs.get(index);
-    return aOfferedJob;
-  }
-
-  public List<OfferedJob> getOfferedJobs()
-  {
-    List<OfferedJob> newOfferedJobs = Collections.unmodifiableList(offeredJobs);
-    return newOfferedJobs;
-  }
-
-  public int numberOfOfferedJobs()
-  {
-    int number = offeredJobs.size();
-    return number;
-  }
-
-  public boolean hasOfferedJobs()
-  {
-    boolean has = offeredJobs.size() > 0;
-    return has;
-  }
-
-  public int indexOfOfferedJob(OfferedJob aOfferedJob)
-  {
-    int index = offeredJobs.indexOf(aOfferedJob);
-    return index;
-  }
-
   public ManagementSystem getManagementSystem()
   {
     return managementSystem;
@@ -387,95 +355,6 @@ public class Applicant
     return wasAdded;
   }
 
-  public static int minimumNumberOfOfferedJobs()
-  {
-    return 0;
-  }
-
-  public static int maximumNumberOfOfferedJobs()
-  {
-    return 3;
-  }
-
-  public OfferedJob addOfferedJob(String aOfferDescription, Course aCourse)
-  {
-    if (numberOfOfferedJobs() >= maximumNumberOfOfferedJobs())
-    {
-      return null;
-    }
-    else
-    {
-      return new OfferedJob(aOfferDescription, aCourse, this);
-    }
-  }
-
-  public boolean addOfferedJob(OfferedJob aOfferedJob)
-  {
-    boolean wasAdded = false;
-    if (offeredJobs.contains(aOfferedJob)) { return false; }
-    if (numberOfOfferedJobs() >= maximumNumberOfOfferedJobs())
-    {
-      return wasAdded;
-    }
-
-    Applicant existingApplicant = aOfferedJob.getApplicant();
-    boolean isNewApplicant = existingApplicant != null && !this.equals(existingApplicant);
-    if (isNewApplicant)
-    {
-      aOfferedJob.setApplicant(this);
-    }
-    else
-    {
-      offeredJobs.add(aOfferedJob);
-    }
-    wasAdded = true;
-    return wasAdded;
-  }
-
-  public boolean removeOfferedJob(OfferedJob aOfferedJob)
-  {
-    boolean wasRemoved = false;
-    //Unable to remove aOfferedJob, as it must always have a applicant
-    if (!this.equals(aOfferedJob.getApplicant()))
-    {
-      offeredJobs.remove(aOfferedJob);
-      wasRemoved = true;
-    }
-    return wasRemoved;
-  }
-
-  public boolean addOfferedJobAt(OfferedJob aOfferedJob, int index)
-  {  
-    boolean wasAdded = false;
-    if(addOfferedJob(aOfferedJob))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfOfferedJobs()) { index = numberOfOfferedJobs() - 1; }
-      offeredJobs.remove(aOfferedJob);
-      offeredJobs.add(index, aOfferedJob);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveOfferedJobAt(OfferedJob aOfferedJob, int index)
-  {
-    boolean wasAdded = false;
-    if(offeredJobs.contains(aOfferedJob))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfOfferedJobs()) { index = numberOfOfferedJobs() - 1; }
-      offeredJobs.remove(aOfferedJob);
-      offeredJobs.add(index, aOfferedJob);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addOfferedJobAt(aOfferedJob, index);
-    }
-    return wasAdded;
-  }
-
   public boolean setManagementSystem(ManagementSystem aManagementSystem)
   {
     boolean wasSet = false;
@@ -516,7 +395,7 @@ public class Applicant
     return 3;
   }
 
-  public Application addApplication(String aApplicationStatus, JobPosting aJobPosting)
+  public Application addApplication(JobPosting aJobPosting)
   {
     if (numberOfApplications() >= maximumNumberOfApplications())
     {
@@ -524,7 +403,7 @@ public class Applicant
     }
     else
     {
-      return new Application(aApplicationStatus, aJobPosting, this);
+      return new Application(aJobPosting, this);
     }
   }
 
@@ -603,11 +482,6 @@ public class Applicant
     {
       aAllocation.removeApplicant(this);
     }
-    for(int i=offeredJobs.size(); i > 0; i--)
-    {
-      OfferedJob aOfferedJob = offeredJobs.get(i - 1);
-      aOfferedJob.delete();
-    }
     ManagementSystem placeholderManagementSystem = managementSystem;
     this.managementSystem = null;
     placeholderManagementSystem.removeApplicant(this);
@@ -621,7 +495,7 @@ public class Applicant
 
   public String toString()
   {
-    String outputString = "";
+	  String outputString = "";
     return super.toString() + "["+
             "studentID" + ":" + getStudentID()+ "," +
             "name" + ":" + getName()+ "," +
