@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -233,8 +234,9 @@ public class PublishJobPostingPage extends JFrame {
 				tc.createJobPosting(jobToggleList.getSelectedItem().toString(), deadline,
 						preferredExperienceTextField.getText(), hourlyRate,
 						cMap.get((String) courseToggleList.getSelectedItem()));
+				JOptionPane.showMessageDialog(PublishJobPostingPage.this,"Job Posting Published");
+				setVisible(false);
 				backToAllJobs();
-				dispose();
 			} catch (InvalidInputException e) {
 				error += e.getMessage();
 			}

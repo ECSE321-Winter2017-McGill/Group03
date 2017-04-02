@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -32,7 +33,6 @@ public class ApplyForJob extends JFrame {
 	private JLabel errorMessage;
 	private JLabel jobPostingLabel;
 	private JLabel nameLabel;
-	private JLabel nameFieldLabel;
 	private JTextField nameTextField;
 	private JLabel idLabel;
 	private JTextField idTextField;
@@ -111,8 +111,10 @@ public class ApplyForJob extends JFrame {
 		nameLabel.setForeground(Color.BLACK);
 		if (user.getClass().equals(Applicant.class)) { //
 			Applicant a = (Applicant) user;
-			nameFieldLabel = new JLabel(a.getName());
-			nameFieldLabel.setForeground(Color.BLACK);
+			nameTextField = new JTextField();
+			nameTextField.setText(a.getName());
+			nameTextField.setEditable(false);
+			nameTextField.setForeground(Color.BLACK);
 		} else {
 			nameTextField = new JTextField();
 		}
@@ -152,7 +154,7 @@ public class ApplyForJob extends JFrame {
 				selectedYear = cb.getSelectedIndex();
 			}
 		});
-		;
+
 
 		pastExperienceLabel = new JLabel("Past Experience");
 		pastExperienceLabel.setForeground(Color.BLACK);
@@ -173,7 +175,6 @@ public class ApplyForJob extends JFrame {
 		firstChoiceLabel = new JLabel("First Choice");
 
 		firstChoiceToggleList = new JComboBox<String>(new String[0]);
-		firstChoiceToggleList.addItem(" ");
 
 		firstChoiceToggleList.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,7 +183,7 @@ public class ApplyForJob extends JFrame {
 				selectedFirstChoice = cb.getSelectedIndex();
 			}
 		});
-		;
+
 
 		secondChoiceLabel = new JLabel("Second Choice");
 
@@ -195,17 +196,12 @@ public class ApplyForJob extends JFrame {
 				selectedSecondChoice = cb.getSelectedIndex();
 			}
 		});
-		;
+
 
 		thirdChoiceLabel = new JLabel("Third Choice");
 
 		thirdChoiceToggleList = new JComboBox<String>(new String[0]);
-		for (JobPosting jp : ms.getJobPostings()) {
-			String d = jp.getJobTitle() + " " + jp.getCourse().getCourseCode();
-			firstChoiceToggleList.addItem(d);
-			secondChoiceToggleList.addItem(d);
-			thirdChoiceToggleList.addItem(d);
-		}
+		
 		thirdChoiceToggleList.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				@SuppressWarnings("unchecked")
@@ -213,6 +209,15 @@ public class ApplyForJob extends JFrame {
 				selectedThirdChoice = cb.getSelectedIndex();
 			}
 		});
+		
+		
+		for (JobPosting jp : ms.getJobPostings()) {
+			String d = jp.getJobTitle() + " " + jp.getCourse().getCourseCode();
+			firstChoiceToggleList.addItem(d);
+			secondChoiceToggleList.addItem(d);
+			thirdChoiceToggleList.addItem(d);
+		}
+		
 
 		submitButton = new JButton("  Submit  ");
 		submitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -236,7 +241,7 @@ public class ApplyForJob extends JFrame {
 		horizontalLineMiddle2 = new JSeparator();
 
 		if (user.getClass().equals(Applicant.class)) {
-			addlayout(nameFieldLabel);
+			addlayout(nameTextField);
 		} else {
 			addlayout(nameTextField);
 		}
@@ -395,6 +400,9 @@ public class ApplyForJob extends JFrame {
 				if (appliedjob != null) {
 					tc.createApplication(appliedjob, name, id, major, isUndergrad, year, exp, firstChoice, secondChoice,
 							thirdChoice, totalAppointmentHours);
+					JOptionPane.showMessageDialog(ApplyForJob.this,"Application Submitted");
+					setVisible(false);
+					backToAllApp();
 				}
 			} catch (InvalidInputException e) {
 				error += e.getMessage();

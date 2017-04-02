@@ -44,7 +44,8 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
         refreshData();
         // 0-> getDB,1-> updataDB
         // DO NOT PASS IN (... , null ,1 )!  This will kill our database.
-        Parameters p=new Parameters(getApplicationContext(),null,0);
+        ManagementSystem ms=(ManagementSystem)loadFromXML();
+        Parameters p=new Parameters(getApplicationContext(),ms,1);
         asyncTask.delegate = this;
         asyncTask.execute(p);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -72,8 +73,7 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
             }
         }
         String string = data;
-        FileOutputStream outputStream;
-        try {
+        FileOutputStream outputStream;        try {
             outputStream =new FileOutputStream (f);
             outputStream.write(string.getBytes());
             System.out.println(outputStream);
@@ -98,6 +98,10 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
                 e.printStackTrace();
                 return null;
             }
+        }else{
+            return new ManagementSystem();
+
+        }
         }else{
             return new ManagementSystem();
         }

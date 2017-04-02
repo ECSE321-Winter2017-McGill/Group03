@@ -24,14 +24,14 @@
 			<div class="sidebar-nav navbar-collapse">
 
 				<div class="navbar-header">
-					<a class="navbar-brand" href="dashboard.php">TAMAS</a>
+					<a class="navbar-brand" href="Dashboard.do">TAMAS</a>
 				</div>
 				<h6 class="welcome">
-					Welcome
-					<?php echo $login_session; ?>
+					Welcome 
+					${name}
 				</h6>
 				<h6 class="welcome">
-					<a href="logout.php">Sign Out</a>
+					<a href="logout.do">Sign Out</a>
 				</h6>
 				<ul class="nav" id="side-menu">
 					<li><a href="Dashboard.do"><i
@@ -42,6 +42,8 @@
 							TA Evaluaion</a></li>
 					<li><a href="viewAllApplication.jsp"><i
 							class="fa fa-dashboard fa-fw"></i> View Application</a></li>
+					<li><a href="Schedule.jsp"><i
+							class="fa fa-dashboard fa-fw"></i> TA Schedule</a></li>
 				</ul>
 			</div>
 		</div>
@@ -82,8 +84,6 @@ $(document).ready(function(){
 
 						<span class="error"> ${viewAllJobPostingsError } </span>
 					</div>
-					<a class="btn btn-info" href="AddJobPosting.do">Add a Job
-						Posting</a> <br />
 					<p>
 						<br />
 					</p>
