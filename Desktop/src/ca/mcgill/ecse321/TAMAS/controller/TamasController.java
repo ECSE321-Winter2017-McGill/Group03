@@ -342,7 +342,7 @@ public class TamasController {
 	}
 	
 
-	public boolean applicationAccepted(Application application) {
+public boolean applicationAccepted(Application application) {
 		if (application.getStatus().equals(Status.SELECTED)) {
 			return true;
 		}
@@ -355,28 +355,25 @@ public class TamasController {
 		}
 		return false;
 	}
-	
+
 	public void acceptApplication(Application application) throws InvalidInputException {
 		if (application.getStatus().equals(Status.PENDING)) {
 			application.setStatus(Status.SELECTED);
 			PersistenceXStream.saveToXMLwithXStream(ms);
-		}
-		else{
+		} else {
 			throw new InvalidInputException("This applicant has already been processed");
 		}
-		
+
 	}
-	
-	public void rejectApplication(Application application) throws InvalidInputException  {
+
+	public void rejectApplication(Application application) throws InvalidInputException {
 		if (application.getStatus().equals(Status.PENDING)) {
 			application.setStatus(Status.REJECTED);
 			PersistenceXStream.saveToXMLwithXStream(ms);
-		}
-		else{
+		} else {
 			throw new InvalidInputException("This applicant has already been processed");
 		}
 	}
-	
 	public void changeHours(Course course, int hour) throws InvalidInputException{
 		if (course==null){
 			throw new InvalidInputException("Select a course! ");

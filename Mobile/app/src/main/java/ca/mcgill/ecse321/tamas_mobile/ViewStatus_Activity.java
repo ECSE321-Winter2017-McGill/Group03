@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ca.mcgill.ecse321.tamas.model.Applicant;
-import ca.mcgill.ecse321.tamas.model.Application;
-import ca.mcgill.ecse321.tamas.model.ManagementSystem;
+import ca.mcgill.ecse321.TAMAS.model.Applicant;
+import ca.mcgill.ecse321.TAMAS.model.Application;
+import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 
 public class ViewStatus_Activity extends AppCompatActivity {
 

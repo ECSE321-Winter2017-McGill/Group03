@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.tamas_mobile;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,28 +15,93 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class Login_Activity extends AppCompatActivity {
+import com.thoughtworks.xstream.XStream;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import ca.mcgill.ecse321.TAMAS.Web.controller.DDBmanager;
+import ca.mcgill.ecse321.TAMAS.model.JobPosting;
+import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
+import ca.mcgill.ecse321.TAMAS.persistence.DBmanager;
+import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
+
+public class Login_Activity extends AppCompatActivity implements AsyncResponse {
+    DDBmanager asyncTask =new DDBmanager();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        refreshData();
+        // 0-> getDB,1-> updataDB
+        // DO NOT PASS IN (... , null ,1 )!  This will kill our database.
+        ManagementSystem ms=(ManagementSystem)loadFromXML();
+        Parameters p=new Parameters(getApplicationContext(),ms,1);
+        asyncTask.delegate = this;
+        asyncTask.execute(p);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                final ManagementSystem ms=(ManagementSystem) loadFromXML();
+                Snackbar.make(view,""+ms.numberOfCourses(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
-
-        refreshData();
-
-
-
+    }
+    @Override
+    public void processFinish(String output){
+        writeFile(output);
+    }
+    public void writeFile(String data) {
+        String filePath = getFilesDir().getPath().toString() + "/data.xml";
+        File f=new File(filePath);
+        if (!f.exists()) {
+            try {
+                f.createNewFile();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        String string = data;
+        FileOutputStream outputStream;
+        try {
+            outputStream =new FileOutputStream (f);
+            outputStream.write(string.getBytes());
+            System.out.println(outputStream);
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("sss"+f.exists());
+    }
+    public Object loadFromXML() {
+        XStream xstream = new XStream();
+        xstream.setMode(XStream.ID_REFERENCES);
+        xstream.alias("jobInfo", JobPosting.class);
+        String filePath = getFilesDir().getPath().toString() + "/data.xml";
+        File f=new File(filePath);
+        if(f.exists()){
+        try {
+            FileReader fileReader = new FileReader(f); // load our xml
+            return xstream.fromXML(fileReader);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        }else{
+            return new ManagementSystem();
+        }
     }
 
     public void refreshData(){

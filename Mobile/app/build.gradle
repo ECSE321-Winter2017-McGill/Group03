@@ -10,6 +10,19 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        jackOptions {
+            enabled true
+        }
+        dexOptions {
+            incremental true
+        }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+
+
+
     }
     buildTypes {
         release {
@@ -30,6 +43,7 @@ dependencies {
     compile('com.thoughtworks.xstream:xstream:1.4.7') {
         exclude group: 'xmlpull'
     }
-    compile files('libs/TAMAS_new.jar')
-
+    compile files('libs/lalala.jar')
+    compile files('libs/mysql-connector-java-5.1.40-bin.jar')
+    compile files('libs/httpclient-4.2.3.jar')
 }

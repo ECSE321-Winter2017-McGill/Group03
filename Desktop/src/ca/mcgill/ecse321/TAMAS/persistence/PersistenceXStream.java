@@ -12,71 +12,70 @@ import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 
 public abstract class PersistenceXStream {
 
-    private static XStream xstream = new XStream();
-    private static String filename = "output/data.xml";
+	private static XStream xstream = new XStream();
+	private static String filename = "output/data.xml";
 
-    public static ManagementSystem initializeModelManager(String fileName) {
-        // Initialization for persistence
-    	ManagementSystem ms;
-//        setFilename(fileName);
-        setAlias("jobInfo", JobPosting.class);
-        
+	public static ManagementSystem initializeModelManager(String fileName) {
+		// Initialization for persistence
+		ManagementSystem ms;
+		// setFilename(fileName);
+		setAlias("jobInfo", JobPosting.class);
 
-        // load model if exists, create otherwise
-        File file = new File(fileName);
-        if (file.exists()) {
-            ms = (ManagementSystem) loadFromXMLwithXStream();
-        } 
-        
-        else {
-            try {
-            	file.getParentFile().mkdirs(); 
-                file.createNewFile();
-            } 
-            catch (Exception e) {
-                e.printStackTrace();
-                //System.exit(1);
-            }
-            ms = new ManagementSystem();
-            saveToXMLwithXStream(ms);
-        }
-        return ms;
+		// load model if exists, create otherwise
+		File file = new File(fileName);
+		if (file.exists()) {
+			ms = (ManagementSystem) loadFromXMLwithXStream();
+		}
 
-    }
+		else {
+			try {
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+			} catch (Exception e) {
+				e.printStackTrace();
+				// System.exit(1);
+			}
+			ms = new ManagementSystem();
+			saveToXMLwithXStream(ms);
+		}
+		return ms;
 
-    public static boolean saveToXMLwithXStream(Object obj) {
-        xstream.setMode(XStream.ID_REFERENCES);
-        String xml = xstream.toXML(obj); // save our xml file
+	}
 
-        try {
-            FileWriter writer = new FileWriter(filename);
-            writer.write(xml);
-            writer.close();
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+	public static boolean saveToXMLwithXStream(Object obj) {
+		xstream.setMode(XStream.ID_REFERENCES);
+		String xml = xstream.toXML(obj); // save our xml file
+		try {
+			DBmanager.updateDB(xml);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			FileWriter writer = new FileWriter(filename);
+			writer.write(xml);
+			writer.close();
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
-    public static Object loadFromXMLwithXStream() {
-        xstream.setMode(XStream.ID_REFERENCES);
-        try {
-            FileReader fileReader = new FileReader(filename); // load our xml file
-            return xstream.fromXML(fileReader);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+	public static Object loadFromXMLwithXStream() {
+		xstream.setMode(XStream.ID_REFERENCES);
+		DBmanager.writeFile(DBmanager.getDB());
+		try {
+			FileReader fileReader = new FileReader(filename); // load our xml
+																// file
+			return xstream.fromXML(fileReader);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
-    public static void setAlias(String xmlTagName, Class<?> className) {
-        xstream.alias(xmlTagName, className);
-    }
-
-//    public static void setFilename(String fn) {
-//        filename = fn;
-//    }
+	public static void setAlias(String xmlTagName, Class<?> className) {
+		xstream.alias(xmlTagName, className);
+	}
 
 }

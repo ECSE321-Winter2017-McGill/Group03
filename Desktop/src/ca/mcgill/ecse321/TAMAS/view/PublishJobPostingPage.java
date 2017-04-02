@@ -75,7 +75,7 @@ public class PublishJobPostingPage extends JFrame {
 
 		courseLabel = new JLabel("Select a course:");
 		courseLabel.setForeground(Color.BLACK);
-		courseToggleList = new JComboBox<String>(new String[0]);
+		courseToggleList = new JComboBox<String>();
 		for (Course c : ms.getCourses()) {
 			String display = c.getCourseCode();
 			cMap.put(display, c);
@@ -84,7 +84,7 @@ public class PublishJobPostingPage extends JFrame {
 
 		jobLabel = new JLabel("Job Title");
 		jobLabel.setForeground(Color.BLACK);
-		jobToggleList = new JComboBox<String>(new String[0]);
+		jobToggleList = new JComboBox<String>();
 		jobToggleList.addItem("TA");
 		jobToggleList.addItem("Grader");
 
