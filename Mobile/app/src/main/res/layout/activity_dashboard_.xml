@@ -73,7 +73,7 @@
             android:textColor="@android:color/background_dark" />
 
         <TextView
-            android:text="Click here to view my application"
+            android:text="Click here to view your application"
             android:layout_width="match_parent"
             android:layout_height="38dp"
             android:id="@+id/view_application"

@@ -29,13 +29,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import ca.mcgill.ecse321.TAMAS.Web.controller.DDBmanager;
+import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
-import ca.mcgill.ecse321.TAMAS.persistence.DBmanager;
-import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
-
 public class Login_Activity extends AppCompatActivity implements AsyncResponse {
     DDBmanager asyncTask =new DDBmanager();
+    private String error ="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +73,7 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
             }
         }
         String string = data;
-        FileOutputStream outputStream;
-        try {
+        FileOutputStream outputStream;        try {
             outputStream =new FileOutputStream (f);
             outputStream.write(string.getBytes());
             System.out.println(outputStream);
@@ -83,7 +81,7 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("sss"+f.exists());
+        //System.out.println("sss"+f.exists());
     }
     public Object loadFromXML() {
         XStream xstream = new XStream();
@@ -91,13 +89,18 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
         xstream.alias("jobInfo", JobPosting.class);
         String filePath = getFilesDir().getPath().toString() + "/data.xml";
         File f=new File(filePath);
-        if(f.exists()){
-        try {
-            FileReader fileReader = new FileReader(f); // load our xml
-            return xstream.fromXML(fileReader);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+        if(f.exists()) {
+            try {
+
+                FileReader fileReader = new FileReader(f); // load our xml
+                return xstream.fromXML(fileReader);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }else{
+            return new ManagementSystem();
+
         }
         }else{
             return new ManagementSystem();
@@ -105,34 +108,59 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
     }
 
     public void refreshData(){
+        TextView errorMessage = (TextView)findViewById(R.id.logInError);
         EditText username = (EditText)findViewById(R.id.username);
         EditText password = (EditText)findViewById(R.id.password);
 
+        errorMessage.setText(error);
         username.setText("");
         password.setText("");
     }
 
     public void login(View v){
+        final ManagementSystem ms=(ManagementSystem) loadFromXML();
+
         EditText username = (EditText)findViewById(R.id.username);
         EditText password = (EditText)findViewById(R.id.password);
         Button login = (Button) findViewById(R.id.login_button);
         TextView errorMessage = (TextView)findViewById(R.id.logInError);
 
-        errorMessage.setText("");
+        error ="";
 
-        if ((username.getText().toString().equals("student")) && (password.getText().toString().equals("password"))){
-
-            Intent applyIntent = new Intent(Login_Activity.this, Dashboard_Activity.class);
-            applyIntent.putExtra("username",username.getText().toString());
-            Login_Activity.this.startActivity(applyIntent);
+        if (username.getText()==null || username.getText().toString().length()==0){
+            error += "Please enter your username! ";
         }
 
-        else{
-            errorMessage.setText("Wrong username or/and password");
-            refreshData();
+        boolean found = false;
+
+        if (error.length()==0) {
+
+            for (Applicant anApplicant : ms.getApplicants()) {
+                if (username.getText().toString().equals(anApplicant.getName())) {
+                    found = true;
+                    Intent loginIntent = new Intent(Login_Activity.this, Dashboard_Activity.class);
+                    loginIntent.putExtra("username", username.getText().toString());
+                    Login_Activity.this.startActivity(loginIntent);
+                    break;
+                }
+            }
+
+            if (found==false){
+                error += "Incorrect username";
+            }
+
         }
+
+        refreshData();
 
     }
+
+    public void switchToRegister(View v){
+        Intent registerIntent = new Intent(Login_Activity.this, Register_Activity.class);
+        Login_Activity.this.startActivity(registerIntent);
+
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -152,7 +180,6 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

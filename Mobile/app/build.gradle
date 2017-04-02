@@ -43,7 +43,6 @@ dependencies {
     compile('com.thoughtworks.xstream:xstream:1.4.7') {
         exclude group: 'xmlpull'
     }
-    compile files('libs/lalala.jar')
     compile files('libs/mysql-connector-java-5.1.40-bin.jar')
     compile files('libs/httpclient-4.2.3.jar')
 }

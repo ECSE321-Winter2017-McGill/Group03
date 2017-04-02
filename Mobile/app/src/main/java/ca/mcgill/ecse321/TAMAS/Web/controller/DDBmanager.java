@@ -41,7 +41,7 @@ public class DDBmanager extends AsyncTask<Parameters, Void, String> {
 			return this.updateDB(ctx[0].ms);
 		}
 	}
-	public void writeFile(String data) {
+	private void writeFile(String data) {
 		String filePath = context.getFilesDir().getPath().toString() + "/data.xml";
 		File f=new File(filePath);
 		if (!f.exists()) {
@@ -64,7 +64,7 @@ public class DDBmanager extends AsyncTask<Parameters, Void, String> {
 		System.out.println("sss"+f.exists());
 	}
 
-	public String getDB() {
+	private String getDB() {
 		System.out.println("Get DB");
 		String q = "xml";
 		try {
@@ -76,6 +76,7 @@ public class DDBmanager extends AsyncTask<Parameters, Void, String> {
 			ResultSet rs = st.executeQuery(query);
 			while (rs.next()) {
 				String r = rs.getString("xml");
+				System.out.println(r);
 				return r;
 			}
 		} catch (Exception e) {
@@ -85,7 +86,7 @@ public class DDBmanager extends AsyncTask<Parameters, Void, String> {
 		return "";
 	}
 
-	public String updateDB(ManagementSystem ms) {
+	private String updateDB(ManagementSystem ms) {
 		XStream xstream = new XStream();
 		xstream.alias("jobInfo", JobPosting.class);
 		xstream.setMode(XStream.ID_REFERENCES);
