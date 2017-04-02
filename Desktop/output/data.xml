@@ -34,7 +34,7 @@
                 <major>CS</major>
                 <year>Year 2</year>
                 <firstChoice>TA ECSE321</firstChoice>
-                <evaluation></evaluation>
+                <evaluation>The Best TA EVER.</evaluation>
                 <totalAppointmentHours>45</totalAppointmentHours>
                 <allocations id="11"/>
                 <offeredJobs id="12"/>
@@ -63,8 +63,2467 @@
   </instructors>
   <applicants id="18">
     <ca.mcgill.ecse321.TAMAS.model.Applicant reference="10"/>
+    <ca.mcgill.ecse321.TAMAS.model.Applicant id="19">
+      <studentID>0</studentID>
+      <name>test1</name>
+      <isUnderGraduated>true</isUnderGraduated>
+      <totalAppointmentHours>0</totalAppointmentHours>
+      <allocations id="20"/>
+      <offeredJobs id="21"/>
+      <managementSystem reference="1"/>
+      <applications id="22"/>
+    </ca.mcgill.ecse321.TAMAS.model.Applicant>
   </applicants>
-  <jobPostings id="19">
+  <jobPostings id="23">
     <jobInfo reference="6"/>
+    <jobInfo id="24">
+      <jobTitle>TA</jobTitle>
+      <submissionDeadline id="25">2100-12-31</submissionDeadline>
+      <perferredExperience>a</perferredExperience>
+      <hourRate>1.0</hourRate>
+      <managementSystem reference="1"/>
+      <course id="26">
+        <semester>Winter 2017</semester>
+        <courseName>Intro to SE</courseName>
+        <courseCode>ECSE321</courseCode>
+        <numTutorial>12</numTutorial>
+        <numLab>0</numLab>
+        <numStudent>111</numStudent>
+        <credit>3</credit>
+        <numTaNeeded>12</numTaNeeded>
+        <numGraderNeeded>1</numGraderNeeded>
+        <hourRequiredTa>123</hourRequiredTa>
+        <hourRequiredGrader>123</hourRequiredGrader>
+        <budgetCalculated>28413.0</budgetCalculated>
+        <courseComponents id="27"/>
+        <jobPosting id="28">
+          <jobInfo id="29">
+            <jobTitle>TA</jobTitle>
+            <submissionDeadline id="30">2017-03-31</submissionDeadline>
+            <perferredExperience>MYSQL</perferredExperience>
+            <hourRate>199.0</hourRate>
+            <managementSystem id="31">
+              <courses id="32">
+                <ca.mcgill.ecse321.TAMAS.model.Course reference="26"/>
+              </courses>
+              <instructors id="33">
+                <ca.mcgill.ecse321.TAMAS.model.Instructor id="34">
+                  <name>I</name>
+                  <managementSystem reference="31"/>
+                  <courses id="35">
+                    <ca.mcgill.ecse321.TAMAS.model.Course reference="26"/>
+                  </courses>
+                </ca.mcgill.ecse321.TAMAS.model.Instructor>
+              </instructors>
+              <applicants id="36">
+                <ca.mcgill.ecse321.TAMAS.model.Applicant id="37">
+                  <studentID>260000000</studentID>
+                  <name>App</name>
+                  <previousExperience>SQLIte</previousExperience>
+                  <isUnderGraduated>true</isUnderGraduated>
+                  <major>CS</major>
+                  <year>Year 2</year>
+                  <firstChoice>TA ECSE321</firstChoice>
+                  <evaluation></evaluation>
+                  <totalAppointmentHours>45</totalAppointmentHours>
+                  <allocations id="38"/>
+                  <offeredJobs id="39"/>
+                  <managementSystem reference="31"/>
+                  <applications id="40">
+                    <ca.mcgill.ecse321.TAMAS.model.Application id="41">
+                      <applicationStatus>Submitted</applicationStatus>
+                      <jobPosting reference="29"/>
+                      <applicant reference="37"/>
+                    </ca.mcgill.ecse321.TAMAS.model.Application>
+                  </applications>
+                </ca.mcgill.ecse321.TAMAS.model.Applicant>
+              </applicants>
+              <jobPostings id="42">
+                <jobInfo reference="29"/>
+              </jobPostings>
+            </managementSystem>
+            <course reference="26"/>
+            <applications id="43">
+              <ca.mcgill.ecse321.TAMAS.model.Application reference="41"/>
+            </applications>
+          </jobInfo>
+          <jobInfo reference="24"/>
+        </jobPosting>
+        <instructor reference="34"/>
+        <offeredJobs id="44"/>
+        <managementSystem reference="31"/>
+      </course>
+      <applications id="45"/>
+    </jobInfo>
+    <jobInfo id="46">
+      <jobTitle>TA</jobTitle>
+      <submissionDeadline id="47">2102-01-03</submissionDeadline>
+      <perferredExperience>aaa</perferredExperience>
+      <hourRate>1.0</hourRate>
+      <managementSystem reference="1"/>
+      <course id="48">
+        <semester>Winter 2017</semester>
+        <courseName>Intro to SE</courseName>
+        <courseCode>ECSE321</courseCode>
+        <numTutorial>12</numTutorial>
+        <numLab>0</numLab>
+        <numStudent>111</numStudent>
+        <credit>3</credit>
+        <numTaNeeded>12</numTaNeeded>
+        <numGraderNeeded>1</numGraderNeeded>
+        <hourRequiredTa>123</hourRequiredTa>
+        <hourRequiredGrader>123</hourRequiredGrader>
+        <budgetCalculated>28413.0</budgetCalculated>
+        <courseComponents id="49"/>
+        <jobPosting id="50">
+          <jobInfo id="51">
+            <jobTitle>TA</jobTitle>
+            <submissionDeadline id="52">2017-03-31</submissionDeadline>
+            <perferredExperience>MYSQL</perferredExperience>
+            <hourRate>199.0</hourRate>
+            <managementSystem id="53">
+              <courses id="54">
+                <ca.mcgill.ecse321.TAMAS.model.Course reference="48"/>
+              </courses>
+              <instructors id="55">
+                <ca.mcgill.ecse321.TAMAS.model.Instructor id="56">
+                  <name>I</name>
+                  <managementSystem reference="53"/>
+                  <courses id="57">
+                    <ca.mcgill.ecse321.TAMAS.model.Course reference="48"/>
+                  </courses>
+                </ca.mcgill.ecse321.TAMAS.model.Instructor>
+              </instructors>
+              <applicants id="58">
+                <ca.mcgill.ecse321.TAMAS.model.Applicant id="59">
+                  <studentID>260000000</studentID>
+                  <name>App</name>
+                  <previousExperience>SQLIte</previousExperience>
+                  <isUnderGraduated>true</isUnderGraduated>
+                  <major>CS</major>
+                  <year>Year 2</year>
+                  <firstChoice>TA ECSE321</firstChoice>
+                  <evaluation></evaluation>
+                  <totalAppointmentHours>45</totalAppointmentHours>
+                  <allocations id="60"/>
+                  <offeredJobs id="61"/>
+                  <managementSystem reference="53"/>
+                  <applications id="62">
+                    <ca.mcgill.ecse321.TAMAS.model.Application id="63">
+                      <applicationStatus>Submitted</applicationStatus>
+                      <jobPosting reference="51"/>
+                      <applicant reference="59"/>
+                    </ca.mcgill.ecse321.TAMAS.model.Application>
+                  </applications>
+                </ca.mcgill.ecse321.TAMAS.model.Applicant>
+              </applicants>
+              <jobPostings id="64">
+                <jobInfo reference="51"/>
+                <jobInfo id="65">
+                  <jobTitle>TA</jobTitle>
+                  <submissionDeadline id="66">2100-12-31</submissionDeadline>
+                  <perferredExperience>a</perferredExperience>
+                  <hourRate>1.0</hourRate>
+                  <managementSystem reference="53"/>
+                  <course id="67">
+                    <semester>Winter 2017</semester>
+                    <courseName>Intro to SE</courseName>
+                    <courseCode>ECSE321</courseCode>
+                    <numTutorial>12</numTutorial>
+                    <numLab>0</numLab>
+                    <numStudent>111</numStudent>
+                    <credit>3</credit>
+                    <numTaNeeded>12</numTaNeeded>
+                    <numGraderNeeded>1</numGraderNeeded>
+                    <hourRequiredTa>123</hourRequiredTa>
+                    <hourRequiredGrader>123</hourRequiredGrader>
+                    <budgetCalculated>28413.0</budgetCalculated>
+                    <courseComponents id="68"/>
+                    <jobPosting id="69">
+                      <jobInfo id="70">
+                        <jobTitle>TA</jobTitle>
+                        <submissionDeadline id="71">2017-03-31</submissionDeadline>
+                        <perferredExperience>MYSQL</perferredExperience>
+                        <hourRate>199.0</hourRate>
+                        <managementSystem id="72">
+                          <courses id="73">
+                            <ca.mcgill.ecse321.TAMAS.model.Course reference="67"/>
+                          </courses>
+                          <instructors id="74">
+                            <ca.mcgill.ecse321.TAMAS.model.Instructor id="75">
+                              <name>I</name>
+                              <managementSystem reference="72"/>
+                              <courses id="76">
+                                <ca.mcgill.ecse321.TAMAS.model.Course reference="67"/>
+                              </courses>
+                            </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                          </instructors>
+                          <applicants id="77">
+                            <ca.mcgill.ecse321.TAMAS.model.Applicant id="78">
+                              <studentID>260000000</studentID>
+                              <name>App</name>
+                              <previousExperience>SQLIte</previousExperience>
+                              <isUnderGraduated>true</isUnderGraduated>
+                              <major>CS</major>
+                              <year>Year 2</year>
+                              <firstChoice>TA ECSE321</firstChoice>
+                              <evaluation></evaluation>
+                              <totalAppointmentHours>45</totalAppointmentHours>
+                              <allocations id="79"/>
+                              <offeredJobs id="80"/>
+                              <managementSystem reference="72"/>
+                              <applications id="81">
+                                <ca.mcgill.ecse321.TAMAS.model.Application id="82">
+                                  <applicationStatus>Submitted</applicationStatus>
+                                  <jobPosting reference="70"/>
+                                  <applicant reference="78"/>
+                                </ca.mcgill.ecse321.TAMAS.model.Application>
+                              </applications>
+                            </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                          </applicants>
+                          <jobPostings id="83">
+                            <jobInfo reference="70"/>
+                          </jobPostings>
+                        </managementSystem>
+                        <course reference="67"/>
+                        <applications id="84">
+                          <ca.mcgill.ecse321.TAMAS.model.Application reference="82"/>
+                        </applications>
+                      </jobInfo>
+                      <jobInfo reference="65"/>
+                    </jobPosting>
+                    <instructor reference="75"/>
+                    <offeredJobs id="85"/>
+                    <managementSystem reference="72"/>
+                  </course>
+                  <applications id="86"/>
+                </jobInfo>
+              </jobPostings>
+            </managementSystem>
+            <course reference="48"/>
+            <applications id="87">
+              <ca.mcgill.ecse321.TAMAS.model.Application reference="63"/>
+            </applications>
+          </jobInfo>
+          <jobInfo reference="46"/>
+        </jobPosting>
+        <instructor reference="56"/>
+        <offeredJobs id="88"/>
+        <managementSystem reference="53"/>
+      </course>
+      <applications id="89"/>
+    </jobInfo>
+    <jobInfo id="90">
+      <jobTitle>TA</jobTitle>
+      <submissionDeadline id="91">2101-01-03</submissionDeadline>
+      <perferredExperience>a</perferredExperience>
+      <hourRate>12.0</hourRate>
+      <managementSystem reference="1"/>
+      <course id="92">
+        <semester>Winter 2017</semester>
+        <courseName>Intro to SE</courseName>
+        <courseCode>ECSE321</courseCode>
+        <numTutorial>12</numTutorial>
+        <numLab>0</numLab>
+        <numStudent>111</numStudent>
+        <credit>3</credit>
+        <numTaNeeded>12</numTaNeeded>
+        <numGraderNeeded>1</numGraderNeeded>
+        <hourRequiredTa>123</hourRequiredTa>
+        <hourRequiredGrader>123</hourRequiredGrader>
+        <budgetCalculated>28413.0</budgetCalculated>
+        <courseComponents id="93"/>
+        <jobPosting id="94">
+          <jobInfo id="95">
+            <jobTitle>TA</jobTitle>
+            <submissionDeadline id="96">2017-03-31</submissionDeadline>
+            <perferredExperience>MYSQL</perferredExperience>
+            <hourRate>199.0</hourRate>
+            <managementSystem id="97">
+              <courses id="98">
+                <ca.mcgill.ecse321.TAMAS.model.Course reference="92"/>
+              </courses>
+              <instructors id="99">
+                <ca.mcgill.ecse321.TAMAS.model.Instructor id="100">
+                  <name>I</name>
+                  <managementSystem reference="97"/>
+                  <courses id="101">
+                    <ca.mcgill.ecse321.TAMAS.model.Course reference="92"/>
+                  </courses>
+                </ca.mcgill.ecse321.TAMAS.model.Instructor>
+              </instructors>
+              <applicants id="102">
+                <ca.mcgill.ecse321.TAMAS.model.Applicant id="103">
+                  <studentID>260000000</studentID>
+                  <name>App</name>
+                  <previousExperience>SQLIte</previousExperience>
+                  <isUnderGraduated>true</isUnderGraduated>
+                  <major>CS</major>
+                  <year>Year 2</year>
+                  <firstChoice>TA ECSE321</firstChoice>
+                  <evaluation></evaluation>
+                  <totalAppointmentHours>45</totalAppointmentHours>
+                  <allocations id="104"/>
+                  <offeredJobs id="105"/>
+                  <managementSystem reference="97"/>
+                  <applications id="106">
+                    <ca.mcgill.ecse321.TAMAS.model.Application id="107">
+                      <applicationStatus>Submitted</applicationStatus>
+                      <jobPosting reference="95"/>
+                      <applicant reference="103"/>
+                    </ca.mcgill.ecse321.TAMAS.model.Application>
+                  </applications>
+                </ca.mcgill.ecse321.TAMAS.model.Applicant>
+              </applicants>
+              <jobPostings id="108">
+                <jobInfo reference="95"/>
+                <jobInfo id="109">
+                  <jobTitle>TA</jobTitle>
+                  <submissionDeadline id="110">2100-12-31</submissionDeadline>
+                  <perferredExperience>a</perferredExperience>
+                  <hourRate>1.0</hourRate>
+                  <managementSystem reference="97"/>
+                  <course id="111">
+                    <semester>Winter 2017</semester>
+                    <courseName>Intro to SE</courseName>
+                    <courseCode>ECSE321</courseCode>
+                    <numTutorial>12</numTutorial>
+                    <numLab>0</numLab>
+                    <numStudent>111</numStudent>
+                    <credit>3</credit>
+                    <numTaNeeded>12</numTaNeeded>
+                    <numGraderNeeded>1</numGraderNeeded>
+                    <hourRequiredTa>123</hourRequiredTa>
+                    <hourRequiredGrader>123</hourRequiredGrader>
+                    <budgetCalculated>28413.0</budgetCalculated>
+                    <courseComponents id="112"/>
+                    <jobPosting id="113">
+                      <jobInfo id="114">
+                        <jobTitle>TA</jobTitle>
+                        <submissionDeadline id="115">2017-03-31</submissionDeadline>
+                        <perferredExperience>MYSQL</perferredExperience>
+                        <hourRate>199.0</hourRate>
+                        <managementSystem id="116">
+                          <courses id="117">
+                            <ca.mcgill.ecse321.TAMAS.model.Course reference="111"/>
+                          </courses>
+                          <instructors id="118">
+                            <ca.mcgill.ecse321.TAMAS.model.Instructor id="119">
+                              <name>I</name>
+                              <managementSystem reference="116"/>
+                              <courses id="120">
+                                <ca.mcgill.ecse321.TAMAS.model.Course reference="111"/>
+                              </courses>
+                            </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                          </instructors>
+                          <applicants id="121">
+                            <ca.mcgill.ecse321.TAMAS.model.Applicant id="122">
+                              <studentID>260000000</studentID>
+                              <name>App</name>
+                              <previousExperience>SQLIte</previousExperience>
+                              <isUnderGraduated>true</isUnderGraduated>
+                              <major>CS</major>
+                              <year>Year 2</year>
+                              <firstChoice>TA ECSE321</firstChoice>
+                              <evaluation></evaluation>
+                              <totalAppointmentHours>45</totalAppointmentHours>
+                              <allocations id="123"/>
+                              <offeredJobs id="124"/>
+                              <managementSystem reference="116"/>
+                              <applications id="125">
+                                <ca.mcgill.ecse321.TAMAS.model.Application id="126">
+                                  <applicationStatus>Submitted</applicationStatus>
+                                  <jobPosting reference="114"/>
+                                  <applicant reference="122"/>
+                                </ca.mcgill.ecse321.TAMAS.model.Application>
+                              </applications>
+                            </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                          </applicants>
+                          <jobPostings id="127">
+                            <jobInfo reference="114"/>
+                          </jobPostings>
+                        </managementSystem>
+                        <course reference="111"/>
+                        <applications id="128">
+                          <ca.mcgill.ecse321.TAMAS.model.Application reference="126"/>
+                        </applications>
+                      </jobInfo>
+                      <jobInfo reference="109"/>
+                    </jobPosting>
+                    <instructor reference="119"/>
+                    <offeredJobs id="129"/>
+                    <managementSystem reference="116"/>
+                  </course>
+                  <applications id="130"/>
+                </jobInfo>
+                <jobInfo id="131">
+                  <jobTitle>TA</jobTitle>
+                  <submissionDeadline id="132">2102-01-03</submissionDeadline>
+                  <perferredExperience>aaa</perferredExperience>
+                  <hourRate>1.0</hourRate>
+                  <managementSystem reference="97"/>
+                  <course id="133">
+                    <semester>Winter 2017</semester>
+                    <courseName>Intro to SE</courseName>
+                    <courseCode>ECSE321</courseCode>
+                    <numTutorial>12</numTutorial>
+                    <numLab>0</numLab>
+                    <numStudent>111</numStudent>
+                    <credit>3</credit>
+                    <numTaNeeded>12</numTaNeeded>
+                    <numGraderNeeded>1</numGraderNeeded>
+                    <hourRequiredTa>123</hourRequiredTa>
+                    <hourRequiredGrader>123</hourRequiredGrader>
+                    <budgetCalculated>28413.0</budgetCalculated>
+                    <courseComponents id="134"/>
+                    <jobPosting id="135">
+                      <jobInfo id="136">
+                        <jobTitle>TA</jobTitle>
+                        <submissionDeadline id="137">2017-03-31</submissionDeadline>
+                        <perferredExperience>MYSQL</perferredExperience>
+                        <hourRate>199.0</hourRate>
+                        <managementSystem id="138">
+                          <courses id="139">
+                            <ca.mcgill.ecse321.TAMAS.model.Course reference="133"/>
+                          </courses>
+                          <instructors id="140">
+                            <ca.mcgill.ecse321.TAMAS.model.Instructor id="141">
+                              <name>I</name>
+                              <managementSystem reference="138"/>
+                              <courses id="142">
+                                <ca.mcgill.ecse321.TAMAS.model.Course reference="133"/>
+                              </courses>
+                            </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                          </instructors>
+                          <applicants id="143">
+                            <ca.mcgill.ecse321.TAMAS.model.Applicant id="144">
+                              <studentID>260000000</studentID>
+                              <name>App</name>
+                              <previousExperience>SQLIte</previousExperience>
+                              <isUnderGraduated>true</isUnderGraduated>
+                              <major>CS</major>
+                              <year>Year 2</year>
+                              <firstChoice>TA ECSE321</firstChoice>
+                              <evaluation></evaluation>
+                              <totalAppointmentHours>45</totalAppointmentHours>
+                              <allocations id="145"/>
+                              <offeredJobs id="146"/>
+                              <managementSystem reference="138"/>
+                              <applications id="147">
+                                <ca.mcgill.ecse321.TAMAS.model.Application id="148">
+                                  <applicationStatus>Submitted</applicationStatus>
+                                  <jobPosting reference="136"/>
+                                  <applicant reference="144"/>
+                                </ca.mcgill.ecse321.TAMAS.model.Application>
+                              </applications>
+                            </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                          </applicants>
+                          <jobPostings id="149">
+                            <jobInfo reference="136"/>
+                            <jobInfo id="150">
+                              <jobTitle>TA</jobTitle>
+                              <submissionDeadline id="151">2100-12-31</submissionDeadline>
+                              <perferredExperience>a</perferredExperience>
+                              <hourRate>1.0</hourRate>
+                              <managementSystem reference="138"/>
+                              <course id="152">
+                                <semester>Winter 2017</semester>
+                                <courseName>Intro to SE</courseName>
+                                <courseCode>ECSE321</courseCode>
+                                <numTutorial>12</numTutorial>
+                                <numLab>0</numLab>
+                                <numStudent>111</numStudent>
+                                <credit>3</credit>
+                                <numTaNeeded>12</numTaNeeded>
+                                <numGraderNeeded>1</numGraderNeeded>
+                                <hourRequiredTa>123</hourRequiredTa>
+                                <hourRequiredGrader>123</hourRequiredGrader>
+                                <budgetCalculated>28413.0</budgetCalculated>
+                                <courseComponents id="153"/>
+                                <jobPosting id="154">
+                                  <jobInfo id="155">
+                                    <jobTitle>TA</jobTitle>
+                                    <submissionDeadline id="156">2017-03-31</submissionDeadline>
+                                    <perferredExperience>MYSQL</perferredExperience>
+                                    <hourRate>199.0</hourRate>
+                                    <managementSystem id="157">
+                                      <courses id="158">
+                                        <ca.mcgill.ecse321.TAMAS.model.Course reference="152"/>
+                                      </courses>
+                                      <instructors id="159">
+                                        <ca.mcgill.ecse321.TAMAS.model.Instructor id="160">
+                                          <name>I</name>
+                                          <managementSystem reference="157"/>
+                                          <courses id="161">
+                                            <ca.mcgill.ecse321.TAMAS.model.Course reference="152"/>
+                                          </courses>
+                                        </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                                      </instructors>
+                                      <applicants id="162">
+                                        <ca.mcgill.ecse321.TAMAS.model.Applicant id="163">
+                                          <studentID>260000000</studentID>
+                                          <name>App</name>
+                                          <previousExperience>SQLIte</previousExperience>
+                                          <isUnderGraduated>true</isUnderGraduated>
+                                          <major>CS</major>
+                                          <year>Year 2</year>
+                                          <firstChoice>TA ECSE321</firstChoice>
+                                          <evaluation></evaluation>
+                                          <totalAppointmentHours>45</totalAppointmentHours>
+                                          <allocations id="164"/>
+                                          <offeredJobs id="165"/>
+                                          <managementSystem reference="157"/>
+                                          <applications id="166">
+                                            <ca.mcgill.ecse321.TAMAS.model.Application id="167">
+                                              <applicationStatus>Submitted</applicationStatus>
+                                              <jobPosting reference="155"/>
+                                              <applicant reference="163"/>
+                                            </ca.mcgill.ecse321.TAMAS.model.Application>
+                                          </applications>
+                                        </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                                      </applicants>
+                                      <jobPostings id="168">
+                                        <jobInfo reference="155"/>
+                                      </jobPostings>
+                                    </managementSystem>
+                                    <course reference="152"/>
+                                    <applications id="169">
+                                      <ca.mcgill.ecse321.TAMAS.model.Application reference="167"/>
+                                    </applications>
+                                  </jobInfo>
+                                  <jobInfo reference="150"/>
+                                </jobPosting>
+                                <instructor reference="160"/>
+                                <offeredJobs id="170"/>
+                                <managementSystem reference="157"/>
+                              </course>
+                              <applications id="171"/>
+                            </jobInfo>
+                          </jobPostings>
+                        </managementSystem>
+                        <course reference="133"/>
+                        <applications id="172">
+                          <ca.mcgill.ecse321.TAMAS.model.Application reference="148"/>
+                        </applications>
+                      </jobInfo>
+                      <jobInfo reference="131"/>
+                    </jobPosting>
+                    <instructor reference="141"/>
+                    <offeredJobs id="173"/>
+                    <managementSystem reference="138"/>
+                  </course>
+                  <applications id="174"/>
+                </jobInfo>
+              </jobPostings>
+            </managementSystem>
+            <course reference="92"/>
+            <applications id="175">
+              <ca.mcgill.ecse321.TAMAS.model.Application reference="107"/>
+            </applications>
+          </jobInfo>
+          <jobInfo reference="90"/>
+        </jobPosting>
+        <instructor reference="100"/>
+        <offeredJobs id="176"/>
+        <managementSystem reference="97"/>
+      </course>
+      <applications id="177"/>
+    </jobInfo>
+    <jobInfo id="178">
+      <jobTitle>TA</jobTitle>
+      <submissionDeadline id="179">2102-01-03</submissionDeadline>
+      <perferredExperience>1111111</perferredExperience>
+      <hourRate>112.0</hourRate>
+      <managementSystem reference="1"/>
+      <course id="180">
+        <semester>Winter 2017</semester>
+        <courseName>Intro to SE</courseName>
+        <courseCode>ECSE321</courseCode>
+        <numTutorial>12</numTutorial>
+        <numLab>0</numLab>
+        <numStudent>111</numStudent>
+        <credit>3</credit>
+        <numTaNeeded>12</numTaNeeded>
+        <numGraderNeeded>1</numGraderNeeded>
+        <hourRequiredTa>123</hourRequiredTa>
+        <hourRequiredGrader>123</hourRequiredGrader>
+        <budgetCalculated>28413.0</budgetCalculated>
+        <courseComponents id="181"/>
+        <jobPosting id="182">
+          <jobInfo id="183">
+            <jobTitle>TA</jobTitle>
+            <submissionDeadline id="184">2017-03-31</submissionDeadline>
+            <perferredExperience>MYSQL</perferredExperience>
+            <hourRate>199.0</hourRate>
+            <managementSystem id="185">
+              <courses id="186">
+                <ca.mcgill.ecse321.TAMAS.model.Course reference="180"/>
+              </courses>
+              <instructors id="187">
+                <ca.mcgill.ecse321.TAMAS.model.Instructor id="188">
+                  <name>I</name>
+                  <managementSystem reference="185"/>
+                  <courses id="189">
+                    <ca.mcgill.ecse321.TAMAS.model.Course reference="180"/>
+                  </courses>
+                </ca.mcgill.ecse321.TAMAS.model.Instructor>
+              </instructors>
+              <applicants id="190">
+                <ca.mcgill.ecse321.TAMAS.model.Applicant id="191">
+                  <studentID>260000000</studentID>
+                  <name>App</name>
+                  <previousExperience>SQLIte</previousExperience>
+                  <isUnderGraduated>true</isUnderGraduated>
+                  <major>CS</major>
+                  <year>Year 2</year>
+                  <firstChoice>TA ECSE321</firstChoice>
+                  <evaluation></evaluation>
+                  <totalAppointmentHours>45</totalAppointmentHours>
+                  <allocations id="192"/>
+                  <offeredJobs id="193"/>
+                  <managementSystem reference="185"/>
+                  <applications id="194">
+                    <ca.mcgill.ecse321.TAMAS.model.Application id="195">
+                      <applicationStatus>Submitted</applicationStatus>
+                      <jobPosting reference="183"/>
+                      <applicant reference="191"/>
+                    </ca.mcgill.ecse321.TAMAS.model.Application>
+                  </applications>
+                </ca.mcgill.ecse321.TAMAS.model.Applicant>
+              </applicants>
+              <jobPostings id="196">
+                <jobInfo reference="183"/>
+                <jobInfo id="197">
+                  <jobTitle>TA</jobTitle>
+                  <submissionDeadline id="198">2100-12-31</submissionDeadline>
+                  <perferredExperience>a</perferredExperience>
+                  <hourRate>1.0</hourRate>
+                  <managementSystem reference="185"/>
+                  <course id="199">
+                    <semester>Winter 2017</semester>
+                    <courseName>Intro to SE</courseName>
+                    <courseCode>ECSE321</courseCode>
+                    <numTutorial>12</numTutorial>
+                    <numLab>0</numLab>
+                    <numStudent>111</numStudent>
+                    <credit>3</credit>
+                    <numTaNeeded>12</numTaNeeded>
+                    <numGraderNeeded>1</numGraderNeeded>
+                    <hourRequiredTa>123</hourRequiredTa>
+                    <hourRequiredGrader>123</hourRequiredGrader>
+                    <budgetCalculated>28413.0</budgetCalculated>
+                    <courseComponents id="200"/>
+                    <jobPosting id="201">
+                      <jobInfo id="202">
+                        <jobTitle>TA</jobTitle>
+                        <submissionDeadline id="203">2017-03-31</submissionDeadline>
+                        <perferredExperience>MYSQL</perferredExperience>
+                        <hourRate>199.0</hourRate>
+                        <managementSystem id="204">
+                          <courses id="205">
+                            <ca.mcgill.ecse321.TAMAS.model.Course reference="199"/>
+                          </courses>
+                          <instructors id="206">
+                            <ca.mcgill.ecse321.TAMAS.model.Instructor id="207">
+                              <name>I</name>
+                              <managementSystem reference="204"/>
+                              <courses id="208">
+                                <ca.mcgill.ecse321.TAMAS.model.Course reference="199"/>
+                              </courses>
+                            </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                          </instructors>
+                          <applicants id="209">
+                            <ca.mcgill.ecse321.TAMAS.model.Applicant id="210">
+                              <studentID>260000000</studentID>
+                              <name>App</name>
+                              <previousExperience>SQLIte</previousExperience>
+                              <isUnderGraduated>true</isUnderGraduated>
+                              <major>CS</major>
+                              <year>Year 2</year>
+                              <firstChoice>TA ECSE321</firstChoice>
+                              <evaluation></evaluation>
+                              <totalAppointmentHours>45</totalAppointmentHours>
+                              <allocations id="211"/>
+                              <offeredJobs id="212"/>
+                              <managementSystem reference="204"/>
+                              <applications id="213">
+                                <ca.mcgill.ecse321.TAMAS.model.Application id="214">
+                                  <applicationStatus>Submitted</applicationStatus>
+                                  <jobPosting reference="202"/>
+                                  <applicant reference="210"/>
+                                </ca.mcgill.ecse321.TAMAS.model.Application>
+                              </applications>
+                            </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                          </applicants>
+                          <jobPostings id="215">
+                            <jobInfo reference="202"/>
+                          </jobPostings>
+                        </managementSystem>
+                        <course reference="199"/>
+                        <applications id="216">
+                          <ca.mcgill.ecse321.TAMAS.model.Application reference="214"/>
+                        </applications>
+                      </jobInfo>
+                      <jobInfo reference="197"/>
+                    </jobPosting>
+                    <instructor reference="207"/>
+                    <offeredJobs id="217"/>
+                    <managementSystem reference="204"/>
+                  </course>
+                  <applications id="218"/>
+                </jobInfo>
+                <jobInfo id="219">
+                  <jobTitle>TA</jobTitle>
+                  <submissionDeadline id="220">2102-01-03</submissionDeadline>
+                  <perferredExperience>aaa</perferredExperience>
+                  <hourRate>1.0</hourRate>
+                  <managementSystem reference="185"/>
+                  <course id="221">
+                    <semester>Winter 2017</semester>
+                    <courseName>Intro to SE</courseName>
+                    <courseCode>ECSE321</courseCode>
+                    <numTutorial>12</numTutorial>
+                    <numLab>0</numLab>
+                    <numStudent>111</numStudent>
+                    <credit>3</credit>
+                    <numTaNeeded>12</numTaNeeded>
+                    <numGraderNeeded>1</numGraderNeeded>
+                    <hourRequiredTa>123</hourRequiredTa>
+                    <hourRequiredGrader>123</hourRequiredGrader>
+                    <budgetCalculated>28413.0</budgetCalculated>
+                    <courseComponents id="222"/>
+                    <jobPosting id="223">
+                      <jobInfo id="224">
+                        <jobTitle>TA</jobTitle>
+                        <submissionDeadline id="225">2017-03-31</submissionDeadline>
+                        <perferredExperience>MYSQL</perferredExperience>
+                        <hourRate>199.0</hourRate>
+                        <managementSystem id="226">
+                          <courses id="227">
+                            <ca.mcgill.ecse321.TAMAS.model.Course reference="221"/>
+                          </courses>
+                          <instructors id="228">
+                            <ca.mcgill.ecse321.TAMAS.model.Instructor id="229">
+                              <name>I</name>
+                              <managementSystem reference="226"/>
+                              <courses id="230">
+                                <ca.mcgill.ecse321.TAMAS.model.Course reference="221"/>
+                              </courses>
+                            </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                          </instructors>
+                          <applicants id="231">
+                            <ca.mcgill.ecse321.TAMAS.model.Applicant id="232">
+                              <studentID>260000000</studentID>
+                              <name>App</name>
+                              <previousExperience>SQLIte</previousExperience>
+                              <isUnderGraduated>true</isUnderGraduated>
+                              <major>CS</major>
+                              <year>Year 2</year>
+                              <firstChoice>TA ECSE321</firstChoice>
+                              <evaluation></evaluation>
+                              <totalAppointmentHours>45</totalAppointmentHours>
+                              <allocations id="233"/>
+                              <offeredJobs id="234"/>
+                              <managementSystem reference="226"/>
+                              <applications id="235">
+                                <ca.mcgill.ecse321.TAMAS.model.Application id="236">
+                                  <applicationStatus>Submitted</applicationStatus>
+                                  <jobPosting reference="224"/>
+                                  <applicant reference="232"/>
+                                </ca.mcgill.ecse321.TAMAS.model.Application>
+                              </applications>
+                            </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                          </applicants>
+                          <jobPostings id="237">
+                            <jobInfo reference="224"/>
+                            <jobInfo id="238">
+                              <jobTitle>TA</jobTitle>
+                              <submissionDeadline id="239">2100-12-31</submissionDeadline>
+                              <perferredExperience>a</perferredExperience>
+                              <hourRate>1.0</hourRate>
+                              <managementSystem reference="226"/>
+                              <course id="240">
+                                <semester>Winter 2017</semester>
+                                <courseName>Intro to SE</courseName>
+                                <courseCode>ECSE321</courseCode>
+                                <numTutorial>12</numTutorial>
+                                <numLab>0</numLab>
+                                <numStudent>111</numStudent>
+                                <credit>3</credit>
+                                <numTaNeeded>12</numTaNeeded>
+                                <numGraderNeeded>1</numGraderNeeded>
+                                <hourRequiredTa>123</hourRequiredTa>
+                                <hourRequiredGrader>123</hourRequiredGrader>
+                                <budgetCalculated>28413.0</budgetCalculated>
+                                <courseComponents id="241"/>
+                                <jobPosting id="242">
+                                  <jobInfo id="243">
+                                    <jobTitle>TA</jobTitle>
+                                    <submissionDeadline id="244">2017-03-31</submissionDeadline>
+                                    <perferredExperience>MYSQL</perferredExperience>
+                                    <hourRate>199.0</hourRate>
+                                    <managementSystem id="245">
+                                      <courses id="246">
+                                        <ca.mcgill.ecse321.TAMAS.model.Course reference="240"/>
+                                      </courses>
+                                      <instructors id="247">
+                                        <ca.mcgill.ecse321.TAMAS.model.Instructor id="248">
+                                          <name>I</name>
+                                          <managementSystem reference="245"/>
+                                          <courses id="249">
+                                            <ca.mcgill.ecse321.TAMAS.model.Course reference="240"/>
+                                          </courses>
+                                        </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                                      </instructors>
+                                      <applicants id="250">
+                                        <ca.mcgill.ecse321.TAMAS.model.Applicant id="251">
+                                          <studentID>260000000</studentID>
+                                          <name>App</name>
+                                          <previousExperience>SQLIte</previousExperience>
+                                          <isUnderGraduated>true</isUnderGraduated>
+                                          <major>CS</major>
+                                          <year>Year 2</year>
+                                          <firstChoice>TA ECSE321</firstChoice>
+                                          <evaluation></evaluation>
+                                          <totalAppointmentHours>45</totalAppointmentHours>
+                                          <allocations id="252"/>
+                                          <offeredJobs id="253"/>
+                                          <managementSystem reference="245"/>
+                                          <applications id="254">
+                                            <ca.mcgill.ecse321.TAMAS.model.Application id="255">
+                                              <applicationStatus>Submitted</applicationStatus>
+                                              <jobPosting reference="243"/>
+                                              <applicant reference="251"/>
+                                            </ca.mcgill.ecse321.TAMAS.model.Application>
+                                          </applications>
+                                        </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                                      </applicants>
+                                      <jobPostings id="256">
+                                        <jobInfo reference="243"/>
+                                      </jobPostings>
+                                    </managementSystem>
+                                    <course reference="240"/>
+                                    <applications id="257">
+                                      <ca.mcgill.ecse321.TAMAS.model.Application reference="255"/>
+                                    </applications>
+                                  </jobInfo>
+                                  <jobInfo reference="238"/>
+                                </jobPosting>
+                                <instructor reference="248"/>
+                                <offeredJobs id="258"/>
+                                <managementSystem reference="245"/>
+                              </course>
+                              <applications id="259"/>
+                            </jobInfo>
+                          </jobPostings>
+                        </managementSystem>
+                        <course reference="221"/>
+                        <applications id="260">
+                          <ca.mcgill.ecse321.TAMAS.model.Application reference="236"/>
+                        </applications>
+                      </jobInfo>
+                      <jobInfo reference="219"/>
+                    </jobPosting>
+                    <instructor reference="229"/>
+                    <offeredJobs id="261"/>
+                    <managementSystem reference="226"/>
+                  </course>
+                  <applications id="262"/>
+                </jobInfo>
+                <jobInfo id="263">
+                  <jobTitle>TA</jobTitle>
+                  <submissionDeadline id="264">2101-01-03</submissionDeadline>
+                  <perferredExperience>a</perferredExperience>
+                  <hourRate>12.0</hourRate>
+                  <managementSystem reference="185"/>
+                  <course id="265">
+                    <semester>Winter 2017</semester>
+                    <courseName>Intro to SE</courseName>
+                    <courseCode>ECSE321</courseCode>
+                    <numTutorial>12</numTutorial>
+                    <numLab>0</numLab>
+                    <numStudent>111</numStudent>
+                    <credit>3</credit>
+                    <numTaNeeded>12</numTaNeeded>
+                    <numGraderNeeded>1</numGraderNeeded>
+                    <hourRequiredTa>123</hourRequiredTa>
+                    <hourRequiredGrader>123</hourRequiredGrader>
+                    <budgetCalculated>28413.0</budgetCalculated>
+                    <courseComponents id="266"/>
+                    <jobPosting id="267">
+                      <jobInfo id="268">
+                        <jobTitle>TA</jobTitle>
+                        <submissionDeadline id="269">2017-03-31</submissionDeadline>
+                        <perferredExperience>MYSQL</perferredExperience>
+                        <hourRate>199.0</hourRate>
+                        <managementSystem id="270">
+                          <courses id="271">
+                            <ca.mcgill.ecse321.TAMAS.model.Course reference="265"/>
+                          </courses>
+                          <instructors id="272">
+                            <ca.mcgill.ecse321.TAMAS.model.Instructor id="273">
+                              <name>I</name>
+                              <managementSystem reference="270"/>
+                              <courses id="274">
+                                <ca.mcgill.ecse321.TAMAS.model.Course reference="265"/>
+                              </courses>
+                            </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                          </instructors>
+                          <applicants id="275">
+                            <ca.mcgill.ecse321.TAMAS.model.Applicant id="276">
+                              <studentID>260000000</studentID>
+                              <name>App</name>
+                              <previousExperience>SQLIte</previousExperience>
+                              <isUnderGraduated>true</isUnderGraduated>
+                              <major>CS</major>
+                              <year>Year 2</year>
+                              <firstChoice>TA ECSE321</firstChoice>
+                              <evaluation></evaluation>
+                              <totalAppointmentHours>45</totalAppointmentHours>
+                              <allocations id="277"/>
+                              <offeredJobs id="278"/>
+                              <managementSystem reference="270"/>
+                              <applications id="279">
+                                <ca.mcgill.ecse321.TAMAS.model.Application id="280">
+                                  <applicationStatus>Submitted</applicationStatus>
+                                  <jobPosting reference="268"/>
+                                  <applicant reference="276"/>
+                                </ca.mcgill.ecse321.TAMAS.model.Application>
+                              </applications>
+                            </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                          </applicants>
+                          <jobPostings id="281">
+                            <jobInfo reference="268"/>
+                            <jobInfo id="282">
+                              <jobTitle>TA</jobTitle>
+                              <submissionDeadline id="283">2100-12-31</submissionDeadline>
+                              <perferredExperience>a</perferredExperience>
+                              <hourRate>1.0</hourRate>
+                              <managementSystem reference="270"/>
+                              <course id="284">
+                                <semester>Winter 2017</semester>
+                                <courseName>Intro to SE</courseName>
+                                <courseCode>ECSE321</courseCode>
+                                <numTutorial>12</numTutorial>
+                                <numLab>0</numLab>
+                                <numStudent>111</numStudent>
+                                <credit>3</credit>
+                                <numTaNeeded>12</numTaNeeded>
+                                <numGraderNeeded>1</numGraderNeeded>
+                                <hourRequiredTa>123</hourRequiredTa>
+                                <hourRequiredGrader>123</hourRequiredGrader>
+                                <budgetCalculated>28413.0</budgetCalculated>
+                                <courseComponents id="285"/>
+                                <jobPosting id="286">
+                                  <jobInfo id="287">
+                                    <jobTitle>TA</jobTitle>
+                                    <submissionDeadline id="288">2017-03-31</submissionDeadline>
+                                    <perferredExperience>MYSQL</perferredExperience>
+                                    <hourRate>199.0</hourRate>
+                                    <managementSystem id="289">
+                                      <courses id="290">
+                                        <ca.mcgill.ecse321.TAMAS.model.Course reference="284"/>
+                                      </courses>
+                                      <instructors id="291">
+                                        <ca.mcgill.ecse321.TAMAS.model.Instructor id="292">
+                                          <name>I</name>
+                                          <managementSystem reference="289"/>
+                                          <courses id="293">
+                                            <ca.mcgill.ecse321.TAMAS.model.Course reference="284"/>
+                                          </courses>
+                                        </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                                      </instructors>
+                                      <applicants id="294">
+                                        <ca.mcgill.ecse321.TAMAS.model.Applicant id="295">
+                                          <studentID>260000000</studentID>
+                                          <name>App</name>
+                                          <previousExperience>SQLIte</previousExperience>
+                                          <isUnderGraduated>true</isUnderGraduated>
+                                          <major>CS</major>
+                                          <year>Year 2</year>
+                                          <firstChoice>TA ECSE321</firstChoice>
+                                          <evaluation></evaluation>
+                                          <totalAppointmentHours>45</totalAppointmentHours>
+                                          <allocations id="296"/>
+                                          <offeredJobs id="297"/>
+                                          <managementSystem reference="289"/>
+                                          <applications id="298">
+                                            <ca.mcgill.ecse321.TAMAS.model.Application id="299">
+                                              <applicationStatus>Submitted</applicationStatus>
+                                              <jobPosting reference="287"/>
+                                              <applicant reference="295"/>
+                                            </ca.mcgill.ecse321.TAMAS.model.Application>
+                                          </applications>
+                                        </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                                      </applicants>
+                                      <jobPostings id="300">
+                                        <jobInfo reference="287"/>
+                                      </jobPostings>
+                                    </managementSystem>
+                                    <course reference="284"/>
+                                    <applications id="301">
+                                      <ca.mcgill.ecse321.TAMAS.model.Application reference="299"/>
+                                    </applications>
+                                  </jobInfo>
+                                  <jobInfo reference="282"/>
+                                </jobPosting>
+                                <instructor reference="292"/>
+                                <offeredJobs id="302"/>
+                                <managementSystem reference="289"/>
+                              </course>
+                              <applications id="303"/>
+                            </jobInfo>
+                            <jobInfo id="304">
+                              <jobTitle>TA</jobTitle>
+                              <submissionDeadline id="305">2102-01-03</submissionDeadline>
+                              <perferredExperience>aaa</perferredExperience>
+                              <hourRate>1.0</hourRate>
+                              <managementSystem reference="270"/>
+                              <course id="306">
+                                <semester>Winter 2017</semester>
+                                <courseName>Intro to SE</courseName>
+                                <courseCode>ECSE321</courseCode>
+                                <numTutorial>12</numTutorial>
+                                <numLab>0</numLab>
+                                <numStudent>111</numStudent>
+                                <credit>3</credit>
+                                <numTaNeeded>12</numTaNeeded>
+                                <numGraderNeeded>1</numGraderNeeded>
+                                <hourRequiredTa>123</hourRequiredTa>
+                                <hourRequiredGrader>123</hourRequiredGrader>
+                                <budgetCalculated>28413.0</budgetCalculated>
+                                <courseComponents id="307"/>
+                                <jobPosting id="308">
+                                  <jobInfo id="309">
+                                    <jobTitle>TA</jobTitle>
+                                    <submissionDeadline id="310">2017-03-31</submissionDeadline>
+                                    <perferredExperience>MYSQL</perferredExperience>
+                                    <hourRate>199.0</hourRate>
+                                    <managementSystem id="311">
+                                      <courses id="312">
+                                        <ca.mcgill.ecse321.TAMAS.model.Course reference="306"/>
+                                      </courses>
+                                      <instructors id="313">
+                                        <ca.mcgill.ecse321.TAMAS.model.Instructor id="314">
+                                          <name>I</name>
+                                          <managementSystem reference="311"/>
+                                          <courses id="315">
+                                            <ca.mcgill.ecse321.TAMAS.model.Course reference="306"/>
+                                          </courses>
+                                        </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                                      </instructors>
+                                      <applicants id="316">
+                                        <ca.mcgill.ecse321.TAMAS.model.Applicant id="317">
+                                          <studentID>260000000</studentID>
+                                          <name>App</name>
+                                          <previousExperience>SQLIte</previousExperience>
+                                          <isUnderGraduated>true</isUnderGraduated>
+                                          <major>CS</major>
+                                          <year>Year 2</year>
+                                          <firstChoice>TA ECSE321</firstChoice>
+                                          <evaluation></evaluation>
+                                          <totalAppointmentHours>45</totalAppointmentHours>
+                                          <allocations id="318"/>
+                                          <offeredJobs id="319"/>
+                                          <managementSystem reference="311"/>
+                                          <applications id="320">
+                                            <ca.mcgill.ecse321.TAMAS.model.Application id="321">
+                                              <applicationStatus>Submitted</applicationStatus>
+                                              <jobPosting reference="309"/>
+                                              <applicant reference="317"/>
+                                            </ca.mcgill.ecse321.TAMAS.model.Application>
+                                          </applications>
+                                        </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                                      </applicants>
+                                      <jobPostings id="322">
+                                        <jobInfo reference="309"/>
+                                        <jobInfo id="323">
+                                          <jobTitle>TA</jobTitle>
+                                          <submissionDeadline id="324">2100-12-31</submissionDeadline>
+                                          <perferredExperience>a</perferredExperience>
+                                          <hourRate>1.0</hourRate>
+                                          <managementSystem reference="311"/>
+                                          <course id="325">
+                                            <semester>Winter 2017</semester>
+                                            <courseName>Intro to SE</courseName>
+                                            <courseCode>ECSE321</courseCode>
+                                            <numTutorial>12</numTutorial>
+                                            <numLab>0</numLab>
+                                            <numStudent>111</numStudent>
+                                            <credit>3</credit>
+                                            <numTaNeeded>12</numTaNeeded>
+                                            <numGraderNeeded>1</numGraderNeeded>
+                                            <hourRequiredTa>123</hourRequiredTa>
+                                            <hourRequiredGrader>123</hourRequiredGrader>
+                                            <budgetCalculated>28413.0</budgetCalculated>
+                                            <courseComponents id="326"/>
+                                            <jobPosting id="327">
+                                              <jobInfo id="328">
+                                                <jobTitle>TA</jobTitle>
+                                                <submissionDeadline id="329">2017-03-31</submissionDeadline>
+                                                <perferredExperience>MYSQL</perferredExperience>
+                                                <hourRate>199.0</hourRate>
+                                                <managementSystem id="330">
+                                                  <courses id="331">
+                                                    <ca.mcgill.ecse321.TAMAS.model.Course reference="325"/>
+                                                  </courses>
+                                                  <instructors id="332">
+                                                    <ca.mcgill.ecse321.TAMAS.model.Instructor id="333">
+                                                      <name>I</name>
+                                                      <managementSystem reference="330"/>
+                                                      <courses id="334">
+                                                        <ca.mcgill.ecse321.TAMAS.model.Course reference="325"/>
+                                                      </courses>
+                                                    </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                                                  </instructors>
+                                                  <applicants id="335">
+                                                    <ca.mcgill.ecse321.TAMAS.model.Applicant id="336">
+                                                      <studentID>260000000</studentID>
+                                                      <name>App</name>
+                                                      <previousExperience>SQLIte</previousExperience>
+                                                      <isUnderGraduated>true</isUnderGraduated>
+                                                      <major>CS</major>
+                                                      <year>Year 2</year>
+                                                      <firstChoice>TA ECSE321</firstChoice>
+                                                      <evaluation></evaluation>
+                                                      <totalAppointmentHours>45</totalAppointmentHours>
+                                                      <allocations id="337"/>
+                                                      <offeredJobs id="338"/>
+                                                      <managementSystem reference="330"/>
+                                                      <applications id="339">
+                                                        <ca.mcgill.ecse321.TAMAS.model.Application id="340">
+                                                          <applicationStatus>Submitted</applicationStatus>
+                                                          <jobPosting reference="328"/>
+                                                          <applicant reference="336"/>
+                                                        </ca.mcgill.ecse321.TAMAS.model.Application>
+                                                      </applications>
+                                                    </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                                                  </applicants>
+                                                  <jobPostings id="341">
+                                                    <jobInfo reference="328"/>
+                                                  </jobPostings>
+                                                </managementSystem>
+                                                <course reference="325"/>
+                                                <applications id="342">
+                                                  <ca.mcgill.ecse321.TAMAS.model.Application reference="340"/>
+                                                </applications>
+                                              </jobInfo>
+                                              <jobInfo reference="323"/>
+                                            </jobPosting>
+                                            <instructor reference="333"/>
+                                            <offeredJobs id="343"/>
+                                            <managementSystem reference="330"/>
+                                          </course>
+                                          <applications id="344"/>
+                                        </jobInfo>
+                                      </jobPostings>
+                                    </managementSystem>
+                                    <course reference="306"/>
+                                    <applications id="345">
+                                      <ca.mcgill.ecse321.TAMAS.model.Application reference="321"/>
+                                    </applications>
+                                  </jobInfo>
+                                  <jobInfo reference="304"/>
+                                </jobPosting>
+                                <instructor reference="314"/>
+                                <offeredJobs id="346"/>
+                                <managementSystem reference="311"/>
+                              </course>
+                              <applications id="347"/>
+                            </jobInfo>
+                          </jobPostings>
+                        </managementSystem>
+                        <course reference="265"/>
+                        <applications id="348">
+                          <ca.mcgill.ecse321.TAMAS.model.Application reference="280"/>
+                        </applications>
+                      </jobInfo>
+                      <jobInfo reference="263"/>
+                    </jobPosting>
+                    <instructor reference="273"/>
+                    <offeredJobs id="349"/>
+                    <managementSystem reference="270"/>
+                  </course>
+                  <applications id="350"/>
+                </jobInfo>
+              </jobPostings>
+            </managementSystem>
+            <course reference="180"/>
+            <applications id="351">
+              <ca.mcgill.ecse321.TAMAS.model.Application reference="195"/>
+            </applications>
+          </jobInfo>
+          <jobInfo reference="178"/>
+        </jobPosting>
+        <instructor reference="188"/>
+        <offeredJobs id="352"/>
+        <managementSystem reference="185"/>
+      </course>
+      <applications id="353"/>
+    </jobInfo>
+    <jobInfo id="354">
+      <jobTitle>Grader</jobTitle>
+      <submissionDeadline id="355">2101-02-03</submissionDeadline>
+      <perferredExperience>DPM</perferredExperience>
+      <hourRate>19.0</hourRate>
+      <managementSystem reference="1"/>
+      <course id="356">
+        <semester>Winter 2017</semester>
+        <courseName>Intro to SE</courseName>
+        <courseCode>ECSE321</courseCode>
+        <numTutorial>12</numTutorial>
+        <numLab>0</numLab>
+        <numStudent>111</numStudent>
+        <credit>3</credit>
+        <numTaNeeded>12</numTaNeeded>
+        <numGraderNeeded>1</numGraderNeeded>
+        <hourRequiredTa>123</hourRequiredTa>
+        <hourRequiredGrader>123</hourRequiredGrader>
+        <budgetCalculated>28413.0</budgetCalculated>
+        <courseComponents id="357"/>
+        <jobPosting id="358">
+          <jobInfo id="359">
+            <jobTitle>TA</jobTitle>
+            <submissionDeadline id="360">2017-03-31</submissionDeadline>
+            <perferredExperience>MYSQL</perferredExperience>
+            <hourRate>199.0</hourRate>
+            <managementSystem id="361">
+              <courses id="362">
+                <ca.mcgill.ecse321.TAMAS.model.Course reference="356"/>
+              </courses>
+              <instructors id="363">
+                <ca.mcgill.ecse321.TAMAS.model.Instructor id="364">
+                  <name>I</name>
+                  <managementSystem reference="361"/>
+                  <courses id="365">
+                    <ca.mcgill.ecse321.TAMAS.model.Course reference="356"/>
+                  </courses>
+                </ca.mcgill.ecse321.TAMAS.model.Instructor>
+              </instructors>
+              <applicants id="366">
+                <ca.mcgill.ecse321.TAMAS.model.Applicant id="367">
+                  <studentID>260000000</studentID>
+                  <name>App</name>
+                  <previousExperience>SQLIte</previousExperience>
+                  <isUnderGraduated>true</isUnderGraduated>
+                  <major>CS</major>
+                  <year>Year 2</year>
+                  <firstChoice>TA ECSE321</firstChoice>
+                  <evaluation>The Best TA EVER.</evaluation>
+                  <totalAppointmentHours>45</totalAppointmentHours>
+                  <allocations id="368"/>
+                  <offeredJobs id="369"/>
+                  <managementSystem reference="361"/>
+                  <applications id="370">
+                    <ca.mcgill.ecse321.TAMAS.model.Application id="371">
+                      <applicationStatus>Submitted</applicationStatus>
+                      <jobPosting reference="359"/>
+                      <applicant reference="367"/>
+                    </ca.mcgill.ecse321.TAMAS.model.Application>
+                  </applications>
+                </ca.mcgill.ecse321.TAMAS.model.Applicant>
+              </applicants>
+              <jobPostings id="372">
+                <jobInfo reference="359"/>
+                <jobInfo id="373">
+                  <jobTitle>TA</jobTitle>
+                  <submissionDeadline id="374">2100-12-31</submissionDeadline>
+                  <perferredExperience>a</perferredExperience>
+                  <hourRate>1.0</hourRate>
+                  <managementSystem reference="361"/>
+                  <course id="375">
+                    <semester>Winter 2017</semester>
+                    <courseName>Intro to SE</courseName>
+                    <courseCode>ECSE321</courseCode>
+                    <numTutorial>12</numTutorial>
+                    <numLab>0</numLab>
+                    <numStudent>111</numStudent>
+                    <credit>3</credit>
+                    <numTaNeeded>12</numTaNeeded>
+                    <numGraderNeeded>1</numGraderNeeded>
+                    <hourRequiredTa>123</hourRequiredTa>
+                    <hourRequiredGrader>123</hourRequiredGrader>
+                    <budgetCalculated>28413.0</budgetCalculated>
+                    <courseComponents id="376"/>
+                    <jobPosting id="377">
+                      <jobInfo id="378">
+                        <jobTitle>TA</jobTitle>
+                        <submissionDeadline id="379">2017-03-31</submissionDeadline>
+                        <perferredExperience>MYSQL</perferredExperience>
+                        <hourRate>199.0</hourRate>
+                        <managementSystem id="380">
+                          <courses id="381">
+                            <ca.mcgill.ecse321.TAMAS.model.Course reference="375"/>
+                          </courses>
+                          <instructors id="382">
+                            <ca.mcgill.ecse321.TAMAS.model.Instructor id="383">
+                              <name>I</name>
+                              <managementSystem reference="380"/>
+                              <courses id="384">
+                                <ca.mcgill.ecse321.TAMAS.model.Course reference="375"/>
+                              </courses>
+                            </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                          </instructors>
+                          <applicants id="385">
+                            <ca.mcgill.ecse321.TAMAS.model.Applicant id="386">
+                              <studentID>260000000</studentID>
+                              <name>App</name>
+                              <previousExperience>SQLIte</previousExperience>
+                              <isUnderGraduated>true</isUnderGraduated>
+                              <major>CS</major>
+                              <year>Year 2</year>
+                              <firstChoice>TA ECSE321</firstChoice>
+                              <evaluation></evaluation>
+                              <totalAppointmentHours>45</totalAppointmentHours>
+                              <allocations id="387"/>
+                              <offeredJobs id="388"/>
+                              <managementSystem reference="380"/>
+                              <applications id="389">
+                                <ca.mcgill.ecse321.TAMAS.model.Application id="390">
+                                  <applicationStatus>Submitted</applicationStatus>
+                                  <jobPosting reference="378"/>
+                                  <applicant reference="386"/>
+                                </ca.mcgill.ecse321.TAMAS.model.Application>
+                              </applications>
+                            </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                          </applicants>
+                          <jobPostings id="391">
+                            <jobInfo reference="378"/>
+                          </jobPostings>
+                        </managementSystem>
+                        <course reference="375"/>
+                        <applications id="392">
+                          <ca.mcgill.ecse321.TAMAS.model.Application reference="390"/>
+                        </applications>
+                      </jobInfo>
+                      <jobInfo reference="373"/>
+                    </jobPosting>
+                    <instructor reference="383"/>
+                    <offeredJobs id="393"/>
+                    <managementSystem reference="380"/>
+                  </course>
+                  <applications id="394"/>
+                </jobInfo>
+                <jobInfo id="395">
+                  <jobTitle>TA</jobTitle>
+                  <submissionDeadline id="396">2102-01-03</submissionDeadline>
+                  <perferredExperience>aaa</perferredExperience>
+                  <hourRate>1.0</hourRate>
+                  <managementSystem reference="361"/>
+                  <course id="397">
+                    <semester>Winter 2017</semester>
+                    <courseName>Intro to SE</courseName>
+                    <courseCode>ECSE321</courseCode>
+                    <numTutorial>12</numTutorial>
+                    <numLab>0</numLab>
+                    <numStudent>111</numStudent>
+                    <credit>3</credit>
+                    <numTaNeeded>12</numTaNeeded>
+                    <numGraderNeeded>1</numGraderNeeded>
+                    <hourRequiredTa>123</hourRequiredTa>
+                    <hourRequiredGrader>123</hourRequiredGrader>
+                    <budgetCalculated>28413.0</budgetCalculated>
+                    <courseComponents id="398"/>
+                    <jobPosting id="399">
+                      <jobInfo id="400">
+                        <jobTitle>TA</jobTitle>
+                        <submissionDeadline id="401">2017-03-31</submissionDeadline>
+                        <perferredExperience>MYSQL</perferredExperience>
+                        <hourRate>199.0</hourRate>
+                        <managementSystem id="402">
+                          <courses id="403">
+                            <ca.mcgill.ecse321.TAMAS.model.Course reference="397"/>
+                          </courses>
+                          <instructors id="404">
+                            <ca.mcgill.ecse321.TAMAS.model.Instructor id="405">
+                              <name>I</name>
+                              <managementSystem reference="402"/>
+                              <courses id="406">
+                                <ca.mcgill.ecse321.TAMAS.model.Course reference="397"/>
+                              </courses>
+                            </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                          </instructors>
+                          <applicants id="407">
+                            <ca.mcgill.ecse321.TAMAS.model.Applicant id="408">
+                              <studentID>260000000</studentID>
+                              <name>App</name>
+                              <previousExperience>SQLIte</previousExperience>
+                              <isUnderGraduated>true</isUnderGraduated>
+                              <major>CS</major>
+                              <year>Year 2</year>
+                              <firstChoice>TA ECSE321</firstChoice>
+                              <evaluation></evaluation>
+                              <totalAppointmentHours>45</totalAppointmentHours>
+                              <allocations id="409"/>
+                              <offeredJobs id="410"/>
+                              <managementSystem reference="402"/>
+                              <applications id="411">
+                                <ca.mcgill.ecse321.TAMAS.model.Application id="412">
+                                  <applicationStatus>Submitted</applicationStatus>
+                                  <jobPosting reference="400"/>
+                                  <applicant reference="408"/>
+                                </ca.mcgill.ecse321.TAMAS.model.Application>
+                              </applications>
+                            </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                          </applicants>
+                          <jobPostings id="413">
+                            <jobInfo reference="400"/>
+                            <jobInfo id="414">
+                              <jobTitle>TA</jobTitle>
+                              <submissionDeadline id="415">2100-12-31</submissionDeadline>
+                              <perferredExperience>a</perferredExperience>
+                              <hourRate>1.0</hourRate>
+                              <managementSystem reference="402"/>
+                              <course id="416">
+                                <semester>Winter 2017</semester>
+                                <courseName>Intro to SE</courseName>
+                                <courseCode>ECSE321</courseCode>
+                                <numTutorial>12</numTutorial>
+                                <numLab>0</numLab>
+                                <numStudent>111</numStudent>
+                                <credit>3</credit>
+                                <numTaNeeded>12</numTaNeeded>
+                                <numGraderNeeded>1</numGraderNeeded>
+                                <hourRequiredTa>123</hourRequiredTa>
+                                <hourRequiredGrader>123</hourRequiredGrader>
+                                <budgetCalculated>28413.0</budgetCalculated>
+                                <courseComponents id="417"/>
+                                <jobPosting id="418">
+                                  <jobInfo id="419">
+                                    <jobTitle>TA</jobTitle>
+                                    <submissionDeadline id="420">2017-03-31</submissionDeadline>
+                                    <perferredExperience>MYSQL</perferredExperience>
+                                    <hourRate>199.0</hourRate>
+                                    <managementSystem id="421">
+                                      <courses id="422">
+                                        <ca.mcgill.ecse321.TAMAS.model.Course reference="416"/>
+                                      </courses>
+                                      <instructors id="423">
+                                        <ca.mcgill.ecse321.TAMAS.model.Instructor id="424">
+                                          <name>I</name>
+                                          <managementSystem reference="421"/>
+                                          <courses id="425">
+                                            <ca.mcgill.ecse321.TAMAS.model.Course reference="416"/>
+                                          </courses>
+                                        </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                                      </instructors>
+                                      <applicants id="426">
+                                        <ca.mcgill.ecse321.TAMAS.model.Applicant id="427">
+                                          <studentID>260000000</studentID>
+                                          <name>App</name>
+                                          <previousExperience>SQLIte</previousExperience>
+                                          <isUnderGraduated>true</isUnderGraduated>
+                                          <major>CS</major>
+                                          <year>Year 2</year>
+                                          <firstChoice>TA ECSE321</firstChoice>
+                                          <evaluation></evaluation>
+                                          <totalAppointmentHours>45</totalAppointmentHours>
+                                          <allocations id="428"/>
+                                          <offeredJobs id="429"/>
+                                          <managementSystem reference="421"/>
+                                          <applications id="430">
+                                            <ca.mcgill.ecse321.TAMAS.model.Application id="431">
+                                              <applicationStatus>Submitted</applicationStatus>
+                                              <jobPosting reference="419"/>
+                                              <applicant reference="427"/>
+                                            </ca.mcgill.ecse321.TAMAS.model.Application>
+                                          </applications>
+                                        </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                                      </applicants>
+                                      <jobPostings id="432">
+                                        <jobInfo reference="419"/>
+                                      </jobPostings>
+                                    </managementSystem>
+                                    <course reference="416"/>
+                                    <applications id="433">
+                                      <ca.mcgill.ecse321.TAMAS.model.Application reference="431"/>
+                                    </applications>
+                                  </jobInfo>
+                                  <jobInfo reference="414"/>
+                                </jobPosting>
+                                <instructor reference="424"/>
+                                <offeredJobs id="434"/>
+                                <managementSystem reference="421"/>
+                              </course>
+                              <applications id="435"/>
+                            </jobInfo>
+                          </jobPostings>
+                        </managementSystem>
+                        <course reference="397"/>
+                        <applications id="436">
+                          <ca.mcgill.ecse321.TAMAS.model.Application reference="412"/>
+                        </applications>
+                      </jobInfo>
+                      <jobInfo reference="395"/>
+                    </jobPosting>
+                    <instructor reference="405"/>
+                    <offeredJobs id="437"/>
+                    <managementSystem reference="402"/>
+                  </course>
+                  <applications id="438"/>
+                </jobInfo>
+                <jobInfo id="439">
+                  <jobTitle>TA</jobTitle>
+                  <submissionDeadline id="440">2101-01-03</submissionDeadline>
+                  <perferredExperience>a</perferredExperience>
+                  <hourRate>12.0</hourRate>
+                  <managementSystem reference="361"/>
+                  <course id="441">
+                    <semester>Winter 2017</semester>
+                    <courseName>Intro to SE</courseName>
+                    <courseCode>ECSE321</courseCode>
+                    <numTutorial>12</numTutorial>
+                    <numLab>0</numLab>
+                    <numStudent>111</numStudent>
+                    <credit>3</credit>
+                    <numTaNeeded>12</numTaNeeded>
+                    <numGraderNeeded>1</numGraderNeeded>
+                    <hourRequiredTa>123</hourRequiredTa>
+                    <hourRequiredGrader>123</hourRequiredGrader>
+                    <budgetCalculated>28413.0</budgetCalculated>
+                    <courseComponents id="442"/>
+                    <jobPosting id="443">
+                      <jobInfo id="444">
+                        <jobTitle>TA</jobTitle>
+                        <submissionDeadline id="445">2017-03-31</submissionDeadline>
+                        <perferredExperience>MYSQL</perferredExperience>
+                        <hourRate>199.0</hourRate>
+                        <managementSystem id="446">
+                          <courses id="447">
+                            <ca.mcgill.ecse321.TAMAS.model.Course reference="441"/>
+                          </courses>
+                          <instructors id="448">
+                            <ca.mcgill.ecse321.TAMAS.model.Instructor id="449">
+                              <name>I</name>
+                              <managementSystem reference="446"/>
+                              <courses id="450">
+                                <ca.mcgill.ecse321.TAMAS.model.Course reference="441"/>
+                              </courses>
+                            </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                          </instructors>
+                          <applicants id="451">
+                            <ca.mcgill.ecse321.TAMAS.model.Applicant id="452">
+                              <studentID>260000000</studentID>
+                              <name>App</name>
+                              <previousExperience>SQLIte</previousExperience>
+                              <isUnderGraduated>true</isUnderGraduated>
+                              <major>CS</major>
+                              <year>Year 2</year>
+                              <firstChoice>TA ECSE321</firstChoice>
+                              <evaluation></evaluation>
+                              <totalAppointmentHours>45</totalAppointmentHours>
+                              <allocations id="453"/>
+                              <offeredJobs id="454"/>
+                              <managementSystem reference="446"/>
+                              <applications id="455">
+                                <ca.mcgill.ecse321.TAMAS.model.Application id="456">
+                                  <applicationStatus>Submitted</applicationStatus>
+                                  <jobPosting reference="444"/>
+                                  <applicant reference="452"/>
+                                </ca.mcgill.ecse321.TAMAS.model.Application>
+                              </applications>
+                            </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                          </applicants>
+                          <jobPostings id="457">
+                            <jobInfo reference="444"/>
+                            <jobInfo id="458">
+                              <jobTitle>TA</jobTitle>
+                              <submissionDeadline id="459">2100-12-31</submissionDeadline>
+                              <perferredExperience>a</perferredExperience>
+                              <hourRate>1.0</hourRate>
+                              <managementSystem reference="446"/>
+                              <course id="460">
+                                <semester>Winter 2017</semester>
+                                <courseName>Intro to SE</courseName>
+                                <courseCode>ECSE321</courseCode>
+                                <numTutorial>12</numTutorial>
+                                <numLab>0</numLab>
+                                <numStudent>111</numStudent>
+                                <credit>3</credit>
+                                <numTaNeeded>12</numTaNeeded>
+                                <numGraderNeeded>1</numGraderNeeded>
+                                <hourRequiredTa>123</hourRequiredTa>
+                                <hourRequiredGrader>123</hourRequiredGrader>
+                                <budgetCalculated>28413.0</budgetCalculated>
+                                <courseComponents id="461"/>
+                                <jobPosting id="462">
+                                  <jobInfo id="463">
+                                    <jobTitle>TA</jobTitle>
+                                    <submissionDeadline id="464">2017-03-31</submissionDeadline>
+                                    <perferredExperience>MYSQL</perferredExperience>
+                                    <hourRate>199.0</hourRate>
+                                    <managementSystem id="465">
+                                      <courses id="466">
+                                        <ca.mcgill.ecse321.TAMAS.model.Course reference="460"/>
+                                      </courses>
+                                      <instructors id="467">
+                                        <ca.mcgill.ecse321.TAMAS.model.Instructor id="468">
+                                          <name>I</name>
+                                          <managementSystem reference="465"/>
+                                          <courses id="469">
+                                            <ca.mcgill.ecse321.TAMAS.model.Course reference="460"/>
+                                          </courses>
+                                        </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                                      </instructors>
+                                      <applicants id="470">
+                                        <ca.mcgill.ecse321.TAMAS.model.Applicant id="471">
+                                          <studentID>260000000</studentID>
+                                          <name>App</name>
+                                          <previousExperience>SQLIte</previousExperience>
+                                          <isUnderGraduated>true</isUnderGraduated>
+                                          <major>CS</major>
+                                          <year>Year 2</year>
+                                          <firstChoice>TA ECSE321</firstChoice>
+                                          <evaluation></evaluation>
+                                          <totalAppointmentHours>45</totalAppointmentHours>
+                                          <allocations id="472"/>
+                                          <offeredJobs id="473"/>
+                                          <managementSystem reference="465"/>
+                                          <applications id="474">
+                                            <ca.mcgill.ecse321.TAMAS.model.Application id="475">
+                                              <applicationStatus>Submitted</applicationStatus>
+                                              <jobPosting reference="463"/>
+                                              <applicant reference="471"/>
+                                            </ca.mcgill.ecse321.TAMAS.model.Application>
+                                          </applications>
+                                        </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                                      </applicants>
+                                      <jobPostings id="476">
+                                        <jobInfo reference="463"/>
+                                      </jobPostings>
+                                    </managementSystem>
+                                    <course reference="460"/>
+                                    <applications id="477">
+                                      <ca.mcgill.ecse321.TAMAS.model.Application reference="475"/>
+                                    </applications>
+                                  </jobInfo>
+                                  <jobInfo reference="458"/>
+                                </jobPosting>
+                                <instructor reference="468"/>
+                                <offeredJobs id="478"/>
+                                <managementSystem reference="465"/>
+                              </course>
+                              <applications id="479"/>
+                            </jobInfo>
+                            <jobInfo id="480">
+                              <jobTitle>TA</jobTitle>
+                              <submissionDeadline id="481">2102-01-03</submissionDeadline>
+                              <perferredExperience>aaa</perferredExperience>
+                              <hourRate>1.0</hourRate>
+                              <managementSystem reference="446"/>
+                              <course id="482">
+                                <semester>Winter 2017</semester>
+                                <courseName>Intro to SE</courseName>
+                                <courseCode>ECSE321</courseCode>
+                                <numTutorial>12</numTutorial>
+                                <numLab>0</numLab>
+                                <numStudent>111</numStudent>
+                                <credit>3</credit>
+                                <numTaNeeded>12</numTaNeeded>
+                                <numGraderNeeded>1</numGraderNeeded>
+                                <hourRequiredTa>123</hourRequiredTa>
+                                <hourRequiredGrader>123</hourRequiredGrader>
+                                <budgetCalculated>28413.0</budgetCalculated>
+                                <courseComponents id="483"/>
+                                <jobPosting id="484">
+                                  <jobInfo id="485">
+                                    <jobTitle>TA</jobTitle>
+                                    <submissionDeadline id="486">2017-03-31</submissionDeadline>
+                                    <perferredExperience>MYSQL</perferredExperience>
+                                    <hourRate>199.0</hourRate>
+                                    <managementSystem id="487">
+                                      <courses id="488">
+                                        <ca.mcgill.ecse321.TAMAS.model.Course reference="482"/>
+                                      </courses>
+                                      <instructors id="489">
+                                        <ca.mcgill.ecse321.TAMAS.model.Instructor id="490">
+                                          <name>I</name>
+                                          <managementSystem reference="487"/>
+                                          <courses id="491">
+                                            <ca.mcgill.ecse321.TAMAS.model.Course reference="482"/>
+                                          </courses>
+                                        </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                                      </instructors>
+                                      <applicants id="492">
+                                        <ca.mcgill.ecse321.TAMAS.model.Applicant id="493">
+                                          <studentID>260000000</studentID>
+                                          <name>App</name>
+                                          <previousExperience>SQLIte</previousExperience>
+                                          <isUnderGraduated>true</isUnderGraduated>
+                                          <major>CS</major>
+                                          <year>Year 2</year>
+                                          <firstChoice>TA ECSE321</firstChoice>
+                                          <evaluation></evaluation>
+                                          <totalAppointmentHours>45</totalAppointmentHours>
+                                          <allocations id="494"/>
+                                          <offeredJobs id="495"/>
+                                          <managementSystem reference="487"/>
+                                          <applications id="496">
+                                            <ca.mcgill.ecse321.TAMAS.model.Application id="497">
+                                              <applicationStatus>Submitted</applicationStatus>
+                                              <jobPosting reference="485"/>
+                                              <applicant reference="493"/>
+                                            </ca.mcgill.ecse321.TAMAS.model.Application>
+                                          </applications>
+                                        </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                                      </applicants>
+                                      <jobPostings id="498">
+                                        <jobInfo reference="485"/>
+                                        <jobInfo id="499">
+                                          <jobTitle>TA</jobTitle>
+                                          <submissionDeadline id="500">2100-12-31</submissionDeadline>
+                                          <perferredExperience>a</perferredExperience>
+                                          <hourRate>1.0</hourRate>
+                                          <managementSystem reference="487"/>
+                                          <course id="501">
+                                            <semester>Winter 2017</semester>
+                                            <courseName>Intro to SE</courseName>
+                                            <courseCode>ECSE321</courseCode>
+                                            <numTutorial>12</numTutorial>
+                                            <numLab>0</numLab>
+                                            <numStudent>111</numStudent>
+                                            <credit>3</credit>
+                                            <numTaNeeded>12</numTaNeeded>
+                                            <numGraderNeeded>1</numGraderNeeded>
+                                            <hourRequiredTa>123</hourRequiredTa>
+                                            <hourRequiredGrader>123</hourRequiredGrader>
+                                            <budgetCalculated>28413.0</budgetCalculated>
+                                            <courseComponents id="502"/>
+                                            <jobPosting id="503">
+                                              <jobInfo id="504">
+                                                <jobTitle>TA</jobTitle>
+                                                <submissionDeadline id="505">2017-03-31</submissionDeadline>
+                                                <perferredExperience>MYSQL</perferredExperience>
+                                                <hourRate>199.0</hourRate>
+                                                <managementSystem id="506">
+                                                  <courses id="507">
+                                                    <ca.mcgill.ecse321.TAMAS.model.Course reference="501"/>
+                                                  </courses>
+                                                  <instructors id="508">
+                                                    <ca.mcgill.ecse321.TAMAS.model.Instructor id="509">
+                                                      <name>I</name>
+                                                      <managementSystem reference="506"/>
+                                                      <courses id="510">
+                                                        <ca.mcgill.ecse321.TAMAS.model.Course reference="501"/>
+                                                      </courses>
+                                                    </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                                                  </instructors>
+                                                  <applicants id="511">
+                                                    <ca.mcgill.ecse321.TAMAS.model.Applicant id="512">
+                                                      <studentID>260000000</studentID>
+                                                      <name>App</name>
+                                                      <previousExperience>SQLIte</previousExperience>
+                                                      <isUnderGraduated>true</isUnderGraduated>
+                                                      <major>CS</major>
+                                                      <year>Year 2</year>
+                                                      <firstChoice>TA ECSE321</firstChoice>
+                                                      <evaluation></evaluation>
+                                                      <totalAppointmentHours>45</totalAppointmentHours>
+                                                      <allocations id="513"/>
+                                                      <offeredJobs id="514"/>
+                                                      <managementSystem reference="506"/>
+                                                      <applications id="515">
+                                                        <ca.mcgill.ecse321.TAMAS.model.Application id="516">
+                                                          <applicationStatus>Submitted</applicationStatus>
+                                                          <jobPosting reference="504"/>
+                                                          <applicant reference="512"/>
+                                                        </ca.mcgill.ecse321.TAMAS.model.Application>
+                                                      </applications>
+                                                    </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                                                  </applicants>
+                                                  <jobPostings id="517">
+                                                    <jobInfo reference="504"/>
+                                                  </jobPostings>
+                                                </managementSystem>
+                                                <course reference="501"/>
+                                                <applications id="518">
+                                                  <ca.mcgill.ecse321.TAMAS.model.Application reference="516"/>
+                                                </applications>
+                                              </jobInfo>
+                                              <jobInfo reference="499"/>
+                                            </jobPosting>
+                                            <instructor reference="509"/>
+                                            <offeredJobs id="519"/>
+                                            <managementSystem reference="506"/>
+                                          </course>
+                                          <applications id="520"/>
+                                        </jobInfo>
+                                      </jobPostings>
+                                    </managementSystem>
+                                    <course reference="482"/>
+                                    <applications id="521">
+                                      <ca.mcgill.ecse321.TAMAS.model.Application reference="497"/>
+                                    </applications>
+                                  </jobInfo>
+                                  <jobInfo reference="480"/>
+                                </jobPosting>
+                                <instructor reference="490"/>
+                                <offeredJobs id="522"/>
+                                <managementSystem reference="487"/>
+                              </course>
+                              <applications id="523"/>
+                            </jobInfo>
+                          </jobPostings>
+                        </managementSystem>
+                        <course reference="441"/>
+                        <applications id="524">
+                          <ca.mcgill.ecse321.TAMAS.model.Application reference="456"/>
+                        </applications>
+                      </jobInfo>
+                      <jobInfo reference="439"/>
+                    </jobPosting>
+                    <instructor reference="449"/>
+                    <offeredJobs id="525"/>
+                    <managementSystem reference="446"/>
+                  </course>
+                  <applications id="526"/>
+                </jobInfo>
+                <jobInfo id="527">
+                  <jobTitle>TA</jobTitle>
+                  <submissionDeadline id="528">2102-01-03</submissionDeadline>
+                  <perferredExperience>1111111</perferredExperience>
+                  <hourRate>112.0</hourRate>
+                  <managementSystem reference="361"/>
+                  <course id="529">
+                    <semester>Winter 2017</semester>
+                    <courseName>Intro to SE</courseName>
+                    <courseCode>ECSE321</courseCode>
+                    <numTutorial>12</numTutorial>
+                    <numLab>0</numLab>
+                    <numStudent>111</numStudent>
+                    <credit>3</credit>
+                    <numTaNeeded>12</numTaNeeded>
+                    <numGraderNeeded>1</numGraderNeeded>
+                    <hourRequiredTa>123</hourRequiredTa>
+                    <hourRequiredGrader>123</hourRequiredGrader>
+                    <budgetCalculated>28413.0</budgetCalculated>
+                    <courseComponents id="530"/>
+                    <jobPosting id="531">
+                      <jobInfo id="532">
+                        <jobTitle>TA</jobTitle>
+                        <submissionDeadline id="533">2017-03-31</submissionDeadline>
+                        <perferredExperience>MYSQL</perferredExperience>
+                        <hourRate>199.0</hourRate>
+                        <managementSystem id="534">
+                          <courses id="535">
+                            <ca.mcgill.ecse321.TAMAS.model.Course reference="529"/>
+                          </courses>
+                          <instructors id="536">
+                            <ca.mcgill.ecse321.TAMAS.model.Instructor id="537">
+                              <name>I</name>
+                              <managementSystem reference="534"/>
+                              <courses id="538">
+                                <ca.mcgill.ecse321.TAMAS.model.Course reference="529"/>
+                              </courses>
+                            </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                          </instructors>
+                          <applicants id="539">
+                            <ca.mcgill.ecse321.TAMAS.model.Applicant id="540">
+                              <studentID>260000000</studentID>
+                              <name>App</name>
+                              <previousExperience>SQLIte</previousExperience>
+                              <isUnderGraduated>true</isUnderGraduated>
+                              <major>CS</major>
+                              <year>Year 2</year>
+                              <firstChoice>TA ECSE321</firstChoice>
+                              <evaluation></evaluation>
+                              <totalAppointmentHours>45</totalAppointmentHours>
+                              <allocations id="541"/>
+                              <offeredJobs id="542"/>
+                              <managementSystem reference="534"/>
+                              <applications id="543">
+                                <ca.mcgill.ecse321.TAMAS.model.Application id="544">
+                                  <applicationStatus>Submitted</applicationStatus>
+                                  <jobPosting reference="532"/>
+                                  <applicant reference="540"/>
+                                </ca.mcgill.ecse321.TAMAS.model.Application>
+                              </applications>
+                            </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                          </applicants>
+                          <jobPostings id="545">
+                            <jobInfo reference="532"/>
+                            <jobInfo id="546">
+                              <jobTitle>TA</jobTitle>
+                              <submissionDeadline id="547">2100-12-31</submissionDeadline>
+                              <perferredExperience>a</perferredExperience>
+                              <hourRate>1.0</hourRate>
+                              <managementSystem reference="534"/>
+                              <course id="548">
+                                <semester>Winter 2017</semester>
+                                <courseName>Intro to SE</courseName>
+                                <courseCode>ECSE321</courseCode>
+                                <numTutorial>12</numTutorial>
+                                <numLab>0</numLab>
+                                <numStudent>111</numStudent>
+                                <credit>3</credit>
+                                <numTaNeeded>12</numTaNeeded>
+                                <numGraderNeeded>1</numGraderNeeded>
+                                <hourRequiredTa>123</hourRequiredTa>
+                                <hourRequiredGrader>123</hourRequiredGrader>
+                                <budgetCalculated>28413.0</budgetCalculated>
+                                <courseComponents id="549"/>
+                                <jobPosting id="550">
+                                  <jobInfo id="551">
+                                    <jobTitle>TA</jobTitle>
+                                    <submissionDeadline id="552">2017-03-31</submissionDeadline>
+                                    <perferredExperience>MYSQL</perferredExperience>
+                                    <hourRate>199.0</hourRate>
+                                    <managementSystem id="553">
+                                      <courses id="554">
+                                        <ca.mcgill.ecse321.TAMAS.model.Course reference="548"/>
+                                      </courses>
+                                      <instructors id="555">
+                                        <ca.mcgill.ecse321.TAMAS.model.Instructor id="556">
+                                          <name>I</name>
+                                          <managementSystem reference="553"/>
+                                          <courses id="557">
+                                            <ca.mcgill.ecse321.TAMAS.model.Course reference="548"/>
+                                          </courses>
+                                        </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                                      </instructors>
+                                      <applicants id="558">
+                                        <ca.mcgill.ecse321.TAMAS.model.Applicant id="559">
+                                          <studentID>260000000</studentID>
+                                          <name>App</name>
+                                          <previousExperience>SQLIte</previousExperience>
+                                          <isUnderGraduated>true</isUnderGraduated>
+                                          <major>CS</major>
+                                          <year>Year 2</year>
+                                          <firstChoice>TA ECSE321</firstChoice>
+                                          <evaluation></evaluation>
+                                          <totalAppointmentHours>45</totalAppointmentHours>
+                                          <allocations id="560"/>
+                                          <offeredJobs id="561"/>
+                                          <managementSystem reference="553"/>
+                                          <applications id="562">
+                                            <ca.mcgill.ecse321.TAMAS.model.Application id="563">
+                                              <applicationStatus>Submitted</applicationStatus>
+                                              <jobPosting reference="551"/>
+                                              <applicant reference="559"/>
+                                            </ca.mcgill.ecse321.TAMAS.model.Application>
+                                          </applications>
+                                        </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                                      </applicants>
+                                      <jobPostings id="564">
+                                        <jobInfo reference="551"/>
+                                      </jobPostings>
+                                    </managementSystem>
+                                    <course reference="548"/>
+                                    <applications id="565">
+                                      <ca.mcgill.ecse321.TAMAS.model.Application reference="563"/>
+                                    </applications>
+                                  </jobInfo>
+                                  <jobInfo reference="546"/>
+                                </jobPosting>
+                                <instructor reference="556"/>
+                                <offeredJobs id="566"/>
+                                <managementSystem reference="553"/>
+                              </course>
+                              <applications id="567"/>
+                            </jobInfo>
+                            <jobInfo id="568">
+                              <jobTitle>TA</jobTitle>
+                              <submissionDeadline id="569">2102-01-03</submissionDeadline>
+                              <perferredExperience>aaa</perferredExperience>
+                              <hourRate>1.0</hourRate>
+                              <managementSystem reference="534"/>
+                              <course id="570">
+                                <semester>Winter 2017</semester>
+                                <courseName>Intro to SE</courseName>
+                                <courseCode>ECSE321</courseCode>
+                                <numTutorial>12</numTutorial>
+                                <numLab>0</numLab>
+                                <numStudent>111</numStudent>
+                                <credit>3</credit>
+                                <numTaNeeded>12</numTaNeeded>
+                                <numGraderNeeded>1</numGraderNeeded>
+                                <hourRequiredTa>123</hourRequiredTa>
+                                <hourRequiredGrader>123</hourRequiredGrader>
+                                <budgetCalculated>28413.0</budgetCalculated>
+                                <courseComponents id="571"/>
+                                <jobPosting id="572">
+                                  <jobInfo id="573">
+                                    <jobTitle>TA</jobTitle>
+                                    <submissionDeadline id="574">2017-03-31</submissionDeadline>
+                                    <perferredExperience>MYSQL</perferredExperience>
+                                    <hourRate>199.0</hourRate>
+                                    <managementSystem id="575">
+                                      <courses id="576">
+                                        <ca.mcgill.ecse321.TAMAS.model.Course reference="570"/>
+                                      </courses>
+                                      <instructors id="577">
+                                        <ca.mcgill.ecse321.TAMAS.model.Instructor id="578">
+                                          <name>I</name>
+                                          <managementSystem reference="575"/>
+                                          <courses id="579">
+                                            <ca.mcgill.ecse321.TAMAS.model.Course reference="570"/>
+                                          </courses>
+                                        </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                                      </instructors>
+                                      <applicants id="580">
+                                        <ca.mcgill.ecse321.TAMAS.model.Applicant id="581">
+                                          <studentID>260000000</studentID>
+                                          <name>App</name>
+                                          <previousExperience>SQLIte</previousExperience>
+                                          <isUnderGraduated>true</isUnderGraduated>
+                                          <major>CS</major>
+                                          <year>Year 2</year>
+                                          <firstChoice>TA ECSE321</firstChoice>
+                                          <evaluation></evaluation>
+                                          <totalAppointmentHours>45</totalAppointmentHours>
+                                          <allocations id="582"/>
+                                          <offeredJobs id="583"/>
+                                          <managementSystem reference="575"/>
+                                          <applications id="584">
+                                            <ca.mcgill.ecse321.TAMAS.model.Application id="585">
+                                              <applicationStatus>Submitted</applicationStatus>
+                                              <jobPosting reference="573"/>
+                                              <applicant reference="581"/>
+                                            </ca.mcgill.ecse321.TAMAS.model.Application>
+                                          </applications>
+                                        </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                                      </applicants>
+                                      <jobPostings id="586">
+                                        <jobInfo reference="573"/>
+                                        <jobInfo id="587">
+                                          <jobTitle>TA</jobTitle>
+                                          <submissionDeadline id="588">2100-12-31</submissionDeadline>
+                                          <perferredExperience>a</perferredExperience>
+                                          <hourRate>1.0</hourRate>
+                                          <managementSystem reference="575"/>
+                                          <course id="589">
+                                            <semester>Winter 2017</semester>
+                                            <courseName>Intro to SE</courseName>
+                                            <courseCode>ECSE321</courseCode>
+                                            <numTutorial>12</numTutorial>
+                                            <numLab>0</numLab>
+                                            <numStudent>111</numStudent>
+                                            <credit>3</credit>
+                                            <numTaNeeded>12</numTaNeeded>
+                                            <numGraderNeeded>1</numGraderNeeded>
+                                            <hourRequiredTa>123</hourRequiredTa>
+                                            <hourRequiredGrader>123</hourRequiredGrader>
+                                            <budgetCalculated>28413.0</budgetCalculated>
+                                            <courseComponents id="590"/>
+                                            <jobPosting id="591">
+                                              <jobInfo id="592">
+                                                <jobTitle>TA</jobTitle>
+                                                <submissionDeadline id="593">2017-03-31</submissionDeadline>
+                                                <perferredExperience>MYSQL</perferredExperience>
+                                                <hourRate>199.0</hourRate>
+                                                <managementSystem id="594">
+                                                  <courses id="595">
+                                                    <ca.mcgill.ecse321.TAMAS.model.Course reference="589"/>
+                                                  </courses>
+                                                  <instructors id="596">
+                                                    <ca.mcgill.ecse321.TAMAS.model.Instructor id="597">
+                                                      <name>I</name>
+                                                      <managementSystem reference="594"/>
+                                                      <courses id="598">
+                                                        <ca.mcgill.ecse321.TAMAS.model.Course reference="589"/>
+                                                      </courses>
+                                                    </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                                                  </instructors>
+                                                  <applicants id="599">
+                                                    <ca.mcgill.ecse321.TAMAS.model.Applicant id="600">
+                                                      <studentID>260000000</studentID>
+                                                      <name>App</name>
+                                                      <previousExperience>SQLIte</previousExperience>
+                                                      <isUnderGraduated>true</isUnderGraduated>
+                                                      <major>CS</major>
+                                                      <year>Year 2</year>
+                                                      <firstChoice>TA ECSE321</firstChoice>
+                                                      <evaluation></evaluation>
+                                                      <totalAppointmentHours>45</totalAppointmentHours>
+                                                      <allocations id="601"/>
+                                                      <offeredJobs id="602"/>
+                                                      <managementSystem reference="594"/>
+                                                      <applications id="603">
+                                                        <ca.mcgill.ecse321.TAMAS.model.Application id="604">
+                                                          <applicationStatus>Submitted</applicationStatus>
+                                                          <jobPosting reference="592"/>
+                                                          <applicant reference="600"/>
+                                                        </ca.mcgill.ecse321.TAMAS.model.Application>
+                                                      </applications>
+                                                    </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                                                  </applicants>
+                                                  <jobPostings id="605">
+                                                    <jobInfo reference="592"/>
+                                                  </jobPostings>
+                                                </managementSystem>
+                                                <course reference="589"/>
+                                                <applications id="606">
+                                                  <ca.mcgill.ecse321.TAMAS.model.Application reference="604"/>
+                                                </applications>
+                                              </jobInfo>
+                                              <jobInfo reference="587"/>
+                                            </jobPosting>
+                                            <instructor reference="597"/>
+                                            <offeredJobs id="607"/>
+                                            <managementSystem reference="594"/>
+                                          </course>
+                                          <applications id="608"/>
+                                        </jobInfo>
+                                      </jobPostings>
+                                    </managementSystem>
+                                    <course reference="570"/>
+                                    <applications id="609">
+                                      <ca.mcgill.ecse321.TAMAS.model.Application reference="585"/>
+                                    </applications>
+                                  </jobInfo>
+                                  <jobInfo reference="568"/>
+                                </jobPosting>
+                                <instructor reference="578"/>
+                                <offeredJobs id="610"/>
+                                <managementSystem reference="575"/>
+                              </course>
+                              <applications id="611"/>
+                            </jobInfo>
+                            <jobInfo id="612">
+                              <jobTitle>TA</jobTitle>
+                              <submissionDeadline id="613">2101-01-03</submissionDeadline>
+                              <perferredExperience>a</perferredExperience>
+                              <hourRate>12.0</hourRate>
+                              <managementSystem reference="534"/>
+                              <course id="614">
+                                <semester>Winter 2017</semester>
+                                <courseName>Intro to SE</courseName>
+                                <courseCode>ECSE321</courseCode>
+                                <numTutorial>12</numTutorial>
+                                <numLab>0</numLab>
+                                <numStudent>111</numStudent>
+                                <credit>3</credit>
+                                <numTaNeeded>12</numTaNeeded>
+                                <numGraderNeeded>1</numGraderNeeded>
+                                <hourRequiredTa>123</hourRequiredTa>
+                                <hourRequiredGrader>123</hourRequiredGrader>
+                                <budgetCalculated>28413.0</budgetCalculated>
+                                <courseComponents id="615"/>
+                                <jobPosting id="616">
+                                  <jobInfo id="617">
+                                    <jobTitle>TA</jobTitle>
+                                    <submissionDeadline id="618">2017-03-31</submissionDeadline>
+                                    <perferredExperience>MYSQL</perferredExperience>
+                                    <hourRate>199.0</hourRate>
+                                    <managementSystem id="619">
+                                      <courses id="620">
+                                        <ca.mcgill.ecse321.TAMAS.model.Course reference="614"/>
+                                      </courses>
+                                      <instructors id="621">
+                                        <ca.mcgill.ecse321.TAMAS.model.Instructor id="622">
+                                          <name>I</name>
+                                          <managementSystem reference="619"/>
+                                          <courses id="623">
+                                            <ca.mcgill.ecse321.TAMAS.model.Course reference="614"/>
+                                          </courses>
+                                        </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                                      </instructors>
+                                      <applicants id="624">
+                                        <ca.mcgill.ecse321.TAMAS.model.Applicant id="625">
+                                          <studentID>260000000</studentID>
+                                          <name>App</name>
+                                          <previousExperience>SQLIte</previousExperience>
+                                          <isUnderGraduated>true</isUnderGraduated>
+                                          <major>CS</major>
+                                          <year>Year 2</year>
+                                          <firstChoice>TA ECSE321</firstChoice>
+                                          <evaluation></evaluation>
+                                          <totalAppointmentHours>45</totalAppointmentHours>
+                                          <allocations id="626"/>
+                                          <offeredJobs id="627"/>
+                                          <managementSystem reference="619"/>
+                                          <applications id="628">
+                                            <ca.mcgill.ecse321.TAMAS.model.Application id="629">
+                                              <applicationStatus>Submitted</applicationStatus>
+                                              <jobPosting reference="617"/>
+                                              <applicant reference="625"/>
+                                            </ca.mcgill.ecse321.TAMAS.model.Application>
+                                          </applications>
+                                        </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                                      </applicants>
+                                      <jobPostings id="630">
+                                        <jobInfo reference="617"/>
+                                        <jobInfo id="631">
+                                          <jobTitle>TA</jobTitle>
+                                          <submissionDeadline id="632">2100-12-31</submissionDeadline>
+                                          <perferredExperience>a</perferredExperience>
+                                          <hourRate>1.0</hourRate>
+                                          <managementSystem reference="619"/>
+                                          <course id="633">
+                                            <semester>Winter 2017</semester>
+                                            <courseName>Intro to SE</courseName>
+                                            <courseCode>ECSE321</courseCode>
+                                            <numTutorial>12</numTutorial>
+                                            <numLab>0</numLab>
+                                            <numStudent>111</numStudent>
+                                            <credit>3</credit>
+                                            <numTaNeeded>12</numTaNeeded>
+                                            <numGraderNeeded>1</numGraderNeeded>
+                                            <hourRequiredTa>123</hourRequiredTa>
+                                            <hourRequiredGrader>123</hourRequiredGrader>
+                                            <budgetCalculated>28413.0</budgetCalculated>
+                                            <courseComponents id="634"/>
+                                            <jobPosting id="635">
+                                              <jobInfo id="636">
+                                                <jobTitle>TA</jobTitle>
+                                                <submissionDeadline id="637">2017-03-31</submissionDeadline>
+                                                <perferredExperience>MYSQL</perferredExperience>
+                                                <hourRate>199.0</hourRate>
+                                                <managementSystem id="638">
+                                                  <courses id="639">
+                                                    <ca.mcgill.ecse321.TAMAS.model.Course reference="633"/>
+                                                  </courses>
+                                                  <instructors id="640">
+                                                    <ca.mcgill.ecse321.TAMAS.model.Instructor id="641">
+                                                      <name>I</name>
+                                                      <managementSystem reference="638"/>
+                                                      <courses id="642">
+                                                        <ca.mcgill.ecse321.TAMAS.model.Course reference="633"/>
+                                                      </courses>
+                                                    </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                                                  </instructors>
+                                                  <applicants id="643">
+                                                    <ca.mcgill.ecse321.TAMAS.model.Applicant id="644">
+                                                      <studentID>260000000</studentID>
+                                                      <name>App</name>
+                                                      <previousExperience>SQLIte</previousExperience>
+                                                      <isUnderGraduated>true</isUnderGraduated>
+                                                      <major>CS</major>
+                                                      <year>Year 2</year>
+                                                      <firstChoice>TA ECSE321</firstChoice>
+                                                      <evaluation></evaluation>
+                                                      <totalAppointmentHours>45</totalAppointmentHours>
+                                                      <allocations id="645"/>
+                                                      <offeredJobs id="646"/>
+                                                      <managementSystem reference="638"/>
+                                                      <applications id="647">
+                                                        <ca.mcgill.ecse321.TAMAS.model.Application id="648">
+                                                          <applicationStatus>Submitted</applicationStatus>
+                                                          <jobPosting reference="636"/>
+                                                          <applicant reference="644"/>
+                                                        </ca.mcgill.ecse321.TAMAS.model.Application>
+                                                      </applications>
+                                                    </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                                                  </applicants>
+                                                  <jobPostings id="649">
+                                                    <jobInfo reference="636"/>
+                                                  </jobPostings>
+                                                </managementSystem>
+                                                <course reference="633"/>
+                                                <applications id="650">
+                                                  <ca.mcgill.ecse321.TAMAS.model.Application reference="648"/>
+                                                </applications>
+                                              </jobInfo>
+                                              <jobInfo reference="631"/>
+                                            </jobPosting>
+                                            <instructor reference="641"/>
+                                            <offeredJobs id="651"/>
+                                            <managementSystem reference="638"/>
+                                          </course>
+                                          <applications id="652"/>
+                                        </jobInfo>
+                                        <jobInfo id="653">
+                                          <jobTitle>TA</jobTitle>
+                                          <submissionDeadline id="654">2102-01-03</submissionDeadline>
+                                          <perferredExperience>aaa</perferredExperience>
+                                          <hourRate>1.0</hourRate>
+                                          <managementSystem reference="619"/>
+                                          <course id="655">
+                                            <semester>Winter 2017</semester>
+                                            <courseName>Intro to SE</courseName>
+                                            <courseCode>ECSE321</courseCode>
+                                            <numTutorial>12</numTutorial>
+                                            <numLab>0</numLab>
+                                            <numStudent>111</numStudent>
+                                            <credit>3</credit>
+                                            <numTaNeeded>12</numTaNeeded>
+                                            <numGraderNeeded>1</numGraderNeeded>
+                                            <hourRequiredTa>123</hourRequiredTa>
+                                            <hourRequiredGrader>123</hourRequiredGrader>
+                                            <budgetCalculated>28413.0</budgetCalculated>
+                                            <courseComponents id="656"/>
+                                            <jobPosting id="657">
+                                              <jobInfo id="658">
+                                                <jobTitle>TA</jobTitle>
+                                                <submissionDeadline id="659">2017-03-31</submissionDeadline>
+                                                <perferredExperience>MYSQL</perferredExperience>
+                                                <hourRate>199.0</hourRate>
+                                                <managementSystem id="660">
+                                                  <courses id="661">
+                                                    <ca.mcgill.ecse321.TAMAS.model.Course reference="655"/>
+                                                  </courses>
+                                                  <instructors id="662">
+                                                    <ca.mcgill.ecse321.TAMAS.model.Instructor id="663">
+                                                      <name>I</name>
+                                                      <managementSystem reference="660"/>
+                                                      <courses id="664">
+                                                        <ca.mcgill.ecse321.TAMAS.model.Course reference="655"/>
+                                                      </courses>
+                                                    </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                                                  </instructors>
+                                                  <applicants id="665">
+                                                    <ca.mcgill.ecse321.TAMAS.model.Applicant id="666">
+                                                      <studentID>260000000</studentID>
+                                                      <name>App</name>
+                                                      <previousExperience>SQLIte</previousExperience>
+                                                      <isUnderGraduated>true</isUnderGraduated>
+                                                      <major>CS</major>
+                                                      <year>Year 2</year>
+                                                      <firstChoice>TA ECSE321</firstChoice>
+                                                      <evaluation></evaluation>
+                                                      <totalAppointmentHours>45</totalAppointmentHours>
+                                                      <allocations id="667"/>
+                                                      <offeredJobs id="668"/>
+                                                      <managementSystem reference="660"/>
+                                                      <applications id="669">
+                                                        <ca.mcgill.ecse321.TAMAS.model.Application id="670">
+                                                          <applicationStatus>Submitted</applicationStatus>
+                                                          <jobPosting reference="658"/>
+                                                          <applicant reference="666"/>
+                                                        </ca.mcgill.ecse321.TAMAS.model.Application>
+                                                      </applications>
+                                                    </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                                                  </applicants>
+                                                  <jobPostings id="671">
+                                                    <jobInfo reference="658"/>
+                                                    <jobInfo id="672">
+                                                      <jobTitle>TA</jobTitle>
+                                                      <submissionDeadline id="673">2100-12-31</submissionDeadline>
+                                                      <perferredExperience>a</perferredExperience>
+                                                      <hourRate>1.0</hourRate>
+                                                      <managementSystem reference="660"/>
+                                                      <course id="674">
+                                                        <semester>Winter 2017</semester>
+                                                        <courseName>Intro to SE</courseName>
+                                                        <courseCode>ECSE321</courseCode>
+                                                        <numTutorial>12</numTutorial>
+                                                        <numLab>0</numLab>
+                                                        <numStudent>111</numStudent>
+                                                        <credit>3</credit>
+                                                        <numTaNeeded>12</numTaNeeded>
+                                                        <numGraderNeeded>1</numGraderNeeded>
+                                                        <hourRequiredTa>123</hourRequiredTa>
+                                                        <hourRequiredGrader>123</hourRequiredGrader>
+                                                        <budgetCalculated>28413.0</budgetCalculated>
+                                                        <courseComponents id="675"/>
+                                                        <jobPosting id="676">
+                                                          <jobInfo id="677">
+                                                            <jobTitle>TA</jobTitle>
+                                                            <submissionDeadline id="678">2017-03-31</submissionDeadline>
+                                                            <perferredExperience>MYSQL</perferredExperience>
+                                                            <hourRate>199.0</hourRate>
+                                                            <managementSystem id="679">
+                                                              <courses id="680">
+                                                                <ca.mcgill.ecse321.TAMAS.model.Course reference="674"/>
+                                                              </courses>
+                                                              <instructors id="681">
+                                                                <ca.mcgill.ecse321.TAMAS.model.Instructor id="682">
+                                                                  <name>I</name>
+                                                                  <managementSystem reference="679"/>
+                                                                  <courses id="683">
+                                                                    <ca.mcgill.ecse321.TAMAS.model.Course reference="674"/>
+                                                                  </courses>
+                                                                </ca.mcgill.ecse321.TAMAS.model.Instructor>
+                                                              </instructors>
+                                                              <applicants id="684">
+                                                                <ca.mcgill.ecse321.TAMAS.model.Applicant id="685">
+                                                                  <studentID>260000000</studentID>
+                                                                  <name>App</name>
+                                                                  <previousExperience>SQLIte</previousExperience>
+                                                                  <isUnderGraduated>true</isUnderGraduated>
+                                                                  <major>CS</major>
+                                                                  <year>Year 2</year>
+                                                                  <firstChoice>TA ECSE321</firstChoice>
+                                                                  <evaluation></evaluation>
+                                                                  <totalAppointmentHours>45</totalAppointmentHours>
+                                                                  <allocations id="686"/>
+                                                                  <offeredJobs id="687"/>
+                                                                  <managementSystem reference="679"/>
+                                                                  <applications id="688">
+                                                                    <ca.mcgill.ecse321.TAMAS.model.Application id="689">
+                                                                      <applicationStatus>Submitted</applicationStatus>
+                                                                      <jobPosting reference="677"/>
+                                                                      <applicant reference="685"/>
+                                                                    </ca.mcgill.ecse321.TAMAS.model.Application>
+                                                                  </applications>
+                                                                </ca.mcgill.ecse321.TAMAS.model.Applicant>
+                                                              </applicants>
+                                                              <jobPostings id="690">
+                                                                <jobInfo reference="677"/>
+                                                              </jobPostings>
+                                                            </managementSystem>
+                                                            <course reference="674"/>
+                                                            <applications id="691">
+                                                              <ca.mcgill.ecse321.TAMAS.model.Application reference="689"/>
+                                                            </applications>
+                                                          </jobInfo>
+                                                          <jobInfo reference="672"/>
+                                                        </jobPosting>
+                                                        <instructor reference="682"/>
+                                                        <offeredJobs id="692"/>
+                                                        <managementSystem reference="679"/>
+                                                      </course>
+                                                      <applications id="693"/>
+                                                    </jobInfo>
+                                                  </jobPostings>
+                                                </managementSystem>
+                                                <course reference="655"/>
+                                                <applications id="694">
+                                                  <ca.mcgill.ecse321.TAMAS.model.Application reference="670"/>
+                                                </applications>
+                                              </jobInfo>
+                                              <jobInfo reference="653"/>
+                                            </jobPosting>
+                                            <instructor reference="663"/>
+                                            <offeredJobs id="695"/>
+                                            <managementSystem reference="660"/>
+                                          </course>
+                                          <applications id="696"/>
+                                        </jobInfo>
+                                      </jobPostings>
+                                    </managementSystem>
+                                    <course reference="614"/>
+                                    <applications id="697">
+                                      <ca.mcgill.ecse321.TAMAS.model.Application reference="629"/>
+                                    </applications>
+                                  </jobInfo>
+                                  <jobInfo reference="612"/>
+                                </jobPosting>
+                                <instructor reference="622"/>
+                                <offeredJobs id="698"/>
+                                <managementSystem reference="619"/>
+                              </course>
+                              <applications id="699"/>
+                            </jobInfo>
+                          </jobPostings>
+                        </managementSystem>
+                        <course reference="529"/>
+                        <applications id="700">
+                          <ca.mcgill.ecse321.TAMAS.model.Application reference="544"/>
+                        </applications>
+                      </jobInfo>
+                      <jobInfo reference="527"/>
+                    </jobPosting>
+                    <instructor reference="537"/>
+                    <offeredJobs id="701"/>
+                    <managementSystem reference="534"/>
+                  </course>
+                  <applications id="702"/>
+                </jobInfo>
+              </jobPostings>
+            </managementSystem>
+            <course reference="356"/>
+            <applications id="703">
+              <ca.mcgill.ecse321.TAMAS.model.Application reference="371"/>
+            </applications>
+          </jobInfo>
+          <jobInfo reference="354"/>
+        </jobPosting>
+        <instructor reference="364"/>
+        <offeredJobs id="704"/>
+        <managementSystem reference="361"/>
+      </course>
+      <applications id="705"/>
+    </jobInfo>
   </jobPostings>
 </ca.mcgill.ecse321.TAMAS.model.ManagementSystem>
