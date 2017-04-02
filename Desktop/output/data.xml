@@ -29,6 +29,29 @@
   <instructors id="9">
     <ca.mcgill.ecse321.TAMAS.model.Instructor reference="6"/>
   </instructors>
-  <applicants id="10"/>
-  <jobPostings id="11"/>
+  <applicants id="10">
+    <ca.mcgill.ecse321.TAMAS.model.Applicant id="11">
+      <studentID>0</studentID>
+      <name>abc</name>
+      <isUnderGraduated>true</isUnderGraduated>
+      <evaluation> you are nice</evaluation>
+      <totalAppointmentHours>0</totalAppointmentHours>
+      <allocations id="12"/>
+      <offeredJobs id="13"/>
+      <managementSystem reference="1"/>
+      <applications id="14"/>
+    </ca.mcgill.ecse321.TAMAS.model.Applicant>
+    <ca.mcgill.ecse321.TAMAS.model.Applicant id="15">
+      <studentID>0</studentID>
+      <name>ccc</name>
+      <isUnderGraduated>true</isUnderGraduated>
+      <evaluation>asdfasdf</evaluation>
+      <totalAppointmentHours>0</totalAppointmentHours>
+      <allocations id="16"/>
+      <offeredJobs id="17"/>
+      <managementSystem reference="1"/>
+      <applications id="18"/>
+    </ca.mcgill.ecse321.TAMAS.model.Applicant>
+  </applicants>
+  <jobPostings id="19"/>
 </ca.mcgill.ecse321.TAMAS.model.ManagementSystem>
