@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import ca.mcgill.ecse321.tamas.model.ManagementSystem;
+import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 
 public class ViewJobPosting_Activity extends AppCompatActivity {
 

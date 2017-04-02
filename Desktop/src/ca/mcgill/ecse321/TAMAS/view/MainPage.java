@@ -63,8 +63,8 @@ public class MainPage extends JFrame {
 			pane.add(applyForJob, BorderLayout.PAGE_END);
 		} else {
 			pane.add(addCourse, BorderLayout.PAGE_START);
-			pane.add(addJobPosting);
-			pane.add(addTAEval);
+			pane.add(addJobPosting,BorderLayout.LINE_START);
+			pane.add(addTAEval,BorderLayout.LINE_END);
 			pane.add(applyForJob, BorderLayout.PAGE_END);
 		}
 
