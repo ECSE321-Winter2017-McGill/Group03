@@ -6,7 +6,8 @@
 
 
 
-###  Login testing purposes:
+###  Branch for meeting Logs:
 
-Username: test
-Password: password
+Each deliverable is split per folder
+Each meeting is logged in a file with its date
+Inside the file, there is the meeting time (the length of the meeting), the participants involved in the meeting and the action items discussed.
