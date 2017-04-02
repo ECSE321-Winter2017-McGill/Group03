@@ -1,18 +1,20 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
+/*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 
-
-// line 161 "../../../../../TAMAS.ump"
-
+// line 113 "../../../../../TAMAS.ump"
 public class Allocation
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
+
+  //Allocation State Machines
+  public enum AllocationStatus { INITIAL, INSTRUCTOR_APPROVED, FINAL_APPROVAL }
+  private AllocationStatus allocationStatus;
 
   //Allocation Associations
   private Course course;
@@ -30,11 +32,29 @@ public class Allocation
       throw new RuntimeException("Unable to create courseJobAllocation due to course");
     }
     applicants = new ArrayList<Applicant>();
+    setAllocationStatus(AllocationStatus.INITIAL);
   }
 
   //------------------------
   // INTERFACE
   //------------------------
+
+  public String getAllocationStatusFullName()
+  {
+    String answer = allocationStatus.toString();
+    return answer;
+  }
+
+  public AllocationStatus getAllocationStatus()
+  {
+    return allocationStatus;
+  }
+
+  public boolean setAllocationStatus(AllocationStatus aAllocationStatus)
+  {
+    allocationStatus = aAllocationStatus;
+    return true;
+  }
 
   public Course getCourse()
   {

@@ -1,5 +1,5 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
+/*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
@@ -110,9 +110,9 @@ public class Instructor
     return 0;
   }
 
-  public Course addCourse(String aSemester, String aCourseName, String aCourseCode, int aNumTutorial, int aNumLab, int aNumStudent, int aCredit, int aNumTaNeeded, int aNumGraderNeeded, int aHourRequiredTa, int aHourRequiredGrader, double aBudgetCalculated, ManagementSystem aManagementSystem)
+  public Course addCourse(String aSemester, String aCourseName, String aCourseCode, int aNumTutorial, int aNumLab, int aNumStudent, int aCredit, int aNumTaNeeded, int aNumGraderNeeded, int aLabHour, int aTutorialHour, int aTotalGraderHour, double aBudgetCalculated, ManagementSystem aManagementSystem)
   {
-    return new Course(aSemester, aCourseName, aCourseCode, aNumTutorial, aNumLab, aNumStudent, aCredit, aNumTaNeeded, aNumGraderNeeded, aHourRequiredTa, aHourRequiredGrader, aBudgetCalculated, this, aManagementSystem);
+    return new Course(aSemester, aCourseName, aCourseCode, aNumTutorial, aNumLab, aNumStudent, aCredit, aNumTaNeeded, aNumGraderNeeded, aLabHour, aTutorialHour, aTotalGraderHour, aBudgetCalculated, this, aManagementSystem);
   }
 
   public boolean addCourse(Course aCourse)
@@ -192,7 +192,7 @@ public class Instructor
 
   public String toString()
   {
-    String outputString = "";
+	  String outputString = "";
     return super.toString() + "["+
             "name" + ":" + getName()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "managementSystem = "+(getManagementSystem()!=null?Integer.toHexString(System.identityHashCode(getManagementSystem())):"null")

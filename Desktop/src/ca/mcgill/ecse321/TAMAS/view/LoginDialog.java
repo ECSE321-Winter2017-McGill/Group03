@@ -29,7 +29,7 @@ public class LoginDialog extends JFrame {
 	private JLabel lbUsername;
 	private JLabel lbPassword;
 	private JButton btnLogin;
-	private JButton btnCancel;
+	private JButton btnRegister;
 	private boolean succeeded;
 
 	public LoginDialog() {
@@ -93,16 +93,20 @@ public class LoginDialog extends JFrame {
 				}
 			}
 		});
-		btnCancel = new JButton("Register");
-		btnCancel.addActionListener(new ActionListener() {
+		btnRegister = new JButton("Register");
+		btnRegister.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				tfUsername.setText("");
+				pfPassword.setText("");
+				
+				setVisible(false);
 				toRegisterPage();
 			}
 		});
 		JPanel bp = new JPanel();
 		bp.add(btnLogin);
-		bp.add(btnCancel);
+		bp.add(btnRegister);
 
 		getContentPane().add(panel, BorderLayout.CENTER);
 		getContentPane().add(bp, BorderLayout.PAGE_END);
