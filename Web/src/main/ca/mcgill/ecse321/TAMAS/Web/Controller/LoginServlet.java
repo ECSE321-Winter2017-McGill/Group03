@@ -12,13 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.thoughtworks.xstream.XStream;
-
-import ca.mcgill.ecse321.TAMAS.controller.TController;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
-import ca.mcgill.ecse321.TAMAS.model.Course;
-import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.DBmanager;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
@@ -30,6 +25,11 @@ public class LoginServlet extends HttpServlet {
 	// private LoginService userValidationService = new LoginService();
 
 	// private TodoService todoService = new TodoService();
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -609435102250998676L;
 
 	protected void doGet(HttpServletRequest request,
 

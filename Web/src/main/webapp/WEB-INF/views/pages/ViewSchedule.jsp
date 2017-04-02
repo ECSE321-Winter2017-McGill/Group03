@@ -137,7 +137,7 @@ body {
 					<div class="box-header with-border"></div>
 					<div class="box-body">
 						<div class="mydiv">
-							<div id='calendar' name='js'></div>
+							<div id='calendar'></div>
 							<br> <a> </a><input
 								class="btn btn-sm btn-info btn-flat pull-left" type="submit"
 								value='Submit Changes' /> <br />
@@ -151,10 +151,5 @@ body {
 			</div>
 		</div>
 	</div>
-
-
-
-
-	</form>
 </body>
 </html>
