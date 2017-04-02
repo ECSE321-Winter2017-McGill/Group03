@@ -51,12 +51,14 @@ public class ViewApplicationsServlet extends HttpServlet {
 				result += "<td>" + apt.getJobPosting().getJobTitle() + " </td>";
 				result += "<td>" + apt.getJobPosting().getCourse().getCourseCode() + " </td>";
 				String s = apt.getStatus().toString();
-				if (s.equals("Submitted")) {
-					result += "<td><span class='label label-info'>" + "Submitted" + "</span></td>";
-				} else if (s.equals("Accpeted")||s.equals("Accepted")) {
-					result += "<td><span class='label label-success'>" + "Accepted" + "</span></td>";
-				} else if (s.equals("Rejected")) {
-					result += "<td><span class='label label-danger'>" + "Rejected" + "</span></td>";
+				if (s.equals("pending")||s.equals("PENDING")) {
+					result += "<td><span class='label label-warning'>" + "Pending" + "</span></td>";
+				} else if (s.equals("OFFER_ACCEPTED")||s.equals("Accepted")) {
+					result += "<td><span class='label label-success'>" + "Offer Accepted" + "</span></td>";
+				} else if (s.equals("OFFER_DECLINED")) {
+					result += "<td><span class='label label-danger'>" + "Offer Rejected" + "</span></td>";
+				}else if(s.equals("SELECTED")){
+					result += "<td><span class='label label-info'>" + "Selected"+ "</span></td>";
 				}else{
 					result += "<td><span class='label label-danger'>" + s+ "</span></td>";
 				}

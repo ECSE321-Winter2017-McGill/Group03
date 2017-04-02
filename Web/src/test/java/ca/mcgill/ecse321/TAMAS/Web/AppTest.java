@@ -1,7 +1,9 @@
 package ca.mcgill.ecse321.TAMAS.Web;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import java.io.File;
+import java.sql.Date;
 import java.util.Calendar;
 
 import org.junit.After;
@@ -12,18 +14,12 @@ import org.junit.BeforeClass;
 import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.controller.TController;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
-import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
-import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 import ca.mcgill.ecse321.TAMAS.model.Application;
 import ca.mcgill.ecse321.TAMAS.model.Course;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
-
-import java.io.File;
-import java.sql.Date;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
+import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
 /**
  * Unit test for simple App.

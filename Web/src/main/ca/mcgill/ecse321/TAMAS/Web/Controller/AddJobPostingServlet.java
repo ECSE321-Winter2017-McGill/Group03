@@ -44,7 +44,7 @@ public class AddJobPostingServlet extends HttpServlet {
 
 		String fileName = "output/data.xml";
 
-		//error = "";
+		// error = "";
 		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
 
 		String courses = "";
@@ -75,7 +75,7 @@ public class AddJobPostingServlet extends HttpServlet {
 
 		String dl = request.getParameter("deadLine");
 		Date deadlineDate = null;
-		double hourlyRate=-1.0;
+		double hourlyRate = -1.0;
 		try {
 			deadlineDate = new Date(Integer.parseInt(dl.substring(0, 3)), Integer.parseInt(dl.substring(5, 6)),
 					Integer.parseInt(dl.substring(8, 9)));
@@ -84,28 +84,33 @@ public class AddJobPostingServlet extends HttpServlet {
 		} catch (Exception e) {
 			error = "Non Valid Date";
 		}
+		for (Course c : ms.getCourses()) {
+			String key = c.getCourseCode();
+			cmap.put(key, c);
+		}
 		String exp = request.getParameter("perferredExperience");
-		
-		String cname = request.getParameter("course");
-		System.out.println(cname);
-		Course aCourse = cmap.get(cname);
 
+		String cname = request.getParameter("course");
+		System.out.println("cName+"+cname);
+		System.out.println(cmap.containsKey(cname));
+		Course aCourse = cmap.get(cname);
+		//System.out.println("course aa"+aCourse.getCourseName());
 		try {
 			TController c = new TController(ms);
 			c.createJobPosting(jobPosition, deadlineDate, exp, hourlyRate, aCourse);
 			// PersistenceXStream.saveToXMLwithXStream(ms);
 			DBmanager.updateDB(objToXML(ms));
 		} catch (Exception e) {
-			
+
 			error = e.getMessage();
-			System.out.println(error);
+			System.out.println("eeeee" + error);
 			request.setAttribute("error", error);
 
 			request.getRequestDispatcher("/WEB-INF/views/pages/AddJobPosting.jsp").forward(
 
 					request, response);
 
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
 

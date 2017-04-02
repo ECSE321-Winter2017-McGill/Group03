@@ -102,9 +102,6 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
             return new ManagementSystem();
 
         }
-        }else{
-            return new ManagementSystem();
-        }
     }
 
     public void refreshData(){
