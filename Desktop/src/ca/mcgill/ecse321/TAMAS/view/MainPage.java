@@ -107,7 +107,7 @@ public class MainPage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
-				new WriteEvaluation(ms, user).setVisible(true);
+				new ViewEvaluation(ms, user).setVisible(true);
 				dispose();
 			}
 

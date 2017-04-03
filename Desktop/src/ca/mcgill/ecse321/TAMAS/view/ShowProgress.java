@@ -32,9 +32,9 @@ public class ShowProgress extends JPanel implements Runnable {
 
 		JLabel lblNewLabel = new JLabel("     Loading Database     ");
 		lblNewLabel.setBounds(145, 26, 135, 35);
-		lblNewLabel.setFont(new Font("Georgia", Font.BOLD,20));
+		lblNewLabel.setFont(new Font("Georgia", Font.BOLD, 20));
 		add(lblNewLabel, BorderLayout.PAGE_START);
-		
+
 		JLabel spaceLabel = new JLabel("                          ");
 		add(spaceLabel, BorderLayout.PAGE_END);
 	}
@@ -42,7 +42,6 @@ public class ShowProgress extends JPanel implements Runnable {
 	public void updateBar(int newValue) {
 		pbar.setValue(newValue);
 	}
-
 
 	@Override
 	public void run() {
@@ -53,7 +52,7 @@ public class ShowProgress extends JPanel implements Runnable {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setContentPane(progress);
 		frame.setBackground(Color.WHITE);
-		frame.setLocationRelativeTo(null);
+		// frame.setLocationRelativeTo(null);
 		frame.pack();
 		frame.setVisible(true);
 
@@ -66,12 +65,18 @@ public class ShowProgress extends JPanel implements Runnable {
 						progress.updateBar(percent);
 					}
 				});
-				java.lang.Thread.sleep(80);
+
+				java.lang.Thread.sleep(getNum());
 			} catch (InterruptedException e) {
 				;
 			}
 		}
 		frame.dispose();
-		
+
+	}
+
+	private long getNum() {
+		int[] a = { 1, 80, 10, 0 ,1};
+		return a[(int) (Math.random() * 5)];
 	}
 }
