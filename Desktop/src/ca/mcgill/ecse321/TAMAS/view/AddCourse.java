@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
@@ -36,18 +37,19 @@ public class AddCourse extends JFrame {
 	private JLabel instructorLabel;
 	private JTextField instructorTextField;
 	
+	private JLabel numGraderNeededLabel;
+	private JTextField numGraderNeededTextField;
 	private JLabel numLabLabel;
 	private JTextField numLabTextField;
 	private JLabel numTutorialLabel;
 	private JTextField numTutorialTextField;
-	private JLabel numTaNeededLabel;
-	private JTextField numTaNeededTextField;
-	private JLabel numGraderNeededLabel;
-	private JTextField numGraderNeededTextField;
-	private JLabel hourTaLabel;
-	private JTextField hourTaTextField;
-	private JLabel hourGraderLabel;
-	private JTextField hourGraderTextField;
+
+	private JLabel labHourLabel;
+	private JTextField labHourTextField;
+	private JLabel tutorialHourLabel;
+	private JTextField tutorialHourTextField;
+	private JLabel totalGraderHourLabel;
+	private JTextField totalGraderHourTextField;
 	
 	private String error = null;
 	private Integer selectedSemester = -1;
@@ -91,13 +93,13 @@ public class AddCourse extends JFrame {
 			}
 		});
 	
-		codeLabel = new JLabel("Course Code:");
-		codeLabel.setForeground(Color.BLACK);
-		codeTextField = new JTextField();
-		
 		nameLabel = new JLabel("Course Name:");
 		nameLabel.setForeground(Color.BLACK);
 		nameTextField = new JTextField();
+		
+		codeLabel = new JLabel("Course Code:");
+		codeLabel.setForeground(Color.BLACK);
+		codeTextField = new JTextField();
 		
 		creditLabel = new JLabel("Credit:");
 		creditLabel.setForeground(Color.BLACK);
@@ -121,21 +123,21 @@ public class AddCourse extends JFrame {
 		numTutorialLabel.setForeground(Color.BLACK);
 		numTutorialTextField = new JTextField();
 		
-		numTaNeededLabel = new JLabel("Number of TA needed:");
-		numTaNeededLabel.setForeground(Color.BLACK);
-		numTaNeededTextField = new JTextField();
+		labHourLabel = new JLabel("Length of Lab Session:");
+		labHourLabel.setForeground(Color.BLACK);
+		labHourTextField = new JTextField();
+		
+		tutorialHourLabel = new JLabel("Length of Tutorial Sessions:");
+		tutorialHourLabel.setForeground(Color.BLACK);
+		tutorialHourTextField = new JTextField();
 		
 		numGraderNeededLabel = new JLabel("Number of Grader needed:");
 		numGraderNeededLabel.setForeground(Color.BLACK);
 		numGraderNeededTextField = new JTextField();
 		
-		hourTaLabel = new JLabel("Appointment Hour for TA:");
-		hourTaLabel.setForeground(Color.BLACK);
-		hourTaTextField = new JTextField();
-		
-		hourGraderLabel = new JLabel("Appointment Hour for Grader:");
-		hourGraderLabel.setForeground(Color.BLACK);
-		hourGraderTextField = new JTextField();
+		totalGraderHourLabel = new JLabel("Appointment Hour for Grader:");
+		totalGraderHourLabel.setForeground(Color.BLACK);
+		totalGraderHourTextField = new JTextField();
 
 		submitButton = new JButton("  Submit  ");
 		submitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -172,31 +174,31 @@ public class AddCourse extends JFrame {
 				.addGroup(layout.createSequentialGroup()
 						.addGroup(layout.createParallelGroup()
 								.addComponent(semesterLabel,200,250,500)
-								.addComponent(codeLabel)
 								.addComponent(nameLabel)
+								.addComponent(codeLabel)
 								.addComponent(creditLabel)
 								.addComponent(maxStudentLabel)
 								.addComponent(instructorLabel)
 								.addComponent(numLabLabel)
 								.addComponent(numTutorialLabel)
-								.addComponent(numTaNeededLabel)
+								.addComponent(labHourLabel)
+								.addComponent(tutorialHourLabel)
 								.addComponent(numGraderNeededLabel)
-								.addComponent(hourTaLabel)
-								.addComponent(hourGraderLabel)
+								.addComponent(totalGraderHourLabel)
 								.addComponent(cancelButton))
 						.addGroup(layout.createParallelGroup()
 								.addComponent(semesterToggleList)
-								.addComponent(codeTextField)
 								.addComponent(nameTextField)
+								.addComponent(codeTextField)
 								.addComponent(creditTextField)
 								.addComponent(maxStudentTextField,200,250,500)
 								.addComponent(instructorTextField)
 								.addComponent(numLabTextField)
 								.addComponent(numTutorialTextField)
-								.addComponent(numTaNeededTextField)
+								.addComponent(labHourTextField)
+								.addComponent(tutorialHourTextField)
 								.addComponent(numGraderNeededTextField)
-								.addComponent(hourTaTextField)
-								.addComponent(hourGraderTextField)
+								.addComponent(totalGraderHourTextField)
 								.addComponent(submitButton))));
 										
 
@@ -209,11 +211,11 @@ public class AddCourse extends JFrame {
 						.addComponent(semesterLabel)
 						.addComponent(semesterToggleList))
 				.addGroup(layout.createParallelGroup()
-						.addComponent(codeLabel)
-						.addComponent(codeTextField,23,23,23))
-				.addGroup(layout.createParallelGroup()
 						.addComponent(nameLabel)
 						.addComponent(nameTextField,23,23,23))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(codeLabel)
+						.addComponent(codeTextField,23,23,23))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(creditLabel)
 						.addComponent(creditTextField,23,23,23))
@@ -232,17 +234,17 @@ public class AddCourse extends JFrame {
 						.addComponent(numTutorialLabel)
 						.addComponent(numTutorialTextField,23,23,23))
 				.addGroup(layout.createParallelGroup()
-						.addComponent(numTaNeededLabel)
-						.addComponent(numTaNeededTextField,23,23,23))
+						.addComponent(labHourLabel)
+						.addComponent(labHourTextField,23,23,23))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(tutorialHourLabel)
+						.addComponent(tutorialHourTextField,23,23,23))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(numGraderNeededLabel)
 						.addComponent(numGraderNeededTextField,23,23,23))
 				.addGroup(layout.createParallelGroup()
-						.addComponent(hourTaLabel)
-						.addComponent(hourTaTextField,23,23,23))
-				.addGroup(layout.createParallelGroup()
-						.addComponent(hourGraderLabel)
-						.addComponent(hourGraderTextField,23,23,23))
+						.addComponent(totalGraderHourLabel)
+						.addComponent(totalGraderHourTextField,23,23,23))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(cancelButton)
 						.addComponent(submitButton))
@@ -271,16 +273,15 @@ public class AddCourse extends JFrame {
 			
 			numLabTextField.setText("");
 			numTutorialTextField.setText("");
-			numTaNeededTextField.setText("");
+
+			labHourTextField.setText("");
+			tutorialHourTextField.setText("");
 			numGraderNeededTextField.setText("");
-			hourTaTextField.setText("");
-			hourGraderTextField.setText("");
+			totalGraderHourTextField.setText("");
 
 			selectedSemester = -1;
 			semesterToggleList.setSelectedIndex(selectedSemester);
 		}
-		
-		// If there is error
 		
 
 		pack();
@@ -329,6 +330,18 @@ public class AddCourse extends JFrame {
 			String instructorName = instructorTextField.getText();
 			
 			
+			int numLab = 0;
+			if (numLabTextField.getText() == null || numLabTextField.getText().trim().length() == 0){
+				numLab = -1;
+			}
+			else if (!numLabTextField.getText().matches("[0-9]+")){
+				numLab = -1;
+			}
+			else{
+				numLab = Integer.parseInt(numLabTextField.getText());
+			}
+			
+			
 			int numTutorial = 0;
 			if (numTutorialTextField.getText() == null || numTutorialTextField.getText().trim().length() == 0){
 				numTutorial = -1;
@@ -341,27 +354,29 @@ public class AddCourse extends JFrame {
 			}
 			
 			
-			int numLab = 0;
-			if (numLabTextField.getText() == null || numLabTextField.getText().trim().length() == 0){
-				numLab = -1;
+			int labHour = 0;
+			if (labHourTextField.getText() == null || labHourTextField.getText().trim().length() == 0){
+				labHour = -1;
 			}
-			else if (!numLabTextField.getText().matches("[0-9]+")){
-				numLab = -1;
+			else if (!labHourTextField.getText().matches("[0-9]+")){
+				labHour = -1;
 			}
 			else{
-				numLab = Integer.parseInt(numLabTextField.getText());
+				labHour = Integer.parseInt(labHourTextField.getText());
 			}
 			
-			int numTa = 0;
-			if (numTaNeededTextField.getText() == null || numTaNeededTextField.getText().trim().length() == 0){
-				numTa = -1;
+			
+			int tutorialHour = 0;
+			if (tutorialHourTextField.getText() == null || tutorialHourTextField.getText().trim().length() == 0){
+				tutorialHour = -1;
 			}
-			else if (!numTaNeededTextField.getText().matches("[0-9]+")){
-				numTa = -1;
+			else if (!tutorialHourTextField.getText().matches("[0-9]+")){
+				tutorialHour = -1;
 			}
 			else{
-				numTa = Integer.parseInt(numTaNeededTextField.getText());
+				tutorialHour = Integer.parseInt(tutorialHourTextField.getText());
 			}
+					
 			
 			int numGrader = 0;
 			if (numGraderNeededTextField.getText() == null || numGraderNeededTextField.getText().trim().length() == 0){
@@ -375,31 +390,23 @@ public class AddCourse extends JFrame {
 			}
 			
 			
-			int hourTa = 0;
-			if (hourTaTextField.getText() == null || hourTaTextField.getText().trim().length() == 0){
-				hourTa = -1;
+			int totalGraderHour = 0;
+			if (totalGraderHourTextField.getText() == null || totalGraderHourTextField.getText().trim().length() == 0){
+				totalGraderHour = -1;
 			}
-			else if (!hourTaTextField.getText().matches("[0-9]+")){
-				hourTa = -1;
-			}
-			else{
-				hourTa = Integer.parseInt(hourTaTextField.getText());
-			}
-			
-			
-			int hourGrader = 0;
-			if (hourGraderTextField.getText() == null || hourGraderTextField.getText().trim().length() == 0){
-				hourGrader = -1;
-			}
-			else if (!hourGraderTextField.getText().matches("[0-9]+")){
-				hourGrader = -1;
+			else if (!totalGraderHourTextField.getText().matches("[0-9]+")){
+				totalGraderHour = -1;
 			}
 			else{
-				hourGrader = Integer.parseInt(hourGraderTextField.getText());
+				totalGraderHour = Integer.parseInt(totalGraderHourTextField.getText());
 			}
 			
 		    try {
-		    	tc.createCourse(semester,courseName,courseCode,creditHour,maxStudentNum,instructorName,numLab,numTa,numGrader,numTutorial,hourTa,hourGrader,ms);
+		    	tc.createCourse(semester,courseName,courseCode,creditHour,maxStudentNum,instructorName,
+		    			numGrader,numLab,numTutorial,labHour,tutorialHour,totalGraderHour);
+		    	JOptionPane.showMessageDialog(AddCourse.this,"Course information Uploaded");
+		    	setVisible(false);
+		    	backToAllCourses();
 		    } catch (InvalidInputException e) {
 		        error = e.getMessage();
 		    }

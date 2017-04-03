@@ -46,13 +46,30 @@ public class AllJobPostings extends JFrame {
 				data[i][1] = aJobPosting.getCourse().getCourseCode();
 				data[i][2] = aJobPosting.getCourse().getCourseName();
 				if (aJobPosting.getJobTitle().equals("TA")) {
-					data[i][0] = aJobPosting.getJobTitle() + " [" + aJobPosting.getCourse().getNumTaNeeded()
-							+ " needed]";
-					data[i][3] = "" + aJobPosting.getCourse().getHourRequiredTa() + " hrs";
+					int numLab = aJobPosting.getCourse().getNumLab();
+					int labHour = aJobPosting.getCourse().getLabHour();
+					int numTutorial = aJobPosting.getCourse().getNumTutorial();
+					int tutorialHour = aJobPosting.getCourse().getTutorialHour();
+					
+					int hourRequiredTa = numLab*labHour + numTutorial*tutorialHour;
+					double temp = hourRequiredTa/180;
+					int numTaNeeded = (int) Math.ceil(temp);
+					
+					
+					data[i][0] = aJobPosting.getJobTitle() + " [" + numTaNeeded	+ " needed]";			
+					if (numTaNeeded==0){
+						data[i][3] = "0 hrs/semester";
+					}else{
+						data[i][3] = "" + Math.ceil(hourRequiredTa/numTaNeeded) + " hrs / semester";
+					}
+					
 				} else {
-					data[i][0] = aJobPosting.getJobTitle() + " [" + aJobPosting.getCourse().getNumGraderNeeded()
-							+ " needed]";
-					data[i][3] = "" + aJobPosting.getCourse().getHourRequiredGrader() + " hrs";
+					data[i][0] = aJobPosting.getJobTitle() + " [" + aJobPosting.getCourse().getNumGraderNeeded() + " needed]";
+					if (aJobPosting.getCourse().getNumGraderNeeded()==0){
+						data[i][3] = "0 hrs / semester";
+					}else{
+						data[i][3] = "" + Math.ceil((aJobPosting.getCourse().getTotalGraderHour())/(aJobPosting.getCourse().getNumGraderNeeded())) + " hrs / semester";
+					}
 				}
 
 				data[i][4] = "$" + aJobPosting.getHourRate() + " / hr";
@@ -99,18 +116,23 @@ public class AllJobPostings extends JFrame {
 		addJobPostingButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO: If deadline passed, window pops up
-
-				if (TamasController.isDeadlinePassed()) {
+				if (ms.getCourses().size()==0){
 					JOptionPane.showMessageDialog(AllJobPostings.this,
-							"Sorry, the deadline to publish new Job Postings have passed.\n" + "The deadline was "
-									+ TamasController.getDefaultDeadLine() + ".");
-				} else {
-					JOptionPane.showMessageDialog(AllJobPostings.this, "Dead line : "
-							+ TamasController.getDefaultDeadLine() + ". You may publish a new job posting");
-					final ManagementSystem ms = PersistenceXStream.initializeModelManager(filename);
-					new PublishJobPostingPage(ms, user).setVisible(true);
-					dispose();
+							"No course information has been uploaded.\n"
+							+ "Please try again later.");
+				}else{
+
+					if (TamasController.isDeadlinePassed()) {
+						JOptionPane.showMessageDialog(AllJobPostings.this,
+								"Sorry, the deadline to publish new Job Postings have passed.\n" + "The deadline was "
+										+ TamasController.getDefaultDeadLine() + ".");
+					} else {
+						JOptionPane.showMessageDialog(AllJobPostings.this, "Deadline : "
+								+ TamasController.getDefaultDeadLine() + ". You may publish a new job posting");
+						final ManagementSystem ms = PersistenceXStream.initializeModelManager(filename);
+						new PublishJobPostingPage(ms, user).setVisible(true);
+						dispose();
+					}
 				}
 			}
 		});

@@ -15,13 +15,12 @@ import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
 public class MainPage extends JFrame {
-	/**
-	 * 
-	 */
+
+
 	private static final long serialVersionUID = 3144791873613255242L;
-	private JButton addJobPosting;
-	private JButton applyForJob;
-	private JButton addCourse;
+	private JButton viewJobPosting;
+	private JButton viewApplication;
+	private JButton viewCourse;
 	private JButton addTAEval;
 	private JButton viewEvaluation;
 	
@@ -39,12 +38,12 @@ public class MainPage extends JFrame {
 	}
 
 	private void initComponents(Object role) {
-		addCourse = new JButton("View all Courses");
-		addCourse.setPreferredSize(new Dimension(300, 150));
-		addJobPosting = new JButton("View all Job Postings");
-		addJobPosting.setPreferredSize(new Dimension(300, 150));
-		applyForJob = new JButton("View all Applications");
-		applyForJob.setPreferredSize(new Dimension(300, 150));
+		viewCourse = new JButton("View all Courses");
+		viewCourse.setPreferredSize(new Dimension(300, 150));
+		viewJobPosting = new JButton("View all Job Postings");
+		viewJobPosting.setPreferredSize(new Dimension(300, 150));
+		viewApplication = new JButton();
+		viewApplication.setPreferredSize(new Dimension(300, 150));
 		
 		// Instructor Only
 		addTAEval = new JButton("Write a new evaluation");
@@ -60,6 +59,7 @@ public class MainPage extends JFrame {
 		pane.setLayout(layout);
 
 		if (role.getClass().equals(Instructor.class)) {
+<<<<<<< HEAD
 			pane.add(addCourse, BorderLayout.PAGE_START);
 			pane.add(addJobPosting);
 			pane.add(viewEvaluation);
@@ -72,12 +72,30 @@ public class MainPage extends JFrame {
 			pane.add(viewEvaluation, BorderLayout.PAGE_START);
 			pane.add(addTAEval);
 			pane.add(applyForJob, BorderLayout.PAGE_END);
+=======
+			pane.add(viewCourse, BorderLayout.PAGE_START);
+			pane.add(viewJobPosting,BorderLayout.CENTER);
+			pane.add(addTAEval,BorderLayout.LINE_START);
+			viewApplication.setText("View all Applications");
+			pane.add(viewApplication, BorderLayout.PAGE_END);
+		} else if (role.getClass().equals(Applicant.class)) {
+			pane.add(viewCourse, BorderLayout.PAGE_START);
+			pane.add(viewJobPosting, BorderLayout.CENTER);
+			viewApplication.setText("View my Applications");
+			pane.add(viewApplication, BorderLayout.PAGE_END);
+		} else {
+			pane.add(viewCourse, BorderLayout.PAGE_START);
+			pane.add(viewJobPosting,BorderLayout.CENTER);
+			pane.add(addTAEval,BorderLayout.LINE_START);
+			viewApplication.setText("View all Applications");
+			pane.add(viewApplication, BorderLayout.PAGE_END);
+>>>>>>> master
 		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
 
-		addJobPosting.addActionListener(new ActionListener() {
+		viewJobPosting.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
@@ -86,7 +104,7 @@ public class MainPage extends JFrame {
 			}
 		});
 
-		applyForJob.addActionListener(new ActionListener() {
+		viewApplication.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
@@ -94,7 +112,7 @@ public class MainPage extends JFrame {
 				dispose();
 			}
 		});
-		addCourse.addActionListener(new ActionListener() {
+		viewCourse.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -1,13 +1,18 @@
 package ca.mcgill.ecse321.TAMAS.controller;
 
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
+import ca.mcgill.ecse321.TAMAS.model.Allocation;
+import ca.mcgill.ecse321.TAMAS.model.Allocation.AllocationStatus;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
+import ca.mcgill.ecse321.TAMAS.model.Application.Status;
 import ca.mcgill.ecse321.TAMAS.model.Course;
+import ca.mcgill.ecse321.TAMAS.model.Department;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
@@ -16,6 +21,50 @@ import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 public class TamasController {
 
 	private ManagementSystem ms = new ManagementSystem();
+
+	public static void changeAllocationStatus(ManagementSystem mm, Object user, Course course)
+			throws InvalidInputException {
+
+		String userRole = user.getClass().toString();
+
+		if (course.hasCourseJobAllocation()) {
+			Allocation allo = course.getCourseJobAllocation();
+			if (allo == null || allo.getApplicants().size() == 0) {
+				throw new InvalidInputException("Course has no assigned Allocaiton");
+			} else {
+				if (userRole.equals(Instructor.class) && allo.getAllocationStatus().equals(AllocationStatus.INITIAL)) {
+					allo.setAllocationStatus(AllocationStatus.INSTRUCTOR_APPROVED);
+				} else if (userRole.equals(Department.class)
+						&& allo.getAllocationStatus().equals(AllocationStatus.INSTRUCTOR_APPROVED)) {
+					allo.setAllocationStatus(AllocationStatus.FINAL_APPROVAL);
+				}
+			}
+		}
+		PersistenceXStream.saveToXMLwithXStream(mm);
+
+	}
+
+	public static void createAllocation(ManagementSystem mm, Course course, ArrayList<Applicant> listApplicant)
+			throws InvalidInputException {
+
+		if (course == null) {
+			throw new InvalidInputException("Can not change allocation due to null course");
+		}
+		if (listApplicant == null || listApplicant.size() == 0) {
+			throw new InvalidInputException("Can not change allocation due to Empty list of Applicant");
+		}
+		try {
+			Allocation allocation = new Allocation(course);
+			for (Applicant app : listApplicant) {
+				allocation.addApplicant(app);
+			}
+			course.setCourseJobAllocation(allocation);
+		} catch (Exception e) {
+			throw new InvalidInputException(e.getMessage());
+		}
+		PersistenceXStream.saveToXMLwithXStream(mm);
+
+	}
 
 	public static Date getToday() {
 
@@ -33,7 +82,7 @@ public class TamasController {
 		Calendar c = Calendar.getInstance();
 		// default deadline
 		c.set(Calendar.YEAR, 2017);
-		c.set(Calendar.MONTH, 4);
+		c.set(Calendar.MONTH, 8);
 		c.set(Calendar.DAY_OF_MONTH, 6);
 
 		return c.getTime();
@@ -63,24 +112,24 @@ public class TamasController {
 
 		Applicant newApplicant;
 
-		if (eval.trim().length()==0) {
+		if (eval.trim().length() == 0) {
 			error += "A space cannot be an evaluation! ";
 		}
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
-		for (int i=0; i<this.ms.getApplicants().size(); i++) {
+		for (int i = 0; i < this.ms.getApplicants().size(); i++) {
 			if (this.ms.getApplicants().get(i).getName().equals(name)) {
 				newApplicant = this.ms.getApplicants().get(i);
 				newApplicant.setEvaluation(eval);
 				break;
 			}
-			
+
 		}
 
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
-	
+
 	public void createJobPosting(String jobPosition, Date deadlineDate, String exp, double hourlyRate, Course aCourse)
 			throws InvalidInputException {
 		String error = "";
@@ -117,7 +166,7 @@ public class TamasController {
 		System.out.println("create");
 		System.out.println(ap.numberOfApplications());
 		if (ap.getApplications().size() < 3) {
-			Application application = new Application("Submitted", jp, ap);
+			Application application = new Application(jp, ap);
 			ap.addApplication(application);
 		}
 
@@ -140,7 +189,8 @@ public class TamasController {
 
 		if (name == null || name.trim().length() == 0) {
 			error += "Name cannot be empty!";
-		}		if (id < 0) {
+		}
+		if (id < 0) {
 			error += "You must input a valid id!";
 		}
 		if (major == null || major.trim().length() == 0) {
@@ -150,7 +200,8 @@ public class TamasController {
 			error += "Past experience cannot be empty!";
 		}
 
-		error = error.trim();		if (error.length() > 0) {
+		error = error.trim();
+		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
 
@@ -164,8 +215,8 @@ public class TamasController {
 			}
 		}
 
-		this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice
-				,"",totalAppointmentHour, ms);
+		this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice,
+				"", totalAppointmentHour, ms);
 
 		PersistenceXStream.saveToXMLwithXStream(ms);
 		return this_applicant;
@@ -263,9 +314,9 @@ public class TamasController {
 	}
 
 	public void createCourse(String semester, String courseName, String courseCode, int credit, int maxStudent,
-			String instructorName, int numLab, int numTutorial, int numTaNeeded, int numGraderNeeded,
-			int hourRequiredTa, int hourRequiredGrader, ManagementSystem aManagementSystem)
-			throws InvalidInputException {
+			String instructorName, int numGraderNeeded, int numLab, int numTutorial, int labHour, int tutorialHour,
+			int totalGraderHour) throws InvalidInputException {
+
 		String error = "";
 
 		if (courseName == null || courseName.trim().length() == 0) {
@@ -283,65 +334,105 @@ public class TamasController {
 		if (instructorName == null || instructorName.trim().length() == 0) {
 			error += "Please specify the instructor! ";
 		}
+		if (labHour < 0) {
+			error += "Please specify a correct lab hour! ";
+		}
+		if (tutorialHour < 0) {
+			error += "Please specify a correct tutorial hour! ";
+		}
 		if (numLab < 0) {
 			error += "Please specify the numebr of lab sessions in the correct format! ";
 		}
 		if (numTutorial < 0) {
-			error += "Please specify the number of tutorial in the correct format! ";
+			error += "Please specify the number of tutorials in the correct format! ";
 		}
-		if (numTaNeeded < 0) {
-			error += "Please specify the number of TA needed in the correct format! ";
-		}
+
 		if (numGraderNeeded < 0) {
 			error += "Please specify the number of Grader needed in the correct format! ";
 		}
-		if (hourRequiredTa < 0) {
-			error += "Please specify the TA appointment hour in the correct format! ";
-		}
-		if (hourRequiredGrader < 0) {
+
+		if (totalGraderHour < 0) {
 			error += "Please specify the Grader appointment hour in the correct format! ";
 		}
 
 		Instructor instructor = null;
+
 		for (Instructor i : ms.getInstructors()) {
-			if (i.getName().equals(instructorName))
+			if (i.getName().equals(instructorName)) {
 				instructor = i;
+				break;
+			}
 		}
+
+		// TODO: consider modifying this
 		if (instructor == null) {
 			instructor = new Instructor(instructorName, ms);
 		}
+
 		error = error.trim();
 
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
 
-		// TODO: HOW TO CALCULATE BUDGET
-		double budgetCalculated = (18 * hourRequiredTa * numTaNeeded) + (15 * hourRequiredGrader * numGraderNeeded);
+		// Required total TA working hours of a course
+		int hourRequiredTa = numLab * labHour + numTutorial * tutorialHour;
 
-		ms.addCourse(new Course(semester, courseName, courseCode, numTutorial, numLab, maxStudent, credit, numTaNeeded,
-				numGraderNeeded, hourRequiredTa, hourRequiredGrader, budgetCalculated, instructor, ms));
+		// The total number of TA needed for a course = ceil(total hours/max
+		// working hours of a TA)
+		// This gives the minimum number of TA needed
+		double temp = (numLab * labHour + numTutorial * tutorialHour) / 180;
+		int numTaNeeded = (int) Math.ceil(temp);
+
+		// TODO: HOW TO CALCULATE BUDGET
+		double budgetCalculated = (18 * hourRequiredTa) + (15 * totalGraderHour);
+
+		Course newCourse = new Course(semester, courseName, courseCode.trim(), numTutorial, numLab, maxStudent, credit,
+				numTaNeeded, numGraderNeeded, labHour, tutorialHour, totalGraderHour, budgetCalculated, instructor, ms);
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 
-	public boolean acceptApplication(Application application) throws InvalidInputException {
-		if (application.getApplicationStatus().equals("Submitted")) {
-			application.setApplicationStatus("Accepted");
-			PersistenceXStream.saveToXMLwithXStream(ms);
+	public boolean applicationAccepted(Application application) {
+		if (application.getStatus().equals(Status.SELECTED)) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean rejectApplication(Application application) throws InvalidInputException {
-		if (application.getApplicationStatus().equals("Submitted")) {
-			
-			application.setApplicationStatus("Rejected");
-			PersistenceXStream.saveToXMLwithXStream(ms);
+	public boolean applicationRejected(Application application) {
+		if (application.getStatus().equals(Status.REJECTED)) {
 			return true;
 		}
 		return false;
+	}
 
+	public void acceptApplication(Application application) throws InvalidInputException {
+		if (application.getStatus().equals(Status.PENDING)) {
+			application.setStatus(Status.SELECTED);
+			PersistenceXStream.saveToXMLwithXStream(ms);
+		} else {
+			throw new InvalidInputException("This applicant has already been processed");
+		}
+
+	}
+
+	public void rejectApplication(Application application) throws InvalidInputException {
+		if (application.getStatus().equals(Status.PENDING)) {
+			application.setStatus(Status.REJECTED);
+			PersistenceXStream.saveToXMLwithXStream(ms);
+		} else {
+			throw new InvalidInputException("This applicant has already been processed");
+		}
+	}
+
+	public void changeHours(Course course, int hour) throws InvalidInputException {
+		if (course == null) {
+			throw new InvalidInputException("Select a course! ");
+		}
+
+		if (hour <= 0) {
+			throw new InvalidInputException("Select a course! ");
+		}
 	}
 
 }

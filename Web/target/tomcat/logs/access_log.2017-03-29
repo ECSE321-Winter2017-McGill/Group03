@@ -1032,3 +1032,17 @@
 0:0:0:0:0:0:0:1 - - [29/Mar/2017:21:35:57 -0400] "GET /AddJobPosting.do?course=ECSE321&jobTitle=TA&deadLine=2020-06-30&perferredExperience=BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB&hourlyRate=19999 HTTP/1.1" 200 3182 http-bio-8080-exec-3 10
 0:0:0:0:0:0:0:1 - - [29/Mar/2017:21:35:58 -0400] "POST /AddJobPosting.do HTTP/1.1" 200 - http-bio-8080-exec-10 731
 0:0:0:0:0:0:0:1 - - [29/Mar/2017:21:35:59 -0400] "GET /ViewAllJobPosting.jsp HTTP/1.1" 200 3561 http-bio-8080-exec-3 784
+0:0:0:0:0:0:0:1 - - [29/Mar/2017:22:54:14 -0400] "GET / HTTP/1.1" 200 2231 http-bio-8080-exec-1 763
+0:0:0:0:0:0:0:1 - - [29/Mar/2017:22:54:14 -0400] "GET /css/style.css HTTP/1.1" 200 7812 http-bio-8080-exec-2 9
+0:0:0:0:0:0:0:1 - - [29/Mar/2017:22:54:14 -0400] "GET /img/mclogo.png HTTP/1.1" 200 5916 http-bio-8080-exec-3 11
+0:0:0:0:0:0:0:1 - - [29/Mar/2017:22:54:14 -0400] "GET /img/mcimg.jpg HTTP/1.1" 200 13090657 http-bio-8080-exec-4 87
+0:0:0:0:0:0:0:1 - - [29/Mar/2017:22:54:17 -0400] "POST /login.do HTTP/1.1" 200 3868 http-bio-8080-exec-6 118
+0:0:0:0:0:0:0:1 - - [29/Mar/2017:22:54:17 -0400] "GET /css/main.css HTTP/1.1" 200 1519 http-bio-8080-exec-7 2
+0:0:0:0:0:0:0:1 - - [29/Mar/2017:22:54:17 -0400] "GET /css/bootstrap.min.css HTTP/1.1" 200 121205 http-bio-8080-exec-5 3
+0:0:0:0:0:0:0:1 - - [29/Mar/2017:22:54:18 -0400] "GET /Dashboard.do HTTP/1.1" 200 3868 http-bio-8080-exec-8 2
+0:0:0:0:0:0:0:1 - - [29/Mar/2017:22:54:20 -0400] "GET /ViewAllJobPosting.jsp HTTP/1.1" 200 3561 http-bio-8080-exec-10 1348
+0:0:0:0:0:0:0:1 - - [29/Mar/2017:22:54:36 -0400] "GET /EvalTa.jsp HTTP/1.1" 200 3801 http-bio-8080-exec-1 115
+0:0:0:0:0:0:0:1 - - [29/Mar/2017:22:54:38 -0400] "GET /ViewAllJobPosting.jsp HTTP/1.1" 200 3561 http-bio-8080-exec-3 815
+0:0:0:0:0:0:0:1 - - [29/Mar/2017:22:54:38 -0400] "GET /css/bootstrap.min.css HTTP/1.1" 304 - http-bio-8080-exec-9 2
+0:0:0:0:0:0:0:1 - - [29/Mar/2017:22:54:38 -0400] "GET /css/main.css HTTP/1.1" 304 - http-bio-8080-exec-3 1
+0:0:0:0:0:0:0:1 - - [29/Mar/2017:22:54:38 -0400] "GET /Dashboard.do HTTP/1.1" 200 3868 http-bio-8080-exec-3 2

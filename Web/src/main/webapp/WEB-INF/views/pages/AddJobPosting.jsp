@@ -20,9 +20,9 @@
 				<div class="navbar-header">
 					<a class="navbar-brand" href="dashboard.php">TAMAS</a>
 				</div>
-				<h6 class="welcome">Welcome</h6>
+				<h6 class="welcome">Welcome ${name}</h6>
 				<h6 class="welcome">
-					<a href="logout.php">Sign Out</a>
+					<a href="logout.do">Sign Out</a>
 				</h6>
 				<ul class="nav" id="side-menu">
 					<li><a href="Dashboard.do"><i
@@ -31,6 +31,10 @@
 							class="fa fa-dashboard fa-fw"></i> View Job Postings</a></li>
 					<li><a href="EvalTa.jsp"><i class="fa fa-dashboard fa-fw"></i>
 							TA Evaluaion</a></li>
+					<li><a href="viewAllApplication.jsp"><i
+							class="fa fa-dashboard fa-fw"></i> View Application</a></li>
+					<li><a href="Schedule.jsp"><i
+							class="fa fa-dashboard fa-fw"></i> TA Schedule</a></li>
 				</ul>
 			</div>
 		</div>
@@ -80,27 +84,25 @@
 								<input class="btn btn-sm btn-info btn-flat pull-left"
 									type="submit" value='Publish' />
 						</form>
-
-						<br> <br> <br>
+						<br> <br>
+						<span class="error"> ${error} </span><br> <br>
 					</div>
+
 				</div>
 			</div>
 		</div>
 	</div>
 	<script>
 		$("#addjob").submit(function(e) {
-			var url = "AddJobPosting.do";
+			var url = "AddJobPosting.jsp";
 			$.ajax({
 				type : "POST",
 				url : url,
 				data : $("#addjob").serialize(),
 				success : function(data) {
-					if (data.search("success") != -1) {
-						window.location.replace('viewAllJobPostings.php');
-					}
 				}
 			});
-			$("#mydiv").load(location.href + " #mydiv");
+			//$("#mydiv").load(location.href + " #mydiv");
 		});
 	</script>
 </body>
