@@ -204,7 +204,11 @@ public class ApplicationDetails extends JFrame {
 				.addGroup(layout.createParallelGroup().addComponent(secondChoiceLabel)
 						.addComponent(secondChoiceToggleList))
 				.addGroup(layout.createParallelGroup()
-						.addComponent(thirdChoiceLabel).addComponent(thirdChoiceToggleList)));
+						.addComponent(thirdChoiceLabel).addComponent(thirdChoiceToggleList))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(closeButton)));
+				
+		
 
 		pack();
 		setResizable(false);

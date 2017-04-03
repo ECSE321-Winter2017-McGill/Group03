@@ -10,10 +10,10 @@ public class TamasApplication {
 
 	public static void main(String[] args) {
 
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch (Exception e) {
-		}
+//		try {
+//			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+//		} catch (Exception e) {
+//		}
 		// Start Application from log in page.
 		LoginDialog login = new LoginDialog();
 		login.setVisible(true);
