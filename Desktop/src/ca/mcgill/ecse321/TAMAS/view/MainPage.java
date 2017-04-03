@@ -59,20 +59,6 @@ public class MainPage extends JFrame {
 		pane.setLayout(layout);
 
 		if (role.getClass().equals(Instructor.class)) {
-<<<<<<< HEAD
-			pane.add(addCourse, BorderLayout.PAGE_START);
-			pane.add(addJobPosting);
-			pane.add(viewEvaluation);
-			pane.add(addTAEval, BorderLayout.PAGE_END);
-		} else if (role.getClass().equals(Applicant.class)) {
-			pane.add(addJobPosting, BorderLayout.PAGE_START);
-			pane.add(viewEvaluation);
-			pane.add(applyForJob, BorderLayout.PAGE_END);
-		} else {
-			pane.add(viewEvaluation, BorderLayout.PAGE_START);
-			pane.add(addTAEval);
-			pane.add(applyForJob, BorderLayout.PAGE_END);
-=======
 			pane.add(viewCourse, BorderLayout.PAGE_START);
 			pane.add(viewJobPosting,BorderLayout.CENTER);
 			pane.add(addTAEval,BorderLayout.LINE_START);
@@ -89,7 +75,6 @@ public class MainPage extends JFrame {
 			pane.add(addTAEval,BorderLayout.LINE_START);
 			viewApplication.setText("View all Applications");
 			pane.add(viewApplication, BorderLayout.PAGE_END);
->>>>>>> master
 		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

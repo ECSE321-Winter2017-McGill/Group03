@@ -408,7 +408,7 @@ public class TamasController {
 
 	public void acceptApplication(Application application) throws InvalidInputException {
 		if (application.getStatus().equals(Status.PENDING)) {
-			application.setStatus(Status.SELECTED);
+			application.setStatus(Status.OFFER_ACCEPTED);
 			PersistenceXStream.saveToXMLwithXStream(ms);
 		} else {
 			throw new InvalidInputException("This applicant has already been processed");
@@ -418,7 +418,7 @@ public class TamasController {
 
 	public void rejectApplication(Application application) throws InvalidInputException {
 		if (application.getStatus().equals(Status.PENDING)) {
-			application.setStatus(Status.REJECTED);
+			application.setStatus(Status.OFFER_DECLINED);
 			PersistenceXStream.saveToXMLwithXStream(ms);
 		} else {
 			throw new InvalidInputException("This applicant has already been processed");
