@@ -14,15 +14,17 @@ import android.widget.TextView;
 import com.thoughtworks.xstream.XStream;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 
+import ca.mcgill.ecse321.TAMAS.Web.controller.DDBmanager;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 
-public class ViewJobPosting_Activity extends AppCompatActivity {
+public class ViewJobPosting_Activity extends AppCompatActivity implements AsyncResponse {
 
-    private ManagementSystem ms;
+
     private String username ="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,12 @@ public class ViewJobPosting_Activity extends AppCompatActivity {
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
 
-        ms = (ManagementSystem) loadFromXML();
+        DDBmanager asyncTask = new DDBmanager();
+        Parameters p=new Parameters(getApplicationContext(),null,0);
+        asyncTask.delegate = this;
+        asyncTask.execute(p);
+
+        ManagementSystem ms = (ManagementSystem) loadFromXML();
 
         TableLayout table = (TableLayout)findViewById(R.id.viewJobPostingTable);
         table.removeAllViews();
@@ -63,9 +70,6 @@ public class ViewJobPosting_Activity extends AppCompatActivity {
             });
 
         }
-
-        System.out.println("*******************************************"+ms.getJobPostings().size());
-
     }
 
     public void backToHome(View v){
@@ -91,5 +95,32 @@ public class ViewJobPosting_Activity extends AppCompatActivity {
         }else{
             return new ManagementSystem();
         }
+    }
+
+    @Override
+    public void processFinish(String output){
+        writeFile(output);
+    }
+    public void writeFile(String data) {
+        String filePath = getFilesDir().getPath().toString() + "/data.xml";
+        File f=new File(filePath);
+        if (!f.exists()) {
+            try {
+                f.createNewFile();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        String string = data;
+        FileOutputStream outputStream;
+        try {
+            outputStream =new FileOutputStream (f);
+            outputStream.write(string.getBytes());
+            System.out.println(outputStream);
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //System.out.println("sss"+f.exists());
     }
 }

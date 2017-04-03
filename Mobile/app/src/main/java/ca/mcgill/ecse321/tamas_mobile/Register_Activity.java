@@ -58,9 +58,6 @@ public class Register_Activity extends AppCompatActivity implements AsyncRespons
                     int numOfExitsingApp=ms.numberOfApplicants();
                     TamasController tc = new TamasController(ms);
                     tc.registerApplicant(newuser.getText().toString());
-
-                    TextView test = (TextView)findViewById(R.id.registerError);
-                    test.setText("here1");
                     if (ms!=null&&ms.numberOfApplicants()==numOfExitsingApp+1) {
                         System.out.println("HHD");
                         Parameters p2 = new Parameters(getApplicationContext(), ms, 1);

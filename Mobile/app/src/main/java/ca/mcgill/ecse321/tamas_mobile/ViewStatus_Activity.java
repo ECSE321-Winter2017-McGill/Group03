@@ -16,22 +16,22 @@ import com.thoughtworks.xstream.XStream;
 import org.w3c.dom.Text;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.mcgill.ecse321.TAMAS.Web.controller.DDBmanager;
 import ca.mcgill.ecse321.TAMAS.controller.TamasController;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 
-public class ViewStatus_Activity extends AppCompatActivity {
+public class ViewStatus_Activity extends AppCompatActivity implements AsyncResponse{
 
     final Context context = this;
-    private ManagementSystem ms;
-    private TamasController tc;
     private String username="";
 
 
@@ -75,7 +75,7 @@ public class ViewStatus_Activity extends AppCompatActivity {
         List<TextView> courses = new ArrayList<TextView>();
         TextView course1 = (TextView)findViewById(R.id.course_empty1);
         TextView course2 = (TextView)findViewById(R.id.course_empty2);
-        TextView course3 = (TextView)findViewById(R.id.course_empty2);
+        TextView course3 = (TextView)findViewById(R.id.course_empty3);
         courses.add(course1);
         courses.add(course2);
         courses.add(course3);
@@ -99,7 +99,12 @@ public class ViewStatus_Activity extends AppCompatActivity {
         status.add(status3);
 
 
-        ms = (ManagementSystem)loadFromXML();
+        DDBmanager asyncTask = new DDBmanager();
+        Parameters p=new Parameters(getApplicationContext(),null,0);
+        asyncTask.delegate = this;
+        asyncTask.execute(p);
+
+        ManagementSystem ms = (ManagementSystem)loadFromXML();
 
         //Find the applicant and get his/her applications
         List<Application> allApplications = null;
@@ -113,13 +118,16 @@ public class ViewStatus_Activity extends AppCompatActivity {
         //Display the applicant's applications and set buttons according to the status
         if (allApplications!=null){
             for (int i=0; i<allApplications.size();i++){
-                courses.get(i).setText(allApplications.get(i).getJobPosting().getCourse().getCourseCode());
+                courses.get(i).setText(allApplications.get(i).getJobPosting().getCourse().getCourseCode()+"index:"+Integer.toString(i));
+                //System.out.println(allApplications.get(i).getJobPosting().getCourse().getCourseCode());
+
                 titles.get(i).setText(allApplications.get(i).getJobPosting().getJobTitle());
 
                 //Modify this after importing the updated library
                 status.get(i).setText(allApplications.get(i).getStatusFullName());
+                //status.get(i).setText(allApplications.size());
                 //Check the enum!!
-                if (allApplications.get(i).getStatusFullName().equals("Selected")){
+                if (allApplications.get(i).getStatusFullName().equals("SELECTED")){
                     acceptButtons.get(i).setEnabled(true);
                     rejectButtons.get(i).setEnabled(true);
                 }
@@ -144,9 +152,23 @@ public class ViewStatus_Activity extends AppCompatActivity {
         dialog.show();
 
 
-        tc = new TamasController(ms);
+        DDBmanager asyncTask = new DDBmanager();
+        Parameters p=new Parameters(getApplicationContext(),null,0);
+        asyncTask.delegate = this;
+        asyncTask.execute(p);
+
+        ManagementSystem ms = (ManagementSystem)loadFromXML();
+        TamasController tc = new TamasController(ms);
+
         //To be implemented in the controller
         //tc.acceptOffer();
+
+        //Uncomment the codes below after controller methods have been implemented
+        //if (ms!=null)
+//        Parameters p2 = new Parameters(getApplicationContext(), ms, 1);
+//        asyncTask=new DDBmanager();
+//        asyncTask.delegate = this;
+//        asyncTask.execute(p2);
 
 
         text.setText("You have successfully accepted this offer");
@@ -179,9 +201,21 @@ public class ViewStatus_Activity extends AppCompatActivity {
         dialog.show();
 
 
-        tc = new TamasController(ms);
+        DDBmanager asyncTask = new DDBmanager();
+        Parameters p=new Parameters(getApplicationContext(),null,0);
+        asyncTask.delegate = this;
+        asyncTask.execute(p);
+
+        ManagementSystem ms = (ManagementSystem)loadFromXML();
+        TamasController tc = new TamasController(ms);
+
         //To be implemented in the controller
         //tc.declineOffer();
+        //Uncomment the codes below after controller methods have been implemented
+//        Parameters p2 = new Parameters(getApplicationContext(), ms, 1);
+//        asyncTask=new DDBmanager();
+//        asyncTask.delegate = this;
+//        asyncTask.execute(p2);
 
 
         text.setText("You have successfully declined this offer");
@@ -222,6 +256,33 @@ public class ViewStatus_Activity extends AppCompatActivity {
         }else{
             return new ManagementSystem();
         }
+    }
+
+    @Override
+    public void processFinish(String output){
+        writeFile(output);
+    }
+    public void writeFile(String data) {
+        String filePath = getFilesDir().getPath().toString() + "/data.xml";
+        File f=new File(filePath);
+        if (!f.exists()) {
+            try {
+                f.createNewFile();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        String string = data;
+        FileOutputStream outputStream;
+        try {
+            outputStream =new FileOutputStream (f);
+            outputStream.write(string.getBytes());
+            System.out.println(outputStream);
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //System.out.println("sss"+f.exists());
     }
 
 }

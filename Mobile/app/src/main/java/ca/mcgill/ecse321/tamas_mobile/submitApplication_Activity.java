@@ -19,6 +19,7 @@ import com.thoughtworks.xstream.XStream;
 import org.w3c.dom.Text;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,14 +30,14 @@ import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.controller.TamasController;
 import ca.mcgill.ecse321.TAMAS.model.Allocation;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
+import ca.mcgill.ecse321.TAMAS.model.Course;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 
-public class submitApplication_Activity extends AppCompatActivity {
+public class submitApplication_Activity extends AppCompatActivity implements AsyncResponse{
 
-    private DDBmanager asyncTask = new DDBmanager();
-    private ManagementSystem ms;
+
     private String error = "";
     private String username = "";
     private String title = "";
@@ -57,6 +58,8 @@ public class submitApplication_Activity extends AppCompatActivity {
 
         TextView jobDescription = (TextView) findViewById(R.id.job_description);
         TextView name = (TextView) findViewById(R.id.applicant_name);
+
+
 
         jobDescription.setText(course + " - " + title);
         name.setText(username);
@@ -106,15 +109,18 @@ public class submitApplication_Activity extends AppCompatActivity {
         preferenceAdapter2.add("Preference 2. Select if already applied for 1 job.");
         preferenceAdapter3.add("Preference 3. Select if already applied for 2 jobs.");
 
-        ArrayList<String> courses = new ArrayList<String>();
-        courses.add("ECSE 321");
-        courses.add("ECSE 223");
-        courses.add("ECSE 222");
+        DDBmanager asyncTask = new DDBmanager();
 
-        for (String course : courses) {
-            preferenceAdapter1.add(course);
-            preferenceAdapter2.add(course);
-            preferenceAdapter3.add(course);
+        Parameters p=new Parameters(getApplicationContext(),null,0);
+        asyncTask.delegate = this;
+        asyncTask.execute(p);
+
+        ManagementSystem ms = (ManagementSystem) loadFromXML();
+
+        for (Course aCourse : ms.getCourses()) {
+            preferenceAdapter1.add(aCourse.getCourseCode());
+            preferenceAdapter2.add(aCourse.getCourseCode());
+            preferenceAdapter3.add(aCourse.getCourseCode());
         }
 
         preference1.setAdapter(preferenceAdapter1);
@@ -155,7 +161,15 @@ public class submitApplication_Activity extends AppCompatActivity {
 
     public void createApplication(View v) {
 
-        ms = (ManagementSystem) loadFromXML();
+        DDBmanager asyncTask = new DDBmanager();
+
+        Parameters p=new Parameters(getApplicationContext(),null,0);
+        asyncTask.delegate = this;
+        asyncTask.execute(p);
+
+        ManagementSystem ms = (ManagementSystem) loadFromXML();
+        TamasController tc = new TamasController(ms);
+
         error = "";
 
         TextView id = (TextView) findViewById(R.id.applicant_id);
@@ -217,7 +231,7 @@ public class submitApplication_Activity extends AppCompatActivity {
 
 
         if (error.trim().length()==0) {
-            TamasController tc = new TamasController(ms);
+
 
             JobPosting thisPosting = null;
             for (JobPosting aPosting : ms.getJobPostings()) {
@@ -242,6 +256,13 @@ public class submitApplication_Activity extends AppCompatActivity {
                             selectedPreference3,                         //pre3
                             0                                            //apt hr
                     );
+
+                    if (ms!=null) {
+                        Parameters p2 = new Parameters(getApplicationContext(), ms, 1);
+                        asyncTask = new DDBmanager();
+                        asyncTask.delegate = this;
+                        asyncTask.execute(p2);
+                    }
                 } catch (InvalidInputException e) {
                     error = e.getMessage();
                 }
@@ -277,6 +298,33 @@ public class submitApplication_Activity extends AppCompatActivity {
         }else{
             return new ManagementSystem();
         }
+    }
+
+    @Override
+    public void processFinish(String output){
+        writeFile(output);
+    }
+    public void writeFile(String data) {
+        String filePath = getFilesDir().getPath().toString() + "/data.xml";
+        File f=new File(filePath);
+        if (!f.exists()) {
+            try {
+                f.createNewFile();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        String string = data;
+        FileOutputStream outputStream;
+        try {
+            outputStream =new FileOutputStream (f);
+            outputStream.write(string.getBytes());
+            System.out.println(outputStream);
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //System.out.println("sss"+f.exists());
     }
 }
 
