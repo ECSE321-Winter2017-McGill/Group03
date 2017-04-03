@@ -15,6 +15,8 @@ import java.sql.Statement;
 
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
+import ca.mcgill.ecse321.TAMAS.view.AllJobPostings;
+import ca.mcgill.ecse321.TAMAS.view.ShowProgress;
 
 public class DBmanager {
 	private static String user = "wzs1234566";
