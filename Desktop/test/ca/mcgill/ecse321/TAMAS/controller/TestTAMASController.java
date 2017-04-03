@@ -15,6 +15,7 @@ import org.junit.Test;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
+import ca.mcgill.ecse321.TAMAS.model.Application.Status;
 import ca.mcgill.ecse321.TAMAS.model.Course;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
@@ -53,7 +54,6 @@ public class TestTAMASController {
 		assertEquals(1, ms.getApplicants().size());
 
 		 try {
-			 
 				tc.createTAEval(aApplicant.getName(), evaluation);
 				
 			} catch (InvalidInputException e) {
@@ -103,7 +103,7 @@ public class TestTAMASController {
 		  assertEquals(1, ms.getInstructors().size());
 		  
 		  Course aCourse = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
-					10, 10, 10, 10,aInstructor, ms);
+					10, 10, 10, 10,10.0,aInstructor, ms);
 		  ms.addCourse(aCourse);
 		  assertEquals(1, ms.getCourses().size());
 
@@ -148,7 +148,7 @@ public class TestTAMASController {
 		  assertEquals(1, ms.getInstructors().size());
 		  
 		  Course aCourse = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
-					10, 10, 10, 10,aInstructor, ms);
+					10, 10, 10, 10,10.0,aInstructor, ms);
 		  ms.addCourse(aCourse);
 		  assertEquals(1, ms.getCourses().size());
 
@@ -180,7 +180,7 @@ public class TestTAMASController {
 		  assertEquals(1, ms.getInstructors().size());
 		  
 		  Course aCourse = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
-					10, 10, 10, 10,aInstructor, ms);
+					10, 10, 10, 10,10.0,aInstructor, ms);
 		  ms.addCourse(aCourse);
 		  assertEquals(1, ms.getCourses().size());
 
@@ -212,7 +212,7 @@ public class TestTAMASController {
    		  assertEquals(1, ms.getInstructors().size());
    		  
    		  Course aCourse = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
-   					10, 10, 10, 10,aInstructor, ms);
+					10, 10, 10, 10,10.0,aInstructor, ms);
    		  ms.addCourse(aCourse);
    		  assertEquals(1, ms.getCourses().size());
 
@@ -237,7 +237,7 @@ public class TestTAMASController {
 		  assertEquals(1, ms.getInstructors().size());
 		  
 		  Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
-					10, 10, 10, 10,i, ms);
+					10, 10, 10, 10,10.0,i, ms);
 		  ms.addCourse(c);
 		  assertEquals(1, ms.getCourses().size());
 		  
@@ -293,7 +293,7 @@ public class TestTAMASController {
 		  assertEquals(secondChoice, ms2.getApplicant(0).getSecondChoice());
 		  assertEquals(thirdChoice, ms2.getApplicant(0).getThirdChoice());
 		  assertEquals(totalAppointmentHour, ms2.getApplicant(0).getTotalAppointmentHours());
-		  assertEquals("Submitted", ms2.getApplicant(0).getApplication(0).getApplicationStatus());
+		  assertEquals("SELECTED", ms2.getApplicant(0).getApplication(0).getStatus().toString());
 		}
     
     @Test 
@@ -305,7 +305,7 @@ public class TestTAMASController {
    		  assertEquals(1, ms.getInstructors().size());
    		  
    		  Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
-   					10, 10, 10, 10,i, ms);
+					10, 10, 10, 10,10.0,i, ms);
    		  ms.addCourse(c);
    		  assertEquals(1, ms.getCourses().size());
    		  
@@ -348,8 +348,8 @@ public class TestTAMASController {
    		  ms.addInstructor(i);
    		  assertEquals(1, ms.getInstructors().size());
    		  
-   		  Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
-   					10, 10, 10, 10,i, ms);
+   		 Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
+					10, 10, 10, 10,10.0,i, ms);
    		  ms.addCourse(c);
    		  assertEquals(1, ms.getCourses().size());
    		  
@@ -392,8 +392,8 @@ public class TestTAMASController {
    		  ms.addInstructor(i);
    		  assertEquals(1, ms.getInstructors().size());
    		  
-   		  Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
-   					10, 10, 10, 10,i, ms);
+   		 Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
+					10, 10, 10, 10,10.0,i, ms);
    		  ms.addCourse(c);
    		  assertEquals(1, ms.getCourses().size());
    		  
@@ -436,8 +436,9 @@ public class TestTAMASController {
    		  ms.addInstructor(i);
    		  assertEquals(1, ms.getInstructors().size());
    		  
-   		  Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
-   					10, 10, 10, 10,i, ms);
+   		 Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
+					10, 10, 10, 10,10.0,i, ms);
+   		 
    		  ms.addCourse(c);
    		  assertEquals(1, ms.getCourses().size());
    		  
@@ -479,8 +480,9 @@ public class TestTAMASController {
    		  ms.addInstructor(i);
    		  assertEquals(1, ms.getInstructors().size());
    		  
-   		  Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
-   					10, 10, 10, 10,i, ms);
+   		 Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
+					10, 10, 10, 10,10.0,i, ms);
+   		 
    		  ms.addCourse(c);
    		  assertEquals(1, ms.getCourses().size());
    		  
@@ -504,9 +506,9 @@ public class TestTAMASController {
    					,"",totalAppointmentHour, ms);
    		  assertEquals(1, ms.getApplicants().size());
    		  
-   		  Application app1 = new Application("Submitted", jp,ap);
-   		  Application app2 = new Application("Submitted", jp,ap);
-   		  Application app3 = new Application("Submitted", jp,ap);
+   		  Application app1 = new Application(jp,ap);
+   		  Application app2 = new Application(jp,ap);
+   		  Application app3 = new Application(jp,ap);
 
    		  ap.addApplication(app1);
    		  ap.addApplication(app2);
@@ -647,22 +649,23 @@ public class TestTAMASController {
     		
     		  String semester = "Winter3000";
     		  String courseName = "ECSE";
-    		  String courseCode = "23232";
+    		  String courseCode = "232323";
     		  int credit = 10;
     		  int maxStudent = 1; 
     		  String instructorName = "Gates";
+    		  int numGraderNeeded = 0;
     		  int numLab = 0;
     		  int numTut = 0;
-    		  int numTaNeeded = 0;
-    		  int numGraderNeeded = 0;
-    		  int hourTa = 0;
-    		  int hourGrader = 0;
-    		  
-    		  TamasController tc = new TamasController(ms);
-    		  try {
-    			tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
-    					instructorName, numLab, numTut, numTaNeeded, numGraderNeeded,
-    					hourTa, hourGrader, ms);
+    		  int labHour = 0;
+    		  int tutHour = 0;
+    	      int totalGraderHour = 10;
+     		  
+     		  TamasController tc = new TamasController(ms);
+     		  try {
+     			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
+     					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+     					totalGraderHour);
+     			 
     		} catch (InvalidInputException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
@@ -670,19 +673,19 @@ public class TestTAMASController {
     		  
     		  ManagementSystem ms1 = ms;
     		  checkResultCourse(semester, courseName, courseCode, credit, maxStudent,
-    				  instructorName, numLab, numTut, numTaNeeded, numGraderNeeded,
-  					hourTa, hourGrader, ms1);
+   					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+   					totalGraderHour, ms1);
 
     		  ManagementSystem ms2 = (ManagementSystem) PersistenceXStream.loadFromXMLwithXStream();
     		  checkResultCourse(semester, courseName, courseCode, credit, maxStudent,
-    					instructorName, numLab, numTut, numTaNeeded, numGraderNeeded,
-      					hourTa, hourGrader, ms);
+   					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+   					totalGraderHour, ms);
     		  ms2.delete();
     		}
            
         private void checkResultCourse(String semester, String courseName, String courseCode, int credit,
-		  int maxStudent, String instructorName,int numLab, int numTut, int numTaNeeded, int numGraderNeeded,
-	      int hourTa, int hourGrader, ManagementSystem ms2){
+		  int maxStudent, String instructorName,int numGraderNeeded, int numLab, int numTut, int labHour,
+	      int tutHour, int totalGraderHour, ManagementSystem ms2){
         	
     		  assertEquals(0, ms2.getApplicants().size());
     		  assertEquals(0, ms2.getJobPostings().size());
@@ -695,12 +698,12 @@ public class TestTAMASController {
     		  assertEquals(credit, ms2.getCourse(0).getCredit());
     		  assertEquals(maxStudent, ms2.getCourse(0).getNumStudent());
     		  assertEquals(instructorName, ms2.getCourse(0).getInstructor().getName());
+    		  assertEquals(numGraderNeeded, ms2.getCourse(0).getNumGraderNeeded());
     		  assertEquals(numLab, ms2.getCourse(0).getNumLab());
     		  assertEquals(numTut, ms2.getCourse(0).getNumTutorial());
-    		  assertEquals(numTaNeeded, ms2.getCourse(0).getNumTaNeeded());
-    		  assertEquals(numGraderNeeded, ms2.getCourse(0).getNumGraderNeeded());
-    		  assertEquals(hourTa, ms2.getCourse(0).getHourRequiredTa());
-    		  assertEquals(hourGrader, ms2.getCourse(0).getHourRequiredGrader());
+    		  assertEquals(labHour, ms2.getCourse(0).getLabHour());
+    		  assertEquals(tutHour, ms2.getCourse(0).getTutorialHour());
+    		  assertEquals(totalGraderHour, ms2.getCourse(0).getTotalGraderHour());
     		}
         
         @Test
@@ -708,26 +711,24 @@ public class TestTAMASController {
      		  assertEquals(0, ms.getCourses().size()); 
      		  
      		  String error = null;
-
-    		  String semester = "Winter3000";
+     		  String semester = "Winter3000";
     		  String courseName = null;
-    		  String courseCode = "23232";
+    		  String courseCode = "232323";
     		  int credit = 10;
     		  int maxStudent = 1; 
     		  String instructorName = "Gates";
+    		  int numGraderNeeded = 0;
     		  int numLab = 0;
     		  int numTut = 0;
-    		  int numTaNeeded = 0;
-    		  int numGraderNeeded = 0;
-    		  int hourTa = 0;
-    		  int hourGrader = 0;
-    		  
+    		  int labHour = 0;
+    		  int tutHour = 0;
+    	      int totalGraderHour = 10;
      		  
      		  TamasController tc = new TamasController(ms);
      		  try {
      			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
-     					instructorName, numLab, numTut, numTaNeeded, numGraderNeeded,
-     					hourTa, hourGrader, ms);
+     					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+     					totalGraderHour);
      			 
      		} catch (InvalidInputException e) {
      			// TODO Auto-generated catch block
@@ -745,25 +746,24 @@ public class TestTAMASController {
      		  
      		  String error = null;
 
-    		  String semester = "Winter3000";
+     		  String semester = "Winter3000";
     		  String courseName = "ECSE";
     		  String courseCode = null;
     		  int credit = 10;
     		  int maxStudent = 1; 
     		  String instructorName = "Gates";
+    		  int numGraderNeeded = 0;
     		  int numLab = 0;
     		  int numTut = 0;
-    		  int numTaNeeded = 0;
-    		  int numGraderNeeded = 0;
-    		  int hourTa = 0;
-    		  int hourGrader = 0;
-    		  
+    		  int labHour = 0;
+    		  int tutHour = 0;
+    	      int totalGraderHour = 10;
      		  
      		  TamasController tc = new TamasController(ms);
      		  try {
      			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
-     					instructorName, numLab, numTut, numTaNeeded, numGraderNeeded,
-     					hourTa, hourGrader, ms);
+     					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+     					totalGraderHour);
      			 
      		} catch (InvalidInputException e) {
      			// TODO Auto-generated catch block
@@ -781,25 +781,24 @@ public class TestTAMASController {
      		  
      		  String error = null;
 
-    		  String semester = "Winter3000";
+     		  String semester = "Winter3000";
     		  String courseName = "ECSE";
     		  String courseCode = "232323";
     		  int credit = -1;
     		  int maxStudent = 1; 
     		  String instructorName = "Gates";
+    		  int numGraderNeeded = 0;
     		  int numLab = 0;
     		  int numTut = 0;
-    		  int numTaNeeded = 0;
-    		  int numGraderNeeded = 0;
-    		  int hourTa = 0;
-    		  int hourGrader = 0;
-    		  
+    		  int labHour = 0;
+    		  int tutHour = 0;
+    	      int totalGraderHour = 10;
      		  
      		  TamasController tc = new TamasController(ms);
      		  try {
      			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
-     					instructorName, numLab, numTut, numTaNeeded, numGraderNeeded,
-     					hourTa, hourGrader, ms);
+     					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+     					totalGraderHour);
      			 
      		} catch (InvalidInputException e) {
      			// TODO Auto-generated catch block
@@ -817,25 +816,24 @@ public class TestTAMASController {
      		  
      		  String error = null;
 
-    		  String semester = "Winter3000";
+     		  String semester = "Winter3000";
     		  String courseName = "ECSE";
     		  String courseCode = "232323";
     		  int credit = 10;
     		  int maxStudent = -1; 
     		  String instructorName = "Gates";
+    		  int numGraderNeeded = 0;
     		  int numLab = 0;
     		  int numTut = 0;
-    		  int numTaNeeded = 0;
-    		  int numGraderNeeded = 0;
-    		  int hourTa = 0;
-    		  int hourGrader = 0;
-    		  
+    		  int labHour = 0;
+    		  int tutHour = 0;
+    	      int totalGraderHour = 10;
      		  
      		  TamasController tc = new TamasController(ms);
      		  try {
      			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
-     					instructorName, numLab, numTut, numTaNeeded, numGraderNeeded,
-     					hourTa, hourGrader, ms);
+     					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+     					totalGraderHour);
      			 
      		} catch (InvalidInputException e) {
      			// TODO Auto-generated catch block
@@ -853,25 +851,24 @@ public class TestTAMASController {
      		  
      		  String error = null;
 
-    		  String semester = "Winter3000";
+     		  String semester = "Winter3000";
     		  String courseName = "ECSE";
     		  String courseCode = "232323";
     		  int credit = 10;
     		  int maxStudent = 1; 
     		  String instructorName = null;
+    		  int numGraderNeeded = 0;
     		  int numLab = 0;
     		  int numTut = 0;
-    		  int numTaNeeded = 0;
-    		  int numGraderNeeded = 0;
-    		  int hourTa = 0;
-    		  int hourGrader = 0;
+    		  int labHour = 0;
+    		  int tutHour = 0;
+    	      int totalGraderHour = 10;
      		  
      		  TamasController tc = new TamasController(ms);
      		  try {
      			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
-     					instructorName, numLab, numTut, numTaNeeded, numGraderNeeded,
-     					hourTa, hourGrader, ms);
-     			 
+     					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+     					totalGraderHour);
      		} catch (InvalidInputException e) {
      			// TODO Auto-generated catch block
      			error = e.getMessage();
@@ -888,7 +885,7 @@ public class TestTAMASController {
      		  
      		  String error = null;
      		  String realError = ("Please specify the numebr of lab sessions in the correct format! "
-     		      + "Please specify the number of tutorial in the correct format! ").trim(); 
+     		      + "Please specify the number of tutorials in the correct format!").trim(); 
 
     		  String semester = "Winter3000";
     		  String courseName = "ECSE";
@@ -896,18 +893,18 @@ public class TestTAMASController {
     		  int credit = 10;
     		  int maxStudent = 1; 
     		  String instructorName = "Gates";
+    		  int numGraderNeeded = 0;
     		  int numLab = -1;
     		  int numTut = -1;
-    		  int numTaNeeded = 0;
-    		  int numGraderNeeded = 0;
-    		  int hourTa = 0;
-    		  int hourGrader = 0;
+    		  int labHour = 0;
+    		  int tutHour = 0;
+    	      int totalGraderHour = 10;
      		  
      		  TamasController tc = new TamasController(ms);
      		  try {
      			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
-     					instructorName, numLab, numTut, numTaNeeded, numGraderNeeded,
-     					hourTa, hourGrader, ms);
+     					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+     					totalGraderHour);
      			 
      		} catch (InvalidInputException e) {
      			// TODO Auto-generated catch block
@@ -921,31 +918,30 @@ public class TestTAMASController {
      		}
         
         @Test
-    	public void testCreateCourseInvalidNumTAndGraderNeeded() {
+    	public void testCreateCourseInvalidNumGraderNeeded() {
      		  assertEquals(0, ms.getCourses().size()); 
      		  
      		  String error = null;
-     		  String realError = ("Please specify the number of TA needed in the correct format! "
-     		      + "Please specify the number of Grader needed in the correct format! ").trim(); 
+     		  String realError = ("Please specify the number of Grader needed in the correct format! ").trim(); 
 
-    		  String semester = "Winter3000";
+     		  String semester = "Winter3000";
     		  String courseName = "ECSE";
     		  String courseCode = "232323";
     		  int credit = 10;
     		  int maxStudent = 1; 
     		  String instructorName = "Gates";
-    		  int numLab = 1;
-    		  int numTut = 1;
-    		  int numTaNeeded = -1;
     		  int numGraderNeeded = -1;
-    		  int hourTa = 0;
-    		  int hourGrader = 0;
+    		  int numLab = 0;
+    		  int numTut = 0;
+    		  int labHour = 0;
+    		  int tutHour = 0;
+    	      int totalGraderHour = 10;
      		  
      		  TamasController tc = new TamasController(ms);
      		  try {
      			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
-     					instructorName, numLab, numTut, numTaNeeded, numGraderNeeded,
-     					hourTa, hourGrader, ms);
+     					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+     					totalGraderHour);
      			 
      		} catch (InvalidInputException e) {
      			// TODO Auto-generated catch block
@@ -963,27 +959,27 @@ public class TestTAMASController {
      		  assertEquals(0, ms.getCourses().size()); 
      		  
      		  String error = null;
-     		  String realError = ("Please specify the TA appointment hour in the correct format! "
-     		      + "Please specify the Grader appointment hour in the correct format! ").trim(); 
+     		  String realError = ("Please specify a correct lab hour! "
+     		      + "Please specify a correct tutorial hour! ").trim(); 
 
-    		  String semester = "Winter3000";
-    		  String courseName = "ECSE";
-    		  String courseCode = "232323";
-    		  int credit = 10;
-    		  int maxStudent = 1; 
-    		  String instructorName = "Gates";
-    		  int numLab = 1;
-    		  int numTut = 1;
-    		  int numTaNeeded = 1;
-    		  int numGraderNeeded = 1;
-    		  int hourTa = -1;
-    		  int hourGrader = -1;
-     		 
-     		  TamasController tc = new TamasController(ms);
-     		  try {
-     			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
-     					instructorName, numLab, numTut, numTaNeeded, numGraderNeeded,
-     					hourTa, hourGrader, ms);
+     	  String semester = "Winter3000";
+   		  String courseName = "ECSE";
+   		  String courseCode = "232323";
+   		  int credit = 10;
+   		  int maxStudent = 1; 
+   		  String instructorName = "Gates";
+   		  int numGraderNeeded = 1;
+   		  int numLab = 0;
+   		  int numTut = 0;
+   		  int labHour = -1;
+   		  int tutHour = -1;
+   	      int totalGraderHour = 10;
+    		  
+    		  TamasController tc = new TamasController(ms);
+    		  try {
+    			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
+    					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+    					totalGraderHour);
      			 
      		} catch (InvalidInputException e) {
      			// TODO Auto-generated catch block
@@ -1009,7 +1005,7 @@ public class TestTAMASController {
    		    assertEquals(1, ms.getInstructors().size());
    		  
     		Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
-					10, 10, 10, 10,i, ms);
+					10, 10, 10, 10,10.0,i, ms);
 		    ms.addCourse(c);
 		    assertEquals(1, ms.getCourses().size());
 
@@ -1018,7 +1014,8 @@ public class TestTAMASController {
       	    ms.addJobPosting(jp);
             assertEquals(1, ms.getJobPostings().size());
             
-            Application app = new Application("Submitted", jp,ap);
+            Application app = new Application(jp,ap);
+            app.setStatus(Status.PENDING);
      		ap.addApplication(app);
 
     	    TamasController tc = new TamasController(ms);
@@ -1036,6 +1033,45 @@ public class TestTAMASController {
     		  
     		  ms2.delete();
     		}
+        
+        @Test 
+        public void testAcceptApplicationInvalidStatus(){
+        	assertEquals(0, ms.getApplicants().size()); 
+        	
+        	Applicant ap = new Applicant(111, "abc", "", true, "", "","", "", "", "", 10, ms);
+            ms.addApplicant(ap);
+    		assertEquals(1, ms.getApplicants().size());
+    		
+    		Instructor i = new Instructor("Danial", ms);
+   		    ms.addInstructor(i);
+   		    assertEquals(1, ms.getInstructors().size());
+   		  
+    		Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
+					10, 10, 10, 10,10.0,i, ms);
+		    ms.addCourse(c);
+		    assertEquals(1, ms.getCourses().size());
+
+    		
+    		JobPosting jp = new JobPosting("", null, "", 10.1, ms, c); 
+      	    ms.addJobPosting(jp);
+            assertEquals(1, ms.getJobPostings().size());
+            
+            Application app = new Application(jp,ap);
+     		ap.addApplication(app);
+
+     		String error = null;
+    	    TamasController tc = new TamasController(ms);
+    		 try{
+    			 tc.acceptApplication(app);
+    		 }catch (InvalidInputException e){
+    			 error = e.getMessage();
+    		 }
+    		 
+ 	     	 error = error.trim();
+ 		 
+		     assertEquals("This applicant has already been processed", error);
+		     assertEquals("SELECTED", app.getStatus().toString());
+    		}
          
             private void checkResultAcceptApplication(Application app, ManagementSystem ms2){
       	
@@ -1044,7 +1080,7 @@ public class TestTAMASController {
     		  assertEquals(1, ms2.getCourses().size());
     		  assertEquals(1, ms2.getInstructors().size());
     		  
-    		  assertEquals("Accepted", ms2.getApplicant(0).getApplication(0).getApplicationStatus());
+    		  assertEquals("OFFER_ACCEPTED", ms2.getApplicant(0).getApplication(0).getStatus().toString());
     		}
             
             @Test 
@@ -1060,7 +1096,7 @@ public class TestTAMASController {
        		    assertEquals(1, ms.getInstructors().size());
        		  
         		Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
-    					10, 10, 10, 10,i, ms);
+    					10, 10, 10, 10,10.0,i, ms);
     		    ms.addCourse(c);
     		    assertEquals(1, ms.getCourses().size());
 
@@ -1069,7 +1105,8 @@ public class TestTAMASController {
           	    ms.addJobPosting(jp);
                 assertEquals(1, ms.getJobPostings().size());
                 
-                Application app = new Application("Submitted", jp,ap);
+                Application app = new Application(jp,ap);
+                app.setStatus(Status.PENDING);
          		ap.addApplication(app);
 
         	    TamasController tc = new TamasController(ms);
@@ -1095,6 +1132,45 @@ public class TestTAMASController {
         		  assertEquals(1, ms2.getCourses().size());
         		  assertEquals(1, ms2.getInstructors().size());
         		  
-        		  assertEquals("Rejected", ms2.getApplicant(0).getApplication(0).getApplicationStatus());
+        		  assertEquals("OFFER_DECLINED", ms2.getApplicant(0).getApplication(0).getStatus().toString());
         		}
+                
+                @Test 
+                public void testRejectApplicationInvalidStatus(){
+                	assertEquals(0, ms.getApplicants().size()); 
+                	
+                	Applicant ap = new Applicant(111, "abc", "", true, "", "","", "", "", "", 10, ms);
+                    ms.addApplicant(ap);
+            		assertEquals(1, ms.getApplicants().size());
+            		
+            		Instructor i = new Instructor("Danial", ms);
+           		    ms.addInstructor(i);
+           		    assertEquals(1, ms.getInstructors().size());
+           		  
+            		Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
+        					10, 10, 10, 10,10.0,i, ms);
+        		    ms.addCourse(c);
+        		    assertEquals(1, ms.getCourses().size());
+
+            		
+            		JobPosting jp = new JobPosting("", null, "", 10.1, ms, c); 
+              	    ms.addJobPosting(jp);
+                    assertEquals(1, ms.getJobPostings().size());
+                    
+                    Application app = new Application(jp,ap);
+             		ap.addApplication(app);
+
+             		String error = null;
+            	    TamasController tc = new TamasController(ms);
+            		 try{
+            			 tc.rejectApplication(app);
+            		 }catch (InvalidInputException e){
+            			 error = e.getMessage();
+            		 }
+            		 
+         	     	 error = error.trim();
+         		 
+        		     assertEquals("This applicant has already been processed", error);
+        		     assertEquals("SELECTED", app.getStatus().toString());
+            		}
 }
