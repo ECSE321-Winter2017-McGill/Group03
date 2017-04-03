@@ -76,7 +76,7 @@ public class ShowProgress extends JPanel implements Runnable {
 	}
 
 	private long getNum() {
-		int[] a = { 1, 80, 10, 0 ,1};
+		int[] a = { 5, 100, 10, 0 ,1};
 		return a[(int) (Math.random() * 5)];
 	}
 }

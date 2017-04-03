@@ -65,7 +65,7 @@ error="Aa";%>
 
 							<br />
 
-							<p>Make sure you have internet connection, log in database and some CSS/JS needs internet.</p>
+							<p>Make sure you have internet connection, Databases and some CSS/JS needs internet connection.</p>
 						</div>
 					</div>
 				</div>
