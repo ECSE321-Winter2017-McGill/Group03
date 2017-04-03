@@ -17,9 +17,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
+import ca.mcgill.ecse321.TAMAS.model.Application;
+import ca.mcgill.ecse321.TAMAS.model.Application.Status;
 import ca.mcgill.ecse321.TAMAS.model.Course;
 import ca.mcgill.ecse321.TAMAS.model.Department;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
+import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 
 public class ViewEvaluation extends JFrame{
@@ -64,7 +67,7 @@ public class ViewEvaluation extends JFrame{
 			allAppName = new ArrayList<String>();
 
 			for(Application app: me.getApplications()){
-				if (app.getApplicationStatus().equals("accepted")){
+				if (app.getStatus().equals(Status.OFFER_ACCEPTED)){
 				    if (app.getJobPosting().getJobTitle().equals("TA")){
 						allAppName.add(me.getName());
 						allApplicant.addItem(me.getName());
@@ -81,7 +84,7 @@ public class ViewEvaluation extends JFrame{
 		    for (Course c: me.getCourses()){
 		    	for (JobPosting jp: c.getJobPosting()){
 		    		for (Application app: jp.getApplications()){
-		    			if (app.getApplicationStatus().equals("accepted")){
+		    			if (app.getStatus().equals(Status.OFFER_ACCEPTED)){
 					        if (app.getJobPosting().getJobTitle().equals("TA")){
 					        	allAppName.add(app.getApplicant().getName());
 		   		   		   		allApplicant.addItem(app.getApplicant().getName());
@@ -95,7 +98,7 @@ public class ViewEvaluation extends JFrame{
 			allAppName = new ArrayList<String>();
 			for (Applicant ap: this.ms.getApplicants()){
 				for(Application app: ap.getApplications())
-					if (app.getApplicationStatus().equals("accepted")){
+					if (app.getStatus().equals(Status.OFFER_ACCEPTED)){
 			             if (app.getJobPosting().getJobTitle().equals("TA")){
 			             	allAppName.add(ap.getName());
    		   		   	    	allApplicant.addItem(ap.getName());
