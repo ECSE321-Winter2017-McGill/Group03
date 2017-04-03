@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.mcgill.ecse321.TAMAS.Web.controller.DDBmanager;
+import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.controller.TamasController;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
@@ -33,7 +34,7 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
 
     final Context context = this;
     private String username="";
-
+    private String error = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,25 +119,39 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
         //Display the applicant's applications and set buttons according to the status
         if (allApplications!=null){
             for (int i=0; i<allApplications.size();i++){
-                courses.get(i).setText(allApplications.get(i).getJobPosting().getCourse().getCourseCode()+"index:"+Integer.toString(i));
-                //System.out.println(allApplications.get(i).getJobPosting().getCourse().getCourseCode());
-
+                courses.get(i).setText(allApplications.get(i).getJobPosting().getCourse().getCourseCode());
                 titles.get(i).setText(allApplications.get(i).getJobPosting().getJobTitle());
-
-                //Modify this after importing the updated library
                 status.get(i).setText(allApplications.get(i).getStatusFullName());
-                //status.get(i).setText(allApplications.size());
-                //Check the enum!!
+
                 if (allApplications.get(i).getStatusFullName().equals("SELECTED")){
                     acceptButtons.get(i).setEnabled(true);
                     rejectButtons.get(i).setEnabled(true);
                 }
             }
         }
+
+        if (error.trim().length()>0){
+            final Dialog dialog = new Dialog(context);
+            dialog.setContentView(R.layout.statusdialog);
+            dialog.setTitle("Error");
+            TextView text = (TextView) dialog.findViewById(R.id.text);
+            text.setText(error);
+            Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+            dialogButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
     }
 
     public void acceptOffer(View v){
 
+        error = "";
+
+        //Reminder
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.statusdialog);
         dialog.setTitle("Reminder");
@@ -152,6 +167,7 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
         dialog.show();
 
 
+        //Load the database
         DDBmanager asyncTask = new DDBmanager();
         Parameters p=new Parameters(getApplicationContext(),null,0);
         asyncTask.delegate = this;
@@ -160,17 +176,44 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
         ManagementSystem ms = (ManagementSystem)loadFromXML();
         TamasController tc = new TamasController(ms);
 
-        //To be implemented in the controller
-        //tc.acceptOffer();
+        List<Application> allApplications = null;
+        for (Applicant anApplicant : ms.getApplicants()) {
+            if (anApplicant.getName().equals(username)) {
+                allApplications = anApplicant.getApplications();
+                break;
+            }
+        }
 
-        //Uncomment the codes below after controller methods have been implemented
-        //if (ms!=null)
-//        Parameters p2 = new Parameters(getApplicationContext(), ms, 1);
-//        asyncTask=new DDBmanager();
-//        asyncTask.delegate = this;
-//        asyncTask.execute(p2);
+        //Update the database
+        if (allApplications!=null) {
+
+            try {
+                switch (v.getId()) {
+                    case R.id.accept1:
+                        tc.acceptOffer(allApplications.get(0));
+                        break;
+                    case R.id.accept2:
+                        tc.acceptOffer(allApplications.get(1));
+                        break;
+                    case R.id.accept3:
+                        tc.acceptOffer(allApplications.get(2));
+                        break;
+                }
+            } catch (InvalidInputException e) {
+                error += e.getMessage();
+            }
+        }
 
 
+        if (ms!=null) {
+            Parameters p2 = new Parameters(getApplicationContext(), ms, 1);
+            asyncTask = new DDBmanager();
+            asyncTask.delegate = this;
+            asyncTask.execute(p2);
+        }
+
+
+        //Success message
         text.setText("You have successfully accepted this offer");
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,11 +228,15 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
 
     }
 
-    public void declineOffer(View v){
+    public void declineOffer(View v) {
+
+        error = "";
+
+        //Reminder
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.statusdialog);
         dialog.setTitle("Reminder");
-        TextView text = (TextView)dialog.findViewById(R.id.text);
+        TextView text = (TextView) dialog.findViewById(R.id.text);
         text.setText("Please make sure that you click the right button. You will not be able to modify your decision later. ");
         Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
         dialogButton.setOnClickListener(new View.OnClickListener() {
@@ -201,23 +248,53 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
         dialog.show();
 
 
+        //Load the database
         DDBmanager asyncTask = new DDBmanager();
-        Parameters p=new Parameters(getApplicationContext(),null,0);
+        Parameters p = new Parameters(getApplicationContext(), null, 0);
         asyncTask.delegate = this;
         asyncTask.execute(p);
 
-        ManagementSystem ms = (ManagementSystem)loadFromXML();
+        ManagementSystem ms = (ManagementSystem) loadFromXML();
         TamasController tc = new TamasController(ms);
 
-        //To be implemented in the controller
-        //tc.declineOffer();
-        //Uncomment the codes below after controller methods have been implemented
-//        Parameters p2 = new Parameters(getApplicationContext(), ms, 1);
-//        asyncTask=new DDBmanager();
-//        asyncTask.delegate = this;
-//        asyncTask.execute(p2);
+        List<Application> allApplications = null;
+        for (Applicant anApplicant : ms.getApplicants()) {
+            if (anApplicant.getName().equals(username)) {
+                allApplications = anApplicant.getApplications();
+                break;
+            }
+        }
+
+        //Update the database
+        if (allApplications!=null) {
+
+            try {
+                switch (v.getId()) {
+                    case R.id.reject1:
+                        tc.declineOffer(allApplications.get(0));
+                        break;
+                    case R.id.reject2:
+                        tc.declineOffer(allApplications.get(1));
+                        break;
+                    case R.id.reject3:
+                        tc.declineOffer(allApplications.get(2));
+                        break;
+                }
+            } catch (InvalidInputException e) {
+                error += e.getMessage();
+            }
+        }
 
 
+        if (ms!=null) {
+            Parameters p2 = new Parameters(getApplicationContext(), ms, 1);
+            asyncTask = new DDBmanager();
+            asyncTask.delegate = this;
+            asyncTask.execute(p2);
+        }
+
+
+        //Success message
         text.setText("You have successfully declined this offer");
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override

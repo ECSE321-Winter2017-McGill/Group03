@@ -328,48 +328,62 @@ public class TamasController {
 				numGraderNeeded, labHour, tutorialHour,totalGraderHour,budgetCalculated, instructor, ms);
 
 	}
-	
 
 	public boolean applicationAccepted(Application application) {
-		if (application.getStatus().equals(Status.SELECTED)) {
+		if (application.getStatusFullName().equals(Status.SELECTED)) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean applicationRejected(Application application) {
-		if (application.getStatus().equals(Status.REJECTED)) {
+		if (application.getStatusFullName().equals(Status.REJECTED)) {
 			return true;
 		}
 		return false;
 	}
-	
-	public void acceptApplication(Application application) throws InvalidInputException {
-		if (application.getStatus().equals(Status.PENDING)) {
+
+	public void acceptApplicant(Application application) throws InvalidInputException {
+		if (application.getStatusFullName().equals(Status.PENDING)) {
 			application.setStatus(Status.SELECTED);
+		} else {
+			throw new InvalidInputException("This applicant has already been accepted");
 		}
-		else{
-			throw new InvalidInputException("This applicant has already been processed");
-		}
-		
 	}
-	
-	public void rejectApplication(Application application) throws InvalidInputException  {
-		if (application.getStatus().equals(Status.PENDING)) {
+
+	public void rejectApplicant(Application application) throws InvalidInputException {
+		if (application.getStatusFullName().equals(Status.PENDING)) {
 			application.setStatus(Status.REJECTED);
-		}
-		else{
-			throw new InvalidInputException("This applicant has already been processed");
+		} else {
+			throw new InvalidInputException("This applicant has already been rejected");
 		}
 	}
-	
-	public void changeHours(Course course, int hour) throws InvalidInputException{
-		if (course==null){
+
+	public void changeHours(Course course, int hour) throws InvalidInputException {
+		if (course == null) {
 			throw new InvalidInputException("Select a course! ");
 		}
-		
-		if (hour<=0){
+
+		if (hour <= 0) {
 			throw new InvalidInputException("Select a course! ");
+		}
+	}
+
+	public void acceptOffer(Application application) throws InvalidInputException{
+		if (application.getStatusFullName().equals(Status.SELECTED)){
+			application.setStatus(Status.OFFER_ACCEPTED);
+		}
+		else{
+			throw new InvalidInputException("You cannot accept the offer! ");
+		}
+	}
+
+	public void declineOffer(Application application) throws InvalidInputException{
+		if (application.getStatusFullName().equals(Status.SELECTED)){
+			application.setStatus(Status.OFFER_DECLINED);
+		}
+		else{
+			throw new InvalidInputException("You cannot decline the offer! ");
 		}
 	}
 
