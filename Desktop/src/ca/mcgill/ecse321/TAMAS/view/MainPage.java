@@ -112,7 +112,7 @@ public class MainPage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
-				new WriteEvaluation(ms, user).setVisible(true);
+				new ViewWriteEvaluation(ms, user).setVisible(true);
 				dispose();
 			}
 
@@ -123,7 +123,7 @@ public class MainPage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
-				new ViewEvaluation(ms, user).setVisible(true);
+				new ViewWriteEvaluation(ms, user).setVisible(true);
 				dispose();
 			}
 
@@ -131,6 +131,6 @@ public class MainPage extends JFrame {
 	}
 
 	public void backToMain() {
-		new MainPage(userName).setVisible(true);
+		new MainPage(user).setVisible(true);
 	}
 }
