@@ -107,24 +107,23 @@ public class TamasController {
 		this.ms = ms;
 	}
 
-	public void createTAEval(String name, String eval) throws InvalidInputException {
+	public void createTAEval(Applicant ta, String eval) throws InvalidInputException {
 		String error = "";
 
-		Applicant newApplicant;
+		// Applicant newApplicant;
 
 		if (eval.trim().length() == 0) {
-			error += "A space cannot be an evaluation! ";
+			error += "Can not submit an empty Evaluation ";
 		}
+
+		try {
+			ta.setEvaluation(eval);
+		} catch (Exception e) {
+			error += e.getMessage();
+		}
+
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
-		}
-		for (int i = 0; i < this.ms.getApplicants().size(); i++) {
-			if (this.ms.getApplicants().get(i).getName().equals(name)) {
-				newApplicant = this.ms.getApplicants().get(i);
-				newApplicant.setEvaluation(eval);
-				break;
-			}
-
 		}
 
 		PersistenceXStream.saveToXMLwithXStream(ms);
