@@ -330,21 +330,21 @@ public class TamasController {
 	}
 
 	public boolean applicationAccepted(Application application) {
-		if (application.getStatusFullName().equals(Status.SELECTED)) {
+		if (application.getStatusFullName().equals("SELECTED")) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean applicationRejected(Application application) {
-		if (application.getStatusFullName().equals(Status.REJECTED)) {
+		if (application.getStatusFullName().equals("REJECTED")) {
 			return true;
 		}
 		return false;
 	}
 
 	public void acceptApplicant(Application application) throws InvalidInputException {
-		if (application.getStatusFullName().equals(Status.PENDING)) {
+		if (application.getStatusFullName().equals("PENDING")) {
 			application.setStatus(Status.SELECTED);
 		} else {
 			throw new InvalidInputException("This applicant has already been accepted");
@@ -352,7 +352,7 @@ public class TamasController {
 	}
 
 	public void rejectApplicant(Application application) throws InvalidInputException {
-		if (application.getStatusFullName().equals(Status.PENDING)) {
+		if (application.getStatusFullName().equals("PENDING")) {
 			application.setStatus(Status.REJECTED);
 		} else {
 			throw new InvalidInputException("This applicant has already been rejected");
@@ -370,21 +370,19 @@ public class TamasController {
 	}
 
 	public void acceptOffer(Application application) throws InvalidInputException{
-		if (application.getStatusFullName().equals(Status.SELECTED)){
-			application.setStatus(Status.OFFER_ACCEPTED);
-		}
-		else{
+		if (!application.getStatusFullName().equals("SELECTED")){
 			throw new InvalidInputException("You cannot accept the offer! ");
 		}
+
+		application.setStatus(Status.OFFER_ACCEPTED);
 	}
 
 	public void declineOffer(Application application) throws InvalidInputException{
-		if (application.getStatusFullName().equals(Status.SELECTED)){
-			application.setStatus(Status.OFFER_DECLINED);
-		}
-		else{
+		if (!application.getStatusFullName().equals("SELECTED")){
 			throw new InvalidInputException("You cannot decline the offer! ");
+
 		}
+		application.setStatus(Status.OFFER_DECLINED);
 	}
 
 }

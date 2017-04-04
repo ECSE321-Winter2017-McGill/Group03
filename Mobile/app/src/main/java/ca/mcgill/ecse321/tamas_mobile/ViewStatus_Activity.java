@@ -38,6 +38,7 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("error message： "+error);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_status_);
         Intent intent = getIntent();
@@ -60,9 +61,9 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
         Button reject1 = (Button) findViewById(R.id.reject1);
         Button reject2 = (Button) findViewById(R.id.reject2);
         Button reject3 = (Button) findViewById(R.id.reject3);
-        rejectButtons.add(accept1);
-        rejectButtons.add(accept2);
-        rejectButtons.add(accept3);
+        rejectButtons.add(reject1);
+        rejectButtons.add(reject2);
+        rejectButtons.add(reject3);
 
         accept1.setEnabled(false);
         accept2.setEnabled(false);
@@ -152,19 +153,19 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
         error = "";
 
         //Reminder
-        final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.statusdialog);
-        dialog.setTitle("Reminder");
-        TextView text = (TextView)dialog.findViewById(R.id.text);
-        text.setText("Please make sure that you click the right button. You will not be able to modify your decision later. ");
-        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
+//        final Dialog dialog = new Dialog(context);
+//        dialog.setContentView(R.layout.statusdialog);
+//        dialog.setTitle("Reminder");
+//        TextView text = (TextView)dialog.findViewById(R.id.text);
+//        text.setText("Please make sure that you click on the right button. You will not be able to modify your decision later. ");
+//        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+//        dialogButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//            }
+//        });
+//        dialog.show();
 
 
         //Load the database
@@ -189,6 +190,7 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
 
             try {
                 switch (v.getId()) {
+
                     case R.id.accept1:
                         tc.acceptOffer(allApplications.get(0));
                         break;
@@ -205,24 +207,31 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
         }
 
 
-        if (ms!=null) {
-            Parameters p2 = new Parameters(getApplicationContext(), ms, 1);
-            asyncTask = new DDBmanager();
-            asyncTask.delegate = this;
-            asyncTask.execute(p2);
-        }
-
-
-        //Success message
-        text.setText("You have successfully accepted this offer");
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
+        if (error.trim().length()<=0) {
+            if (ms != null) {
+                Parameters p2 = new Parameters(getApplicationContext(), ms, 1);
+                asyncTask = new DDBmanager();
+                asyncTask.delegate = this;
+                asyncTask.execute(p2);
             }
-        });
 
-        dialog.show();
+
+            //Success message
+            final Dialog dialog = new Dialog(context);
+            dialog.setContentView(R.layout.statusdialog);
+            dialog.setTitle("Reminder");
+            TextView text = (TextView)dialog.findViewById(R.id.text);
+            text.setText("You have successfully accepted this offer. Refresh the page to view the updated status");
+            Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+            dialogButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+        }
 
         refreshData();
 
