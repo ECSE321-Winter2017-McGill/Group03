@@ -36,6 +36,7 @@ public class MainPage extends JFrame {
 	}
 
 	private void initComponents(Object role) {
+		
 		viewCourse = new JButton("View all Courses");
 		viewCourse.setPreferredSize(new Dimension(300, 150));
 		viewJobPosting = new JButton("View all Job Postings");

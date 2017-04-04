@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.WindowConstants;
 
 public class AllCourses extends JFrame {
 
@@ -42,6 +43,7 @@ public class AllCourses extends JFrame {
 	}
 
 	private void initComponents() {
+		
 		// get table data ready;
 
 		String[] columnNames = { "Semester", "Course Code", "Course Name", "Credit", "Instructor",
@@ -111,6 +113,7 @@ public class AllCourses extends JFrame {
 		}
 		pack();
 		setVisible(true);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		
 		// add actions listeners

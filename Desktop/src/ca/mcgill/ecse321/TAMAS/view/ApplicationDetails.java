@@ -212,6 +212,7 @@ public class ApplicationDetails extends JFrame {
 
 		pack();
 		setResizable(false);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 	
 	private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {

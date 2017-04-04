@@ -12,6 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
+
 import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.controller.TamasController;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
@@ -86,6 +88,8 @@ public class WriteEvaluation extends JFrame {
 			}
 		});
 		setTitle("TA Evaluation");
+		setVisible(true);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		// layout
 		GroupLayout layout = new GroupLayout(getContentPane());

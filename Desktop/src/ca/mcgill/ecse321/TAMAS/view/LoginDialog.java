@@ -33,6 +33,7 @@ public class LoginDialog extends JFrame {
 	private boolean succeeded;
 
 	public LoginDialog() {
+
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints cs = new GridBagConstraints();
 		cs.fill = GridBagConstraints.HORIZONTAL;

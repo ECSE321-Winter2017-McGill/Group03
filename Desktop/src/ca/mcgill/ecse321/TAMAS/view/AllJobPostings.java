@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.WindowConstants;
 
 public class AllJobPostings extends JFrame {
 
@@ -35,6 +36,7 @@ public class AllJobPostings extends JFrame {
 	}
 
 	private void initComponents() {
+		
 		// get table data ready;
 		String[] columnNames = { "Job Title", "Course Code", "Course Name", "Hour Required", "Hourly Rate",
 				"Preferred Experience", "Submission Deadline" };
@@ -112,6 +114,8 @@ public class AllJobPostings extends JFrame {
 		}
 		pack();
 		setVisible(true);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		
 		// add actions listeners
 		addJobPostingButton.addActionListener(new ActionListener() {
 			@Override

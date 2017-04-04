@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.WindowConstants;
 
 public class AllApplication extends JFrame {
 
@@ -197,6 +198,7 @@ public class AllApplication extends JFrame {
 		}
 		pack();
 		setVisible(true);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		// add actions listeners
 		applyJobButton.addActionListener(new ActionListener() {
