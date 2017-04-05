@@ -597,6 +597,7 @@ public class TamasController {
 			throw new InvalidInputException("The allocation cannot be finalized before it is approved by the instructor! ");
 		}
 		allocation.setAllocationStatus(AllocationStatus.FINAL_APPROVAL);
+		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 	
 	
