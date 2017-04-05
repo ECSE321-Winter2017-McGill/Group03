@@ -36,8 +36,8 @@ public class AllApplication extends JFrame {
 	private static String filename = "output/data.xml";
 
 	private Object user;
-	private int selectedApplication;
-	private HashMap<String, Application> applicationMap = new HashMap<String, Application>();
+	private int selectedCourse;
+	private HashMap<String, Course> courseMap = new HashMap<String, Course>();
 	private TamasController tc;
 	private String[][] data;
 	private JTable table;
@@ -47,7 +47,6 @@ public class AllApplication extends JFrame {
 		this.ms = ms;
 		tc = new TamasController(ms);
 		data = new String[ms.numberOfApplicants() * 3 + 1][5];
-		System.out.println(data);
 		initComponents();
 	}
 
@@ -125,10 +124,7 @@ public class AllApplication extends JFrame {
 
 		// get the rest of frame ready;
 		JButton applyJobButton = new JButton("Apply for a Position");
-		final JComboBox<String> allApplication = new JComboBox<String>(new String[0]);
-		JButton viewDetailButton = new JButton("View Details");
-		JButton acceptAppButton = new JButton("Accept");
-		JButton rejectAppButton = new JButton("Reject");
+		final JComboBox<String> allJobPostingCourse = new JComboBox<String>(new String[0]);
 		JButton backButton = new JButton("Back");
 		JButton viewAllocation = new JButton("View Allocation");
 
@@ -144,27 +140,17 @@ public class AllApplication extends JFrame {
 			
 			buttomPane.add(backButton);
 			pane.add(buttomPane, BorderLayout.PAGE_END);
-			
-			
+						
 
 			Instructor anInstructor = (Instructor) user;
 			List<Course> myCourses = anInstructor.getCourses();
-			List<JobPosting> relatedJobPosting = new ArrayList<>();
 			for (Course aCourse : myCourses) {
-				relatedJobPosting.addAll(aCourse.getJobPosting());
-			}
-			for (JobPosting aJobPosting : relatedJobPosting) {
-				List<Application> relatedApplication = aJobPosting.getApplications();
-				for (Application aApplication : relatedApplication) {
-					String appDescription = aApplication.getApplicant().getName() + " (as " + aApplication.getJobPosting().getJobTitle()
-							+ " for " + aApplication.getJobPosting().getCourse().getCourseCode() + ")";
-					allApplication.addItem(appDescription);
-					applicationMap.put(appDescription, aApplication);
-				}
+				String courseDescription = aCourse.getCourseName() + " (" + aCourse.getCourseCode() + ")";
+				allJobPostingCourse.addItem(courseDescription);
+				courseMap.put(courseDescription, aCourse);
 			}
 			
-			commandPane.add(allApplication);
-			commandPane.add(viewDetailButton);
+			commandPane.add(allJobPostingCourse);
 			commandPane.add(viewAllocation);
 			pane.add(commandPane, BorderLayout.CENTER);
 		} else if (user.getClass().equals(Applicant.class)) {
@@ -180,19 +166,13 @@ public class AllApplication extends JFrame {
 			buttomPane.add(backButton);
 			pane.add(buttomPane, BorderLayout.PAGE_END);
 
-			for (Applicant anApplicant : ms.getApplicants()) {
-				for (Application aApplication : anApplicant.getApplications()) {
-					String appDescription = anApplicant.getName() + " (as " + aApplication.getJobPosting().getJobTitle()
-							+ " for " + aApplication.getJobPosting().getCourse().getCourseCode() + ")";
-					allApplication.addItem(appDescription);
-					applicationMap.put(appDescription, aApplication);
-				}
+			for (Course aCourse: ms.getCourses()){
+				String courseDescription = aCourse.getCourseName() + " (" + aCourse.getCourseCode() + ")";
+				allJobPostingCourse.addItem(courseDescription);
+				courseMap.put(courseDescription, aCourse);
 			}
 						
-			commandPane.add(allApplication);
-			commandPane.add(viewDetailButton);
-			commandPane.add(acceptAppButton);
-			commandPane.add(rejectAppButton);
+			commandPane.add(allJobPostingCourse);
 			commandPane.add(viewAllocation);
 			pane.add(commandPane, BorderLayout.CENTER);
 		}
@@ -216,67 +196,12 @@ public class AllApplication extends JFrame {
 			}
 		});
 
-		allApplication.addActionListener(new ActionListener() {
+		allJobPostingCourse.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>) e.getSource();
-				selectedApplication = cb.getSelectedIndex();
-			}
-		});
-		
-		
-		viewDetailButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (allApplication.getItemCount()==0){
-					JOptionPane.showMessageDialog(AllApplication.this,
-							"No application has been submitted.");
-				}else{
-					String appDescription = allApplication.getItemAt(selectedApplication).toString();
-					Application selectedApp = applicationMap.get(appDescription);
-					
-					new ApplicationDetails(ms,selectedApp.getApplicant(),user).setVisible(true);
-				}
-			}
-		});
-		
-
-		acceptAppButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (allApplication.getItemCount()==0){
-					JOptionPane.showMessageDialog(AllApplication.this,
-							"No application has been submitted.");
-				}else{
-					String appDescription = allApplication.getItemAt(selectedApplication).toString();
-					Application selectedApp = applicationMap.get(appDescription);
-					if (!tc.applicationAccepted(selectedApp)) {
-						JOptionPane.showMessageDialog(AllApplication.this,
-								"You cannot change the status after it has been set");
-					}
-					dispose();
-					initComponents();
-				}
-			}
-		});
-
-		rejectAppButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (allApplication.getItemCount()==0){
-					JOptionPane.showMessageDialog(AllApplication.this,
-							"No application has been submitted.");
-				}else{	
-					String appDescription = allApplication.getItemAt(selectedApplication).toString();
-					Application selectedApp = applicationMap.get(appDescription);
-					if (!tc.applicationRejected(selectedApp)) {
-						JOptionPane.showMessageDialog(AllApplication.this,
-								"You cannot change the status after it has been set");
-					}
-					dispose();
-					initComponents();
-					}
+				selectedCourse = cb.getSelectedIndex();
 			}
 		});
 		
@@ -285,7 +210,16 @@ public class AllApplication extends JFrame {
 		viewAllocation.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				if (allJobPostingCourse.getItemCount()==0){
+					JOptionPane.showMessageDialog(AllApplication.this,
+							"No course information has been submitted.");
+				}else{
+					String courseDescription = allJobPostingCourse.getItemAt(selectedCourse).toString();
+					Course selectedCourse = courseMap.get(courseDescription);
+					
+					new AllocationPage(ms,selectedCourse,user).setVisible(true);
+					setVisible(false);
+					}
 			}
 		});
 		

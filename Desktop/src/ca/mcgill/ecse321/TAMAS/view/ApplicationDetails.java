@@ -53,7 +53,7 @@ public class ApplicationDetails extends JFrame {
 	private JSeparator horizontalLineMiddle1;
 	private JSeparator horizontalLineMiddle2;
 	
-	private JButton closeButton;
+	private JButton backButton;
 
 	private ManagementSystem ms;
 	private Applicant app;
@@ -146,10 +146,10 @@ public class ApplicationDetails extends JFrame {
 		
 		
 		
-		closeButton = new JButton("  Close  ");
-		closeButton.addActionListener(new java.awt.event.ActionListener() {
+		backButton = new JButton("  Close  ");
+		backButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				closeButtonActionPerformed(evt);
+				backButtonActionPerformed(evt);
 			}
 		});
 		
@@ -168,18 +168,23 @@ public class ApplicationDetails extends JFrame {
 				.addComponent(formTitle).addComponent(horizontalLineTop)
 				.addComponent(horizontalLineMiddle1).addComponent(horizontalLineMiddle2)
 				.addGroup(layout.createSequentialGroup()
-						.addGroup(layout.createParallelGroup() .addComponent(nameLabel)
-								.addComponent(idLabel).addComponent(majorLabel).addComponent(isUndergradLabel)
-								.addComponent(yearLabel).addComponent(pastExperienceLabel)
-								.addComponent(firstChoiceLabel).addComponent(secondChoiceLabel)
-								.addComponent(thirdChoiceLabel)
+						.addGroup(layout.createParallelGroup() 
+								.addComponent(nameLabel)
+								.addComponent(idLabel)
+								.addComponent(majorLabel)
+								.addComponent(isUndergradLabel)
+								.addComponent(yearLabel)
+								.addComponent(pastExperienceLabel)
+								.addComponent(firstChoiceLabel)
+								.addComponent(secondChoiceLabel)
+								.addComponent(thirdChoiceLabel))
 						.addGroup(layout.createParallelGroup()
 								.addComponent(nameLabel).addComponent(nameTextField).addComponent(idTextField)
 								.addComponent(majorTextField).addComponent(isUndergradToggleList)
 								.addComponent(yearToggleList).addComponent(pastExperienceTextArea)
 								.addComponent(firstChoiceToggleList).addComponent(secondChoiceToggleList)
 								.addComponent(thirdChoiceToggleList)
-								.addComponent(closeButton)))));
+								.addComponent(backButton))));
 
 		layout.setVerticalGroup(layout.createSequentialGroup()
 				.addComponent(formTitle)
@@ -206,7 +211,7 @@ public class ApplicationDetails extends JFrame {
 				.addGroup(layout.createParallelGroup()
 						.addComponent(thirdChoiceLabel).addComponent(thirdChoiceToggleList))
 				.addGroup(layout.createParallelGroup()
-						.addComponent(closeButton)));
+						.addComponent(backButton)));
 				
 		
 
@@ -215,7 +220,7 @@ public class ApplicationDetails extends JFrame {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 	
-	private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {
+	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		setVisible(false);
 	}
 	
