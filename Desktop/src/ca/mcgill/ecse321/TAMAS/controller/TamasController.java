@@ -407,15 +407,10 @@ public class TamasController {
 		return false;
 	}
 
-<<<<<<< HEAD
-	public void acceptApplication(Application application){
-		if (application.getStatus().equals(Status.PENDING)){ 
-			application.setStatus(Status.SELECTED);
-=======
+
 	public void acceptApplication(Application application) throws InvalidInputException {
 		if (application.getStatus().equals(Status.PENDING)) {
 			application.setStatus(Status.OFFER_ACCEPTED);
->>>>>>> 261938e8dcfcecadd45b006e3ae2321f56c10599
 			PersistenceXStream.saveToXMLwithXStream(ms);
 		}
 	}

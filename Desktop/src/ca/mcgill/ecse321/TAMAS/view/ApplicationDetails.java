@@ -189,11 +189,9 @@ public class ApplicationDetails extends JFrame {
 								.addComponent(firstChoiceToggleList)
 								.addComponent(secondChoiceToggleList)
 								.addComponent(thirdChoiceToggleList)
-<<<<<<< HEAD
 								.addComponent(backButton))));
-=======
 								.addComponent(closeButton))));
->>>>>>> 261938e8dcfcecadd45b006e3ae2321f56c10599
+
 
 		layout.setVerticalGroup(layout.createSequentialGroup()
 				.addComponent(formTitle)

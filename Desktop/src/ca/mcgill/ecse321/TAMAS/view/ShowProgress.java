@@ -52,10 +52,6 @@ public class ShowProgress extends JPanel implements Runnable {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setContentPane(progress);
 		frame.setBackground(Color.WHITE);
-<<<<<<< HEAD
-=======
-		// frame.setLocationRelativeTo(null);
->>>>>>> 261938e8dcfcecadd45b006e3ae2321f56c10599
 		frame.pack();
 		frame.setVisible(true);
 

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package ca.mcgill.ecse321.TAMAS.view;
 
 import java.awt.Color;
@@ -182,7 +181,6 @@ public class WriteEvaluation extends JFrame {
 	}
 
 }
-=======
 //package ca.mcgill.ecse321.TAMAS.view;
 //
 //import java.awt.Color;
@@ -361,4 +359,4 @@ public class WriteEvaluation extends JFrame {
 //	}
 //
 //}
->>>>>>> 261938e8dcfcecadd45b006e3ae2321f56c10599
+
