@@ -22,6 +22,8 @@ public class MainPage extends JFrame {
 	private JButton viewApplication;
 	private JButton viewCourse;
 	private JButton addTAEval;
+	private JButton viewEvaluation;
+	
 	private static String fileName = "output/data.xml";
 
 	private String userName;
@@ -47,6 +49,9 @@ public class MainPage extends JFrame {
 		// Instructor Only
 		addTAEval = new JButton("Write a new evaluation");
 		addTAEval.setPreferredSize(new Dimension(300, 150));
+		
+		viewEvaluation = new JButton("View an evaluation");
+		viewEvaluation.setPreferredSize(new Dimension(300, 150));
 		
 		setTitle("Welcome Page");
 		
@@ -108,7 +113,18 @@ public class MainPage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
-				new WriteEvaluation(ms, user).setVisible(true);
+				new ViewWriteEvaluation(ms, user).setVisible(true);
+				dispose();
+			}
+
+		});
+		
+		viewEvaluation.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
+				new ViewWriteEvaluation(ms, user).setVisible(true);
 				dispose();
 			}
 
@@ -116,6 +132,6 @@ public class MainPage extends JFrame {
 	}
 
 	public void backToMain() {
-		new MainPage(userName).setVisible(true);
+		new MainPage(user).setVisible(true);
 	}
 }
