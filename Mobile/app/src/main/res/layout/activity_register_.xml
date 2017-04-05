@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_register_"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="ca.mcgill.ecse321.tamas_mobile.Register_Activity"
+    android:background="@drawable/loginpage">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="29dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/registerError"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+            android:textColor="@android:color/holo_red_dark" />
+
+        <view
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            class="android.support.v4.widget.Space"
+            android:id="@+id/view" />
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:id="@+id/imageView12"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/mcgilllogo" />
+
+        <TextView
+            android:text="Register to be an applicant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:textSize="24sp"
+            android:fontFamily="sans-serif"
+            android:textColor="@android:color/background_light"
+            android:textStyle="normal|italic"
+            android:textAlignment="center" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/newuser"
+            android:hint="Username"
+            android:textAlignment="center" />
+
+        <Button
+            android:text="Register now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/registerButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:textStyle="normal|bold"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:onClick="register"/>
+
+        <Button
+            android:text="Back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/backToLogInButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:textStyle="normal|bold"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:onClick="backToLogIn"/>
+    </LinearLayout>
+
+</RelativeLayout>

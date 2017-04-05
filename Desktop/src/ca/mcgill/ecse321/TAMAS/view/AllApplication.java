@@ -1,7 +1,11 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
+import ca.mcgill.ecse321.TAMAS.controller.TamasController;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
+import ca.mcgill.ecse321.TAMAS.model.Course;
+import ca.mcgill.ecse321.TAMAS.model.Instructor;
+import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
@@ -10,94 +14,293 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public class AllApplication extends JFrame {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 5797257474418419821L;
 
 	private ManagementSystem ms;
 	private static String filename = "output/data.xml";
 
-	private String userName;
+	private Object user;
+	private int selectedApplication;
+	private HashMap<String, Application> applicationMap = new HashMap<String, Application>();
+	private TamasController tc;
+	private String[][] data;
+	private JTable table;
 
-	public AllApplication(ManagementSystem ms, String userName) {
-		this.userName = userName;
+	public AllApplication(ManagementSystem ms, Object user) {
+		this.user = user;
 		this.ms = ms;
+		tc = new TamasController(ms);
+		data = new String[ms.numberOfApplicants() * 3 + 1][5];
+		System.out.println(data);
 		initComponents();
 	}
 
 	private void initComponents() {
 		// get table data ready;
-		String[] columnNames = { "Job Title", "Course ID", "Application Status"};
-		String[][] data = new String[3][3];
+		String[] columnNames = { "Applicant Name", "U/G", "Job Title", "Course Code", "Application Status" };
+
 		int i = 0;
-		Applicant me = null;
-		System.out.println(ms.numberOfApplicants());
-		for (Applicant at : ms.getApplicants()) {
-			System.out.println(at.getName());
-			if (at.getName().equals(userName))
-				me = at;
-		}
-		if (me != null) {
-			for (Application an:me.getApplications()) {
-				data[i][0] = an.getJobPosting().getJobTitle();
-				data[i][1] = an.getJobPosting().getCourse().getCourseCoude();
-				data[i][2] = an.getApplicationStatus();
+		if (user.getClass().equals(Applicant.class)) {
+			Applicant me = (Applicant) user;
+			for (Application myApplication : me.getApplications()) {
+				data[i][0] = me.getName();
+
+				if (me.getIsUnderGraduated() == true) {
+					data[i][1] = "Und";
+				} else {
+					data[i][1] = "Grad";
+				}
+
+				data[i][2] = myApplication.getJobPosting().getJobTitle();
+				data[i][3] = myApplication.getJobPosting().getCourse().getCourseCode();
+				data[i][4] = myApplication.getStatus().toString();
 				i++;
 			}
-		}else{
+		} else if (user.getClass().equals(Instructor.class)) {
+			Instructor anInstructor = (Instructor) user;
+			List<Course> myCourses = anInstructor.getCourses();
+			List<JobPosting> relatedJobPosting = new ArrayList<>();
+			for (Course aCourse : myCourses) {
+				relatedJobPosting.addAll(aCourse.getJobPosting());
+			}
+			for (JobPosting aJobPosting : relatedJobPosting) {
+				List<Application> allApplication = aJobPosting.getApplications();
+				for (Application aApplication : allApplication) {
+					data[i][0] = aApplication.getApplicant().getName();
+
+					if (aApplication.getApplicant().getIsUnderGraduated() == true) {
+						data[i][1] = "Und";
+					} else {
+						data[i][1] = "Grad";
+					}
+
+					data[i][2] = aApplication.getJobPosting().getJobTitle();
+					data[i][3] = aApplication.getJobPosting().getCourse().getCourseCode();
+					data[i][4] = aApplication.getStatus().toString();
+					i++;
+				}
+			}
+		} else {
+			for (Applicant anApplicant : ms.getApplicants()) {
+				for (Application aApplication : anApplicant.getApplications()) {
+					data[i][0] = anApplicant.getName();
+
+					if (anApplicant.getIsUnderGraduated() == true) {
+						data[i][1] = "Und";
+					} else {
+						data[i][1] = "Grad";
+					}
+
+					data[i][2] = aApplication.getJobPosting().getJobTitle();
+					data[i][3] = aApplication.getJobPosting().getCourse().getCourseCode();
+					data[i][4] = aApplication.getStatus().toString();
+					i++;
+				}
+			}
 		}
 
 		// get table itself ready;
-		final JTable table = new JTable(data, columnNames);
+		table = new JTable(data, columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(700, 100));
 		table.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(table);
-		JPanel butPane = new JPanel();
+		JPanel buttomPane = new JPanel();
+		JPanel commandPane = new JPanel();
 
 		// get the rest of frame ready;
-		JButton addJobPosting = new JButton("App For a Job");
-		butPane.add(addJobPosting);
+		JButton applyJobButton = new JButton("Apply for a Position");
+		final JComboBox<String> allApplication = new JComboBox<String>(new String[0]);
+		JButton viewDetailButton = new JButton("View Details");
+		JButton acceptAppButton = new JButton("Accept");
+		JButton rejectAppButton = new JButton("Reject");
+		JButton backButton = new JButton("Back");
+		JButton viewAllocation = new JButton("View Allocation");
 
 		// get frame ready;
-		setTitle("View All Application");
+		
+
 		BorderLayout layout = new BorderLayout();
 		Container pane = getContentPane();
 		pane.setLayout(layout);
 		pane.add(scrollPane, BorderLayout.PAGE_START);
-		pane.add(butPane, BorderLayout.CENTER);
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		if (user.getClass().equals(Instructor.class)) {
+			setTitle("View All Applications");
+			
+			buttomPane.add(backButton);
+			pane.add(buttomPane, BorderLayout.PAGE_END);
+			
+			
+
+			Instructor anInstructor = (Instructor) user;
+			List<Course> myCourses = anInstructor.getCourses();
+			List<JobPosting> relatedJobPosting = new ArrayList<>();
+			for (Course aCourse : myCourses) {
+				relatedJobPosting.addAll(aCourse.getJobPosting());
+			}
+			for (JobPosting aJobPosting : relatedJobPosting) {
+				List<Application> relatedApplication = aJobPosting.getApplications();
+				for (Application aApplication : relatedApplication) {
+					String appDescription = aApplication.getApplicant().getName() + " (as " + aApplication.getJobPosting().getJobTitle()
+							+ " for " + aApplication.getJobPosting().getCourse().getCourseCode() + ")";
+					allApplication.addItem(appDescription);
+					applicationMap.put(appDescription, aApplication);
+				}
+			}
+			
+			commandPane.add(allApplication);
+			commandPane.add(viewDetailButton);
+			commandPane.add(viewAllocation);
+			pane.add(commandPane, BorderLayout.CENTER);
+		} else if (user.getClass().equals(Applicant.class)) {
+			setTitle("View My Applications");
+			
+			buttomPane.add(applyJobButton);
+			buttomPane.add(backButton);
+			pane.add(buttomPane, BorderLayout.PAGE_END);
+		} else {
+			setTitle("View All Applications");
+			
+			buttomPane.add(applyJobButton);
+			buttomPane.add(backButton);
+			pane.add(buttomPane, BorderLayout.PAGE_END);
+
+			for (Applicant anApplicant : ms.getApplicants()) {
+				for (Application aApplication : anApplicant.getApplications()) {
+					String appDescription = anApplicant.getName() + " (as " + aApplication.getJobPosting().getJobTitle()
+							+ " for " + aApplication.getJobPosting().getCourse().getCourseCode() + ")";
+					allApplication.addItem(appDescription);
+					applicationMap.put(appDescription, aApplication);
+				}
+			}
+						
+			commandPane.add(allApplication);
+			commandPane.add(viewDetailButton);
+			commandPane.add(acceptAppButton);
+			commandPane.add(rejectAppButton);
+			commandPane.add(viewAllocation);
+			pane.add(commandPane, BorderLayout.CENTER);
+		}
 		pack();
 		setVisible(true);
+
 		// add actions listeners
-		addJobPosting.addActionListener(new ActionListener() {
+		applyJobButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				final ManagementSystem ms = PersistenceXStream.initializeModelManager(filename);
-				new ApplyForJob(ms,userName).setVisible(true);
-				dispose();
+				if (ms.getCourses().size()==0){
+					JOptionPane.showMessageDialog(AllApplication.this,
+							"No Job Posting has been published.\n"
+							+ "Please try again later.");
+				}else{
+					final ManagementSystem ms = PersistenceXStream.initializeModelManager(filename);
+					new ApplyForJob(ms, user).setVisible(true);
+					dispose();
+				}
 			}
 		});
-		addWindowListener(new WindowAdapter() {
+
+		allApplication.addActionListener(new ActionListener() {
 			@Override
-			public void windowClosing(WindowEvent e) {
-				backToMain();
+			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unchecked")
+				JComboBox<String> cb = (JComboBox<String>) e.getSource();
+				selectedApplication = cb.getSelectedIndex();
 			}
 		});
+		
+		
+		viewDetailButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (allApplication.getItemCount()==0){
+					JOptionPane.showMessageDialog(AllApplication.this,
+							"No application has been submitted.");
+				}else{
+					String appDescription = allApplication.getItemAt(selectedApplication).toString();
+					Application selectedApp = applicationMap.get(appDescription);
+					
+					new ApplicationDetails(ms,selectedApp.getApplicant(),user).setVisible(true);
+				}
+			}
+		});
+		
+
+		acceptAppButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (allApplication.getItemCount()==0){
+					JOptionPane.showMessageDialog(AllApplication.this,
+							"No application has been submitted.");
+				}else{
+					String appDescription = allApplication.getItemAt(selectedApplication).toString();
+					Application selectedApp = applicationMap.get(appDescription);
+					if (!tc.applicationAccepted(selectedApp)) {
+						JOptionPane.showMessageDialog(AllApplication.this,
+								"You cannot change the status after it has been set");
+					}
+					dispose();
+					initComponents();
+				}
+			}
+		});
+
+		rejectAppButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (allApplication.getItemCount()==0){
+					JOptionPane.showMessageDialog(AllApplication.this,
+							"No application has been submitted.");
+				}else{	
+					String appDescription = allApplication.getItemAt(selectedApplication).toString();
+					Application selectedApp = applicationMap.get(appDescription);
+					if (!tc.applicationRejected(selectedApp)) {
+						JOptionPane.showMessageDialog(AllApplication.this,
+								"You cannot change the status after it has been set");
+					}
+					dispose();
+					initComponents();
+					}
+			}
+		});
+		
+		
+		
+		viewAllocation.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		
+		
+
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				backToMain();
+				setVisible(false);
+			}
+		});
+
 	}
 
 	private void backToMain() {
-		new MainPage(userName).setVisible(true);
+		new MainPage(user).setVisible(true);
 	}
 }

@@ -35,25 +35,38 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:baselineAligned="false">
 
                     <TextView
                         android:text="Application 1"
-                        android:layout_width="235dp"
+                        android:layout_width="158dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/application1"
                         android:textSize="24sp"
                         android:textStyle="normal|bold" />
 
                     <Button
-                        android:text="View Offer"
+                        android:text="accept"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/viewOffer1"
-                        android:layout_weight="1"
+                        android:id="@+id/accept1"
                         android:textStyle="normal|bold"
                         style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_gravity="end"/>
+                        android:layout_gravity="end"
+                        android:onClick="acceptOffer"
+                        />
+
+                    <Button
+                        android:text="Reject"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/reject1"
+                        android:layout_weight="1"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:textStyle="normal|bold"
+                        android:onClick="declineOffer"/>
+
                 </LinearLayout>
 
             </TableRow>
@@ -172,21 +185,32 @@
 
                     <TextView
                         android:text="Application 2"
-                        android:layout_width="230dp"
+                        android:layout_width="159dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/application2"
                         android:textSize="24sp"
                         android:textStyle="normal|bold" />
 
                     <Button
-                        android:text="View Offer"
+                        android:text="accept"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/viewOffer2"
+                        android:id="@+id/accept2"
                         android:layout_weight="1"
                         android:textStyle="normal|bold"
                         style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_gravity="end"/>
+                        android:layout_gravity="end"
+                        android:onClick="acceptOffer"/>
+
+                    <Button
+                        android:text="reject"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/reject2"
+                        android:layout_weight="1"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:textStyle="normal|bold"
+                        android:onClick="declineOffer"/>
                 </LinearLayout>
 
             </TableRow>
@@ -305,22 +329,33 @@
 
                     <TextView
                         android:text="Application 3"
-                        android:layout_width="232dp"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/application3"
                         android:textSize="24sp"
                         android:textStyle="normal|bold" />
 
                     <Button
-                        android:text="View Offer"
+                        android:text="accept"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/viewOffer3"
+                        android:id="@+id/accept3"
                         android:layout_weight="1"
                         android:textStyle="normal|bold"
                         style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_gravity="end"
+                        android:onClick="acceptOffer"
                         />
+
+                    <Button
+                        android:text="reject"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/reject3"
+                        android:layout_weight="1"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:textStyle="normal|bold"
+                        android:onClick="declineOffer"/>
                 </LinearLayout>
 
             </TableRow>

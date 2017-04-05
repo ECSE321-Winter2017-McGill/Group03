@@ -1,0 +1,68 @@
+<ca.mcgill.ecse321.TAMAS.model.ManagementSystem id="1">
+  <courses id="2">
+    <ca.mcgill.ecse321.TAMAS.model.Course id="3">
+      <semester>Winter3000</semester>
+      <courseName>ECSE</courseName>
+      <courseCode>232323</courseCode>
+      <numTutorial>0</numTutorial>
+      <numLab>0</numLab>
+      <numStudent>1</numStudent>
+      <credit>10</credit>
+      <numTaNeeded>0</numTaNeeded>
+      <numGraderNeeded>0</numGraderNeeded>
+      <labHour>0</labHour>
+      <tutorialHour>0</tutorialHour>
+      <totalGraderHour>10</totalGraderHour>
+      <budgetCalculated>150.0</budgetCalculated>
+      <jobPosting id="4">
+        <ca.mcgill.ecse321.TAMAS.model.JobPosting id="5">
+          <jobTitle>TA</jobTitle>
+          <submissionDeadline id="6">2017-04-27</submissionDeadline>
+          <perferredExperience>aaa</perferredExperience>
+          <hourRate>111.0</hourRate>
+          <managementSystem reference="1"/>
+          <course reference="3"/>
+          <applications id="7">
+            <ca.mcgill.ecse321.TAMAS.model.Application id="8">
+              <status>SELECTED</status>
+              <jobPosting reference="5"/>
+              <applicant id="9">
+                <studentID>123123</studentID>
+                <name>aaappp</name>
+                <previousExperience>ad</previousExperience>
+                <isUnderGraduated>true</isUnderGraduated>
+                <major>asd</major>
+                <year>Year 0</year>
+                <firstChoice>TA 232323</firstChoice>
+                <evaluation>the WORST TA &gt; from WEB</evaluation>
+                <totalAppointmentHours>45</totalAppointmentHours>
+                <allocations id="10"/>
+                <managementSystem reference="1"/>
+                <applications id="11">
+                  <ca.mcgill.ecse321.TAMAS.model.Application reference="8"/>
+                </applications>
+              </applicant>
+            </ca.mcgill.ecse321.TAMAS.model.Application>
+          </applications>
+        </ca.mcgill.ecse321.TAMAS.model.JobPosting>
+      </jobPosting>
+      <instructor id="12">
+        <name>Gates</name>
+        <managementSystem reference="1"/>
+        <courses id="13">
+          <ca.mcgill.ecse321.TAMAS.model.Course reference="3"/>
+        </courses>
+      </instructor>
+      <managementSystem reference="1"/>
+    </ca.mcgill.ecse321.TAMAS.model.Course>
+  </courses>
+  <instructors id="14">
+    <ca.mcgill.ecse321.TAMAS.model.Instructor reference="12"/>
+  </instructors>
+  <applicants id="15">
+    <ca.mcgill.ecse321.TAMAS.model.Applicant reference="9"/>
+  </applicants>
+  <jobPostings id="16">
+    <ca.mcgill.ecse321.TAMAS.model.JobPosting reference="5"/>
+  </jobPostings>
+</ca.mcgill.ecse321.TAMAS.model.ManagementSystem>

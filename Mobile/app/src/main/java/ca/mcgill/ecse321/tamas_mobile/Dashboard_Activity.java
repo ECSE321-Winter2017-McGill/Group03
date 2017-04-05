@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 public class Dashboard_Activity extends AppCompatActivity {
 
+    private String username="";
 
 
     @Override
@@ -16,8 +17,10 @@ public class Dashboard_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_);
         Intent intent = getIntent();
-        String username = intent.getStringExtra("username");
+        username = intent.getStringExtra("username");
 
+        TextView welcomeMessage = (TextView) findViewById(R.id.welcome_message);
+        welcomeMessage.setText("Hello, "+username+"!");
     }
 
 
@@ -32,6 +35,7 @@ public class Dashboard_Activity extends AppCompatActivity {
     public void viewJobPosting(View v) {
 
         Intent viewJobPostingIntent = new Intent(Dashboard_Activity.this, ViewJobPosting_Activity.class);
+        viewJobPostingIntent.putExtra("username",username);
         Dashboard_Activity.this.startActivity(viewJobPostingIntent);
 
     }
@@ -41,6 +45,7 @@ public class Dashboard_Activity extends AppCompatActivity {
     public void viewApplication(View v){
 
         Intent viewApplicationIntent = new Intent(Dashboard_Activity.this, ViewStatus_Activity.class);
+        viewApplicationIntent.putExtra("username",username);
         Dashboard_Activity.this.startActivity(viewApplicationIntent);
 
     }
