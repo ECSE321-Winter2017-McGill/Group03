@@ -643,6 +643,114 @@ public class TestTAMASController {
 		  assertEquals(3, ms.getInstructors().size());
 		}
         
+        @Test
+        public void testRegisterInstructor() {
+    		  assertEquals(0, ms.getInstructors().size()); 
+    		  
+    		  TamasController tc = new TamasController(ms);
+    		  try {
+    			tc.registerInstructor("a");
+    			tc.registerInstructor("b");
+    			tc.registerInstructor("c");
+
+    		} catch (InvalidInputException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    		  
+    		  ManagementSystem ms1 = ms;
+    		  checkResultRegisterInstructor("a", ms1, 0);
+    		  checkResultRegisterInstructor("b", ms1, 1);
+    		  checkResultRegisterInstructor("c", ms1, 2);
+
+    		  ManagementSystem ms2 = (ManagementSystem) PersistenceXStream.loadFromXMLwithXStream();
+    		  checkResultRegisterInstructor("a", ms2, 0);
+    		  checkResultRegisterInstructor("b", ms2, 1);
+    		  checkResultRegisterInstructor("c", ms2, 2);
+    		  
+    		  ms2.delete();
+    		}
+         
+            private void checkResultRegisterInstructor( String name, ManagementSystem ms2, int index){
+      	
+    		  assertEquals(3, ms2.getInstructors().size());
+    		  assertEquals(0, ms2.getJobPostings().size());
+    		  assertEquals(0, ms2.getCourses().size());
+    		  assertEquals(0, ms2.getApplicants().size());
+    		  
+    		  assertEquals(name, ms2.getInstructor(index).getName());
+    		}
+            
+            @Test
+           public void testRegisterInstructorNullName() {
+    		  assertEquals(0, ms.getInstructors().size()); 
+    		  
+    		  String name = null;
+    		  String error = null;
+    		  
+    		  TamasController tc = new TamasController(ms);
+    		  try {
+    			tc.registerInstructor(name);
+
+    		} catch (InvalidInputException e) {
+    			// TODO Auto-generated catch block
+    			error = e.getMessage();
+    		}
+    		  
+    		  error = error.trim();
+    		  assertEquals("Name cannot be empty!", error);
+    		  
+    		  assertEquals(0, ms.getInstructors().size());
+    		}
+            
+            @Test
+            public void testRegisterInstructorExistingApplicant() {
+     		  assertEquals(0, ms.getInstructors().size()); 
+     		  
+     		  String name = null;
+     		  String error = null;
+     		  Applicant ap1 = new Applicant(111, "a", "", true, "", "","", "", "", "", 10, ms);
+     		 
+     		  TamasController tc = new TamasController(ms);
+     		  try {
+     			tc.registerInstructor(ap1.getName());
+
+     		} catch (InvalidInputException e) {
+     			// TODO Auto-generated catch block
+     			error = e.getMessage();
+     		}
+     		  
+     		  error = error.trim();
+     		  assertEquals("This username already exists!", error);
+     		  
+     		  assertEquals(0, ms.getInstructors().size());
+     		}
+            
+            
+            @Test
+            public void testRegisterInstructorExistingInstructor() {
+     		  assertEquals(0, ms.getInstructors().size()); 
+     		  
+     		  String name = null;
+     		  String error = null;
+     		  Instructor Inst1 = new Instructor("a", ms);
+     		 
+     		  TamasController tc = new TamasController(ms);
+     		  try {
+     			tc.registerInstructor(Inst1.getName());
+
+     		} catch (InvalidInputException e) {
+     			// TODO Auto-generated catch block
+     			error = e.getMessage();
+     		}
+     		  
+     		  error = error.trim();
+     		  assertEquals("This username already exists!", error);
+     		  
+     		  assertEquals(1, ms.getInstructors().size());
+     		}
+            
+            
         @Test 
     	public void testCreateCourse() {
     		  assertEquals(0, ms.getCourses().size()); 
