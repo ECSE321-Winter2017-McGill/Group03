@@ -33,6 +33,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
+import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.controller.TamasController;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
@@ -552,6 +553,7 @@ public class AllocationPage extends JFrame {
 	}
 	
 	private void createButtonActionPerformed(java.awt.event.ActionEvent evt){
+		String error = "";
 		ArrayList<Integer> allTAHourAppointed = new ArrayList<Integer>();
 		ArrayList<Integer> allGraderHourAppointed = new ArrayList<Integer>();
 		ArrayList<Applicant> taAppointed = new ArrayList<Applicant>();
@@ -559,18 +561,36 @@ public class AllocationPage extends JFrame {
 		
 		
 		
-		
-		
-		
-		tc.createAllocation(ManagementSys, Course, List of selected TAs, list of hours assigned to selected TAs, list of selected graders, list of hours assigned to selected graders);
+		try{
+		  tc.createAllocation(ms, course, taAppointed, allTAHourAppointed, graderAppointed, allGraderHourAppointed);
+		}
+		catch(InvalidInputException e){
+			error = e.getMessage();
+		}
 	}
 	
 	private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt){
-		tc.createAllocation(ManagementSys, Allocation, List of selected TAs, list of hours assigned to selected TAs, list of selected graders, list of hours assigned to selected graders);
+		String error = "";
+		ArrayList<Integer> allTAHourAppointed = new ArrayList<Integer>();
+		ArrayList<Integer> allGraderHourAppointed = new ArrayList<Integer>();
+		ArrayList<Applicant> taAppointed = new ArrayList<Applicant>();
+		ArrayList<Applicant> graderAppointed = new ArrayList<Applicant>();
+		try{
+		tc.createAllocation(ms, course.getCourseJobAllocation(), taAppointed, allTAHourAppointed, graderAppointed, allGraderHourAppointed);
+		}
+		catch(InvalidInputException e){
+			error = e.getMessage();
+		}
 	}
 	
 	private void finalizeButtonActionPerformed(java.awt.event.ActionEvent evt){
-		tc.finalizeAllocation(Allocation);
+		String error = "";
+		try{
+			tc.finalizeAllocation(course.getCourseJobAllocation());
+		}
+		catch (InvalidInputeException e){
+			error = e.getMessage();
+		}
 	}
 	
 	private void backToAllApp() {
