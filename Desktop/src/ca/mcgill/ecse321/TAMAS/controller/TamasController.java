@@ -45,7 +45,7 @@ public class TamasController {
 
 	}
 
-	public static void createAllocation(ManagementSystem mm, Course course, ArrayList<Applicant> tas, ArrayList<Integer> taHours, ArrayList<Applicant>graders, ArrayList<Integer>graderHours)
+	public void createAllocation(ManagementSystem mm, Course course, ArrayList<Applicant> tas, ArrayList<Integer> taHours, ArrayList<Applicant>graders, ArrayList<Integer>graderHours)
 			throws InvalidInputException {
 
 		if (course == null) {
