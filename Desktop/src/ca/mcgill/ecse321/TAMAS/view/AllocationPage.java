@@ -84,6 +84,9 @@ public class AllocationPage extends JFrame {
 	
 	private int valueSet = 0;
 	private int rowToBeChangedIndex;
+	private HashMap<String,Applicant> nameApplicantMap = new HashMap<String, Applicant>();
+	private ArrayList<Applicant> tas;
+	private ArrayList<Integer> taHours;
 	
 	
 	public AllocationPage(ManagementSystem ms, Course course, Object user){
@@ -133,6 +136,7 @@ public class AllocationPage extends JFrame {
 				for (Application aApplication: anApplicant.getApplications()){
 					if ((aApplication.getStatusFullName().equals("PENDING") || aApplication.getStatusFullName().equals("SELECTED")) && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())){
 							data[i][0] = anApplicant.getName();
+							nameApplicantMap.put(anApplicant.getName(),anApplicant);
 							if (anApplicant.getIsUnderGraduated() == true) {
 								data[i][1] = "Und";
 							} else {
