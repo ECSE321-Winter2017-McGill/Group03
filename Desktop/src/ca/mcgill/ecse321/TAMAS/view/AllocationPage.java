@@ -33,6 +33,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
+import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.controller.TamasController;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
@@ -84,6 +85,13 @@ public class AllocationPage extends JFrame {
 	private int valueSet = 0;
 	private int rowToBeChangedIndex;
 	
+	ArrayList<Integer> allTAHourAppointed = new ArrayList<Integer>();
+	ArrayList<Integer> allGraderHourAppointed = new ArrayList<Integer>();
+	ArrayList<Applicant> taAppointed = new ArrayList<Applicant>();
+	ArrayList<Applicant> graderAppointed = new ArrayList<Applicant>();
+	
+	private HashMap<String,Applicant> applicantMap = new HashMap<String,Applicant>();	
+	
 	
 	public AllocationPage(ManagementSystem ms, Course course, Object user){
 		this.ms = ms;
@@ -104,7 +112,7 @@ public class AllocationPage extends JFrame {
 		if (course.getCourseJobAllocation()==null){
 			for (Applicant anApplicant: ms.getApplicants()) {
 				for (Application aApplication: anApplicant.getApplications()){
-					if ((aApplication.getStatusFullName().equals("PENDING") || aApplication.getStatusFullName().equals("SELECTED")) && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())){
+					if ((aApplication.getStatusFullName().equals("PENDING") || aApplication.getStatusFullName().equals("SELECTED")) && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())&& aApplication.getJobPosting().getCourse().getSemester().equals(course.getSemester())){
 						numApplications++;
 					}
 				}
@@ -113,14 +121,13 @@ public class AllocationPage extends JFrame {
 		else {
 			for (Applicant anApplicant: ms.getApplicants()) {
 				for (Application aApplication: anApplicant.getApplications()){
-					if (aApplication.getStatusFullName().equals("SELECTED") && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())){
+					if (aApplication.getStatusFullName().equals("SELECTED") && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())&& aApplication.getJobPosting().getCourse().getSemester().equals(course.getSemester())){
 						numApplications++;
 					}
 				}
 			}
 		}
 		
-
 		
 		
 		data = new String[numApplications+1][4];
@@ -130,7 +137,7 @@ public class AllocationPage extends JFrame {
 		if (course.getCourseJobAllocation()==null){
 			for (Applicant anApplicant: ms.getApplicants()) {
 				for (Application aApplication: anApplicant.getApplications()){
-					if ((aApplication.getStatusFullName().equals("PENDING") || aApplication.getStatusFullName().equals("SELECTED")) && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())){
+					if ((aApplication.getStatusFullName().equals("PENDING") || aApplication.getStatusFullName().equals("SELECTED")) && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())&& aApplication.getJobPosting().getCourse().getSemester().equals(course.getSemester())){
 							data[i][0] = anApplicant.getName();
 							if (anApplicant.getIsUnderGraduated() == true) {
 								data[i][1] = "Und";
@@ -147,7 +154,7 @@ public class AllocationPage extends JFrame {
 		else {
 			for (Applicant anApplicant: ms.getApplicants()) {
 				for (Application aApplication: anApplicant.getApplications()){
-					if (aApplication.getStatusFullName().equals("SELECTED") && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())){
+					if (aApplication.getStatusFullName().equals("SELECTED") && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())&& aApplication.getJobPosting().getCourse().getSemester().equals(course.getSemester())&& aApplication.getJobPosting().getCourse().getSemester().equals(course.getSemester())){
 							data[i][0] = anApplicant.getName();
 							if (anApplicant.getIsUnderGraduated() == true) {
 								data[i][1] = "Und";
@@ -290,7 +297,7 @@ public class AllocationPage extends JFrame {
 			// TODO: Change needed (what if no allocation, what should instructor see on ToggleList)
 			for (Applicant anApplicant: ms.getApplicants()) {
 				for (Application aApplication: anApplicant.getApplications()){
-					if (aApplication.getStatusFullName().equals("SELECTED") && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())){
+					if (aApplication.getStatusFullName().equals("SELECTED") && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())&& aApplication.getJobPosting().getCourse().getSemester().equals(course.getSemester())){
 						String appDescription = aApplication.getApplicant().getName() + " (as " + aApplication.getJobPosting().getJobTitle()
 								+ " for " + aApplication.getJobPosting().getCourse().getCourseCode() + ")";
 						allApplication.addItem(appDescription);
@@ -317,7 +324,7 @@ public class AllocationPage extends JFrame {
 			if (course.getCourseJobAllocation()==null){
 				for (Applicant anApplicant: ms.getApplicants()) {
 					for (Application aApplication: anApplicant.getApplications()){
-						if ((aApplication.getStatusFullName().equals("PENDING") || aApplication.getStatusFullName().equals("SELECTED")) && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())){
+						if ((aApplication.getStatusFullName().equals("PENDING") || aApplication.getStatusFullName().equals("SELECTED")) && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())&& aApplication.getJobPosting().getCourse().getSemester().equals(course.getSemester())){
 							String appDescription = aApplication.getApplicant().getName() + " (as " + aApplication.getJobPosting().getJobTitle()
 									+ " for " + aApplication.getJobPosting().getCourse().getCourseCode() + ")";
 							allApplication.addItem(appDescription);
@@ -329,7 +336,7 @@ public class AllocationPage extends JFrame {
 			else {
 				for (Applicant anApplicant: ms.getApplicants()) {
 					for (Application aApplication: anApplicant.getApplications()){
-						if (aApplication.getStatusFullName().equals("SELECTED") && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())){
+						if (aApplication.getStatusFullName().equals("SELECTED") && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())&& aApplication.getJobPosting().getCourse().getSemester().equals(course.getSemester())){
 							String appDescription = aApplication.getApplicant().getName() + " (as " + aApplication.getJobPosting().getJobTitle()
 									+ " for " + aApplication.getJobPosting().getCourse().getCourseCode() + ")";
 							allApplication.addItem(appDescription);
@@ -338,9 +345,6 @@ public class AllocationPage extends JFrame {
 					}
 				}
 			}
-			
-
-					
 						
 			commandPane.add(allApplication);
 			commandPane.add(viewDetailButton);
@@ -415,7 +419,12 @@ public class AllocationPage extends JFrame {
 								"Application already accepted.");
 					}
 					else{
-						tc.acceptApplication(selectedApp);
+						try {
+							tc.acceptApplication(selectedApp);
+						} catch (InvalidInputException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					}
 					dispose();
 					initComponents();
@@ -498,7 +507,7 @@ public class AllocationPage extends JFrame {
 //		
 
 		
-		budgetRemainingTextField.setText("$" + Integer.toString());
+//		budgetRemainingTextField.setText("$" + Integer.toString());
 		
 		String consoleText = "<html>";
 
@@ -519,7 +528,7 @@ public class AllocationPage extends JFrame {
 		if (course.getCourseJobAllocation()==null){
 			for (Applicant anApplicant: ms.getApplicants()) {
 				for (Application aApplication: anApplicant.getApplications()){
-					if ((aApplication.getStatusFullName().equals("PENDING") || aApplication.getStatusFullName().equals("SELECTED")) && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())){
+					if ((aApplication.getStatusFullName().equals("PENDING") || aApplication.getStatusFullName().equals("SELECTED")) && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())&& aApplication.getJobPosting().getCourse().getSemester().equals(course.getSemester())){
 						if (aApplication.getApplicant().isIsUnderGraduated() == false){
 							numGradStudent++;
 							gradNames+="," + aApplication.getApplicant().getName();
@@ -531,7 +540,7 @@ public class AllocationPage extends JFrame {
 		else {
 			for (Applicant anApplicant: ms.getApplicants()) {
 				for (Application aApplication: anApplicant.getApplications()){
-					if (aApplication.getStatusFullName().equals("SELECTED") && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())){
+					if (aApplication.getStatusFullName().equals("SELECTED") && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())&& aApplication.getJobPosting().getCourse().getSemester().equals(course.getSemester())){
 						if (aApplication.getApplicant().isIsUnderGraduated() == false){
 							numGradStudent++;
 							gradNames+="," + aApplication.getApplicant().getName();
@@ -545,32 +554,42 @@ public class AllocationPage extends JFrame {
 				+ gradNames);
 		
 	}
-	
+
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt){
 		backToAllApp();
 		setVisible(false);
 	}
 	
 	private void createButtonActionPerformed(java.awt.event.ActionEvent evt){
-		ArrayList<Integer> allTAHourAppointed = new ArrayList<Integer>();
-		ArrayList<Integer> allGraderHourAppointed = new ArrayList<Integer>();
-		ArrayList<Applicant> taAppointed = new ArrayList<Applicant>();
-		ArrayList<Applicant> graderAppointed = new ArrayList<Applicant>();
+	
+		int i = 0;
+		for (JobPosting aJobPosting: course.getJobPosting()){
+			for (Application anApplication: aJobPosting.getApplications()){
+				if ( anApplication.getStatusFullName().equals("SELECTED")&& anApplication.getJobPosting().getCourse().getSemester().equals(course.getSemester())){
+					if (anApplication.getJobPosting().getJobTitle().equals("TA")){
+						
+						
+					}
+					else if (anApplication.getJobPosting().getJobTitle().equals("Grader")){
+						
+						
+					}
+				}
+			}
+		}
+		
+
 		
 		
-		
-		
-		
-		
-		tc.createAllocation(ManagementSys, Course, List of selected TAs, list of hours assigned to selected TAs, list of selected graders, list of hours assigned to selected graders);
+//		tc.createAllocation(ManagementSys, Course, List of selected TAs, list of hours assigned to selected TAs, list of selected graders, list of hours assigned to selected graders);
 	}
 	
 	private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt){
-		tc.createAllocation(ManagementSys, Allocation, List of selected TAs, list of hours assigned to selected TAs, list of selected graders, list of hours assigned to selected graders);
+//		tc.createAllocation(ManagementSys, Allocation, List of selected TAs, list of hours assigned to selected TAs, list of selected graders, list of hours assigned to selected graders);
 	}
 	
 	private void finalizeButtonActionPerformed(java.awt.event.ActionEvent evt){
-		tc.finalizeAllocation(Allocation);
+//		tc.finalizeAllocation(Allocation);
 	}
 	
 	private void backToAllApp() {

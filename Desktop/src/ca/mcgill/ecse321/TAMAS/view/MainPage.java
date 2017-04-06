@@ -1,13 +1,21 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
@@ -24,6 +32,9 @@ public class MainPage extends JFrame {
 	private JButton addTAEval;
 	private JButton viewEvaluation;
 	
+	private JPanel topPanel;
+	private JPanel optionsPanel;
+	
 	private static String fileName = "output/data.xml";
 
 	private String userName;
@@ -32,52 +43,103 @@ public class MainPage extends JFrame {
 
 	public MainPage(Object user) {
 		this.user = user;
-
 		initComponents(user);
-
 	}
 
 	private void initComponents(Object role) {
 		
-		viewCourse = new JButton("View all Courses");
-		viewCourse.setPreferredSize(new Dimension(300, 150));
-		viewJobPosting = new JButton("View all Job Postings");
-		viewJobPosting.setPreferredSize(new Dimension(300, 150));
+		viewCourse = new JButton("   View All Courses   ");
+//		viewCourse.setPreferredSize(new Dimension(70, 60));
+		
+		viewJobPosting = new JButton("View All Job Postings ");
+//		viewJobPosting.setPreferredSize(new Dimension(70, 60));
+		
 		viewApplication = new JButton();
-		viewApplication.setPreferredSize(new Dimension(300, 150));
+//		viewApplication.setPreferredSize(new Dimension(70, 60));
 		
 		// Instructor Only
-		addTAEval = new JButton("Write a new evaluation");
-		addTAEval.setPreferredSize(new Dimension(300, 150));
+		addTAEval = new JButton("Write A New Evaluation");
+//		addTAEval.setPreferredSize(new Dimension(70, 60));
 		
-		viewEvaluation = new JButton("View an evaluation");
-		viewEvaluation.setPreferredSize(new Dimension(300, 150));
+		viewEvaluation = new JButton("  View an Evaluation  ");
+//		viewEvaluation.setPreferredSize(new Dimension(70, 150));
 		
 		setTitle("Welcome Page");
 		
-		BorderLayout layout = new BorderLayout();
-		Container pane = getContentPane();
-		pane.setLayout(layout);
+		topPanel = new JPanel (new GridLayout(0,1));
+		topPanel.setBackground(Color.BLACK);
+		topPanel.add(new JLabel (new ImageIcon("MainPageTitle.JPG")));
+		
+		
+		optionsPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints layout = new GridBagConstraints();
+		optionsPanel.setBackground(Color.black);
+		
+		layout.insets = new Insets(10, 0, 0, 0);
+		
 
 		if (role.getClass().equals(Instructor.class)) {
-			pane.add(viewCourse, BorderLayout.PAGE_START);
-			pane.add(viewJobPosting,BorderLayout.CENTER);
-			pane.add(addTAEval,BorderLayout.LINE_START);
-			viewApplication.setText("View all Applications");
-			pane.add(viewApplication, BorderLayout.PAGE_END);
+			layout.gridx = 0;
+			layout.gridy = 0;
+			optionsPanel.add(viewCourse,layout);
+			
+			layout.gridx = 0;
+			layout.gridy = 1;
+			optionsPanel.add(viewJobPosting,layout);
+			
+			layout.gridx = 0;
+			layout.gridy = 2;
+			optionsPanel.add(addTAEval,layout);
+			
+			layout.insets = new Insets(10, 0, 20, 0);
+			
+			layout.gridx = 0;
+			layout.gridy = 3;
+			viewApplication.setText("View All Applications");
+			optionsPanel.add(viewApplication,layout);
+			
 		} else if (role.getClass().equals(Applicant.class)) {
-			pane.add(viewCourse, BorderLayout.PAGE_START);
-			pane.add(viewJobPosting, BorderLayout.CENTER);
-			viewApplication.setText("View my Applications");
-			pane.add(viewApplication, BorderLayout.PAGE_END);
-		} else {
-			pane.add(viewCourse, BorderLayout.PAGE_START);
-			pane.add(viewJobPosting,BorderLayout.CENTER);
-			pane.add(addTAEval,BorderLayout.LINE_START);
-			viewApplication.setText("View all Applications");
-			pane.add(viewApplication, BorderLayout.PAGE_END);
-		}
+			layout.gridx = 0;
+			layout.gridy = 0;
+			optionsPanel.add(viewCourse,layout);
+			
+			layout.gridx = 0;
+			layout.gridy = 1;
+			optionsPanel.add(viewJobPosting,layout);
+			
+			layout.insets = new Insets(10, 0, 20, 0);
+			
+			layout.gridx = 0;
+			layout.gridy = 2;
+			optionsPanel.add(viewApplication,layout);
+			viewApplication.setText("View My Applications");
 
+		} else {
+			layout.gridx = 0;
+			layout.gridy = 0;
+			optionsPanel.add(viewCourse,layout);
+			
+			layout.gridx = 0;
+			layout.gridy = 1;
+			optionsPanel.add(viewJobPosting,layout);
+			
+			layout.gridx = 0;
+			layout.gridy = 2;
+			optionsPanel.add(addTAEval,layout);
+			
+			layout.insets = new Insets(10, 0, 20, 0);
+			
+			layout.gridx = 0;
+			layout.gridy = 3;
+			optionsPanel.add(viewApplication,layout);
+			viewApplication.setText("View All Applications");
+		}
+		
+		add(topPanel, BorderLayout.NORTH); // Adds Panels into Frame
+		add(optionsPanel,BorderLayout.CENTER);
+		setBackground(Color.BLACK);
+
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
 
