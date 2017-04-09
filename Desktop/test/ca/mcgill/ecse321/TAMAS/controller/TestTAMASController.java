@@ -1136,10 +1136,650 @@ public class TestTAMASController {
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
+        
+//        @Test
+//        public void testRegisterInstructor() {
+//    		  assertEquals(0, ms.getInstructors().size());
+//
+//    		  TamasController tc = new TamasController(ms);
+//    		  try {
+//    			tc.registerInstructor("a");
+//    			tc.registerInstructor("b");
+//    			tc.registerInstructor("c");
+//
+//    		} catch (InvalidInputException e) {
+//    			// TODO Auto-generated catch block
+//    			e.printStackTrace();
+//    		}
+//
+//    		  ManagementSystem ms1 = ms;
+//    		  checkResultRegisterInstructor("a", ms1, 0);
+//    		  checkResultRegisterInstructor("b", ms1, 1);
+//    		  checkResultRegisterInstructor("c", ms1, 2);
+//
+//    		  ManagementSystem ms2 = (ManagementSystem) PersistenceXStream.loadFromXMLwithXStream();
+//    		  checkResultRegisterInstructor("a", ms2, 0);
+//    		  checkResultRegisterInstructor("b", ms2, 1);
+//    		  checkResultRegisterInstructor("c", ms2, 2);
+//
+//    		  ms2.delete();
+//    		}
+//
+//            private void checkResultRegisterInstructor( String name, ManagementSystem ms2, int index){
+//
+//    		  assertEquals(3, ms2.getInstructors().size());
+//    		  assertEquals(0, ms2.getJobPostings().size());
+//    		  assertEquals(0, ms2.getCourses().size());
+//    		  assertEquals(0, ms2.getApplicants().size());
+//
+//    		  assertEquals(name, ms2.getInstructor(index).getName());
+//    		}
+//
+//            @Test
+//           public void testRegisterInstructorNullName() {
+//    		  assertEquals(0, ms.getInstructors().size());
+//
+//    		  String name = null;
+//    		  String error = null;
+//
+//    		  TamasController tc = new TamasController(ms);
+//    		  try {
+//    			tc.registerInstructor(name);
+//
+//    		} catch (InvalidInputException e) {
+//    			// TODO Auto-generated catch block
+//    			error = e.getMessage();
+//    		}
+//
+//    		  error = error.trim();
+//    		  assertEquals("Name cannot be empty!", error);
+//
+//    		  assertEquals(0, ms.getInstructors().size());
+//    		}
+//
+//            @Test
+//            public void testRegisterInstructorExistingApplicant() {
+//     		  assertEquals(0, ms.getInstructors().size());
+//
+//     		  String name = null;
+//     		  String error = null;
+//     		  Applicant ap1 = new Applicant(111, "a", "", true, "", "","", "", "", "", 10, ms);
+//
+//     		  TamasController tc = new TamasController(ms);
+//     		  try {
+//     			tc.registerInstructor(ap1.getName());
+//
+//     		} catch (InvalidInputException e) {
+//     			// TODO Auto-generated catch block
+//     			error = e.getMessage();
+//     		}
+//
+//     		  error = error.trim();
+//     		  assertEquals("This username already exists!", error);
+//
+//     		  assertEquals(0, ms.getInstructors().size());
+//     		}
+//
+//
+//            @Test
+//            public void testRegisterInstructorExistingInstructor() {
+//     		  assertEquals(0, ms.getInstructors().size());
+//
+//     		  String name = null;
+//     		  String error = null;
+//     		  Instructor Inst1 = new Instructor("a", ms);
+//
+//     		  TamasController tc = new TamasController(ms);
+//     		  try {
+//     			tc.registerInstructor(Inst1.getName());
+//
+//     		} catch (InvalidInputException e) {
+//     			// TODO Auto-generated catch block
+//     			error = e.getMessage();
+//     		}
+//
+//     		  error = error.trim();
+//     		  assertEquals("This username already exists!", error);
+//
+//     		  assertEquals(1, ms.getInstructors().size());
+//     		}
+//
+//
+//        @Test
+//    	public void testCreateCourse() {
+//    		  assertEquals(0, ms.getCourses().size());
+//
+//    		  String semester = "Winter3000";
+//    		  String courseName = "ECSE";
+//    		  String courseCode = "232323";
+//    		  int credit = 10;
+//    		  int maxStudent = 1;
+//    		  String instructorName = "Gates";
+//    		  int numGraderNeeded = 0;
+//    		  int numLab = 0;
+//    		  int numTut = 0;
+//    		  int labHour = 0;
+//    		  int tutHour = 0;
+//    	      int totalGraderHour = 10;
+//
+//     		  TamasController tc = new TamasController(ms);
+//     		  try {
+//     			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
+//     					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+//     					totalGraderHour);
+//
+//    		} catch (InvalidInputException e) {
+//    			// TODO Auto-generated catch block
+//    			e.printStackTrace();
+//    		}
+//
+//    		  ManagementSystem ms1 = ms;
+//    		  checkResultCourse(semester, courseName, courseCode, credit, maxStudent,
+//   					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+//   					totalGraderHour, ms1);
+//
+//    		  ManagementSystem ms2 = (ManagementSystem) PersistenceXStream.loadFromXMLwithXStream();
+//    		  checkResultCourse(semester, courseName, courseCode, credit, maxStudent,
+//   					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+//   					totalGraderHour, ms);
+//    		  ms2.delete();
+//    		}
+//
+//        private void checkResultCourse(String semester, String courseName, String courseCode, int credit,
+//		  int maxStudent, String instructorName,int numGraderNeeded, int numLab, int numTut, int labHour,
+//	      int tutHour, int totalGraderHour, ManagementSystem ms2){
+//
+//    		  assertEquals(0, ms2.getApplicants().size());
+//    		  assertEquals(0, ms2.getJobPostings().size());
+//    		  assertEquals(1, ms2.getCourses().size());
+//    		  assertEquals(1, ms2.getInstructors().size());
+//
+//    		  assertEquals(semester, ms2.getCourse(0).getSemester());
+//    		  assertEquals(courseName, ms2.getCourse(0).getCourseName());
+//    		  assertEquals(courseCode, ms2.getCourse(0).getCourseCode());
+//    		  assertEquals(credit, ms2.getCourse(0).getCredit());
+//    		  assertEquals(maxStudent, ms2.getCourse(0).getNumStudent());
+//    		  assertEquals(instructorName, ms2.getCourse(0).getInstructor().getName());
+//    		  assertEquals(numGraderNeeded, ms2.getCourse(0).getNumGraderNeeded());
+//    		  assertEquals(numLab, ms2.getCourse(0).getNumLab());
+//    		  assertEquals(numTut, ms2.getCourse(0).getNumTutorial());
+//    		  assertEquals(labHour, ms2.getCourse(0).getLabHour());
+//    		  assertEquals(tutHour, ms2.getCourse(0).getTutorialHour());
+//    		  assertEquals(totalGraderHour, ms2.getCourse(0).getTotalGraderHour());
+//    		}
+//
+//        @Test
+//    	public void testCreateCourseNullCourseName() {
+//     		  assertEquals(0, ms.getCourses().size());
+//
+//     		  String error = null;
+//     		  String semester = "Winter3000";
+//    		  String courseName = null;
+//    		  String courseCode = "232323";
+//    		  int credit = 10;
+//    		  int maxStudent = 1;
+//    		  String instructorName = "Gates";
+//    		  int numGraderNeeded = 0;
+//    		  int numLab = 0;
+//    		  int numTut = 0;
+//    		  int labHour = 0;
+//    		  int tutHour = 0;
+//    	      int totalGraderHour = 10;
+//
+//     		  TamasController tc = new TamasController(ms);
+//     		  try {
+//     			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
+//     					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+//     					totalGraderHour);
+//
+//     		} catch (InvalidInputException e) {
+//     			// TODO Auto-generated catch block
+//     			error = e.getMessage();
+//     		}
+//     		 error = error.trim();
+//  		  assertEquals("Please specify the course name!", error);
+//
+//  		  assertEquals(0, ms.getCourses().size());
+//     		}
+//
+//        @Test
+//    	public void testCreateCourseNullCourseCode() {
+//     		  assertEquals(0, ms.getCourses().size());
+//
+//     		  String error = null;
+//
+//     		  String semester = "Winter3000";
+//    		  String courseName = "ECSE";
+//    		  String courseCode = null;
+//    		  int credit = 10;
+//    		  int maxStudent = 1;
+//    		  String instructorName = "Gates";
+//    		  int numGraderNeeded = 0;
+//    		  int numLab = 0;
+//    		  int numTut = 0;
+//    		  int labHour = 0;
+//    		  int tutHour = 0;
+//    	      int totalGraderHour = 10;
+//
+//     		  TamasController tc = new TamasController(ms);
+//     		  try {
+//     			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
+//     					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+//     					totalGraderHour);
+//
+//     		} catch (InvalidInputException e) {
+//     			// TODO Auto-generated catch block
+//     			error = e.getMessage();
+//     		}
+//     		 error = error.trim();
+//  		  assertEquals("Please specify the course code!", error);
+//
+//  		  assertEquals(0, ms.getCourses().size());
+//     		}
+//
+//        @Test
+//    	public void testCreateCourseInvalidCredit() {
+//     		  assertEquals(0, ms.getCourses().size());
+//
+//     		  String error = null;
+//
+//     		  String semester = "Winter3000";
+//    		  String courseName = "ECSE";
+//    		  String courseCode = "232323";
+//    		  int credit = -1;
+//    		  int maxStudent = 1;
+//    		  String instructorName = "Gates";
+//    		  int numGraderNeeded = 0;
+//    		  int numLab = 0;
+//    		  int numTut = 0;
+//    		  int labHour = 0;
+//    		  int tutHour = 0;
+//    	      int totalGraderHour = 10;
+//
+//     		  TamasController tc = new TamasController(ms);
+//     		  try {
+//     			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
+//     					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+//     					totalGraderHour);
+//
+//     		} catch (InvalidInputException e) {
+//     			// TODO Auto-generated catch block
+//     			error = e.getMessage();
+//     		}
+//     		 error = error.trim();
+//  		  assertEquals("Please specify the number of credits in the correct format!", error);
+//
+//  		  assertEquals(0, ms.getCourses().size());
+//     		}
+//
+//        @Test
+//    	public void testCreateCourseInvalidMaxStudent() {
+//     		  assertEquals(0, ms.getCourses().size());
+//
+//     		  String error = null;
+//
+//     		  String semester = "Winter3000";
+//    		  String courseName = "ECSE";
+//    		  String courseCode = "232323";
+//    		  int credit = 10;
+//    		  int maxStudent = -1;
+//    		  String instructorName = "Gates";
+//    		  int numGraderNeeded = 0;
+//    		  int numLab = 0;
+//    		  int numTut = 0;
+//    		  int labHour = 0;
+//    		  int tutHour = 0;
+//    	      int totalGraderHour = 10;
+//
+//     		  TamasController tc = new TamasController(ms);
+//     		  try {
+//     			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
+//     					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+//     					totalGraderHour);
+//
+//     		} catch (InvalidInputException e) {
+//     			// TODO Auto-generated catch block
+//     			error = e.getMessage();
+//     		}
+//     		 error = error.trim();
+//  		  assertEquals("Please specify the maximum number of students in the correct format!", error);
+//
+//  		  assertEquals(0, ms.getCourses().size());
+//     		}
+//
+//        @Test
+//    	public void testCreateCourseNullInstructor() {
+//     		  assertEquals(0, ms.getCourses().size());
+//
+//     		  String error = null;
+//
+//     		  String semester = "Winter3000";
+//    		  String courseName = "ECSE";
+//    		  String courseCode = "232323";
+//    		  int credit = 10;
+//    		  int maxStudent = 1;
+//    		  String instructorName = null;
+//    		  int numGraderNeeded = 0;
+//    		  int numLab = 0;
+//    		  int numTut = 0;
+//    		  int labHour = 0;
+//    		  int tutHour = 0;
+//    	      int totalGraderHour = 10;
+//
+//     		  TamasController tc = new TamasController(ms);
+//     		  try {
+//     			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
+//     					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+//     					totalGraderHour);
+//     		} catch (InvalidInputException e) {
+//     			// TODO Auto-generated catch block
+//     			error = e.getMessage();
+//     		}
+//     		 error = error.trim();
+//  		  assertEquals("Please specify the instructor!", error);
+//
+//  		  assertEquals(0, ms.getCourses().size());
+//     		}
+//
+//        @Test
+//    	public void testCreateCourseInvalidNumLabAndTut() {
+//     		  assertEquals(0, ms.getCourses().size());
+//
+//     		  String error = null;
+//     		  String realError = ("Please specify the numebr of lab sessions in the correct format! "
+//     		      + "Please specify the number of tutorials in the correct format!").trim();
+//
+//    		  String semester = "Winter3000";
+//    		  String courseName = "ECSE";
+//    		  String courseCode = "232323";
+//    		  int credit = 10;
+//    		  int maxStudent = 1;
+//    		  String instructorName = "Gates";
+//    		  int numGraderNeeded = 0;
+//    		  int numLab = -1;
+//    		  int numTut = -1;
+//    		  int labHour = 0;
+//    		  int tutHour = 0;
+//    	      int totalGraderHour = 10;
+//
+//     		  TamasController tc = new TamasController(ms);
+//     		  try {
+//     			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
+//     					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+//     					totalGraderHour);
+//
+//     		} catch (InvalidInputException e) {
+//     			// TODO Auto-generated catch block
+//     			error = e.getMessage();
+//     		}
+//     		 error = error.trim();
+//
+//  		  assertEquals(realError, error);
+//
+//  		  assertEquals(0, ms.getCourses().size());
+//     		}
+//
+//        @Test
+//    	public void testCreateCourseInvalidNumGraderNeeded() {
+//     		  assertEquals(0, ms.getCourses().size());
+//
+//     		  String error = null;
+//     		  String realError = ("Please specify the number of Grader needed in the correct format! ").trim();
+//
+//     		  String semester = "Winter3000";
+//    		  String courseName = "ECSE";
+//    		  String courseCode = "232323";
+//    		  int credit = 10;
+//    		  int maxStudent = 1;
+//    		  String instructorName = "Gates";
+//    		  int numGraderNeeded = -1;
+//    		  int numLab = 0;
+//    		  int numTut = 0;
+//    		  int labHour = 0;
+//    		  int tutHour = 0;
+//    	      int totalGraderHour = 10;
+//
+//     		  TamasController tc = new TamasController(ms);
+//     		  try {
+//     			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
+//     					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+//     					totalGraderHour);
+//
+//     		} catch (InvalidInputException e) {
+//     			// TODO Auto-generated catch block
+//     			error = e.getMessage();
+//     		}
+//     		 error = error.trim();
+//
+//  		  assertEquals(realError, error);
+//
+//  		  assertEquals(0, ms.getCourses().size());
+//     		}
+//
+//        @Test
+//    	public void testCreateCourseInvalidHourTAndGrader() {
+//     		  assertEquals(0, ms.getCourses().size());
+//
+//     		  String error = null;
+//     		  String realError = ("Please specify a correct lab hour! "
+//     		      + "Please specify a correct tutorial hour! ").trim();
+//
+//     	  String semester = "Winter3000";
+//   		  String courseName = "ECSE";
+//   		  String courseCode = "232323";
+//   		  int credit = 10;
+//   		  int maxStudent = 1;
+//   		  String instructorName = "Gates";
+//   		  int numGraderNeeded = 1;
+//   		  int numLab = 0;
+//   		  int numTut = 0;
+//   		  int labHour = -1;
+//   		  int tutHour = -1;
+//   	      int totalGraderHour = 10;
+//
+//    		  TamasController tc = new TamasController(ms);
+//    		  try {
+//    			 tc.createCourse(semester, courseName, courseCode, credit, maxStudent,
+//    					instructorName, numGraderNeeded, numLab, numTut, labHour, tutHour,
+//    					totalGraderHour);
+//
+//     		} catch (InvalidInputException e) {
+//     			// TODO Auto-generated catch block
+//     			error = e.getMessage();
+//     		}
+//     		 error = error.trim();
+//
+//  		  assertEquals(realError, error);
+//
+//  		  assertEquals(0, ms.getCourses().size());
+//     		}
+//
+//        @Test
+//        public void testAcceptApplication(){
+//        	assertEquals(0, ms.getApplicants().size());
+//
+//        	Applicant ap = new Applicant(111, "abc", "", true, "", "","", "", "", "", 10, ms);
+//            ms.addApplicant(ap);
+//    		assertEquals(1, ms.getApplicants().size());
+//
+//    		Instructor i = new Instructor("Danial", ms);
+//   		    ms.addInstructor(i);
+//   		    assertEquals(1, ms.getInstructors().size());
+//
+//    		Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
+//					10, 10, 10, 10,10.0,i, ms);
+//		    ms.addCourse(c);
+//		    assertEquals(1, ms.getCourses().size());
+//
+//
+//    		JobPosting jp = new JobPosting("", null, "", 10.1, ms, c);
+//      	    ms.addJobPosting(jp);
+//            assertEquals(1, ms.getJobPostings().size());
+//
+//            Application app = new Application(jp,ap);
+//            app.setStatus(Status.PENDING);
+//     		ap.addApplication(app);
+//
+//    	    TamasController tc = new TamasController(ms);
+//    		 try{
+//    			 tc.acceptApplication(app);
+//    		 }catch (InvalidInputException e){
+//    			 e.printStackTrace();
+//    		 }
+//
+//    		  ManagementSystem ms1 = ms;
+//    		  checkResultAcceptApplication(app, ms1);
+//
+//    		  ManagementSystem ms2 = (ManagementSystem) PersistenceXStream.loadFromXMLwithXStream();
+//    		  checkResultAcceptApplication(app, ms2);
+//
+//    		  ms2.delete();
+//    		}
+//
+//        @Test
+//        public void testAcceptApplicationInvalidStatus(){
+//        	assertEquals(0, ms.getApplicants().size());
+//
+//        	Applicant ap = new Applicant(111, "abc", "", true, "", "","", "", "", "", 10, ms);
+//            ms.addApplicant(ap);
+//    		assertEquals(1, ms.getApplicants().size());
+//
+//    		Instructor i = new Instructor("Danial", ms);
+//   		    ms.addInstructor(i);
+//   		    assertEquals(1, ms.getInstructors().size());
+//
+//    		Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
+//					10, 10, 10, 10,10.0,i, ms);
+//		    ms.addCourse(c);
+//		    assertEquals(1, ms.getCourses().size());
+//
+//
+//    		JobPosting jp = new JobPosting("", null, "", 10.1, ms, c);
+//      	    ms.addJobPosting(jp);
+//            assertEquals(1, ms.getJobPostings().size());
+//
+//            Application app = new Application(jp,ap);
+//     		ap.addApplication(app);
+//
+//     		String error = null;
+//    	    TamasController tc = new TamasController(ms);
+//    		 try{
+//    			 tc.acceptApplication(app);
+//    		 }catch (InvalidInputException e){
+//    			 error = e.getMessage();
+//    		 }
+//
+// 	     	 error = error.trim();
+//
+//		     assertEquals("This applicant has already been processed", error);
+//		     assertEquals("SELECTED", app.getStatus().toString());
+//    		}
+//
+//            private void checkResultAcceptApplication(Application app, ManagementSystem ms2){
+//
+//    		  assertEquals(1, ms2.getApplicants().size());
+//    		  assertEquals(1, ms2.getJobPostings().size());
+//    		  assertEquals(1, ms2.getCourses().size());
+//    		  assertEquals(1, ms2.getInstructors().size());
+//
+//    		  assertEquals("OFFER_ACCEPTED", ms2.getApplicant(0).getApplication(0).getStatus().toString());
+//    		}
+//
+//            @Test
+//            public void testRejectApplication(){
+//            	assertEquals(0, ms.getApplicants().size());
+//
+//            	Applicant ap = new Applicant(111, "abc", "", true, "", "","", "", "", "", 10, ms);
+//                ms.addApplicant(ap);
+//        		assertEquals(1, ms.getApplicants().size());
+//
+//        		Instructor i = new Instructor("Danial", ms);
+//       		    ms.addInstructor(i);
+//       		    assertEquals(1, ms.getInstructors().size());
+//
+//        		Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
+//    					10, 10, 10, 10,10.0,i, ms);
+//    		    ms.addCourse(c);
+//    		    assertEquals(1, ms.getCourses().size());
+//
+//
+//        		JobPosting jp = new JobPosting("", null, "", 10.1, ms, c);
+//          	    ms.addJobPosting(jp);
+//                assertEquals(1, ms.getJobPostings().size());
+//
+//                Application app = new Application(jp,ap);
+//                app.setStatus(Status.PENDING);
+//         		ap.addApplication(app);
+//
+//        	    TamasController tc = new TamasController(ms);
+//        		 try{
+//        			 tc.rejectApplication(app);
+//        		 }catch (InvalidInputException e){
+//        			 e.printStackTrace();
+//        		 }
+//
+//        		  ManagementSystem ms1 = ms;
+//        		  checkResultRejectApplication(app, ms1);
+//
+//        		  ManagementSystem ms2 = (ManagementSystem) PersistenceXStream.loadFromXMLwithXStream();
+//        		  checkResultRejectApplication(app, ms2);
+//
+//        		  ms2.delete();
+//        		}
+//
+//                private void checkResultRejectApplication(Application app, ManagementSystem ms2){
+//
+//        		  assertEquals(1, ms2.getApplicants().size());
+//        		  assertEquals(1, ms2.getJobPostings().size());
+//        		  assertEquals(1, ms2.getCourses().size());
+//        		  assertEquals(1, ms2.getInstructors().size());
+//
+//        		  assertEquals("OFFER_DECLINED", ms2.getApplicant(0).getApplication(0).getStatus().toString());
+//        		}
+//
+//                @Test
+//                public void testRejectApplicationInvalidStatus(){
+//                	assertEquals(0, ms.getApplicants().size());
+//
+//                	Applicant ap = new Applicant(111, "abc", "", true, "", "","", "", "", "", 10, ms);
+//                    ms.addApplicant(ap);
+//            		assertEquals(1, ms.getApplicants().size());
+//
+//            		Instructor i = new Instructor("Danial", ms);
+//           		    ms.addInstructor(i);
+//           		    assertEquals(1, ms.getInstructors().size());
+//
+//            		Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10,
+//        					10, 10, 10, 10,10.0,i, ms);
+//        		    ms.addCourse(c);
+//        		    assertEquals(1, ms.getCourses().size());
+//
+//
+//            		JobPosting jp = new JobPosting("", null, "", 10.1, ms, c);
+//              	    ms.addJobPosting(jp);
+//                    assertEquals(1, ms.getJobPostings().size());
+//
+//                    Application app = new Application(jp,ap);
+//             		ap.addApplication(app);
+//
+//             		String error = null;
+//            	    TamasController tc = new TamasController(ms);
+//            		 try{
+//            			 tc.rejectApplication(app);
+//            		 }catch (InvalidInputException e){
+//            			 error = e.getMessage();
+//            		 }
+//
+//         	     	 error = error.trim();
+//
+//        		     assertEquals("This applicant has already been processed", error);
+//        		     assertEquals("SELECTED", app.getStatus().toString());
+//            		}
+//
 
-		error = error.trim();
-
-		assertEquals("This applicant has already been processed", error);
-		assertEquals("SELECTED", app.getStatus().toString());
+//		error = error.trim();
+//
+//		assertEquals("This applicant has already been processed", error);
+//		assertEquals("SELECTED", app.getStatus().toString());
 	}
 }
