@@ -263,7 +263,7 @@ public class CourseDetails extends JFrame {
 
 		pack();
 		setResizable(false);
-		
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 	}
 	

@@ -448,6 +448,8 @@ public class TamasController {
 		}
 
 		// Required total TA working hours of a course
+		// labHour = total hour for one lab session/semester
+		// tutorialHour = total hour for one tutorial session/semester
 		int hourRequiredTa = numLab * labHour + numTutorial * tutorialHour;
 
 		// The total number of TA needed for a course = ceil(total hours/max
@@ -478,23 +480,20 @@ public class TamasController {
 		return false;
 	}
 
+
 	public void acceptApplication(Application application) throws InvalidInputException {
 		if (application.getStatus().equals(Status.PENDING)) {
 			application.setStatus(Status.OFFER_ACCEPTED);
 			PersistenceXStream.saveToXMLwithXStream(ms);
-		} else {
-			throw new InvalidInputException("This applicant has already been processed");
 		}
-
 	}
 
-	public void rejectApplication(Application application) throws InvalidInputException {
+	public void rejectApplication(Application application) {
 		if (application.getStatus().equals(Status.PENDING)) {
 			application.setStatus(Status.OFFER_DECLINED);
 			PersistenceXStream.saveToXMLwithXStream(ms);
-		} else {
-			throw new InvalidInputException("This applicant has already been processed");
 		}
+		
 	}
 
 	//Can take a course instead of an allocation

@@ -123,11 +123,11 @@ public class AddCourse extends JFrame {
 		numTutorialLabel.setForeground(Color.BLACK);
 		numTutorialTextField = new JTextField();
 		
-		labHourLabel = new JLabel("Length of Lab Session:");
+		labHourLabel = new JLabel("Lab Hours/Semester:");
 		labHourLabel.setForeground(Color.BLACK);
 		labHourTextField = new JTextField();
 		
-		tutorialHourLabel = new JLabel("Length of Tutorial Sessions:");
+		tutorialHourLabel = new JLabel("Tutorial Hours/Semster:");
 		tutorialHourLabel.setForeground(Color.BLACK);
 		tutorialHourTextField = new JTextField();
 		

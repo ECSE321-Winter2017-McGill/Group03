@@ -13,6 +13,7 @@ public class LoginHint extends JFrame {
 	private static final long serialVersionUID = -1637505664795335145L;
 
 	public LoginHint() {
+		
 		JLabel hint0 = new JLabel("To log in as a department use: ");
 		hint0.setFont(new Font("Georgia", Font.BOLD, 13));
 		

@@ -23,7 +23,7 @@ public class ShowProgress extends JPanel implements Runnable {
 		setLayout(layout);
 		// initialize Progress Bar
 		pbar = new JProgressBar();
-		pbar.setForeground(Color.PINK);
+		pbar.setForeground(Color.BLUE);
 		pbar.setBounds(100, 100, 400, 120);
 		pbar.setMinimum(MY_MINIMUM);
 		pbar.setMaximum(MY_MAXIMUM);
@@ -52,7 +52,6 @@ public class ShowProgress extends JPanel implements Runnable {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setContentPane(progress);
 		frame.setBackground(Color.WHITE);
-		// frame.setLocationRelativeTo(null);
 		frame.pack();
 		frame.setVisible(true);
 

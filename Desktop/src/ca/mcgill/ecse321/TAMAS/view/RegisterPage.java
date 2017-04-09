@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 
 import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
@@ -144,6 +145,8 @@ public class RegisterPage extends JFrame{
 				
 				);
 		pack();
+		setVisible(true);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 	
 	private void refreshData(){

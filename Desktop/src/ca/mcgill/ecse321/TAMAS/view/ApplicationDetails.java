@@ -53,7 +53,7 @@ public class ApplicationDetails extends JFrame {
 	private JSeparator horizontalLineMiddle1;
 	private JSeparator horizontalLineMiddle2;
 	
-	private JButton closeButton;
+	private JButton backButton;
 
 	private ManagementSystem ms;
 	private Applicant app;
@@ -146,10 +146,10 @@ public class ApplicationDetails extends JFrame {
 		
 		
 		
-		closeButton = new JButton("  Close  ");
-		closeButton.addActionListener(new java.awt.event.ActionListener() {
+		backButton = new JButton("  Close  ");
+		backButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				closeButtonActionPerformed(evt);
+				backButtonActionPerformed(evt);
 			}
 		});
 		
@@ -189,7 +189,9 @@ public class ApplicationDetails extends JFrame {
 								.addComponent(firstChoiceToggleList)
 								.addComponent(secondChoiceToggleList)
 								.addComponent(thirdChoiceToggleList)
+								.addComponent(backButton))));
 								.addComponent(closeButton))));
+
 
 		layout.setVerticalGroup(layout.createSequentialGroup()
 				.addComponent(formTitle)
@@ -219,15 +221,16 @@ public class ApplicationDetails extends JFrame {
 				.addGroup(layout.createParallelGroup()
 						.addComponent(thirdChoiceLabel).addComponent(thirdChoiceToggleList))
 				.addGroup(layout.createParallelGroup()
-						.addComponent(closeButton)));
+						.addComponent(backButton)));
 				
 		
 
 		pack();
 		setResizable(false);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 	
-	private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {
+	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		setVisible(false);
 	}
 	
