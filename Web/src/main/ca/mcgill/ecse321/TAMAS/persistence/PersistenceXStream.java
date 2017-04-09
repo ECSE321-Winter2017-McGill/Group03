@@ -13,7 +13,7 @@ import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 public abstract class PersistenceXStream {
 
 	private static XStream xstream = new XStream();
-	private static String filename = "output/data.xml";
+	private static String filename = "output/data2.xml";
 
 	public static ManagementSystem initializeModelManager(String fileName) {
 		// Initialization for persistence

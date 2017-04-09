@@ -238,6 +238,7 @@ public class TamasController {
 		System.out.println(ap.numberOfApplications());
 		if (ap.getApplications().size() < 3) {
 			Application application = new Application(jp, ap);
+			application.setStatus(Status.PENDING);
 			ap.addApplication(application);
 		}
 
@@ -389,7 +390,7 @@ public class TamasController {
 			int totalGraderHour) throws InvalidInputException {
 
 		String error = "";
-
+		courseCode = courseCode.replaceAll("\\s+","");
 		if (courseName == null || courseName.trim().length() == 0) {
 			error += "Please specify the course name! ";
 		}

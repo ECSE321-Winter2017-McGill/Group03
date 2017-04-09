@@ -362,7 +362,7 @@ public boolean applicationAccepted(Application application) {
 
 	public void acceptApplication(Application application) throws InvalidInputException {
 		if (application.getStatus().equals(Status.PENDING)) {
-			application.setStatus(Status.SELECTED);
+			application.setStatus(Status.OFFER_ACCEPTED);
 			DBmanager.updateDB(this.objToXML(ms));
 		} else {
 			throw new InvalidInputException("This applicant has already been processed");
