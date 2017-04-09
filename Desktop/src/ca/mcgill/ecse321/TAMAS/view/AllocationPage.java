@@ -84,6 +84,9 @@ public class AllocationPage extends JFrame {
 	
 	private int valueSet = 0;
 	private int rowToBeChangedIndex;
+	private HashMap<String,Applicant> nameApplicantMap = new HashMap<String, Applicant>();
+	private ArrayList<Applicant> tas;
+	private ArrayList<Integer> taHours;
 	
 	ArrayList<Integer> allTAHourAppointed = new ArrayList<Integer>();
 	ArrayList<Integer> allGraderHourAppointed = new ArrayList<Integer>();
@@ -139,6 +142,7 @@ public class AllocationPage extends JFrame {
 				for (Application aApplication: anApplicant.getApplications()){
 					if ((aApplication.getStatusFullName().equals("PENDING") || aApplication.getStatusFullName().equals("SELECTED")) && aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())&& aApplication.getJobPosting().getCourse().getSemester().equals(course.getSemester())){
 							data[i][0] = anApplicant.getName();
+							nameApplicantMap.put(anApplicant.getName(),anApplicant);
 							if (anApplicant.getIsUnderGraduated() == true) {
 								data[i][1] = "Und";
 							} else {
@@ -561,6 +565,7 @@ public class AllocationPage extends JFrame {
 	}
 	
 	private void createButtonActionPerformed(java.awt.event.ActionEvent evt){
+// <<<<<<< Presentation
 	
 		int i = 0;
 		for (JobPosting aJobPosting: course.getJobPosting()){
@@ -590,6 +595,46 @@ public class AllocationPage extends JFrame {
 	
 	private void finalizeButtonActionPerformed(java.awt.event.ActionEvent evt){
 //		tc.finalizeAllocation(Allocation);
+// =======
+// 		String error = "";
+// 		ArrayList<Integer> allTAHourAppointed = new ArrayList<Integer>();
+// 		ArrayList<Integer> allGraderHourAppointed = new ArrayList<Integer>();
+// 		ArrayList<Applicant> taAppointed = new ArrayList<Applicant>();
+// 		ArrayList<Applicant> graderAppointed = new ArrayList<Applicant>();
+		
+		
+		
+// 		try{
+// 		  tc.createAllocation(ms, course, taAppointed, allTAHourAppointed, graderAppointed, allGraderHourAppointed);
+// 		}
+// 		catch(InvalidInputException e){
+// 			error = e.getMessage();
+// 		}
+// 	}
+	
+// 	private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt){
+// 		String error = "";
+// 		ArrayList<Integer> allTAHourAppointed = new ArrayList<Integer>();
+// 		ArrayList<Integer> allGraderHourAppointed = new ArrayList<Integer>();
+// 		ArrayList<Applicant> taAppointed = new ArrayList<Applicant>();
+// 		ArrayList<Applicant> graderAppointed = new ArrayList<Applicant>();
+// 		try{
+// 		tc.createAllocation(ms, course.getCourseJobAllocation(), taAppointed, allTAHourAppointed, graderAppointed, allGraderHourAppointed);
+// 		}
+// 		catch(InvalidInputException e){
+// 			error = e.getMessage();
+// 		}
+// 	}
+	
+// 	private void finalizeButtonActionPerformed(java.awt.event.ActionEvent evt){
+// 		String error = "";
+// 		try{
+// 			tc.finalizeAllocation(course.getCourseJobAllocation());
+// 		}
+// 		catch (InvalidInputeException e){
+// 			error = e.getMessage();
+// 		}
+// >>>>>>> master
 	}
 	
 	private void backToAllApp() {
