@@ -22,6 +22,7 @@ public class TamasController {
 
 	private ManagementSystem ms = new ManagementSystem();
 
+	//Deleted????
 	public static void changeAllocationStatus(ManagementSystem mm, Object user, Course course)
 			throws InvalidInputException {
 
@@ -44,26 +45,97 @@ public class TamasController {
 
 	}
 
-	public static void createAllocation(ManagementSystem mm, Course course, ArrayList<Applicant> listApplicant)
+	public void createAllocation(ManagementSystem mm, Course course, ArrayList<Applicant> tas, ArrayList<Integer> taHours, ArrayList<Applicant>graders, ArrayList<Integer>graderHours)
 			throws InvalidInputException {
 
 		if (course == null) {
-			throw new InvalidInputException("Can not change allocation due to null course");
+			throw new InvalidInputException("Can not change allocation due to null course. ");
 		}
-		if (listApplicant == null || listApplicant.size() == 0) {
-			throw new InvalidInputException("Can not change allocation due to Empty list of Applicant");
+		if (tas == null || tas.size() == 0) {
+			throw new InvalidInputException("Can not change allocation due to Empty list of potential TAs. ");
+		}
+		if (taHours == null || taHours.size()==0 || taHours.size()!=tas.size()){
+			throw new InvalidInputException("Please assign working hours to all selected applicants. ");
+		}
+		if (graders == null || graders.size()==0){
+			throw new InvalidInputException("Can not change allocation due to Empty list of potential Graders. ");
+		}
+		if (graderHours==null || graderHours.size()==0|| graderHours.size()!=graders.size()){
+			throw new InvalidInputException("Please assign working hours to all selected applicants. ");
 		}
 		try {
 			Allocation allocation = new Allocation(course);
-			for (Applicant app : listApplicant) {
-				allocation.addApplicant(app);
+			
+			double taBudget = 0; 
+			double graderBudget = 0; 
+			
+			for (int i=0; i<tas.size();i++){
+				if( ( 180 - tas.get(i).getTotalAppointmentHours() ) < taHours.get(i).intValue() ){
+					allocation.delete();
+					throw new InvalidInputException("Applicant "+tas.get(i).getName()+" can only have "+(180-tas.get(i).getTotalAppointmentHours())+" appointment hours");
+				}
+				allocation.addApplicant(tas.get(i));
+				int newTotalHours = tas.get(i).getTotalAppointmentHours()+taHours.get(i);
+				tas.get(i).setTotalAppointmentHours(newTotalHours);
+				
+				List<Application>allApplications = tas.get(i).getApplications();
+				for (Application anApp: allApplications){
+					Course thisCourse = anApp.getJobPosting().getCourse();
+					String jobTitle = anApp.getJobPosting().getJobTitle();
+					if (thisCourse.getSemester().equals(course.getSemester())&&thisCourse.getCourseCode().equals(course.getCourseCode())&&jobTitle.equals("TA")){
+						anApp.setStatus(Status.SELECTED);
+						taBudget = taBudget + anApp.getJobPosting().getHourRate();
+					}
+				}
 			}
-			course.setCourseJobAllocation(allocation);
-		} catch (Exception e) {
+			
+			
+			for (int j=0; j<graders.size();j++){
+				allocation.addApplicant(graders.get(j));
+				
+				List<Application>allApplications = graders.get(j).getApplications();
+				for (Application anApp: allApplications){
+					Course thisCourse = anApp.getJobPosting().getCourse();
+					String jobTitle = anApp.getJobPosting().getJobTitle();
+					if (thisCourse.getSemester().equals(course.getSemester())&&thisCourse.getCourseCode().equals(course.getCourseCode())&&jobTitle.equals("Grader")){
+						anApp.setStatus(Status.SELECTED);
+						graderBudget = graderBudget + anApp.getJobPosting().getHourRate();
+					}
+				}
+			}
+
+			if ( ( taBudget + graderBudget ) > course.getBudgetCalculated() ){
+				allocation.delete();
+				throw new InvalidInputException("This allocation exceeds the budget!");
+			}
+			
+			allocation.setAllocationStatus(AllocationStatus.INITIAL);
+			
+//			for (int i=0; i<listApplicant.size();i++){
+//				List<Application>allApplications = listApplicant.get(i).getApplications();
+//				for (int j=0;j<allApplications.size();j++){
+//					Course thisCourse = allApplications.get(j).getJobPosting().getCourse();
+//					String jobTitle = allApplications.get(j).getJobPosting().getJobTitle();
+//					if (thisCourse.getSemester().equals(course.getSemester())&&thisCourse.getCourseCode().equals(course.getCourseCode())){
+//						if (jobTitle.equals("TA")){
+//							if(180-listApplicant.get(i).getTotalAppointmentHours()<listHours.get(i).intValue()){
+//								allocation.addApplicant(listApplicant.get(i));
+//							}
+//							else{
+//								throw new InvalidInputException();
+//							}
+//						}
+//						else if (jobTitle.equals("Grader")){
+//							allocation.addApplicant(listApplicant.get(i));
+//						}
+//					}
+//				}
+//			}
+				
+		} catch (RuntimeException e) {
 			throw new InvalidInputException(e.getMessage());
 		}
 		PersistenceXStream.saveToXMLwithXStream(mm);
-
 	}
 
 	public static Date getToday() {
@@ -425,14 +497,110 @@ public class TamasController {
 		}
 	}
 
-	public void changeHours(Course course, int hour) throws InvalidInputException {
-		if (course == null) {
+	//Can take a course instead of an allocation
+	public void changeHours(Allocation allocation, ManagementSystem mm, ArrayList<Applicant> tas, ArrayList<Integer> taHours, ArrayList<Applicant>graders, ArrayList<Integer>graderHours) throws InvalidInputException {
+		if (allocation == null) {
 			throw new InvalidInputException("Select a course! ");
 		}
+		
+		if (!allocation.getAllocationStatus().equals("INITIAL")){
+			throw new InvalidInputException("You cannot modify this allocation! " );
+		}
+		
+		if (tas == null || tas.size() == 0) {
+			throw new InvalidInputException("Can not change allocation due to Empty list of potential TAs. ");
+		}
+		if (taHours == null || taHours.size()==0 || taHours.size()!=tas.size()){
+			throw new InvalidInputException("Please assign working hours to all selected applicants. ");
+		}
+		if (graders == null || graders.size()==0){
+			throw new InvalidInputException("Can not change allocation due to Empty list of potential Graders. ");
+		}
+		if (graderHours==null || graderHours.size()==0|| graderHours.size()!=graders.size()){
+			throw new InvalidInputException("Please assign working hours to all selected applicants. ");
+		}
+		try {
+			
+			double taBudget = 0; 
+			double graderBudget = 0; 
+			
+			for (int i=0; i<tas.size();i++){
+				if( ( 180 - tas.get(i).getTotalAppointmentHours() ) < taHours.get(i).intValue() ){
+					allocation.delete();
+					throw new InvalidInputException("Applicant "+tas.get(i).getName()+" can only have "+(180-tas.get(i).getTotalAppointmentHours())+" appointment hours");
+				}
+				allocation.addApplicant(tas.get(i));
+				int newTotalHours = tas.get(i).getTotalAppointmentHours()+taHours.get(i);
+				tas.get(i).setTotalAppointmentHours(newTotalHours);
+				
+				List<Application>allApplications = tas.get(i).getApplications();
+				for (Application anApp: allApplications){
+					Course thisCourse = anApp.getJobPosting().getCourse();
+					String jobTitle = anApp.getJobPosting().getJobTitle();
+					if (thisCourse.getSemester().equals(allocation.getCourse().getSemester())&&thisCourse.getCourseCode().equals(allocation.getCourse().getCourseCode())&&jobTitle.equals("TA")){
+						anApp.setStatus(Status.SELECTED);
+						taBudget = taBudget + anApp.getJobPosting().getHourRate();
+					}
+				}
+			}
+			
+			
+			for (int j=0; j<graders.size();j++){
+				allocation.addApplicant(graders.get(j));
+				
+				List<Application>allApplications = graders.get(j).getApplications();
+				for (Application anApp: allApplications){
+					Course thisCourse = anApp.getJobPosting().getCourse();
+					String jobTitle = anApp.getJobPosting().getJobTitle();
+					if (thisCourse.getSemester().equals(allocation.getCourse().getSemester())&&thisCourse.getCourseCode().equals(allocation.getCourse().getCourseCode())&&jobTitle.equals("Grader")){
+						anApp.setStatus(Status.SELECTED);
+						graderBudget = graderBudget + anApp.getJobPosting().getHourRate();
+					}
+				}
+			}
 
-		if (hour <= 0) {
-			throw new InvalidInputException("Select a course! ");
+			if ( ( taBudget + graderBudget ) > allocation.getCourse().getBudgetCalculated() ){
+				allocation.delete();
+				throw new InvalidInputException("This allocation exceeds the budget!");
+			}
+			
+			allocation.setAllocationStatus(AllocationStatus.INSTRUCTOR_APPROVED);
+			
+//			for (int i=0; i<listApplicant.size();i++){
+//				List<Application>allApplications = listApplicant.get(i).getApplications();
+//				for (int j=0;j<allApplications.size();j++){
+//					Course thisCourse = allApplications.get(j).getJobPosting().getCourse();
+//					String jobTitle = allApplications.get(j).getJobPosting().getJobTitle();
+//					if (thisCourse.getSemester().equals(course.getSemester())&&thisCourse.getCourseCode().equals(course.getCourseCode())){
+//						if (jobTitle.equals("TA")){
+//							if(180-listApplicant.get(i).getTotalAppointmentHours()<listHours.get(i).intValue()){
+//								allocation.addApplicant(listApplicant.get(i));
+//							}
+//							else{
+//								throw new InvalidInputException();
+//							}
+//						}
+//						else if (jobTitle.equals("Grader")){
+//							allocation.addApplicant(listApplicant.get(i));
+//						}
+//					}
+//				}
+//			}
+				
+		} catch (RuntimeException e) {
+			throw new InvalidInputException(e.getMessage());
 		}
+		PersistenceXStream.saveToXMLwithXStream(mm);
 	}
+	
+	public void finalizeAllocation(Allocation allocation) throws InvalidInputException{
+		if (!allocation.getAllocationStatusFullName().equals("INSTRUCTOR_APPROVED")){
+			throw new InvalidInputException("The allocation cannot be finalized before it is approved by the instructor! ");
+		}
+		allocation.setAllocationStatus(AllocationStatus.FINAL_APPROVAL);
+		PersistenceXStream.saveToXMLwithXStream(ms);
+	}
+	
+	
 
 }

@@ -305,6 +305,8 @@ public class AllApplication extends JFrame {
 		viewAllocation.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//Course course = 
+				//new AllocationPage1(ms,)
 
 			}
 		});
