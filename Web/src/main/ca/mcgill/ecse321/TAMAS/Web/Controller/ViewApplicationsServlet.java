@@ -39,7 +39,11 @@ public class ViewApplicationsServlet extends HttpServlet {
 		for (Applicant app : ms.getApplicants()) {
 			for (Application apt : app.getApplications()) {
 				result += "<tr>";
+				if(apt.getJobPosting().getJobTitle().equals("TA")){
 				result += "<td><span class='label label-info'>" + apt.getJobPosting().getJobTitle() + "</span></td>";
+				}else{
+					result += "<td><span class='label label-success'>" + apt.getJobPosting().getJobTitle() + "</span></td>";
+				}
 				result += "<td>" + app.getName() + "</td>";
 				// result += "<td><span class='label label-success'>
 				// Grader</span></td>";

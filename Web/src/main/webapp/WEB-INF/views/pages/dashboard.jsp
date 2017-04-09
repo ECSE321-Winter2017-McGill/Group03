@@ -62,7 +62,7 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td><a href="jobPostings.php">COMP 250</a></td>
+										<td><a href="ViewAllJobPosting.jsp">COMP 250</a></td>
 										<td>Intro to Computer Science</td>
 										<td><span class="label label-success">2/5</span></td>
 										<!--<td><p>2/5</p></td>-->
@@ -70,7 +70,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td><a href="jobPostings.php">ECSE 200</a></td>
+										<td><a href="ViewAllJobPosting.jsp">ECSE 200</a></td>
 										<td>Electrical Circuits 1</td>
 										<td><span class="label label-warning">0/3</span></td>
 										<!--<td><p>2/5</p></td>-->
@@ -79,7 +79,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td><a href="jobPostings.php">ECSE 321</a></td>
+										<td><a href="ViewAllJobPosting.jsp">ECSE 321</a></td>
 										<td>Intro. to Soft.Eng</td>
 										<td><span class="label label-danger">5/5</span></td>
 										<td>
@@ -88,7 +88,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td><a href="jobPostings.php">ECSE 221</a></td>
+										<td><a href="ViewAllJobPosting.jsp">ECSE 221</a></td>
 										<td>Intro. to Comp.Eng</td>
 										<td><span class="label label-info">1/3</span></td>
 										<td>
