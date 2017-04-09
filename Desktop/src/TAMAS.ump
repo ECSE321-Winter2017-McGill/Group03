@@ -106,6 +106,8 @@ class Application{
 
   0..3 -- 1 Applicant;
 
+  Integer hour;
+
 }
 
 
