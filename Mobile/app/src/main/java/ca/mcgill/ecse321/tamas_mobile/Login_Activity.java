@@ -33,7 +33,7 @@ import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 public class Login_Activity extends AppCompatActivity implements AsyncResponse {
-    DDBmanager asyncTask =new DDBmanager();
+    DDBmanager asyncTask = new DDBmanager();
     private String error ="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +115,11 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
     }
 
     public void login(View v){
-        final ManagementSystem ms=(ManagementSystem) loadFromXML();
+//        DDBmanager asyncTask =new DDBmanager();
+//        Parameters p=new Parameters(getApplicationContext(),null,0);
+//        asyncTask.delegate = this;
+//        asyncTask.execute(p);
+        final ManagementSystem ms=(ManagementSystem)loadFromXML();
 
         EditText username = (EditText)findViewById(R.id.username);
         EditText password = (EditText)findViewById(R.id.password);

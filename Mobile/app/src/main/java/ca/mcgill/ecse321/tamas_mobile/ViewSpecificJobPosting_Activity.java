@@ -10,19 +10,20 @@ import android.widget.TextView;
 import com.thoughtworks.xstream.XStream;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Date;
 
+import ca.mcgill.ecse321.TAMAS.Web.controller.DDBmanager;
 import ca.mcgill.ecse321.TAMAS.controller.TamasController;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 
 
-public class ViewSpecificJobPosting_Activity extends AppCompatActivity {
+public class ViewSpecificJobPosting_Activity extends AppCompatActivity implements AsyncResponse {
 
-    private ManagementSystem ms;
-    private TamasController tc;
+
     private String username="";
     private String title="";
     private String course="";
@@ -31,8 +32,14 @@ public class ViewSpecificJobPosting_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_specific_job_posting_);
-        ms = (ManagementSystem) loadFromXML();
-        tc = new TamasController(ms);
+
+        DDBmanager asyncTask = new DDBmanager();
+        Parameters p=new Parameters(getApplicationContext(),null,0);
+        asyncTask.delegate = this;
+        asyncTask.execute(p);
+
+        ManagementSystem ms = (ManagementSystem) loadFromXML();
+        TamasController tc =  new TamasController(ms);
 
         TextView jobPostingTitle = (TextView) findViewById(R.id.JobPostingTitle);
         TextView jobTitle = (TextView) findViewById(R.id.JobTitle);
@@ -109,5 +116,32 @@ public class ViewSpecificJobPosting_Activity extends AppCompatActivity {
         }else{
             return new ManagementSystem();
         }
+    }
+
+    @Override
+    public void processFinish(String output){
+        writeFile(output);
+    }
+    public void writeFile(String data) {
+        String filePath = getFilesDir().getPath().toString() + "/data.xml";
+        File f=new File(filePath);
+        if (!f.exists()) {
+            try {
+                f.createNewFile();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        String string = data;
+        FileOutputStream outputStream;
+        try {
+            outputStream =new FileOutputStream (f);
+            outputStream.write(string.getBytes());
+            System.out.println(outputStream);
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //System.out.println("sss"+f.exists());
     }
 }
