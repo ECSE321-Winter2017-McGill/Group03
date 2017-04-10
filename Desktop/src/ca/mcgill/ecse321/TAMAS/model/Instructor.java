@@ -1,5 +1,5 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
+/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
@@ -192,7 +192,7 @@ public class Instructor
 
   public String toString()
   {
-	  String outputString = "";
+    String outputString = "";
     return super.toString() + "["+
             "name" + ":" + getName()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "managementSystem = "+(getManagementSystem()!=null?Integer.toHexString(System.identityHashCode(getManagementSystem())):"null")

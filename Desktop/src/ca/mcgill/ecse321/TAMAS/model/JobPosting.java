@@ -1,5 +1,5 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
+/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.sql.Date;
@@ -186,9 +186,9 @@ public class JobPosting
     return 0;
   }
 
-  public Application addApplication(Applicant aApplicant)
+  public Application addApplication(int aHour, Applicant aApplicant)
   {
-    return new Application(this, aApplicant);
+    return new Application(aHour, this, aApplicant);
   }
 
   public boolean addApplication(Application aApplication)
@@ -271,7 +271,7 @@ public class JobPosting
 
   public String toString()
   {
-	  String outputString = "";
+    String outputString = "";
     return super.toString() + "["+
             "jobTitle" + ":" + getJobTitle()+ "," +
             "perferredExperience" + ":" + getPerferredExperience()+ "," +
