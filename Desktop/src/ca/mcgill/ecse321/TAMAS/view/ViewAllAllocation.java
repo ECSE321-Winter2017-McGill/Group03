@@ -16,6 +16,10 @@ import javax.swing.JTree;
 
 public class ViewAllAllocation extends JFrame{
 	private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+	
+	/**
+	 * Class constructor
+	 */
 	public ViewAllAllocation() {
 		getContentPane().setLayout(null);
 		

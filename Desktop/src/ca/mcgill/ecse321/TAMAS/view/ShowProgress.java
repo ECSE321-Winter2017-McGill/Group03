@@ -18,6 +18,9 @@ public class ShowProgress extends JPanel implements Runnable {
 
 	static final int MY_MAXIMUM = 100;
 
+	/**
+	 * Class constructor
+	 */
 	public ShowProgress() {
 		BorderLayout layout = new BorderLayout();
 		setLayout(layout);
@@ -39,6 +42,10 @@ public class ShowProgress extends JPanel implements Runnable {
 		add(spaceLabel, BorderLayout.PAGE_END);
 	}
 
+	/**
+	 * Update the progress bar with its new value
+	 * @param newValue New value of the progress bar
+	 */
 	public void updateBar(int newValue) {
 		pbar.setValue(newValue);
 	}
@@ -74,6 +81,9 @@ public class ShowProgress extends JPanel implements Runnable {
 
 	}
 
+	/**
+	 * @return number
+	 */
 	private long getNum() {
 		int[] a = { 5, 85, 10, 0 ,1};
 		return a[(int) (Math.random() * 5)];

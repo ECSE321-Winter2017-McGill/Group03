@@ -33,6 +33,11 @@ public class NewMainPage extends JPanel {
 	private ManagementSystem ms;
 	private Object user;
 
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 * @param user User
+	 */
 	public NewMainPage(ManagementSystem ms, Object user) {
 		super(new GridLayout(1, 1));
 
@@ -76,6 +81,12 @@ public class NewMainPage extends JPanel {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Setup all courses information
+	 * @param ms Management system
+	 * @param user User
+	 * @return JPanel
+	 */
 	private JComponent allCourse(ManagementSystem ms, final Object user) {
 		// get table data ready;
 
@@ -149,6 +160,11 @@ public class NewMainPage extends JPanel {
 		return pane;
 	}
 
+	/**
+	 * Creates text panel
+	 * @param text Label of new text panel
+	 * @return JPanel
+	 */
 	protected JComponent makeTextPanel(String text) {
 		JPanel panel = new JPanel(false);
 		JLabel filler = new JLabel(text);
@@ -158,7 +174,10 @@ public class NewMainPage extends JPanel {
 		return panel;
 	}
 
-	/** Returns an ImageIcon, or null if the path was invalid. */
+	/**  
+	 * @param path Image path
+	 * @return ImageIcon, or null if the path was invalid
+	 */
 	protected static ImageIcon createImageIcon(String path) {
 		java.net.URL imgURL = NewMainPage.class.getResource(path);
 		if (imgURL != null) {

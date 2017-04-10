@@ -29,12 +29,20 @@ public class AllJobPostings extends JFrame {
 
 	private Object user;
 
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 * @param user User
+	 */
 	public AllJobPostings(ManagementSystem ms, Object user) {
 		this.ms = ms;
 		this.user = user;
 		initComponents();
 	}
 
+	/**
+	 * Initialize all components
+	 */
 	private void initComponents() {
 		
 		// get table data ready;
@@ -151,6 +159,9 @@ public class AllJobPostings extends JFrame {
 
 	}
 
+	/**
+	 * Return to main page
+	 */
 	private void backToMain() {
 		new MainPage(user).setVisible(true);
 	}

@@ -36,12 +36,20 @@ public class AllCourses extends JFrame {
 	
 	
 
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 * @param user User
+	 */
 	public AllCourses(ManagementSystem ms, Object user) {
 		this.user = user;
 		this.ms = ms;
 		initComponents();
 	}
 
+	/**
+	 * Initialize all components
+	 */
 	private void initComponents() {
 		
 		// get table data ready;
@@ -153,6 +161,9 @@ public class AllCourses extends JFrame {
 		
 	}
 
+	/**
+	 * Return to main page
+	 */
 	private void backToMain() {
 		new MainPage(user).setVisible(true);
 	}

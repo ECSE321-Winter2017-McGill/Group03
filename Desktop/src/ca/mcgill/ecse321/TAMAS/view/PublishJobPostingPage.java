@@ -57,6 +57,11 @@ public class PublishJobPostingPage extends JFrame {
 	private Object user;
 	private HashMap<String, Course> cMap = new HashMap<>();
 
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 * @param user User
+	 */
 	public PublishJobPostingPage(ManagementSystem ms, Object user) {
 		this.ms = ms;
 		this.user = user;
@@ -64,6 +69,9 @@ public class PublishJobPostingPage extends JFrame {
 		refreshData();
 	}
 
+	/**
+	 * Initialize all components
+	 */
 	private void initComponents() {
 
 		formTitle = new JLabel("Publish Job Posting");
@@ -178,6 +186,9 @@ public class PublishJobPostingPage extends JFrame {
 	}
 
 	// can also disable submit if string is empty
+	/**
+	 * Display error, or reset page if there are no errors
+	 */
 	private void refreshData() {
 		// error
 		errorMessage.setText(error);
@@ -199,6 +210,9 @@ public class PublishJobPostingPage extends JFrame {
 
 	}
 
+	/**
+	 * Action triggered when creating a new job posting
+	 */
 	private void createJobPostingButtonActionPerformed() {
 		// call the controller
 
@@ -250,11 +264,18 @@ public class PublishJobPostingPage extends JFrame {
 		refreshData();
 	}
 
+	/**
+	 * Action triggered when cancelling
+	 * @param evt Action event
+	 */
 	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		backToAllJobs();
 		setVisible(false);
 	}
 
+	/**
+	 * Return to all job postings page
+	 */
 	private void backToAllJobs() {
 		new AllJobPostings(ms, user).setVisible(true);
 	}
