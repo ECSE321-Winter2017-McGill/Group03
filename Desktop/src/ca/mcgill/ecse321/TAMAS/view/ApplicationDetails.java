@@ -190,7 +190,6 @@ public class ApplicationDetails extends JFrame {
 								.addComponent(secondChoiceToggleList)
 								.addComponent(thirdChoiceToggleList)
 								.addComponent(backButton))));
-								.addComponent(closeButton))));
 
 
 		layout.setVerticalGroup(layout.createSequentialGroup()
