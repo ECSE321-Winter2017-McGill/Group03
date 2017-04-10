@@ -51,31 +51,31 @@ public class LoginServlet extends HttpServlet {
 		String name = request.getParameter("username");
 
 		String password = request.getParameter("password");
-		boolean found = false;
-		for (Applicant a : ms.getApplicants()) {
-			if (a.getName().equals(name)) {
-				found = true;
-				String role = "applicant";
-				request.getSession().setAttribute("role", role);
-				break;
-			}
-		}
-		for (Instructor a : ms.getInstructors()) {
-			if (a.getName().equals(name)) {
-				found = true;
-				String role = "instructor";
-				request.getSession().setAttribute("role", role);
-				break;
-			}
-		}
-
-		if (!found) {
-			request.getSession().setAttribute("role", "department");
-			found=true;
-		}
+//		boolean found = false;
+//		for (Applicant a : ms.getApplicants()) {
+//			if (a.getName().equals(name)) {
+//				found = true;
+//				String role = "applicant";
+//				request.getSession().setAttribute("role", role);
+//				break;
+//			}
+//		}
+//		for (Instructor a : ms.getInstructors()) {
+//			if (a.getName().equals(name)) {
+//				found = true;
+//				String role = "instructor";
+//				request.getSession().setAttribute("role", role);
+//				break;
+//			}
+//		}
+//
+//		if (!found) {
+//			request.getSession().setAttribute("role", "department");
+//			found=true;
+//		}
 
 		request.getSession().setAttribute("name", name);
-		if (password.equals("t") && found) {
+		if (password.equals("t")) {
 
 			request.getSession().setAttribute("name", name);
 			request.getRequestDispatcher("/WEB-INF/views/pages/dashboard.jsp").forward(request, response);

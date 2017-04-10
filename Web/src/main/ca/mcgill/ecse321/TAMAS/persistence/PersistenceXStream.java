@@ -13,7 +13,7 @@ import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 public abstract class PersistenceXStream {
 
 	private static XStream xstream = new XStream();
-	private static String filename = "output/data2.xml";
+	private static String filename = "output/data.xml";
 
 	public static ManagementSystem initializeModelManager(String fileName) {
 		// Initialization for persistence
@@ -48,11 +48,11 @@ public abstract class PersistenceXStream {
 		xstream.setMode(XStream.ID_REFERENCES);
 		String xml = xstream.toXML(obj); // save our xml file
 		System.out.println(xml);
-//		try {
-//			DBmanager.updateDB(xml);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		try {
+			DBmanager.updateDB(xml);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		try {
 			FileWriter writer = new FileWriter(filename);
 			writer.write(xml);
