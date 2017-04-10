@@ -1081,11 +1081,7 @@ public class TestTAMASController {
 		ap.addApplication(app);
 
 		TamasController tc = new TamasController(ms);
-		try {
-			tc.rejectApplication(app);
-		} catch (InvalidInputException e) {
-			e.printStackTrace();
-		}
+		tc.rejectApplication(app);
 
 		ManagementSystem ms1 = ms;
 		checkResultRejectApplication(app, ms1);
@@ -1131,11 +1127,7 @@ public class TestTAMASController {
 
 		String error = null;
 		TamasController tc = new TamasController(ms);
-		try {
-			tc.rejectApplication(app);
-		} catch (InvalidInputException e) {
-			error = e.getMessage();
-		}
+		tc.rejectApplication(app);
         
 //        @Test
 //        public void testRegisterInstructor() {

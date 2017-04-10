@@ -3,15 +3,14 @@ package ca.mcgill.ecse321.TAMAS.view;
 import ca.mcgill.ecse321.TAMAS.controller.TamasController;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
-import ca.mcgill.ecse321.TAMAS.model.Application.Status;
 import ca.mcgill.ecse321.TAMAS.model.Course;
-import ca.mcgill.ecse321.TAMAS.model.Department;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -30,6 +29,7 @@ import javax.swing.JTable;
 import javax.swing.WindowConstants;
 
 public class AllApplication extends JFrame {
+
 
 	private static final long serialVersionUID = 5797257474418419821L;
 
@@ -69,7 +69,7 @@ public class AllApplication extends JFrame {
 
 				data[i][2] = myApplication.getJobPosting().getJobTitle();
 				data[i][3] = myApplication.getJobPosting().getCourse().getCourseCode();
-				data[i][4] = myApplication.getStatusFullName();
+				data[i][4] = myApplication.getStatus().toString();
 				i++;
 			}
 		} else if (user.getClass().equals(Instructor.class)) {
@@ -130,6 +130,7 @@ public class AllApplication extends JFrame {
 		JButton viewAllocation = new JButton("View Allocation");
 
 		// get frame ready;
+		
 
 		BorderLayout layout = new BorderLayout();
 		Container pane = getContentPane();
@@ -137,65 +138,31 @@ public class AllApplication extends JFrame {
 		pane.add(scrollPane, BorderLayout.PAGE_START);
 		if (user.getClass().equals(Instructor.class)) {
 			setTitle("View All Applications");
-
+			
 			buttomPane.add(backButton);
 			pane.add(buttomPane, BorderLayout.PAGE_END);
+						
 
 			Instructor anInstructor = (Instructor) user;
 			List<Course> myCourses = anInstructor.getCourses();
 			for (Course aCourse : myCourses) {
-
 				String courseDescription = aCourse.getCourseName() + " (" + aCourse.getCourseCode() + ")";
 				allJobPostingCourse.addItem(courseDescription);
 				courseMap.put(courseDescription, aCourse);
 			}
 			
 			commandPane.add(allJobPostingCourse);
-
-// 				relatedJobPosting.addAll(aCourse.getJobPosting());
-// 			}
-// 			for (JobPosting aJobPosting : relatedJobPosting) {
-// 				List<Application> relatedApplication = aJobPosting.getApplications();
-// 				for (Application aApplication : relatedApplication) {
-// 					String appDescription = aApplication.getApplicant().getName() + " (as "
-// 							+ aApplication.getJobPosting().getJobTitle() + " for "
-// 							+ aApplication.getJobPosting().getCourse().getCourseCode() + ")";
-// 					allApplication.addItem(appDescription);
-// 					applicationMap.put(appDescription, aApplication);
-// 				}
-// 			}
-
-// 			commandPane.add(allApplication);
-// 			commandPane.add(viewDetailButton);
-
 			commandPane.add(viewAllocation);
 			pane.add(commandPane, BorderLayout.CENTER);
 		} else if (user.getClass().equals(Applicant.class)) {
 			setTitle("View My Applications");
-			Applicant using = (Applicant) user;
-			for (Applicant anApplicant : ms.getApplicants()) {
-
-				if (anApplicant.getName().equals(using.getName())) {
-					for (Application aApplication : anApplicant.getApplications()) {
-						String appDescription = anApplicant.getName() + " (as "
-								+ aApplication.getJobPosting().getJobTitle() + " for "
-								+ aApplication.getJobPosting().getCourse().getCourseCode() + ")";
-						allApplication.addItem(appDescription);
-						applicationMap.put(appDescription, aApplication);
-					}
-				}
-			}
-			commandPane.add(allApplication);
-			commandPane.add(viewDetailButton);
-			commandPane.add(acceptAppButton);
-			commandPane.add(rejectAppButton);
+			
 			buttomPane.add(applyJobButton);
 			buttomPane.add(backButton);
-			pane.add(commandPane, BorderLayout.CENTER);
 			pane.add(buttomPane, BorderLayout.PAGE_END);
 		} else {
 			setTitle("View All Applications");
-
+			
 			buttomPane.add(applyJobButton);
 			buttomPane.add(backButton);
 			pane.add(buttomPane, BorderLayout.PAGE_END);
@@ -205,31 +172,25 @@ public class AllApplication extends JFrame {
 				allJobPostingCourse.addItem(courseDescription);
 				courseMap.put(courseDescription, aCourse);
 			}
-//<<<<<<< AllocationPage
 						
 			commandPane.add(allJobPostingCourse);
-// =======
-
-// 			commandPane.add(allApplication);
-// 			commandPane.add(viewDetailButton);
-// 			commandPane.add(acceptAppButton);
-// 			commandPane.add(rejectAppButton);
-// >>>>>>> master
 			commandPane.add(viewAllocation);
 			pane.add(commandPane, BorderLayout.CENTER);
 		}
 		pack();
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		
 
 		// add actions listeners
 		applyJobButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (ms.getCourses().size() == 0) {
+				if (ms.getCourses().size()==0){
 					JOptionPane.showMessageDialog(AllApplication.this,
-							"No Job Posting has been published.\n" + "Please try again later.");
-				} else {
+							"No Job Posting has been published.\n"
+							+ "Please try again later.");
+				}else{
 					final ManagementSystem ms = PersistenceXStream.initializeModelManager(filename);
 					new ApplyForJob(ms, user).setVisible(true);
 					dispose();
@@ -245,7 +206,6 @@ public class AllApplication extends JFrame {
 				selectedCourse = cb.getSelectedIndex();
 			}
 		});
-// <<<<<<< AllocationPage
 		
 		
 		
@@ -267,81 +227,6 @@ public class AllApplication extends JFrame {
 		
 		
 		
-// =======
-
-// 		viewDetailButton.addActionListener(new ActionListener() {
-// 			@Override
-// 			public void actionPerformed(ActionEvent e) {
-// 				if (allApplication.getItemCount() == 0) {
-// 					JOptionPane.showMessageDialog(AllApplication.this, "No application has been submitted.");
-// 				} else {
-// 					String appDescription = allApplication.getItemAt(selectedApplication).toString();
-// 					Application selectedApp = applicationMap.get(appDescription);
-
-// 					new ApplicationDetails(ms, selectedApp.getApplicant(), user).setVisible(true);
-// 				}
-// 			}
-// 		});
-
-// 		acceptAppButton.addActionListener(new ActionListener() {
-// 			@Override
-// 			public void actionPerformed(ActionEvent e) {
-// 				if (allApplication.getItemCount() == 0) {
-// 					JOptionPane.showMessageDialog(AllApplication.this, "No application has been submitted.");
-// 				} else {
-// 					String appDescription = allApplication.getItemAt(selectedApplication).toString();
-// 					Application selectedApp = applicationMap.get(appDescription);
-
-// 					if (user.getClass().equals(Department.class) && selectedApp.getStatus().equals(Status.PENDING)) {
-// 						selectedApp.setStatus(Status.SELECTED);
-// 					} else if (user.getClass().equals(Applicant.class)
-// 							&& selectedApp.getStatus().equals(Status.SELECTED)) {
-// 						selectedApp.setStatus(Status.OFFER_ACCEPTED);
-// 					} else {
-// 						JOptionPane.showMessageDialog(AllApplication.this, "You cannot change the status now");
-// 					}
-
-// 					PersistenceXStream.saveToXMLwithXStream(ms);
-
-// 					dispose();
-// 					initComponents();
-// 				}
-// 			}
-// 		});
-
-// 		rejectAppButton.addActionListener(new ActionListener() {
-// 			@Override
-// 			public void actionPerformed(ActionEvent e) {
-// 				if (allApplication.getItemCount() == 0) {
-// 					JOptionPane.showMessageDialog(AllApplication.this, "No application has been submitted.");
-// 				} else {
-// 					String appDescription = allApplication.getItemAt(selectedApplication).toString();
-// 					Application selectedApp = applicationMap.get(appDescription);
-// 					if (user.getClass().equals(Department.class) && selectedApp.getStatus().equals(Status.PENDING)) {
-// 						selectedApp.setStatus(Status.SELECTED);
-// 					} else if (user.getClass().equals(Applicant.class)
-// 							&& selectedApp.getStatus().equals(Status.SELECTED)) {
-// 						selectedApp.setStatus(Status.OFFER_DECLINED);
-// 					} else {
-// 						JOptionPane.showMessageDialog(AllApplication.this, "You cannot change the status now");
-// 					}
-
-// 					PersistenceXStream.saveToXMLwithXStream(ms);
-// 					dispose();
-// 					initComponents();
-// 				}
-// 			}
-// 		});
-
-// 		viewAllocation.addActionListener(new ActionListener() {
-// 			@Override
-// 			public void actionPerformed(ActionEvent e) {
-// 				//Course course = 
-// 				//new AllocationPage1(ms,)
-
-// 			}
-// 		});
-// >>>>>>> master
 
 		backButton.addActionListener(new ActionListener() {
 			@Override
