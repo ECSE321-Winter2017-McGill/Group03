@@ -219,7 +219,7 @@ public class AllApplication extends JFrame {
 					String courseDescription = allJobPostingCourse.getItemAt(selectedCourse).toString();
 					Course selectedCourse = courseMap.get(courseDescription);
 					
-					new AllocationPage(ms,selectedCourse,user).setVisible(true);
+					new AllocationPage1(ms,selectedCourse,user).setVisible(true);
 					setVisible(false);
 					}
 			}

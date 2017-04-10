@@ -70,7 +70,7 @@ public class AllocationPage1 extends JFrame {
 	private HashMap<String, Application> applicationMap = new HashMap<String, Application>();
 	private JComboBox<String> allApplication;
 	private JButton viewDetailButton;
-	private JButton acceptAppButton;
+	// private JButton acceptAppButton;
 	private JButton rejectAppButton;
 	private JButton checkGradButton;
 	private int selectedApplication;
@@ -100,7 +100,7 @@ public class AllocationPage1 extends JFrame {
 
 		String[] columnNames = { "Name", "U/G", "Job Title", "Appointment Hour" };
 		int numApplications = 0;
-
+		//
 		if (course.getCourseJobAllocation() == null) {
 			for (Applicant anApplicant : ms.getApplicants()) {
 				for (Application aApplication : anApplicant.getApplications()) {
@@ -185,9 +185,9 @@ public class AllocationPage1 extends JFrame {
 
 		budgetRemainingLabel = new JLabel("Budget Remaining:");
 		budgetRemainingTextField = new JTextField();
-		budgetRemainingTextField.setText("     $" + Integer.toString(budget) + "      ");
+		budgetRemainingTextField.setText("<html><p>" + Integer.toString(budget) + "</p></html>");
 		budgetRemainingTextField.setForeground(Color.BLACK);
-		budgetRemainingTextField.setEditable(false);
+//		budgetRemainingTextField.setEditable(false);
 
 		// deleteButton = new JButton("Remove Applicant");
 		// deleteButton.addActionListener(new ActionListener() {
@@ -203,7 +203,7 @@ public class AllocationPage1 extends JFrame {
 		// });
 		final JComboBox<String> allApplication = new JComboBox<String>(new String[0]);
 		viewDetailButton = new JButton("View Details");
-		acceptAppButton = new JButton("Accept");
+		// acceptAppButton = new JButton("Accept");
 		rejectAppButton = new JButton("Reject");
 		checkGradButton = new JButton("Check Grad");
 
@@ -341,7 +341,7 @@ public class AllocationPage1 extends JFrame {
 
 			commandPane.add(allApplication);
 			commandPane.add(viewDetailButton);
-			commandPane.add(acceptAppButton);
+			// commandPane.add(acceptAppButton);
 			commandPane.add(rejectAppButton);
 
 			commandPane.add(budgetRemainingLabel);
@@ -382,39 +382,43 @@ public class AllocationPage1 extends JFrame {
 			}
 		});
 
-		acceptAppButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (allApplication.getItemCount() == 0) {
-					JOptionPane.showMessageDialog(AllocationPage1.this, "No application has been submitted.");
-				} else {
-					int reply = JOptionPane.showConfirmDialog(AllocationPage1.this,
-							"Hire for all tutorial/lab sessions?", null, JOptionPane.YES_NO_OPTION);
-					if (reply == JOptionPane.YES_OPTION) {
-						valueSet = course.getLabHour() * course.getNumLab()
-								+ course.getTutorialHour() * course.getNumTutorial();
-
-					} else if (reply == JOptionPane.NO_OPTION) {
-						valueSet = 0;
-					}
-
-					String appDescription = allApplication.getItemAt(selectedApplication).toString();
-					Application selectedApp = applicationMap.get(appDescription);
-					if (tc.applicationAccepted(selectedApp)) {
-						JOptionPane.showMessageDialog(AllocationPage1.this, "Application already accepted.");
-					} else {
-						try {
-							tc.acceptApplication(selectedApp);
-						} catch (InvalidInputException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-					}
-					dispose();
-					initComponents();
-				}
-			}
-		});
+		// acceptAppButton.addActionListener(new ActionListener() {
+		// @Override
+		// public void actionPerformed(ActionEvent e) {
+		// if (allApplication.getItemCount() == 0) {
+		// JOptionPane.showMessageDialog(AllocationPage1.this, "No application
+		// has been submitted.");
+		// } else {
+		// int reply = JOptionPane.showConfirmDialog(AllocationPage1.this,
+		// "Hire for all tutorial/lab sessions?", null,
+		// JOptionPane.YES_NO_OPTION);
+		// if (reply == JOptionPane.YES_OPTION) {
+		// valueSet = course.getLabHour() * course.getNumLab()
+		// + course.getTutorialHour() * course.getNumTutorial();
+		//
+		// } else if (reply == JOptionPane.NO_OPTION) {
+		// valueSet = 0;
+		// }
+		//
+		// String appDescription =
+		// allApplication.getItemAt(selectedApplication).toString();
+		// Application selectedApp = applicationMap.get(appDescription);
+		// if (tc.applicationAccepted(selectedApp)) {
+		// JOptionPane.showMessageDialog(AllocationPage1.this, "Application
+		// already accepted.");
+		// } else {
+		// try {
+		//// tc.acceptApplication(selectedApp);
+		// } catch (InvalidInputException e1) {
+		// // TODO Auto-generated catch block
+		// e1.printStackTrace();
+		// }
+		// }
+		// dispose();
+		// initComponents();
+		// }
+		// }
+		// });
 
 		rejectAppButton.addActionListener(new ActionListener() {
 			@Override
@@ -551,13 +555,17 @@ public class AllocationPage1 extends JFrame {
 		ArrayList<Applicant> graderAppointed = new ArrayList<Applicant>();
 
 		for (int i = 0; i < data.length; i++) {
+			try {
+				if (table.getModel().getValueAt(i, 2).equals("TA")) {
+					taAppointed.add(nameApplicantMap.get(table.getModel().getValueAt(i, 0)));
+					allTAHourAppointed.add((Integer) table.getModel().getValueAt(i, 3));
+				} else if(table.getModel().getValueAt(i, 2).equals("Grader")){
+					graderAppointed.add(nameApplicantMap.get(table.getModel().getValueAt(i, 0)));
+					allGraderHourAppointed.add((Integer) table.getModel().getValueAt(i, 3));
+				}
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(AllocationPage1.this, "Table Empty");
 
-			if (table.getModel().getValueAt(i, 2).equals("TA")) {
-				taAppointed.add(nameApplicantMap.get(table.getModel().getValueAt(i, 0)));
-				allTAHourAppointed.add((Integer) table.getModel().getValueAt(i, 3));
-			} else {
-				graderAppointed.add(nameApplicantMap.get(table.getModel().getValueAt(i, 0)));
-				allGraderHourAppointed.add((Integer) table.getModel().getValueAt(i, 3));
 			}
 
 		}

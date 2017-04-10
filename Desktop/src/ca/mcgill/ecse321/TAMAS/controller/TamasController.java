@@ -108,7 +108,7 @@ public class TamasController {
 				allocation.delete();
 				throw new InvalidInputException("This allocation exceeds the budget!");
 			}
-			
+			if
 			allocation.setAllocationStatus(AllocationStatus.INITIAL);
 			
 //			for (int i=0; i<listApplicant.size();i++){
@@ -131,10 +131,10 @@ public class TamasController {
 //					}
 //				}
 //			}
-				
-		} catch (RuntimeException e) {
-			throw new InvalidInputException(e.getMessage());
-		}
+//				
+//		} catch (RuntimeException e) {
+//			throw new InvalidInputException(e.getMessage());
+//		}
 		PersistenceXStream.saveToXMLwithXStream(mm);
 	}
 
@@ -237,7 +237,7 @@ public class TamasController {
 		System.out.println("create");
 		System.out.println(ap.numberOfApplications());
 		if (ap.getApplications().size() < 3) {
-			Application application = new Application(jp, ap);
+			Application application = new Application(0, jp, ap);
 			application.setStatus(Status.PENDING);
 			ap.addApplication(application);
 		}
@@ -481,16 +481,16 @@ public class TamasController {
 	}
 
 
-	public void acceptApplication(Application application) throws InvalidInputException {
-		if (application.getStatus().equals(Status.PENDING)) {
-			application.setStatus(Status.OFFER_ACCEPTED);
-			PersistenceXStream.saveToXMLwithXStream(ms);
-		}
-	}
+//	public void acceptApplication(Application application) throws InvalidInputException {
+//		if (application.getStatus().equals(Status.PENDING)) {
+//			application.setStatus(Status.OFFER_ACCEPTED);
+//			PersistenceXStream.saveToXMLwithXStream(ms);
+//		}
+//	}
 
 	public void rejectApplication(Application application) {
 		if (application.getStatus().equals(Status.PENDING)) {
-			application.setStatus(Status.OFFER_DECLINED);
+			application.setStatus(Status.REJECTED);
 			PersistenceXStream.saveToXMLwithXStream(ms);
 		}
 		
