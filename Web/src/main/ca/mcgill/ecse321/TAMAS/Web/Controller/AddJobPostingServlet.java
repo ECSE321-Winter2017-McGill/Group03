@@ -62,7 +62,8 @@ public class AddJobPostingServlet extends HttpServlet {
 
     }
 
-    protected void doPost(HttpServletRequest request,
+    @SuppressWarnings("deprecation")
+	protected void doPost(HttpServletRequest request,
 
                           HttpServletResponse response) throws ServletException, IOException {
         String fileName = "output/data.xml";

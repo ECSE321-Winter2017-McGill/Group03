@@ -23,6 +23,11 @@ import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
 public class ViewApplicationsServlet extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2909744365295318220L;
+
 	protected void doGet(HttpServletRequest request,
 
 			HttpServletResponse response) throws ServletException, IOException {
