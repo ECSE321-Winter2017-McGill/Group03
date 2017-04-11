@@ -307,7 +307,7 @@ public class TamasController {
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 
-	private Applicant createApplicant(String name, int id, String major, boolean isUndergrad, String year, String exp,
+	public Applicant createApplicant(String name, int id, String major, boolean isUndergrad, String year, String exp,
 			String firstChoice, String secondChoice, String thirdChoice, int totalAppointmentHour)
 			throws InvalidInputException {
 		String error = "";
