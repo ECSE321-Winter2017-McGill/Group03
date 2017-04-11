@@ -358,15 +358,7 @@ public class ApplyForJob extends JFrame {
 				name = nameTextField.getText();
 			}
 
-			int id;
-			if (idTextField.getText().equals("")) {
-				id = -1;
-			} else if (!idTextField.getText().matches("[0-9]+")) {
-				id = -1;
-			} else {
-				id = Integer.parseInt(idTextField.getText());
-			}
-
+			String id = idTextField.getText();
 			String major = majorTextField.getText();
 
 			boolean isUndergrad = true;

@@ -226,7 +226,7 @@ public class TamasController {
 
 	}
 
-	public void createApplication(JobPosting jp, String name, int id, String major, boolean isUndergrad, String year,
+	public void createApplication(JobPosting jp, String name, String id, String major, boolean isUndergrad, String year,
 			String exp, String firstChoice, String secondChoice, String thirdChoice, int totalAppointmentHour)
 			throws InvalidInputException {
 
@@ -254,7 +254,7 @@ public class TamasController {
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 
-	public Applicant createApplicant(String name, int id, String major, boolean isUndergrad, String year, String exp,
+	public Applicant createApplicant(String name, String id, String major, boolean isUndergrad, String year, String exp,
 			String firstChoice, String secondChoice, String thirdChoice, int totalAppointmentHour)
 			throws InvalidInputException {
 		String error = "";
@@ -262,7 +262,16 @@ public class TamasController {
 		if (name == null || name.trim().length() == 0) {
 			error += "Name cannot be empty!";
 		}
-		if (id < 0) {
+		
+		int idNum = 0;
+		try {
+				idNum = Integer.parseInt(id);
+				} catch (NumberFormatException e) {
+					error += "id must be a number! ";
+				} catch (NullPointerException e) {
+					error += "id must be a number! ";
+				}
+		if (idNum < 0) {
 			error += "You must input a valid id!";
 		}
 		if (major == null || major.trim().length() == 0) {
@@ -287,7 +296,7 @@ public class TamasController {
 			}
 		}
 
-		this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice,
+		this_applicant = new Applicant(idNum, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice,
 				"", totalAppointmentHour, ms);
 
 		PersistenceXStream.saveToXMLwithXStream(ms);
@@ -385,9 +394,9 @@ public class TamasController {
 
 	}
 
-	public void createCourse(String semester, String courseName, String courseCode, int credit, int maxStudent,
-			String instructorName, int numGraderNeeded, int numLab, int numTutorial, int labHour, int tutorialHour,
-			int totalGraderHour) throws InvalidInputException {
+	public void createCourse(String semester, String courseName, String courseCode, String credit, String maxStudent,
+			String instructorName, String numGraderNeeded, String numLab, String numTutorial, String labHour, String tutorialHour,
+			String totalGraderHour) throws InvalidInputException {
 
 		String error = "";
 		courseCode = courseCode.replaceAll("\\s+","");
@@ -397,33 +406,104 @@ public class TamasController {
 		if (courseCode == null || courseCode.trim().length() == 0) {
 			error += "Please specify the course code! ";
 		}
-		if (credit < 0) {
+		
+		int creditNum = 0;
+		try {
+			 	creditNum = Integer.parseInt(credit);
+				} catch (NumberFormatException e) {
+					error += "Please specify the number of credits in the correct format! ";
+				} catch (NullPointerException e) {
+					error += "Please specify the number of credits in the correct format! ";
+			    }	
+		if (creditNum < 0) {
 			error += "Please specify the number of credits in the correct format! ";
 		}
-		if (maxStudent < 0) {
+		
+		int maxStudentNum = 0;
+		try {
+			maxStudentNum = Integer.parseInt(maxStudent);
+				} catch (NumberFormatException e) {
+					error += "max student must be a number! ";
+				} catch (NullPointerException e) {
+					error += "max student must be a number! ";
+			    }	
+		if (maxStudentNum < 0) {
 			error += "Please specify the maximum number of students in the correct format! ";
 		}
+		
 		if (instructorName == null || instructorName.trim().length() == 0) {
 			error += "Please specify the instructor! ";
 		}
-		if (labHour < 0) {
+		
+		int labHourNum = 0;
+		try {
+			labHourNum = Integer.parseInt(labHour);
+				} catch (NumberFormatException e) {
+					error += "lab hour must be a number! ";
+				} catch (NullPointerException e) {
+					error += "lab hour must be a number! ";
+			    }	
+		if (labHourNum < 0) {
 			error += "Please specify a correct lab hour! ";
 		}
-		if (tutorialHour < 0) {
+		
+		int tutorialHourNum = 0;
+		try {
+			tutorialHourNum = Integer.parseInt(tutorialHour);
+				} catch (NumberFormatException e) {
+					error += "tutorial hour must be a number! ";
+				} catch (NullPointerException e) {
+					error += "tutorial hour must be a number! ";
+			    }	
+		if (tutorialHourNum < 0) {
 			error += "Please specify a correct tutorial hour! ";
 		}
-		if (numLab < 0) {
+		
+		int numLabNum = 0;
+		try {
+			numLabNum = Integer.parseInt(numLab);
+				} catch (NumberFormatException e) {
+					error += "number of labs must be a number! ";
+				} catch (NullPointerException e) {
+					error += "number of labs must be a number! ";
+			    }	
+		if (numLabNum < 0) {
 			error += "Please specify the numebr of lab sessions in the correct format! ";
 		}
-		if (numTutorial < 0) {
+		
+		int numTutorialNum = 0;
+		try {
+			numTutorialNum = Integer.parseInt(numTutorial);
+				} catch (NumberFormatException e) {
+					error += "number of tutorials must be a number! ";
+				} catch (NullPointerException e) {
+					error += "number of tutorials must be a number! ";
+			    }	
+		if (numTutorialNum < 0) {
 			error += "Please specify the number of tutorials in the correct format! ";
 		}
 
-		if (numGraderNeeded < 0) {
+		int numGraderNeededNum = 0;
+		try {
+			numGraderNeededNum = Integer.parseInt(numGraderNeeded);
+				} catch (NumberFormatException e) {
+					error += "number of Grader needed must be a number! ";
+				} catch (NullPointerException e) {
+					error += "number of Grader needed must be a number! ";
+			    }	
+		if (numGraderNeededNum < 0) {
 			error += "Please specify the number of Grader needed in the correct format! ";
 		}
 
-		if (totalGraderHour < 0) {
+		int totalGraderHourNum = 0;
+		try {
+			totalGraderHourNum = Integer.parseInt(totalGraderHour);
+				} catch (NumberFormatException e) {
+					error += "total grader hour must be a number! ";
+				} catch (NullPointerException e) {
+					error += "total grader hour must be a number! ";
+			    }	
+		if (totalGraderHourNum < 0) {
 			error += "Please specify the Grader appointment hour in the correct format! ";
 		}
 
@@ -450,19 +530,19 @@ public class TamasController {
 		// Required total TA working hours of a course
 		// labHour = total hour for one lab session/semester
 		// tutorialHour = total hour for one tutorial session/semester
-		int hourRequiredTa = numLab * labHour + numTutorial * tutorialHour;
+		int hourRequiredTa = numLabNum * labHourNum + numTutorialNum * tutorialHourNum;
 
 		// The total number of TA needed for a course = ceil(total hours/max
 		// working hours of a TA)
 		// This gives the minimum number of TA needed
-		double temp = (numLab * labHour + numTutorial * tutorialHour) / 180;
+		double temp = (numLabNum * labHourNum + numTutorialNum* tutorialHourNum) / 180;
 		int numTaNeeded = (int) Math.ceil(temp);
 
 		// TODO: HOW TO CALCULATE BUDGET
-		double budgetCalculated = (18 * hourRequiredTa) + (15 * totalGraderHour);
+		double budgetCalculated = (18 * hourRequiredTa) + (15 * totalGraderHourNum);
 
-		Course newCourse = new Course(semester, courseName, courseCode.trim(), numTutorial, numLab, maxStudent, credit,
-				numTaNeeded, numGraderNeeded, labHour, tutorialHour, totalGraderHour, budgetCalculated, instructor, ms);
+		Course newCourse = new Course(semester, courseName, courseCode.trim(), numTutorialNum, numLabNum, maxStudentNum, creditNum,
+				numTaNeeded, numGraderNeededNum, labHourNum, tutorialHourNum, totalGraderHourNum, budgetCalculated, instructor, ms);
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 

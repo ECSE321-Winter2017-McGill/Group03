@@ -79,6 +79,14 @@ public class AllCourses extends JFrame {
 		JButton viewDetailButton = new JButton("View Details");
 		JButton addCourse = new JButton("Add a Course");
 		JButton backButton = new JButton("Back");
+		
+		// Combobox action listenser
+		allCourse.addActionListener(new java.awt.event.ActionListener() {
+	        public void actionPerformed(java.awt.event.ActionEvent evt) {
+	            JComboBox<String> cb = (JComboBox<String>) evt.getSource();
+	            selectedCourse = cb.getSelectedIndex();
+	        }
+	    });
 
 		for (Course aCourse: ms.getCourses()){
 			String courseDescription = aCourse.getCourseName() + " (" + aCourse.getCourseCode() + ")";
@@ -126,7 +134,7 @@ public class AllCourses extends JFrame {
 				}else{
 					String courseDescription = allCourse.getItemAt(selectedCourse).toString();
 					Course selectedCourse = courseMap.get(courseDescription);
-					
+					System.out.print(courseDescription);
 					new CourseDetails(ms,selectedCourse,user).setVisible(true);
 				}
 			}
