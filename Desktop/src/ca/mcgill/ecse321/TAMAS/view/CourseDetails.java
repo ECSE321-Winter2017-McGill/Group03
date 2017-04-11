@@ -53,7 +53,7 @@ public class CourseDetails extends JFrame {
 	private JSeparator horizontalLineTop;
 	private JSeparator horizontalLineMiddle;
 	
-	private JButton closeButton;
+	private JButton backButton;
 	
 
 	private ManagementSystem ms;
@@ -161,17 +161,16 @@ public class CourseDetails extends JFrame {
 		totalGraderHourTextField.setEditable(false);
 		
 		
-		closeButton = new JButton("  Close  ");
-		closeButton.addActionListener(new java.awt.event.ActionListener() {
+		backButton = new JButton("  Back  ");
+		backButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				closeButtonActionPerformed(evt);
+				backButtonActionPerformed(evt);
 			}
 		});
 		
 		
 		
 		setTitle("Course Details");
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		
 		
@@ -199,7 +198,7 @@ public class CourseDetails extends JFrame {
 								.addComponent(tutorialHourLabel)
 								.addComponent(numGraderNeededLabel)
 								.addComponent(totalGraderHourLabel)
-								.addComponent(closeButton))
+								.addComponent(backButton))
 						.addGroup(layout.createParallelGroup()
 								.addComponent(semesterToggleList)
 								.addComponent(nameTextField)
@@ -258,7 +257,7 @@ public class CourseDetails extends JFrame {
 						.addComponent(totalGraderHourLabel)
 						.addComponent(totalGraderHourTextField,23,23,23))
 				.addGroup(layout.createParallelGroup()
-						.addComponent(closeButton))
+						.addComponent(backButton))
 				);
 
 		pack();
@@ -267,8 +266,9 @@ public class CourseDetails extends JFrame {
 		
 	}
 	
-	private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		setVisible(false);
+	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		backToAllCourses();
+		dispose();
 	}
 	
 	private void backToAllCourses() {

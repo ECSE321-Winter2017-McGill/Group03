@@ -403,12 +403,7 @@ public class AllocationPage1 extends JFrame {
 					if (tc.applicationAccepted(selectedApp)) {
 						JOptionPane.showMessageDialog(AllocationPage1.this, "Application already accepted.");
 					} else {
-						try {
 							tc.acceptApplication(selectedApp);
-						} catch (InvalidInputException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
 					}
 					dispose();
 					initComponents();

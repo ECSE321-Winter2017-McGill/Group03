@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
@@ -30,7 +31,6 @@ public class MainPage extends JFrame {
 	private JButton viewApplication;
 	private JButton viewCourse;
 	private JButton addTAEval;
-	private JButton viewEvaluation;
 	
 	private JPanel topPanel;
 	private JPanel optionsPanel;
@@ -61,8 +61,6 @@ public class MainPage extends JFrame {
 		addTAEval = new JButton("Write A New Evaluation");
 //		addTAEval.setPreferredSize(new Dimension(70, 60));
 		
-		viewEvaluation = new JButton("  View an Evaluation  ");
-//		viewEvaluation.setPreferredSize(new Dimension(70, 150));
 		
 		setTitle("Welcome Page");
 		
@@ -175,25 +173,21 @@ public class MainPage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
-				new ViewWriteEvaluation(ms, user).setVisible(true);
-				dispose();
+				
+				if (ms.getApplicants().size() > 0){
+					System.out.println(ms.getApplicants());
+					new WriteEvaluation(ms, user).setVisible(true);
+					dispose();
+				}
+				
+				else{
+					JOptionPane.showMessageDialog(MainPage.this,"You cannot write evaluation because\n"
+							+ "there is currently no applicant in the system");
+				}
 			}
 
 		});
 		
-		viewEvaluation.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
-				new ViewWriteEvaluation(ms, user).setVisible(true);
-				dispose();
-			}
-
-		});
 	}
 
-	public void backToMain() {
-		new MainPage(user).setVisible(true);
-	}
 }

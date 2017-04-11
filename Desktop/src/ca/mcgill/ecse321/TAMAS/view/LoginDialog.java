@@ -83,7 +83,6 @@ public class LoginDialog extends JFrame {
 							JOptionPane.INFORMATION_MESSAGE);
 					succeeded = true;
 					new MainPage(getUserRole()).setVisible(true);
-					(new Thread(new ShowProgress())).start();
 					dispose();
 				} else {
 					JOptionPane.showMessageDialog(LoginDialog.this, "Invalid username or password", "Login",

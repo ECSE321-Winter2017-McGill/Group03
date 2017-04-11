@@ -179,17 +179,16 @@ public class TamasController {
 		this.ms = ms;
 	}
 
-	public void createTAEval(Applicant ta, String eval) throws InvalidInputException {
+	public void createTAEval(Applicant ta, String header, String eval) throws InvalidInputException {
 		String error = "";
-
-		// Applicant newApplicant;
 
 		if (eval.trim().length() == 0) {
 			error += "Can not submit an empty Evaluation ";
 		}
 
 		try {
-			ta.setEvaluation(eval);
+			String formatedEval = header + ":\n" + eval;
+			ta.setEvaluation(formatedEval);
 		} catch (Exception e) {
 			error += e.getMessage();
 		}
@@ -200,6 +199,33 @@ public class TamasController {
 
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
+	
+	
+	public void addMoreTAEval(Applicant ta, String header, String eval) throws InvalidInputException{
+		String error = "";
+		
+		if (eval.trim().length() == 0) {
+			error += "Can not submit an empty Evaluation ";
+		}
+		
+		try {
+			String previousEval = ta.getEvaluation().trim();
+			String newEval = "\n" + "\n" + header + ":\n" + eval;
+			String allEval = previousEval + newEval;
+			
+			ta.setEvaluation(allEval); 
+		} catch (Exception e) {
+			error += e.getMessage();
+		}
+
+		if (error.length() > 0) {
+			throw new InvalidInputException(error);
+		}
+
+		PersistenceXStream.saveToXMLwithXStream(ms);
+			
+	}
+	
 
 	public void createJobPosting(String jobPosition, Date deadlineDate, String exp, double hourlyRate, Course aCourse)
 			throws InvalidInputException {
@@ -231,13 +257,12 @@ public class TamasController {
 			throws InvalidInputException {
 
 		String error = "";
-		Applicant ap = createApplicant(name, id, major, isUndergrad, year, exp, firstChoice, secondChoice, thirdChoice,
-				totalAppointmentHour);
+		Applicant ap = createApplicant(name, id, major, isUndergrad, year, exp, firstChoice, secondChoice, thirdChoice,totalAppointmentHour);
 
 		System.out.println("create");
 		System.out.println(ap.numberOfApplications());
 		if (ap.getApplications().size() < 3) {
-			Application application = new Application(jp, ap);
+			Application application = new Application(0,jp, ap);
 			application.setStatus(Status.PENDING);
 			ap.addApplication(application);
 		}
@@ -481,16 +506,16 @@ public class TamasController {
 	}
 
 
-	public void acceptApplication(Application application) throws InvalidInputException {
+	public void acceptApplication(Application application){
 		if (application.getStatus().equals(Status.PENDING)) {
-			application.setStatus(Status.OFFER_ACCEPTED);
+			application.setStatus(Status.SELECTED);
 			PersistenceXStream.saveToXMLwithXStream(ms);
 		}
 	}
 
 	public void rejectApplication(Application application) {
 		if (application.getStatus().equals(Status.PENDING)) {
-			application.setStatus(Status.OFFER_DECLINED);
+			application.setStatus(Status.REJECTED);
 			PersistenceXStream.saveToXMLwithXStream(ms);
 		}
 		
@@ -601,5 +626,34 @@ public class TamasController {
 	}
 	
 	
+	
+	public boolean offerAccepted(Application application) {
+		if (application.getStatus().equals(Status.OFFER_ACCEPTED)) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean offerRejected(Application application) {
+		if (application.getStatus().equals(Status.OFFER_DECLINED)) {
+			return true;
+		}
+		return false;
+	}
+	
+	
+	public void acceptOffer(Application application){
+		if (application.getStatus().equals(Status.SELECTED)) {
+			application.setStatus(Status.OFFER_ACCEPTED);
+			PersistenceXStream.saveToXMLwithXStream(ms);
+		}
+	}
+	
+	public void rejectOffer(Application application){
+		if (application.getStatus().equals(Status.SELECTED)) {
+			application.setStatus(Status.OFFER_DECLINED);
+			PersistenceXStream.saveToXMLwithXStream(ms);
+		}
+	}
 
 }

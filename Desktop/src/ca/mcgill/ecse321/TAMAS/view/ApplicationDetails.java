@@ -146,7 +146,7 @@ public class ApplicationDetails extends JFrame {
 		
 		
 		
-		backButton = new JButton("  Close  ");
+		backButton = new JButton("  Back  ");
 		backButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				backButtonActionPerformed(evt);
@@ -156,7 +156,6 @@ public class ApplicationDetails extends JFrame {
 		
 
 		setTitle("Application Details");
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	
 
 		GroupLayout layout = new GroupLayout(getContentPane());
@@ -230,10 +229,12 @@ public class ApplicationDetails extends JFrame {
 	}
 	
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		setVisible(false);
+		backToAllocation();
+		dispose();
 	}
 	
-	private void backToAllApp() {
-		new AllApplication(ms, user).setVisible(true);
+	private void backToAllocation(){
+//		new AllocationPage().setVisible(true);
 	}
+	
 }

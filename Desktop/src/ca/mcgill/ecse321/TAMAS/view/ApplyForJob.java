@@ -49,7 +49,6 @@ public class ApplyForJob extends JFrame {
 	private JTextArea pastExperienceTextArea;
 	private JLabel choiceMessage0;
 	private JLabel choiceMessage1;
-	private JLabel choiceMessage2;
 	private JLabel firstChoiceLabel;
 	private JComboBox<String> firstChoiceToggleList;
 	private JLabel secondChoiceLabel;
@@ -109,15 +108,7 @@ public class ApplyForJob extends JFrame {
 
 		nameLabel = new JLabel("Name:");
 		nameLabel.setForeground(Color.BLACK);
-		if (user.getClass().equals(Applicant.class)) { //
-			Applicant a = (Applicant) user;
-			nameTextField = new JTextField();
-			nameTextField.setText(a.getName());
-			nameTextField.setEditable(false);
-			nameTextField.setForeground(Color.BLACK);
-		} else {
-			nameTextField = new JTextField();
-		}
+
 
 		idLabel = new JLabel("McGill ID:");
 		idLabel.setForeground(Color.BLACK);
@@ -162,14 +153,12 @@ public class ApplyForJob extends JFrame {
 		pastExperienceTextArea.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
 
 		choiceMessage0 = new JLabel(
-				"Please select this position as your first choice if you are applying for 1 position");
+				"Please select a first and second choice if already applied for 1 position");
 		choiceMessage0.setForeground(Color.BLACK);
 
-		choiceMessage1 = new JLabel("Please select a second choice if already applied for 1 position");
+		choiceMessage1 = new JLabel("Please select a first,second and third choice if already applied for 2 positions");
 		choiceMessage1.setForeground(Color.BLACK);
 
-		choiceMessage2 = new JLabel("Please select a third choice if already applied for 2 positions");
-		choiceMessage2.setForeground(Color.BLACK);
 
 		// TODO: choices are hard coded.
 		firstChoiceLabel = new JLabel("First Choice");
@@ -240,22 +229,63 @@ public class ApplyForJob extends JFrame {
 		horizontalLineMiddle1 = new JSeparator();
 		horizontalLineMiddle2 = new JSeparator();
 
+		
+		if (user.getClass().equals(Applicant.class)) { //
+			Applicant a = (Applicant) user;
+			nameTextField = new JTextField();
+			nameTextField.setText(a.getName());
+			nameTextField.setEditable(false);
+			nameTextField.setForeground(Color.BLACK);
+			
+			// first, second, third choice toggle list enabled depending on
+			// the number of applications the applicant has submitted before
+			if (((Applicant)user).getApplications().size() == 0){
+				firstChoiceToggleList.setEnabled(false);
+				secondChoiceToggleList.setEnabled(false);
+				thirdChoiceToggleList.setEnabled(false);
+			}
+			else if (((Applicant)user).getApplications().size() == 1){
+				firstChoiceToggleList.setEnabled(true);
+				secondChoiceToggleList.setEnabled(true);
+				thirdChoiceToggleList.setEnabled(false);
+			}
+			else{
+				firstChoiceToggleList.setEnabled(true);
+				secondChoiceToggleList.setEnabled(true);
+				thirdChoiceToggleList.setEnabled(true);
+			}		
+			
+		} 
+		
+		// If user == Instructor or Department, all of the choice toggle list enabled
+		else {
+			nameTextField = new JTextField();
+			firstChoiceToggleList.setEnabled(true);
+			secondChoiceToggleList.setEnabled(true);
+			thirdChoiceToggleList.setEnabled(true);
+		}
+		
+		
+		
+		
 		if (user.getClass().equals(Applicant.class)) {
-			addlayout(nameTextField);
-		} else {
-			addlayout(nameTextField);
+			addlayout(nameTextField,firstChoiceToggleList,secondChoiceToggleList,thirdChoiceToggleList);
+		} 
+		
+		else {
+			addlayout(nameTextField,firstChoiceToggleList,secondChoiceToggleList,thirdChoiceToggleList);
 		}
 
 	}
 
-	private void addlayout(Component o) {
+	private void addlayout(Component name, Component firstChoice, Component secondChoice, Component thirdChoice) {
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
 		layout.setHorizontalGroup(layout.createParallelGroup().addComponent(formTitle).addComponent(errorMessage)
 				.addComponent(horizontalLineTop).addComponent(horizontalLineMiddle1).addComponent(horizontalLineMiddle2)
-				.addComponent(choiceMessage0).addComponent(choiceMessage1).addComponent(choiceMessage2)
+				.addComponent(choiceMessage0).addComponent(choiceMessage1)
 
 				.addGroup(layout.createSequentialGroup()
 						.addGroup(layout.createParallelGroup().addComponent(jobPostingLabel).addComponent(nameLabel)
@@ -264,16 +294,16 @@ public class ApplyForJob extends JFrame {
 								.addComponent(firstChoiceLabel).addComponent(secondChoiceLabel)
 								.addComponent(thirdChoiceLabel).addComponent(cancelButton))
 						.addGroup(layout.createParallelGroup().addComponent(jobPostingToggleList)
-								.addComponent(nameLabel).addComponent(o).addComponent(idTextField)
+								.addComponent(nameLabel).addComponent(name).addComponent(idTextField)
 								.addComponent(majorTextField).addComponent(isUndergradToggleList)
 								.addComponent(yearToggleList).addComponent(pastExperienceTextArea)
-								.addComponent(firstChoiceToggleList).addComponent(secondChoiceToggleList)
-								.addComponent(thirdChoiceToggleList).addComponent(submitButton))));
+								.addComponent(firstChoice).addComponent(secondChoice)
+								.addComponent(thirdChoice).addComponent(submitButton))));
 
 		layout.setVerticalGroup(layout.createSequentialGroup().addComponent(formTitle)
 				.addGroup(layout.createParallelGroup().addComponent(horizontalLineTop)).addComponent(errorMessage)
 				.addGroup(layout.createParallelGroup().addComponent(jobPostingLabel).addComponent(jobPostingToggleList))
-				.addGroup(layout.createParallelGroup().addComponent(nameLabel).addComponent(o))
+				.addGroup(layout.createParallelGroup().addComponent(nameLabel).addComponent(name))
 				.addGroup(layout.createParallelGroup().addComponent(idLabel).addComponent(idTextField))
 				.addGroup(layout.createParallelGroup().addComponent(majorLabel).addComponent(majorTextField))
 				.addGroup(layout.createParallelGroup().addComponent(horizontalLineMiddle1))
@@ -283,13 +313,12 @@ public class ApplyForJob extends JFrame {
 				.addGroup(layout.createParallelGroup().addComponent(pastExperienceLabel)
 						.addComponent(pastExperienceTextArea))
 				.addGroup(layout.createParallelGroup().addComponent(horizontalLineMiddle2)).addComponent(choiceMessage0)
-				.addComponent(choiceMessage1).addComponent(choiceMessage2)
+				.addComponent(choiceMessage1)
 				.addGroup(
-						layout.createParallelGroup().addComponent(firstChoiceLabel).addComponent(firstChoiceToggleList))
-				.addGroup(layout.createParallelGroup().addComponent(secondChoiceLabel)
-						.addComponent(secondChoiceToggleList))
+						layout.createParallelGroup().addComponent(firstChoiceLabel).addComponent(firstChoice))
+				.addGroup(layout.createParallelGroup().addComponent(secondChoiceLabel).addComponent(secondChoice))
 				.addGroup(
-						layout.createParallelGroup().addComponent(thirdChoiceLabel).addComponent(thirdChoiceToggleList))
+						layout.createParallelGroup().addComponent(thirdChoiceLabel).addComponent(thirdChoice))
 				.addGroup(layout.createParallelGroup().addComponent(cancelButton).addComponent(submitButton))
 
 		);
@@ -345,10 +374,6 @@ public class ApplyForJob extends JFrame {
 			error += "Please select your year.";
 		}
 
-		if (selectedFirstChoice < 0) {
-			error += "Please select your first choice.";
-		}
-
 		if (error.trim().length() == 0) {
 			String name = null;
 			if (user.getClass().equals(Applicant.class)) {
@@ -380,7 +405,11 @@ public class ApplyForJob extends JFrame {
 			String secondChoice = null;
 			String thirdChoice = null;
 
-			firstChoice = (String) firstChoiceToggleList.getSelectedItem();
+			
+			
+			if (selectedFirstChoice != -1) {
+				firstChoice = (String) firstChoiceToggleList.getSelectedItem();
+			}
 
 			if (selectedSecondChoice != -1) {
 				secondChoice = (String) secondChoiceToggleList.getSelectedItem();

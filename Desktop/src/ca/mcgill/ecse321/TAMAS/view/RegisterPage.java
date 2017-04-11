@@ -188,16 +188,12 @@ public class RegisterPage extends JFrame{
 			}
 			
 			if (error.trim().length()==0){
-				int selectedOption = JOptionPane.showConfirmDialog(null, 
-		                "Registration Completed.\n"
-		                + "Registration Page will be closed", 
-		                "", 
-		                JOptionPane.OK_CANCEL_OPTION); 
-				if (selectedOption == JOptionPane.OK_OPTION) {
+				JOptionPane.showMessageDialog(RegisterPage.this, "Registration Completed.\n"
+		                + "Registration Page will be closed");
+
 					new LoginDialog().setVisible(true);
 					new LoginHint().setVisible(true);
 					setVisible(false);
-				}
 			}
 
 

@@ -423,12 +423,7 @@ public class AllocationPage extends JFrame {
 								"Application already accepted.");
 					}
 					else{
-						try {
-							tc.acceptApplication(selectedApp);
-						} catch (InvalidInputException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						tc.acceptApplication(selectedApp);
 					}
 					dispose();
 					initComponents();

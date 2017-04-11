@@ -128,6 +128,7 @@ public class AllCourses extends JFrame {
 					Course selectedCourse = courseMap.get(courseDescription);
 					
 					new CourseDetails(ms,selectedCourse,user).setVisible(true);
+					dispose();
 				}
 			}
 		});
@@ -147,7 +148,7 @@ public class AllCourses extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				backToMain();
-				setVisible(false);
+				dispose();
 			}
 		});
 		
