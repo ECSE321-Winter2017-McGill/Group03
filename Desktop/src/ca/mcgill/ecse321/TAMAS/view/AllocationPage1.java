@@ -60,7 +60,7 @@ public class AllocationPage1 extends JFrame {
 	private JPanel buttomPane;
 
 	private JLabel budgetRemainingLabel;
-	private JTextField budgetRemainingTextField;
+	private JLabel budgetRemainingTextField;
 	private JButton createButton;
 	private JButton modifyButton;
 	private JButton finalizeButton;
@@ -123,7 +123,7 @@ public class AllocationPage1 extends JFrame {
 			}
 		}
 
-		data = new String[numApplications + 1][4];
+		data = new String[numApplications][4];
 
 		int i = 0;
 
@@ -142,7 +142,14 @@ public class AllocationPage1 extends JFrame {
 							data[i][1] = "Grad";
 						}
 						data[i][2] = aApplication.getJobPosting().getJobTitle();
-						data[i][3] = "45";
+						// if (aApplication.getHour() < 45) {
+						// System.out.println(aApplication.getHour());
+						// data[i][3] = "45";
+						// } else {
+						System.out.println(aApplication.getHour());
+						data[i][3] = Integer.toString(aApplication.getHour());
+						// }
+
 						i++;
 					}
 				}
@@ -153,13 +160,19 @@ public class AllocationPage1 extends JFrame {
 					if (aApplication.getStatusFullName().equals("SELECTED") && aApplication.getJobPosting().getCourse()
 							.getCourseName().equals(course.getCourseName())) {
 						data[i][0] = anApplicant.getName();
+						nameApplicantMap.put(anApplicant.getName(), anApplicant);
 						if (anApplicant.getIsUnderGraduated() == true) {
 							data[i][1] = "Und";
 						} else {
 							data[i][1] = "Grad";
 						}
 						data[i][2] = aApplication.getJobPosting().getJobTitle();
-						data[i][3] = "45";
+						// if (aApplication.getHour() < 45) {
+						//
+						// data[i][3] = "45";
+						// } else {
+						data[i][3] = Integer.toString(aApplication.getHour());
+						// }
 						i++;
 					}
 				}
@@ -184,10 +197,10 @@ public class AllocationPage1 extends JFrame {
 		int budget = (int) Math.floor(course.getBudgetCalculated());
 
 		budgetRemainingLabel = new JLabel("Budget Remaining:");
-		budgetRemainingTextField = new JTextField();
+		budgetRemainingTextField = new JLabel();
 		budgetRemainingTextField.setText("<html><p>" + Integer.toString(budget) + "</p></html>");
 		budgetRemainingTextField.setForeground(Color.BLACK);
-//		budgetRemainingTextField.setEditable(false);
+		// budgetRemainingTextField.setEditable(false);
 
 		// deleteButton = new JButton("Remove Applicant");
 		// deleteButton.addActionListener(new ActionListener() {
@@ -446,55 +459,56 @@ public class AllocationPage1 extends JFrame {
 
 	public void refreshData() {
 		//
-		// int numApplications = 0;
-		// for (Applicant anApplicant: ms.getApplicants()) {
-		// for (Application aApplication: anApplicant.getApplications()){
-		// if ( (aApplication.getStatusFullName().equals("PENDING") ||
-		// aApplication.getStatusFullName().equals("SELECTED")) &&
-		// aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())
-		// ){
-		// numApplications++;
-		// }
-		// }
-		// }
-		//
-		//
-		// String[][] data = new String[numApplications+1][4];
-		//
-		// int i = 0;
-		// for (Applicant anApplicant: ms.getApplicants()) {
-		// for (Application aApplication: anApplicant.getApplications()){
-		// if ( (aApplication.getStatusFullName().equals("PENDING") ||
-		// aApplication.getStatusFullName().equals("SELECTED")) &&
-		// aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())
-		// ){
-		// data[i][0] = anApplicant.getName();
-		// if (anApplicant.getIsUnderGraduated() == true) {
-		// data[i][1] = "Und";
-		// } else {
-		// data[i][1] = "Grad";
-		// }
-		// data[i][2] = aApplication.getJobPosting().getJobTitle();
-		// data[i][3] = "45";
-		// i++;
-		// }
-		// }
-		// }
-		//
-		// DefaultTableModel tableModel = new DefaultTableModel(data,
-		// columnNames);
-		// table = new JTable(tableModel);
-		// table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-		// table.setPreferredScrollableViewportSize(new Dimension(1200, 100));
-		// table.setFillsViewportHeight(true);
-		//
-		//
-		// if (valueSet != 0){
-		// tableModel.setValueAt(valueSet, selectedApplication, 3);
-		// }
-		//
+		int numApplications = 0;
+		for (Applicant anApplicant : ms.getApplicants()) {
+			for (Application aApplication : anApplicant.getApplications()) {
+				if ((aApplication.getStatusFullName().equals("PENDING")
+						|| aApplication.getStatusFullName().equals("SELECTED"))
+						&& aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())) {
+					numApplications++;
+				}
+			}
+		}
 
-		// budgetRemainingTextField.setText("$" + Integer.toString());
+		String[][] data = new String[numApplications][4];
+
+		int i = 0;
+		for (Applicant anApplicant : ms.getApplicants()) {
+			for (Application aApplication : anApplicant.getApplications()) {
+				if ((aApplication.getStatusFullName().equals("PENDING")
+						|| aApplication.getStatusFullName().equals("SELECTED"))
+						&& aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())) {
+					data[i][0] = anApplicant.getName();
+					nameApplicantMap.put(anApplicant.getName(), anApplicant);
+					if (anApplicant.getIsUnderGraduated() == true) {
+						data[i][1] = "Und";
+					} else {
+						data[i][1] = "Grad";
+					}
+					data[i][2] = aApplication.getJobPosting().getJobTitle();
+					// if (aApplication.getHour() < 45) {
+					// System.out.println(aApplication.getHour());
+					// data[i][3] = "45";
+					// } else {
+					// System.out.println(aApplication.getHour());
+					data[i][3] = Integer.toString(aApplication.getHour());
+					// }
+					i++;
+				}
+			}
+		}
+
+		DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
+		table = new JTable(tableModel);
+		table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+		table.setPreferredScrollableViewportSize(new Dimension(1200, 100));
+		table.setFillsViewportHeight(true);
+
+		if (valueSet != 0) {
+			tableModel.setValueAt(valueSet, selectedApplication, 3);
+		}
+
+		budgetRemainingTextField.setText("$" + tc.getRemainingBudget(course));
 
 		String consoleText = "<html>";
 
@@ -548,6 +562,7 @@ public class AllocationPage1 extends JFrame {
 	}
 
 	private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {
+
 		String error = "";
 		ArrayList<Integer> allTAHourAppointed = new ArrayList<Integer>();
 		ArrayList<Integer> allGraderHourAppointed = new ArrayList<Integer>();
@@ -558,12 +573,13 @@ public class AllocationPage1 extends JFrame {
 			try {
 				if (table.getModel().getValueAt(i, 2).equals("TA")) {
 					taAppointed.add(nameApplicantMap.get(table.getModel().getValueAt(i, 0)));
-					allTAHourAppointed.add((Integer) table.getModel().getValueAt(i, 3));
-				} else if(table.getModel().getValueAt(i, 2).equals("Grader")){
+					allTAHourAppointed.add(Integer.parseInt((String) table.getModel().getValueAt(i, 3)));
+				} else if (table.getModel().getValueAt(i, 2).equals("Grader")) {
 					graderAppointed.add(nameApplicantMap.get(table.getModel().getValueAt(i, 0)));
-					allGraderHourAppointed.add((Integer) table.getModel().getValueAt(i, 3));
+					allGraderHourAppointed.add(Integer.parseInt((String) table.getModel().getValueAt(i, 3)));
 				}
 			} catch (Exception e) {
+				e.printStackTrace();
 				JOptionPane.showMessageDialog(AllocationPage1.this, "Table Empty");
 
 			}
@@ -571,8 +587,10 @@ public class AllocationPage1 extends JFrame {
 		}
 
 		try {
+			System.out.println(course.getCourseJobAllocation() == null);
 			tc.createAllocation(ms, course, taAppointed, allTAHourAppointed, graderAppointed, allGraderHourAppointed);
-		} catch (InvalidInputException e) {
+			budgetRemainingLabel.setText("<html><p>" + tc.getRemainingBudget(course) + "</p></html>");
+		} catch (Exception e) {
 			error = e.getMessage();
 		}
 	}
@@ -583,12 +601,43 @@ public class AllocationPage1 extends JFrame {
 		ArrayList<Integer> allGraderHourAppointed = new ArrayList<Integer>();
 		ArrayList<Applicant> taAppointed = new ArrayList<Applicant>();
 		ArrayList<Applicant> graderAppointed = new ArrayList<Applicant>();
+		for (int i = 0; i < data.length; i++) {
+			try {
+				if (table.getModel().getValueAt(i, 2).equals("TA")) {
+//					System.out.println(nameApplicantMap.get(table.getModel().getValueAt(i, 0)).getName());
+					
+					String des = (String)table.getModel().getValueAt(i, 0);
+					HashMap<String,Applicant>newmap=nameApplicantMap;
+					
+					taAppointed.add(newmap.get(des));
+					allTAHourAppointed.add(Integer.parseInt((String) table.getModel().getValueAt(i, 3)));
+				} else if (table.getModel().getValueAt(i, 2).equals("Grader")) {
+					graderAppointed.add(nameApplicantMap.get(table.getModel().getValueAt(i, 0)));
+					allGraderHourAppointed.add(Integer.parseInt((String) table.getModel().getValueAt(i, 3)));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(AllocationPage1.this, "Table Empty");
+
+			}
+
+		}
 		try {
+//			for(int i=0;i<1)
+//			
+			
+			
+			
 			tc.changeHours(course.getCourseJobAllocation(), ms, taAppointed, allTAHourAppointed, graderAppointed,
 					allGraderHourAppointed);
-		} catch (InvalidInputException e) {
+			
+
+		} catch (Exception e) {
+
 			error = e.getMessage();
+			System.out.println("Error = " + error);
 		}
+		refreshData();
 	}
 
 	private void finalizeButtonActionPerformed(java.awt.event.ActionEvent evt) {
