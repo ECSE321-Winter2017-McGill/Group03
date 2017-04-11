@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-@WebServlet(urlPatterns="/")
+@WebServlet(urlPatterns="/Dashboard.do")
 public class dashboardServlet  extends HttpServlet{
 	/**
 	 * 
@@ -17,10 +17,6 @@ public class dashboardServlet  extends HttpServlet{
 	protected void doGet(HttpServletRequest request,
 
 			HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		
-		// respond to http get request for Dashboard.do
 
 		request.getRequestDispatcher("/WEB-INF/views/pages/dashboard.jsp").forward(
 

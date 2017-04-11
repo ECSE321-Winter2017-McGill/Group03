@@ -17,6 +17,8 @@ import com.thoughtworks.xstream.XStream;
 
 import ca.mcgill.ecse321.TAMAS.controller.TController;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
+import ca.mcgill.ecse321.TAMAS.model.Course;
+import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.DBmanager;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
@@ -35,10 +37,6 @@ public class EvalServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 
 			HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		
-		// respond to http get request
 		evalError="";
 		DBmanager.writeFile(DBmanager.getDB());
 		request.setAttribute("evalError", evalError);
@@ -51,9 +49,6 @@ public class EvalServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 
 			HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		// respond to http post request
 		evalError="";
 		String fileName = "output/data.xml";
 

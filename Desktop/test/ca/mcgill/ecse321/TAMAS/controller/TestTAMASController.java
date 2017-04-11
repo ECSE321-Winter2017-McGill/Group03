@@ -353,7 +353,6 @@ public class TestTAMASController {
 	public void testCreateApplicant() {
 		assertEquals(0, ms.getApplicants().size());
 
-		String error = null;
 		String name = "Kaiyue";
 		int id = 111;
 		String major = "CE";
@@ -365,10 +364,9 @@ public class TestTAMASController {
 		String thirdChoice = "no";
 		int totalAppointmentHour = 10;
 
-		Applicant ap = null;
 		TamasController tc = new TamasController(ms);
 		try {
-			ap = tc.createApplicant(name, id, major, isUndergrad, year, exp, firstChoice, secondChoice, thirdChoice,
+			tc.createApplicant(name, id, major, isUndergrad, year, exp, firstChoice, secondChoice, thirdChoice,
 					totalAppointmentHour);
 		} catch (InvalidInputException e) {
 			// TODO Auto-generated catch block
@@ -423,9 +421,8 @@ public class TestTAMASController {
 		int totalAppointmentHour = 10;
 
 		TamasController tc = new TamasController(ms);
-		Applicant ap = null;
 		try {
-			ap = tc.createApplicant( name, id, major, isUndergrad, year, exp, firstChoice, secondChoice, thirdChoice,
+			tc.createApplicant( name, id, major, isUndergrad, year, exp, firstChoice, secondChoice, thirdChoice,
 					totalAppointmentHour);
 		} catch (InvalidInputException e) {
 			// TODO Auto-generated catch block
@@ -454,10 +451,9 @@ public class TestTAMASController {
 		String thirdChoice = "no";
 		int totalAppointmentHour = 10;
 
-		Applicant ap = null;
 		TamasController tc = new TamasController(ms);
 		try {
-			ap=tc.createApplicant(name, id, major, isUndergrad, year, exp, firstChoice, secondChoice, thirdChoice,
+			tc.createApplicant(name, id, major, isUndergrad, year, exp, firstChoice, secondChoice, thirdChoice,
 					totalAppointmentHour);
 		} catch (InvalidInputException e) {
 			// TODO Auto-generated catch block
@@ -486,10 +482,9 @@ public class TestTAMASController {
 		String thirdChoice = "no";
 		int totalAppointmentHour = 10;
 
-		Applicant ap = null;
 		TamasController tc = new TamasController(ms);
 		try {
-			ap=tc.createApplicant(name, id, major, isUndergrad, year, exp, firstChoice, secondChoice, thirdChoice,
+			tc.createApplicant(name, id, major, isUndergrad, year, exp, firstChoice, secondChoice, thirdChoice,
 					totalAppointmentHour);
 		} catch (InvalidInputException e) {
 			// TODO Auto-generated catch block
@@ -518,10 +513,9 @@ public class TestTAMASController {
 		String thirdChoice = "no";
 		int totalAppointmentHour = 10;
 
-		Applicant ap = null;
 		TamasController tc = new TamasController(ms);
 		try {
-			ap=tc.createApplicant(name, id, major, isUndergrad, year, exp, firstChoice, secondChoice, thirdChoice,
+			tc.createApplicant(name, id, major, isUndergrad, year, exp, firstChoice, secondChoice, thirdChoice,
 					totalAppointmentHour);
 		} catch (InvalidInputException e) {
 			// TODO Auto-generated catch block
@@ -599,8 +593,8 @@ public class TestTAMASController {
 		assertEquals(0, ms.getApplicants().size());
 
 		Applicant ap1 = new Applicant(111, "a", "", true, "", "", "", "", "", "", 10, ms);
-		Applicant ap2 = new Applicant(111, "b", "", true, "", "", "", "", "", "", 10, ms);
-		Applicant ap3 = new Applicant(111, "c", "", true, "", "", "", "", "", "", 10, ms);
+		new Applicant(111, "b", "", true, "", "", "", "", "", "", 10, ms);
+		new Applicant(111, "c", "", true, "", "", "", "", "", "", 10, ms);
 
 		assertEquals(3, ms.getApplicants().size());
 
@@ -625,8 +619,8 @@ public class TestTAMASController {
 		assertEquals(0, ms.getApplicants().size());
 
 		Instructor Inst1 = new Instructor("a", ms);
-		Instructor Inst2 = new Instructor("b", ms);
-		Instructor Inst3 = new Instructor("c", ms);
+		new Instructor("b", ms);
+		new Instructor("c", ms);
 
 		assertEquals(3, ms.getInstructors().size());
 
@@ -1007,12 +1001,7 @@ public class TestTAMASController {
 		app.setStatus(Status.PENDING);
 		ap.addApplication(app);
 
-		TamasController tc = new TamasController(ms);
-//		try {
-//			tc.rejectApplication(app);
-//		} catch (InvalidInputException e) {
-//			e.printStackTrace();
-//		}
+		new TamasController(ms);
 
 		ManagementSystem ms1 = ms;
 		checkResultAcceptApplication(app, ms1);
@@ -1145,7 +1134,6 @@ public class TestTAMASController {
             public void testRegisterInstructorExistingApplicant() {
      		  assertEquals(0, ms.getInstructors().size());
 
-     		  String name = null;
      		  String error = null;
      		  Applicant ap1 = new Applicant(111, "a", "", true, "", "","", "", "", "", 10, ms);
 
@@ -1169,7 +1157,6 @@ public class TestTAMASController {
             public void testRegisterInstructorExistingInstructor() {
      		  assertEquals(0, ms.getInstructors().size());
 
-     		  String name = null;
      		  String error = null;
      		  Instructor Inst1 = new Instructor("a", ms);
 

@@ -1,9 +1,3 @@
-
-
-
-// This the same controller used in Desktop Application.
-
-
 package ca.mcgill.ecse321.TAMAS.controller;
 
 import java.util.Date;
