@@ -44,7 +44,7 @@ public class AllCourses extends JFrame {
 		this.ms = ms;
 		initComponents();
 		selectedCourse = -1;
-		allCourse.setSelectedIndex(selectedCourse);
+		allCourse.setSelectedIndex(selectedCourse);  	
 	}
 
 	private void initComponents() {
