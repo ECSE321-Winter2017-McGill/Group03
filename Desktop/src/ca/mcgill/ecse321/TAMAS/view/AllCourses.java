@@ -33,13 +33,16 @@ public class AllCourses extends JFrame {
 	private Object user;
 	private int selectedCourse;
 	private HashMap<String, Course> courseMap = new HashMap<String, Course>();
+	private JComboBox<String> allCourse = new JComboBox<String>(new String[0]);
 	
-	
+	private String error;
 
 	public AllCourses(ManagementSystem ms, Object user) {
 		this.user = user;
 		this.ms = ms;
 		initComponents();
+		selectedCourse = -1;
+		allCourse.setSelectedIndex(selectedCourse);  	
 	}
 
 	private void initComponents() {
@@ -75,11 +78,19 @@ public class AllCourses extends JFrame {
 		JPanel buttomPane = new JPanel();
 
 		// get the rest of frame ready;
-		final JComboBox<String> allCourse = new JComboBox<String>(new String[0]);
 		JButton viewDetailButton = new JButton("View Details");
 		JButton addCourse = new JButton("Add a Course");
 		JButton backButton = new JButton("Back");
 
+		// Combobox action listenser
+		allCourse.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            JComboBox<String> cb = (JComboBox<String>) evt.getSource();
+            selectedCourse = cb.getSelectedIndex();
+        }
+	    });	
+		
+		
 		for (Course aCourse: ms.getCourses()){
 			String courseDescription = aCourse.getCourseName() + " (" + aCourse.getCourseCode() + ")";
 			allCourse.addItem(courseDescription);
@@ -120,15 +131,23 @@ public class AllCourses extends JFrame {
 		viewDetailButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				error = "";
+				
 				if (allCourse.getItemCount()==0){
 					JOptionPane.showMessageDialog(AllCourses.this,
 							"No course information has been submitted.");
-				}else{
+				}
+				else if (selectedCourse < 0){
+					JOptionPane.showMessageDialog(AllCourses.this,
+							"You need to select a course.");
+				}
+				else{
+					
 					String courseDescription = allCourse.getItemAt(selectedCourse).toString();
 					Course selectedCourse = courseMap.get(courseDescription);
-					
+					System.out.print(courseDescription);
 					new CourseDetails(ms,selectedCourse,user).setVisible(true);
-					dispose();
 				}
 			}
 		});
@@ -148,7 +167,7 @@ public class AllCourses extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				backToMain();
-				dispose();
+				setVisible(false);
 			}
 		});
 		
