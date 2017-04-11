@@ -39,10 +39,11 @@ public class AddJobPostingServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
 
                          HttpServletResponse response) throws ServletException, IOException {
+    	
+    	// respond to http get request for /AddJobPosting.jsp
 
         String fileName = "output/data.xml";
 
-        // error = "";
         final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
 
         String courses = "";
@@ -62,10 +63,14 @@ public class AddJobPostingServlet extends HttpServlet {
 
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings({ "deprecation", "unused" })
 	protected void doPost(HttpServletRequest request,
 
                           HttpServletResponse response) throws ServletException, IOException {
+    	
+    	
+    	// respond to http post request for /AddJobPosting.jsp
+    	
         String fileName = "output/data.xml";
         final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
         error = "";
@@ -93,23 +98,19 @@ public class AddJobPostingServlet extends HttpServlet {
         System.out.println("cName+" + cname);
         System.out.println(cmap.containsKey(cname));
         Course aCourse = cmap.get(cname);
-        //System.out.println("course aa"+aCourse.getCourseName());
         try {
             TController c = new TController(ms);
             c.createJobPosting(jobPosition, deadlineDate, exp, hourlyRate, aCourse);
-            // PersistenceXStream.saveToXMLwithXStream(ms);
             DBmanager.updateDB(objToXML(ms));
         } catch (Exception e) {
 
             error = e.getMessage();
-            System.out.println("eeeee" + error);
+            System.out.println(error);
             request.setAttribute("error", error);
 
             request.getRequestDispatcher("/WEB-INF/views/pages/AddJobPosting.jsp").forward(
 
                     request, response);
-
-            // e.printStackTrace();
         }
     }
 
