@@ -1,3 +1,9 @@
+
+
+
+// This the same controller used in Desktop Application.
+
+
 package ca.mcgill.ecse321.TAMAS.controller;
 
 import java.util.Date;
@@ -122,7 +128,7 @@ public class TController {
 		System.out.println("create");
 		System.out.println(ap.numberOfApplications());
 		if (ap.getApplications().size() < 3) {
-			Application application = new Application(jp, ap);
+			Application application = new Application(0, jp, ap);
 			ap.addApplication(application);
 		}
 

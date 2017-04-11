@@ -26,10 +26,7 @@
 				<div class="navbar-header">
 					<a class="navbar-brand" href="Dashboard.do">TAMAS</a>
 				</div>
-				<h6 class="welcome">
-					Welcome 
-					${name}
-				</h6>
+				<h6 class="welcome">Welcome ${name}</h6>
 				<h6 class="welcome">
 					<a href="logout.do">Sign Out</a>
 				</h6>
@@ -76,10 +73,10 @@
 								</tbody>
 							</table>
 							<script>
-$(document).ready(function(){
-    $('#myTable').dataTable();
-});
-                            </script>
+								$(document).ready(function() {
+									$('#myTable').dataTable();
+								});
+							</script>
 						</div>
 
 						<span class="error"> ${viewAllJobPostingsError } </span>

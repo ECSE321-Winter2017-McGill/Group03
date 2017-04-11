@@ -1,12 +1,6 @@
 package ca.mcgill.ecse321.TAMAS.Web.Controller;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 import javax.servlet.ServletException;
 
 import javax.servlet.annotation.WebServlet;
@@ -29,18 +23,20 @@ public class ViewJobPostingServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static ManagementSystem ms = new ManagementSystem();
+
 
 	protected void doGet(HttpServletRequest request,
 
 			HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		// respond to http get request
 
-		// out=response.getWriter();
+
 		String result = "";
 		String fileName = "output/data.xml";
 		DBmanager.writeFile(DBmanager.getDB());
 		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
-		// System.out.println("aaaaa");
 		for (JobPosting js : ms.getJobPostings()) {
 			result += "<tr>";
 			if (js.getJobTitle().equals("TA")) {

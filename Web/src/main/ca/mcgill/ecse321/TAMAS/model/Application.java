@@ -1,5 +1,5 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
+/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 
@@ -10,6 +10,9 @@ public class Application
   //------------------------
   // MEMBER VARIABLES
   //------------------------
+
+  //Application Attributes
+  private int hour;
 
   //Application State Machines
   public enum Status { SELECTED, REJECTED, PENDING, OFFER_ACCEPTED, OFFER_DECLINED }
@@ -23,8 +26,9 @@ public class Application
   // CONSTRUCTOR
   //------------------------
 
-  public Application(JobPosting aJobPosting, Applicant aApplicant)
+  public Application(int aHour, JobPosting aJobPosting, Applicant aApplicant)
   {
+    hour = aHour;
     boolean didAddJobPosting = setJobPosting(aJobPosting);
     if (!didAddJobPosting)
     {
@@ -41,6 +45,19 @@ public class Application
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setHour(int aHour)
+  {
+    boolean wasSet = false;
+    hour = aHour;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public int getHour()
+  {
+    return hour;
+  }
 
   public String getStatusFullName()
   {
@@ -129,4 +146,14 @@ public class Application
     placeholderApplicant.removeApplication(this);
   }
 
+
+  public String toString()
+  {
+    String outputString = "";
+    return super.toString() + "["+
+            "hour" + ":" + getHour()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "jobPosting = "+(getJobPosting()!=null?Integer.toHexString(System.identityHashCode(getJobPosting())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "applicant = "+(getApplicant()!=null?Integer.toHexString(System.identityHashCode(getApplicant())):"null")
+     + outputString;
+  }
 }

@@ -1,3 +1,8 @@
+
+
+// This file connects to the Database and store results in xml.
+
+
 package ca.mcgill.ecse321.TAMAS.persistence;
 
 import java.io.BufferedReader;
@@ -20,7 +25,7 @@ public class DBmanager {
 	private static String myUrl = "jdbc:mysql://test.cabyhhnybi2l.us-west-2.rds.amazonaws.com/test";
 	private static ManagementSystem ms = new ManagementSystem();
 
-	public static void writeFile(String data) {
+	public static void writeFile(String data) { // save data to data.xml
 		System.out.println("Write1");
 		try {
 			FileWriter writer = new FileWriter("output/data.xml");
@@ -31,7 +36,7 @@ public class DBmanager {
 		}
 	}
 
-	public static String readFile(String fileName) throws IOException {
+	public static String readFile(String fileName) throws IOException { 
 		System.out.println("Read");
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		try {
@@ -50,6 +55,7 @@ public class DBmanager {
 	}
 
 	public static String getDB() {
+		// get Database data
 		System.out.println("GetDB1");
 		ResultSet rs = null;
 		String q = "xml";
@@ -77,6 +83,8 @@ public class DBmanager {
 	}
 
 	public static void updateDB(String data) {
+		// update the database
+		
 		System.out.println("updateDB");
 		String q = "update xml set xml ='" + data + "' where data='data'";
 		try {

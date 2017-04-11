@@ -1,90 +1,101 @@
-.navbar-default{
-	//color: rgb(199,237,233);
+.navbar-default { //
+	color: rgb(199, 237, 233);
 }
-
 
 #login {
-    padding-top: 50px
+	padding-top: 50px
 }
+
 #login .form-wrap {
-    width: 30%;
-    margin: 0 auto;
+	width: 30%;
+	margin: 0 auto;
 }
+
 #login h1 {
-    color: #1fa67b;
-    font-size: 18px;
-    text-align: center;
-    font-weight: bold;
-    padding-bottom: 20px;
+	color: #1fa67b;
+	font-size: 18px;
+	text-align: center;
+	font-weight: bold;
+	padding-bottom: 20px;
 }
+
 #login .form-group {
-    margin-bottom: 25px;
+	margin-bottom: 25px;
 }
+
 #login .checkbox {
-    margin-bottom: 20px;
-    position: relative;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
+	margin-bottom: 20px;
+	position: relative;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 }
 
 #login .checkbox .character-checkbox {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    vertical-align: middle;
-    display: inline-block;
+	width: 25px;
+	height: 25px;
+	cursor: pointer;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+	vertical-align: middle;
+	display: inline-block;
 }
+
 #login .checkbox .label {
-    color: #6d6d6d;
-    font-size: 13px;
-    font-weight: normal;
+	color: #6d6d6d;
+	font-size: 13px;
+	font-weight: normal;
 }
+
 #login .btn.btn-custom {
-    font-size: 14px;
+	font-size: 14px;
 	margin-bottom: 20px;
 }
 
 .form-control {
-    color: #212121;
+	color: #212121;
 }
+
 .btn-custom {
-    color: #fff;
+	color: #fff;
 	background-color: #1fa67b;
 }
-.btn-custom:hover,
-.btn-custom:focus {
-    color: #fff;
+
+.btn-custom:hover, .btn-custom:focus {
+	color: #fff;
 }
+
 .error {
 	color: #FF0000;
 }
+
 body {
-  background-color: #f8f8f8;
+	background-color: #f8f8f8;
 }
+
 #wrapper {
-  width: 100%;
+	width: 100%;
 }
+
 #page-wrapper {
-  padding: 0 15px;
-  min-height: 568px;
-  background-color: white;
-    position: inherit;
-    margin: 0 0 0 250px;
-    padding: 0 30px;
-    border-left: 1px solid #e7e7e7;
+	padding: 0 15px;
+	min-height: 568px;
+	background-color: white;
+	position: inherit;
+	margin: 0 0 0 250px;
+	padding: 0 30px;
+	border-left: 1px solid #e7e7e7;
 }
+
 .sidebar ul li {
-  border-bottom: 1px solid #e7e7e7;
+	border-bottom: 1px solid #e7e7e7;
 }
-  .sidebar {
-    z-index: 1;
-    position: absolute;
-    width: 250px;
-    margin-top: 30px;
-  
+
+.sidebar {
+	z-index: 1;
+	position: absolute;
+	width: 250px;
+	margin-top: 30px;
 }

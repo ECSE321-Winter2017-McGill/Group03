@@ -15,10 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.thoughtworks.xstream.XStream;
 
-import ca.mcgill.ecse321.TAMAS.controller.TController;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
-import ca.mcgill.ecse321.TAMAS.model.Course;
-import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.DBmanager;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
@@ -37,6 +34,8 @@ public class EvalTAServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 
 			HttpServletResponse response) throws ServletException, IOException {
+		
+		// respond to http get request
 		DBmanager.writeFile(DBmanager.getDB());
 		String fileName = "output/data.xml";
 		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
@@ -44,7 +43,6 @@ public class EvalTAServlet extends HttpServlet {
 		String TAs = "";
 		String data = "";
 		for (Applicant app : ms.getApplicants()) {
-			//System.out.println(app.getName()+"eval:"+app.getEvaluation());
 			if (app.getEvaluation()!=null&&app.getEvaluation()!="") {
 				data += "<tr>";
 				data += "<td>" + app.getName() + "</td>";
@@ -63,34 +61,6 @@ public class EvalTAServlet extends HttpServlet {
 				request, response);
 
 	}
-
-//	protected void doPost(HttpServletRequest request,
-//
-//			HttpServletResponse response) throws ServletException, IOException {
-//		
-//		String fileName = "output/data.xml";
-//
-//		String taName = request.getParameter("TA");
-//		String Eval = request.getParameter("evaluation");
-//
-//		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
-//
-//		try {
-//			TController c = new TController(ms);
-//			System.out.println(taName+"eval1:"+Eval);
-//			c.createTAEval(taName, Eval);
-//			System.out.println(taName+"eval2:"+Eval);
-//			DBmanager.updateDB(objToXML(ms));
-//		} catch (Exception e) {
-//			System.out.println(e.getMessage());
-//			
-//			request.setAttribute("evalError", "evalError");
-//			
-//			request.getRequestDispatcher("/WEB-INF/views/AddEval.jsp").forward(
-//					request, response);
-//			e.printStackTrace();
-//		}
-//	}
 
 	public static String objToXML(Object obj) {
 		xstream.setMode(XStream.ID_REFERENCES);
