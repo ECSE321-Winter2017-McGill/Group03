@@ -189,7 +189,7 @@ public class AllApplication extends JFrame {
 			
 			
 			for (Application aApplication: ((Applicant)user).getApplications()){
-				if (aApplication.getStatusFullName().equals("SELECTED") || aApplication.getStatusFullName().equals("OFFER_ACCEPTED")){
+				if (aApplication.getStatusFullName().equals("SELECTED")){
 					String appDescription = aApplication.getJobPosting().getJobTitle() + " for " + aApplication.getJobPosting().getCourse().getCourseCode();
 					offerApplication.addItem(appDescription);
 					applicationMap.put(appDescription, aApplication);
@@ -290,21 +290,7 @@ public class AllApplication extends JFrame {
 		acceptOfferButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (offerApplication.getItemCount()==0){
-					JOptionPane.showMessageDialog(AllApplication.this,"You do not have any offer.");
-				}
-				else{
-					String appDescription = offerApplication.getItemAt(selectedApplication).toString();
-					Application selectedApp = applicationMap.get(appDescription);
-					if (tc.offerAccepted(selectedApp)){
-						JOptionPane.showMessageDialog(AllApplication.this, "Offer already accepted.");
-					}
-					else{
-						tc.acceptOffer(selectedApp);
-					}
-					dispose();
-					initComponents();
-				}
+				acceptOfferButtonActionPerformed(e);
 			}
 		});
 		
@@ -312,21 +298,7 @@ public class AllApplication extends JFrame {
 		rejectOfferButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (offerApplication.getItemCount()==0){
-					JOptionPane.showMessageDialog(AllApplication.this,"You do not have any offer.");
-				}
-				else{
-					String appDescription = offerApplication.getItemAt(selectedApplication).toString();
-					Application selectedApp = applicationMap.get(appDescription);
-					if (tc.offerRejected(selectedApp)){
-						JOptionPane.showMessageDialog(AllApplication.this, "Offer already rejected.");
-					}
-					else{
-						tc.rejectOffer(selectedApp);
-					}
-					dispose();
-					initComponents();
-				}
+				rejectOfferButtonActionPerformed(e);
 			}
 		});
 		
@@ -335,26 +307,21 @@ public class AllApplication extends JFrame {
 		viewEvalButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (((Applicant)user).getEvaluation().trim().length()==0){
+				
+				if (((Applicant)user).getEvaluation() != null){
+					if (((Applicant)user).getEvaluation().trim().length()<=2){
+						JOptionPane.showMessageDialog(AllApplication.this, "No evaluation is available for viewing.");
+					}
+
+					else{
+						new ViewEvaluation(ms,user).setVisible(true);
+						dispose();
+					}
+				}
+				else{
 					JOptionPane.showMessageDialog(AllApplication.this, "No evaluation is available for viewing.");
 				}
-//				else if (selectedApplication<0){
-//					JOptionPane.showMessageDialog(AllApplication.this, "You must select an offer/position.");
-//				}
-				else{
-//					String appDescription = myApplication.getItemAt(selectedApplication).toString();
-//					Application selectedApp = applicationMap.get(appDescription);
-//					
-//					if (selectedApp.getStatusFullName().equals("SELECTED")){
-//						JOptionPane.showMessageDialog(AllApplication.this, "You have not accepted this offer yet.");
-//					}
-//					else if ( (selectedApp.getStatusFullName().equals("OFFER_ACCEPTED")) && () ){
-//						
-//					}
-					
-					new ViewEvaluation(ms,user).setVisible(true);
-					dispose();
-				}
+
 			}
 		});
 		
@@ -368,6 +335,49 @@ public class AllApplication extends JFrame {
 			}
 		});
 
+	}
+	
+	private void acceptOfferButtonActionPerformed(ActionEvent e){
+		if (offerApplication.getItemCount()==0){
+			JOptionPane.showMessageDialog(AllApplication.this,"You do not have any offer.");
+		}
+		else if (selectedApplication<0){
+			JOptionPane.showMessageDialog(AllApplication.this,"You must select an offer.");
+		}
+		else{
+			String appDescription = offerApplication.getItemAt(selectedApplication).toString();
+			Application selectedApp = applicationMap.get(appDescription);
+			if (tc.offerAccepted(selectedApp)){
+				JOptionPane.showMessageDialog(AllApplication.this, "Offer already accepted.");
+			}
+			else{
+				tc.acceptOffer(selectedApp);
+				dispose();
+				new AllApplication(ms,user).setVisible(true);
+			}
+			
+		}
+	}
+	
+	public void rejectOfferButtonActionPerformed(ActionEvent e){
+		if (offerApplication.getItemCount()==0){
+			JOptionPane.showMessageDialog(AllApplication.this,"You do not have any offer.");
+		}
+		else if (selectedApplication<0){
+			JOptionPane.showMessageDialog(AllApplication.this,"You must select an offer.");
+		}
+		else{
+			String appDescription = offerApplication.getItemAt(selectedApplication).toString();
+			Application selectedApp = applicationMap.get(appDescription);
+			if (tc.offerRejected(selectedApp)){
+				JOptionPane.showMessageDialog(AllApplication.this, "Offer already rejected.");
+			}
+			else{
+				tc.rejectOffer(selectedApp);
+				dispose();
+				new AllApplication(ms,user).setVisible(true);
+			}
+		}
 	}
 
 	private void backToMain() {

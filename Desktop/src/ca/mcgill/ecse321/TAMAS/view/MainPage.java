@@ -175,7 +175,6 @@ public class MainPage extends JFrame {
 				final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
 				
 				if (ms.getApplicants().size() > 0){
-					System.out.println(ms.getApplicants());
 					new WriteEvaluation(ms, user).setVisible(true);
 					dispose();
 				}
