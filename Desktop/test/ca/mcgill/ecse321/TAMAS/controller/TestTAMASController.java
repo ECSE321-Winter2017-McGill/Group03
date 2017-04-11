@@ -54,7 +54,7 @@ public class TestTAMASController {
 		assertEquals(1, ms.getApplicants().size());
 
 		try {
-			tc.createTAEval(aApplicant, evaluation);
+			tc.createTAEval(aApplicant, evaluation, evaluation);
 
 		} catch (InvalidInputException e) {
 			// TODO Auto-generated catch block
@@ -79,7 +79,7 @@ public class TestTAMASController {
 		assertEquals(1, ms.getApplicants().size());
 		TamasController tc = new TamasController(ms);
 		try {
-			tc.createTAEval(aApplicant, evaluation);
+			tc.createTAEval(aApplicant, evaluation, evaluation);
 
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
