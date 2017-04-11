@@ -16,6 +16,7 @@ import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,18 +32,23 @@ public class AllCourses extends JFrame {
 	private static String filename = "output/data.xml";
 
 	private Object user;
+	private JComboBox<String> allCourse = new JComboBox<String>(new String[0]);
 	private int selectedCourse;
 	private HashMap<String, Course> courseMap = new HashMap<String, Course>();
 	
+	private String error;
 	
 
 	public AllCourses(ManagementSystem ms, Object user) {
 		this.user = user;
 		this.ms = ms;
 		initComponents();
+		selectedCourse = -1;
+		allCourse.setSelectedIndex(selectedCourse);
 	}
 
 	private void initComponents() {
+		
 		
 		// get table data ready;
 
@@ -74,8 +80,7 @@ public class AllCourses extends JFrame {
 		JPanel commandPane = new JPanel();
 		JPanel buttomPane = new JPanel();
 
-		// get the rest of frame ready;
-		final JComboBox<String> allCourse = new JComboBox<String>(new String[0]);
+		// get the rest of frame ready
 		JButton viewDetailButton = new JButton("View Details");
 		JButton addCourse = new JButton("Add a Course");
 		JButton backButton = new JButton("Back");
@@ -128,10 +133,19 @@ public class AllCourses extends JFrame {
 		viewDetailButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				error = "";
+				
 				if (allCourse.getItemCount()==0){
 					JOptionPane.showMessageDialog(AllCourses.this,
 							"No course information has been submitted.");
-				}else{
+				}
+				else if (selectedCourse < 0){
+					JOptionPane.showMessageDialog(AllCourses.this,
+							"You need to select a course.");
+				}
+				else{
+					
 					String courseDescription = allCourse.getItemAt(selectedCourse).toString();
 					Course selectedCourse = courseMap.get(courseDescription);
 					System.out.print(courseDescription);
