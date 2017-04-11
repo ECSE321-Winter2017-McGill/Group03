@@ -55,8 +55,8 @@ public class TestTAMASPersistence {
  		JobPosting jp2 = new JobPosting("Grader", date2, "not so good", 13.6, ms, c2); 
 
 		//create Application
-		 Application app1 = new Application(jp1, ap1);
-		 Application app2 = new Application(jp2, ap2);
+		 Application app1 = new Application(1,jp1, ap1);
+		 Application app2 = new Application(1,jp2, ap2);
 
 		
 	}
