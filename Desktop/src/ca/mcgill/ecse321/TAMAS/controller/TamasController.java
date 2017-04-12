@@ -21,6 +21,10 @@ import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 public class TamasController {
 
 	private ManagementSystem ms = new ManagementSystem();
+	
+	public TamasController(ManagementSystem ms) {
+		this.ms = ms;
+	}
 
 	public static void changeAllocationStatus(ManagementSystem mm, Object user, Course course)
 			throws InvalidInputException {
@@ -51,6 +55,11 @@ public class TamasController {
 		if (course == null) {
 			throw new InvalidInputException("Can not change allocation due to null course. ");
 		}
+		
+		if (course.hasCourseJobAllocation()==true){
+			throw new InvalidInputException("The course already have an allocation for this semester");
+		}
+		
 		if (tas == null) {
 			throw new InvalidInputException("Can not change allocation due to Empty list of potential TAs. ");
 		}
@@ -70,27 +79,28 @@ public class TamasController {
 			double graderBudget = 0;
 
 			for (int i = 0; i < tas.size(); i++) {
+				// Check if it is possible for a candidate to work for the corresponding assigned hours
+				// This follows the rule in the user story: One cannot have more than 180 appointment hours
 				if ((180 - tas.get(i).getTotalAppointmentHours()) < taHours.get(i).intValue()) {
 					allocation.delete();
 					throw new InvalidInputException("Applicant " + tas.get(i).getName() + " can only have "
 							+ (180 - tas.get(i).getTotalAppointmentHours()) + " appointment hours");
 				}
 				allocation.addApplicant(tas.get(i));
-				int newTotalHours = tas.get(i).getTotalAppointmentHours() + taHours.get(i);
-				tas.get(i).setTotalAppointmentHours(newTotalHours);
-
+				
+				// Calculate the fees of hiring the selected TAs 
 				List<Application> allApplications = tas.get(i).getApplications();
 				for (Application anApp : allApplications) {
 					Course thisCourse = anApp.getJobPosting().getCourse();
 					String jobTitle = anApp.getJobPosting().getJobTitle();
 					if (thisCourse.getSemester().equals(course.getSemester())
 							&& thisCourse.getCourseCode().equals(course.getCourseCode()) && jobTitle.equals("TA")) {
-						anApp.setStatus(Status.SELECTED);
-						taBudget = taBudget + anApp.getJobPosting().getHourRate();
+						taBudget = taBudget + anApp.getJobPosting().getHourRate()*taHours.get(i);
 					}
 				}
 			}
 
+			// Calculate the fees of hiring the selected graders
 			for (int j = 0; j < graders.size(); j++) {
 				allocation.addApplicant(graders.get(j));
 
@@ -100,18 +110,23 @@ public class TamasController {
 					String jobTitle = anApp.getJobPosting().getJobTitle();
 					if (thisCourse.getSemester().equals(course.getSemester())
 							&& thisCourse.getCourseCode().equals(course.getCourseCode()) && jobTitle.equals("Grader")) {
-						anApp.setStatus(Status.SELECTED);
-						graderBudget = graderBudget + anApp.getJobPosting().getHourRate();
+						
+						graderBudget = graderBudget + anApp.getJobPosting().getHourRate()*graderHours.get(j);
 					}
 				}
 			}
 
+			// Check if the allocation exceeds the budget of this course
 			if ((taBudget + graderBudget) > course.getBudgetCalculated()) {
 				allocation.delete();
 				throw new InvalidInputException("This allocation exceeds the budget!");
 			}
 
+			
 			for (int i = 0; i < tas.size(); i++) {
+				// Update the candidate's appointment hours
+				int newTotalHours = tas.get(i).getTotalAppointmentHours() + taHours.get(i);
+				tas.get(i).setTotalAppointmentHours(newTotalHours);
 				List<Application> allApplications = tas.get(i).getApplications();
 				for (Application anApp : allApplications) {
 					Course thisCourse = anApp.getJobPosting().getCourse();
@@ -119,6 +134,8 @@ public class TamasController {
 					if (thisCourse.getSemester().equals(allocation.getCourse().getSemester())
 							&& thisCourse.getCourseCode().equals(allocation.getCourse().getCourseCode())
 							&& jobTitle.equals("TA")) {
+						// Set the application status to "SELECTED", which is equivalent to "send offer"
+						anApp.setStatus(Status.SELECTED);
 						anApp.setHour(taHours.get(i));
 					}
 				}
@@ -132,6 +149,8 @@ public class TamasController {
 					if (thisCourse.getSemester().equals(allocation.getCourse().getSemester())
 							&& thisCourse.getCourseCode().equals(allocation.getCourse().getCourseCode())
 							&& jobTitle.equals("Grader")) {
+						// Set the application status to "SELECTED", which is equivalent to "send offer"
+						anApp.setStatus(Status.SELECTED);
 						anApp.setHour(graderHours.get(j));
 					}
 				}
@@ -145,20 +164,23 @@ public class TamasController {
 		PersistenceXStream.saveToXMLwithXStream(mm);
 	}
 
+	
 	public double getRemainingBudget(Course course) {
-		double reBud = 0;
+		double payment = 0;
 
+		
 		for (JobPosting jp : course.getJobPosting()) {
 			for (Application apn : jp.getApplications()) {
 				boolean ispartBudget = apn.getStatus().equals(Status.SELECTED)
 						|| apn.getStatus().equals(Status.OFFER_ACCEPTED);
 				if (ispartBudget) {
-					reBud *= jp.getHourRate();
+					payment *= jp.getHourRate();
 				}
 			}
 		}
 
-		return course.getBudgetCalculated() - reBud;
+		// Remaining budget = total budget - payment
+		return course.getBudgetCalculated() - payment;
 
 	}
 
@@ -199,9 +221,7 @@ public class TamasController {
 
 	}
 
-	public TamasController(ManagementSystem ms) {
-		this.ms = ms;
-	}
+	
 
 	public void createTAEval(Applicant ta, String header, String eval) throws InvalidInputException {
 		String error = "";
@@ -211,6 +231,7 @@ public class TamasController {
 		}
 
 		try {
+			// Format the evaluation content
 			String formatedEval = header + ":\n" + eval;
 			ta.setEvaluation(formatedEval);
 		} catch (Exception e) {
@@ -232,6 +253,7 @@ public class TamasController {
 		}
 
 		try {
+			// Format the evaluation content
 			String previousEval = ta.getEvaluation().trim();
 			String newEval = "\n" + "\n" + header + ":\n" + eval;
 			String allEval = previousEval + newEval;
@@ -284,6 +306,8 @@ public class TamasController {
 
 		System.out.println("create");
 		System.out.println(ap.numberOfApplications());
+		
+		// Check if the applicant has more than three applications
 		if (ap.getApplications().size() < 3) {
 			Application application = new Application(0, jp, ap);
 			application.setStatus(Status.PENDING);
@@ -327,6 +351,8 @@ public class TamasController {
 
 		Applicant this_applicant = null;
 
+		// If an applicant already exists in our system, found that object and return it
+		// Otherwise, create a new applicant object with the information specified
 		for (Applicant anApplicant : ms.getApplicants()) {
 			if ((anApplicant.getName().equals(name))) {
 				this_applicant = anApplicant;
@@ -355,6 +381,7 @@ public class TamasController {
 		List<Applicant> allApplicants = ms.getApplicants();
 		List<Instructor> allInstructors = ms.getInstructors();
 
+		// Check if the username is duplicate
 		for (Applicant anApplicant : allApplicants) {
 			if (anApplicant.getName().equals(name.trim())) {
 				error += "This username already exists! ";
@@ -379,7 +406,7 @@ public class TamasController {
 		}
 
 		try {
-			// TODO: Create a real applicant to test
+			
 			ms.addApplicant(0, name, null, true, null, null, null, null, null, null, 0);
 		} catch (RuntimeException e) {
 			throw new InvalidInputException(e.getMessage());
@@ -400,6 +427,7 @@ public class TamasController {
 		List<Applicant> allApplicants = ms.getApplicants();
 		List<Instructor> allInstructors = ms.getInstructors();
 
+		//Check if the username is duplicate
 		for (Applicant anApplicant : allApplicants) {
 			if (anApplicant.getName().equals(name.trim())) {
 				error += "This username already exists! ";
@@ -536,7 +564,7 @@ public class TamasController {
 
 	}
 
-	// Can take a course instead of an allocation
+	
 	public void changeHours(Allocation allocation, ManagementSystem mm, ArrayList<Applicant> tas,
 			ArrayList<Integer> taHours, ArrayList<Applicant> graders, ArrayList<Integer> graderHours)
 			throws InvalidInputException {
@@ -566,16 +594,17 @@ public class TamasController {
 			double graderBudget = 0;
 
 			for (int i = 0; i < tas.size(); i++) {
+				// Check if it is possible for a candidate to work for the corresponding assigned hours
+				// This follows the rule in the user story: One cannot have more than 180 appointment hours
 				if ((180 - tas.get(i).getTotalAppointmentHours()) < taHours.get(i).intValue()) {
 					throw new InvalidInputException("Applicant " + tas.get(i).getName() + " can only have "
 							+ (180 - tas.get(i).getTotalAppointmentHours()) + " appointment hours");
 				}
-				try {
+				
 
 					allocation.addApplicant(tas.get(i));
-					int newTotalHours = tas.get(i).getTotalAppointmentHours() + taHours.get(i);
-					tas.get(i).setTotalAppointmentHours(newTotalHours);
-
+					
+					// Calculate the fees of hiring the selected TAs
 					List<Application> allApplications = tas.get(i).getApplications();
 					for (Application anApp : allApplications) {
 
@@ -584,14 +613,14 @@ public class TamasController {
 						if (thisCourse.getSemester().equals(allocation.getCourse().getSemester())
 								&& thisCourse.getCourseCode().equals(allocation.getCourse().getCourseCode())
 								&& jobTitle.equals("TA")) {
-							anApp.setStatus(Status.SELECTED);
-							taBudget = taBudget + anApp.getJobPosting().getHourRate();
+							
+							taBudget = taBudget + anApp.getJobPosting().getHourRate()*taHours.get(i);
 						}
 					}
-				} catch (Exception e) {
-				}
+				
 			}
 			for (int j = 0; j < graders.size(); j++) {
+				
 				allocation.addApplicant(graders.get(j));
 
 				List<Application> allApplications = graders.get(j).getApplications();
@@ -601,19 +630,18 @@ public class TamasController {
 					if (thisCourse.getSemester().equals(allocation.getCourse().getSemester())
 							&& thisCourse.getCourseCode().equals(allocation.getCourse().getCourseCode())
 							&& jobTitle.equals("Grader")) {
-						anApp.setStatus(Status.SELECTED);
-						graderBudget = graderBudget + anApp.getJobPosting().getHourRate();
+						graderBudget = graderBudget + anApp.getJobPosting().getHourRate()*graderHours.get(j);
 					}
 				}
 			}
 
 			if ((taBudget + graderBudget) > allocation.getCourse().getBudgetCalculated()) {
-				// allocation.delete();
-				System.out.println("budgert error");
 				throw new InvalidInputException("This allocation exceeds the budget!");
 			}
 
 			for (int i = 0; i < tas.size(); i++) {
+				int newTotalHours = tas.get(i).getTotalAppointmentHours() + taHours.get(i);
+				tas.get(i).setTotalAppointmentHours(newTotalHours);
 				List<Application> allApplications = tas.get(i).getApplications();
 				for (Application anApp : allApplications) {
 					Course thisCourse = anApp.getJobPosting().getCourse();
@@ -621,9 +649,8 @@ public class TamasController {
 					if (thisCourse.getSemester().equals(allocation.getCourse().getSemester())
 							&& thisCourse.getCourseCode().equals(allocation.getCourse().getCourseCode())
 							&& jobTitle.equals("TA")) {
-
-						if (anApp.setHour(taHours.get(i))) {
-						}
+						anApp.setStatus(Status.SELECTED);
+						anApp.setHour(taHours.get(i));
 					}
 				}
 			}
@@ -636,22 +663,21 @@ public class TamasController {
 					if (thisCourse.getSemester().equals(allocation.getCourse().getSemester())
 							&& thisCourse.getCourseCode().equals(allocation.getCourse().getCourseCode())
 							&& jobTitle.equals("Grader")) {
-						if (anApp.setHour(taHours.get(j))) {
-						}
+						anApp.setStatus(Status.SELECTED);
+					    anApp.setHour(taHours.get(j));
 					}
 				}
 			}
 
-			System.out.println("set status" + allocation.setAllocationStatus(AllocationStatus.INSTRUCTOR_APPROVED));
+			
 			try {
 				PersistenceXStream.saveToXMLwithXStream(mm);
 			} catch (Exception e) {
-				System.out.println("per error" + e.getMessage());
+				throw new InvalidInputException(e.getMessage());
 
 			}
-			System.out.println(PersistenceXStream.saveToXMLwithXStream(mm));
+			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			throw new InvalidInputException(e.getMessage());
 		}
 
