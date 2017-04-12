@@ -942,7 +942,7 @@ public class TamasController {
 				}
 			}
 
-
+			allocation.setAllocationStatus(AllocationStatus.INSTRUCTOR_APPROVED);
 			try {
 				PersistenceXStream.saveToXMLwithXStream(mm);
 			} catch (Exception e) {

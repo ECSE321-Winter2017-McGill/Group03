@@ -458,7 +458,7 @@ public class AllocationPage extends JFrame {
 
 		try {
 			tc.createAllocation(ms, course, taAppointed, allTAHourAppointed, graderAppointed, allGraderHourAppointed);
-			budgetRemainingLabel.setText("<html><p>" + tc.getRemainingBudget(course) + "</p></html>");
+			budgetRemainingTextField.setText("<html><p>" + tc.getRemainingBudget(course) + "</p></html>");
 		} catch (Exception e) {
 			e.getMessage();
 		}
