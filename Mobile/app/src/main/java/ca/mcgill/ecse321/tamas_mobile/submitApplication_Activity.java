@@ -305,12 +305,10 @@ public class submitApplication_Activity extends AppCompatActivity implements Asy
         try {
             outputStream =new FileOutputStream (f);
             outputStream.write(string.getBytes());
-            System.out.println(outputStream);
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //System.out.println("sss"+f.exists());
     }
 }
 

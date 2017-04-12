@@ -58,15 +58,10 @@ public class Register_Activity extends AppCompatActivity implements AsyncRespons
                     // Call the register method in controller
                     tc.registerApplicant(newuser.getText().toString());
                     if (ms!=null) {
-                        System.out.println("HHD");
                         Parameters p2 = new Parameters(getApplicationContext(), ms, 1);
                         asyncTask=new DDBmanager();
                         asyncTask.delegate = this;
                         asyncTask.execute(p2);
-//                        ms=(ManagementSystem)loadFromXML();
-//                        System.out.println("HHD2");
-//                        test.setText(ms.numberOfApplicants());
-                        System.out.println("END OF IF");
                     }
                 }
                 catch (InvalidInputException e){
@@ -128,11 +123,9 @@ public class Register_Activity extends AppCompatActivity implements AsyncRespons
         try {
             outputStream =new FileOutputStream (f);
             outputStream.write(string.getBytes());
-            System.out.println(outputStream);
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("sss"+f.exists());
     }
 }

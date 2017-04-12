@@ -121,11 +121,9 @@ public class ViewJobPosting_Activity extends AppCompatActivity implements AsyncR
         try {
             outputStream =new FileOutputStream (f);
             outputStream.write(string.getBytes());
-            System.out.println(outputStream);
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //System.out.println("sss"+f.exists());
     }
 }
