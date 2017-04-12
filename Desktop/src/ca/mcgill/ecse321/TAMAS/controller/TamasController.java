@@ -619,6 +619,7 @@ public class TamasController {
 					}
 				
 			}
+			// Calculate the fees of hiring the selected graders 
 			for (int j = 0; j < graders.size(); j++) {
 				
 				allocation.addApplicant(graders.get(j));
@@ -649,6 +650,7 @@ public class TamasController {
 					if (thisCourse.getSemester().equals(allocation.getCourse().getSemester())
 							&& thisCourse.getCourseCode().equals(allocation.getCourse().getCourseCode())
 							&& jobTitle.equals("TA")) {
+						// Set the application status to "SELECTED", which is equivalent to "send offer"
 						anApp.setStatus(Status.SELECTED);
 						anApp.setHour(taHours.get(i));
 					}
@@ -663,8 +665,9 @@ public class TamasController {
 					if (thisCourse.getSemester().equals(allocation.getCourse().getSemester())
 							&& thisCourse.getCourseCode().equals(allocation.getCourse().getCourseCode())
 							&& jobTitle.equals("Grader")) {
+						// Set the application status to "SELECTED", which is equivalent to "send offer"
 						anApp.setStatus(Status.SELECTED);
-					    anApp.setHour(taHours.get(j));
+					    anApp.setHour(graderHours.get(j));
 					}
 				}
 			}
