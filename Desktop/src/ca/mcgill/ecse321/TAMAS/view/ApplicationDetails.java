@@ -59,6 +59,12 @@ public class ApplicationDetails extends JFrame {
 	private Applicant app;
 	private Object user;
 
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 * @param app Applicant
+	 * @param user User
+	 */
 	public ApplicationDetails(ManagementSystem ms,Applicant app,Object user) {
 		this.ms = ms;
 		this.app = app;
@@ -66,6 +72,9 @@ public class ApplicationDetails extends JFrame {
 		initComponents();
 	}
 
+	/**
+	 * Initialize all components
+	 */
 	public void initComponents() {
 		
 		formTitle = new JLabel("Application");
@@ -229,11 +238,11 @@ public class ApplicationDetails extends JFrame {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 	
+	/**
+	 * Action triggered when back button is clicked
+	 * @param evt Action event
+	 */
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		setVisible(false);
-	}
-	
-	private void backToAllApp() {
-		new AllApplication(ms, user).setVisible(true);
 	}
 }

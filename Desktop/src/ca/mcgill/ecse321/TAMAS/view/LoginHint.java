@@ -12,6 +12,9 @@ public class LoginHint extends JFrame {
 
 	private static final long serialVersionUID = -1637505664795335145L;
 
+	/**
+	 * Class constructor
+	 */
 	public LoginHint() {
 		
 		JLabel hint0 = new JLabel("To log in as a department use: ");

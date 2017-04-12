@@ -39,6 +39,11 @@ public class AllCourses extends JFrame {
 	private String error;
 	
 
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 * @param user User
+	 */
 	public AllCourses(ManagementSystem ms, Object user) {
 		this.user = user;
 		this.ms = ms;
@@ -47,6 +52,9 @@ public class AllCourses extends JFrame {
 		allCourse.setSelectedIndex(selectedCourse);  	
 	}
 
+	/**
+	 * Initialize all components
+	 */
 	private void initComponents() {
 		
 		
@@ -175,6 +183,9 @@ public class AllCourses extends JFrame {
 		
 	}
 
+	/**
+	 * Return to main page
+	 */
 	private void backToMain() {
 		new MainPage(user).setVisible(true);
 	}
