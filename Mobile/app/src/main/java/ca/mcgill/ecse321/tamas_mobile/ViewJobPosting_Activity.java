@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.tamas_mobile;
 
-import android.app.Application;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +30,7 @@ public class ViewJobPosting_Activity extends AppCompatActivity implements AsyncR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_job_posting_);
 
+        // Get the username of the current user
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
 
@@ -41,9 +41,11 @@ public class ViewJobPosting_Activity extends AppCompatActivity implements AsyncR
 
         ManagementSystem ms = (ManagementSystem) loadFromXML();
 
+        // Clear all the elements that are previously displayed
         TableLayout table = (TableLayout)findViewById(R.id.viewJobPostingTable);
         table.removeAllViews();
 
+        // Check the number and content of the latest job postings in the system and create UI elements accordingly
         for (int i=0;i<ms.getJobPostings().size();i++) {
             final JobPosting thisPosting = ms.getJobPostings().get(i);
 
@@ -59,6 +61,8 @@ public class ViewJobPosting_Activity extends AppCompatActivity implements AsyncR
             jobPostingTitle.setTextColor(Color.BLACK);
             jobPostingTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
             jobPostingTitle.setOnClickListener(new View.OnClickListener() {
+                // This method is called if a certain job posting title is clicked
+                // The next page shows the content of the selected job posting
                 @Override
                 public void onClick(View v) {
                     Intent viewJobIntent = new Intent(ViewJobPosting_Activity.this, ViewSpecificJobPosting_Activity.class);
@@ -72,6 +76,7 @@ public class ViewJobPosting_Activity extends AppCompatActivity implements AsyncR
         }
     }
 
+    // This method is called if the back button is clicked
     public void backToHome(View v){
         Intent backIntent = new Intent(ViewJobPosting_Activity.this, Dashboard_Activity.class);
         backIntent.putExtra("username",username);
@@ -116,11 +121,9 @@ public class ViewJobPosting_Activity extends AppCompatActivity implements AsyncR
         try {
             outputStream =new FileOutputStream (f);
             outputStream.write(string.getBytes());
-            System.out.println(outputStream);
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //System.out.println("sss"+f.exists());
     }
 }

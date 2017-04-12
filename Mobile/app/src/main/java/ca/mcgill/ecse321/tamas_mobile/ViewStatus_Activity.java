@@ -2,9 +2,7 @@ package ca.mcgill.ecse321.tamas_mobile;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,8 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.thoughtworks.xstream.XStream;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,9 +34,11 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("error message： "+error);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_status_);
+
+        // Get the username of the current user
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
         refreshData();
@@ -108,7 +106,7 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
 
         ManagementSystem ms = (ManagementSystem)loadFromXML();
 
-        //Find the applicant and get his/her applications
+        //Find the current user and get all his applications
         List<Application> allApplications = null;
         for (Applicant anApplicant: ms.getApplicants()){
             if (anApplicant.getName().equals(username)){
@@ -117,13 +115,14 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
             }
         }
 
-        //Display the applicant's applications and set buttons according to the status
+        //Display the applicant's applications and set buttons status according to the application status
         if (allApplications!=null){
             for (int i=0; i<allApplications.size();i++){
                 courses.get(i).setText(allApplications.get(i).getJobPosting().getCourse().getCourseCode());
                 titles.get(i).setText(allApplications.get(i).getJobPosting().getJobTitle());
                 status.get(i).setText(allApplications.get(i).getStatusFullName());
 
+                // The accept or reject buttons are only enabled if an application status is "SELECTED"
                 if (allApplications.get(i).getStatusFullName().equals("SELECTED")){
                     acceptButtons.get(i).setEnabled(true);
                     rejectButtons.get(i).setEnabled(true);
@@ -131,6 +130,7 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
             }
         }
 
+        // A dialog containing error message will be shown
         if (error.trim().length()>0){
             final Dialog dialog = new Dialog(context);
             dialog.setContentView(R.layout.statusdialog);
@@ -148,27 +148,11 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
         }
     }
 
+    // This method will be called if the accept button is called
     public void acceptOffer(View v){
 
         error = "";
 
-        //Reminder
-//        final Dialog dialog = new Dialog(context);
-//        dialog.setContentView(R.layout.statusdialog);
-//        dialog.setTitle("Reminder");
-//        TextView text = (TextView)dialog.findViewById(R.id.text);
-//        text.setText("Please make sure that you click on the right button. You will not be able to modify your decision later. ");
-//        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-//        dialogButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.dismiss();
-//            }
-//        });
-//        dialog.show();
-
-
-        //Load the database
         DDBmanager asyncTask = new DDBmanager();
         Parameters p=new Parameters(getApplicationContext(),null,0);
         asyncTask.delegate = this;
@@ -177,6 +161,7 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
         ManagementSystem ms = (ManagementSystem)loadFromXML();
         TamasController tc = new TamasController(ms);
 
+        // Find the applicant in the system
         List<Application> allApplications = null;
         for (Applicant anApplicant : ms.getApplicants()) {
             if (anApplicant.getName().equals(username)) {
@@ -185,7 +170,8 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
             }
         }
 
-        //Update the database
+        // Check which button calls this method
+        // Depending on the id number of the clicked buttons, decide which application status to update
         if (allApplications!=null) {
 
             try {
@@ -193,12 +179,24 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
 
                     case R.id.accept1:
                         tc.acceptOffer(allApplications.get(0));
+                        Button accept1=(Button)findViewById(R.id.accept1);
+                        accept1.setEnabled(false);
+                        Button reject1 = (Button) findViewById(R.id.reject1);
+                        reject1.setEnabled(false);
                         break;
                     case R.id.accept2:
                         tc.acceptOffer(allApplications.get(1));
+                        Button accept2=(Button)findViewById(R.id.accept2);
+                        accept2.setEnabled(false);
+                        Button reject2 = (Button) findViewById(R.id.reject2);
+                        reject2.setEnabled(false);
                         break;
                     case R.id.accept3:
                         tc.acceptOffer(allApplications.get(2));
+                        Button accept3=(Button)findViewById(R.id.accept3);
+                        accept3.setEnabled(false);
+                        Button reject3 = (Button) findViewById(R.id.reject3);
+                        reject3.setEnabled(false);
                         break;
                 }
             } catch (InvalidInputException e) {
@@ -221,7 +219,7 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
             dialog.setContentView(R.layout.statusdialog);
             dialog.setTitle("Reminder");
             TextView text = (TextView)dialog.findViewById(R.id.text);
-            text.setText("You have successfully accepted this offer. Refresh the page to view the updated status");
+            text.setText("You have successfully accepted this offer. Come back to this page later to view the updated status!");
             Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
             dialogButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -233,6 +231,7 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
             dialog.show();
         }
 
+
         refreshData();
 
     }
@@ -240,22 +239,6 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
     public void declineOffer(View v) {
 
         error = "";
-
-        //Reminder
-        final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.statusdialog);
-        dialog.setTitle("Reminder");
-        TextView text = (TextView) dialog.findViewById(R.id.text);
-        text.setText("Please make sure that you click the right button. You will not be able to modify your decision later. ");
-        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-
 
         //Load the database
         DDBmanager asyncTask = new DDBmanager();
@@ -281,12 +264,24 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
                 switch (v.getId()) {
                     case R.id.reject1:
                         tc.declineOffer(allApplications.get(0));
+                        Button accept1=(Button)findViewById(R.id.accept1);
+                        accept1.setEnabled(false);
+                        Button reject1 = (Button) findViewById(R.id.reject1);
+                        reject1.setEnabled(false);
                         break;
                     case R.id.reject2:
                         tc.declineOffer(allApplications.get(1));
+                        Button accept2=(Button)findViewById(R.id.accept2);
+                        accept2.setEnabled(false);
+                        Button reject2 = (Button) findViewById(R.id.reject2);
+                        reject2.setEnabled(false);
                         break;
                     case R.id.reject3:
                         tc.declineOffer(allApplications.get(2));
+                        Button accept3=(Button)findViewById(R.id.accept3);
+                        accept3.setEnabled(false);
+                        Button reject3 = (Button) findViewById(R.id.reject3);
+                        reject3.setEnabled(false);
                         break;
                 }
             } catch (InvalidInputException e) {
@@ -295,30 +290,41 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
         }
 
 
-        if (ms!=null) {
-            Parameters p2 = new Parameters(getApplicationContext(), ms, 1);
-            asyncTask = new DDBmanager();
-            asyncTask.delegate = this;
-            asyncTask.execute(p2);
+        if (error.trim().length()<=0) {
+
+            if (ms != null) {
+                Parameters p2 = new Parameters(getApplicationContext(), ms, 1);
+                asyncTask = new DDBmanager();
+                asyncTask.delegate = this;
+                asyncTask.execute(p2);
+            }
+
+
+            //Success message
+            final Dialog dialog = new Dialog(context);
+            dialog.setContentView(R.layout.statusdialog);
+            dialog.setTitle("Reminder");
+            TextView text = (TextView)dialog.findViewById(R.id.text);
+            text.setText("You have successfully declined this offer. Come back to this page later to view the updated status");
+            Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+            dialogButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+
         }
 
-
-        //Success message
-        text.setText("You have successfully declined this offer");
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-
         refreshData();
+
     }
 
 
 
+    // This method is called when the back button is clicked
     public void backFromStatus(View v){
         Intent back = new Intent(ViewStatus_Activity.this,Dashboard_Activity.class);
         back.putExtra("username",username);
@@ -363,12 +369,10 @@ public class ViewStatus_Activity extends AppCompatActivity implements AsyncRespo
         try {
             outputStream =new FileOutputStream (f);
             outputStream.write(string.getBytes());
-            System.out.println(outputStream);
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //System.out.println("sss"+f.exists());
     }
 
 }

@@ -1,8 +1,6 @@
 package ca.mcgill.ecse321.tamas_mobile;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,18 +18,13 @@ import com.thoughtworks.xstream.XStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import ca.mcgill.ecse321.TAMAS.Web.controller.DDBmanager;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
+
 public class Login_Activity extends AppCompatActivity implements AsyncResponse {
     DDBmanager asyncTask = new DDBmanager();
     private String error ="";
@@ -45,7 +38,7 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
         // 0-> getDB,1-> updataDB
         // DO NOT PASS IN (... , null ,1 )!  This will kill our database.
         ManagementSystem ms=(ManagementSystem)loadFromXML();
-        Parameters p=new Parameters(getApplicationContext(),ms,1);
+        Parameters p=new Parameters(getApplicationContext(),ms,0);
         asyncTask.delegate = this;
         asyncTask.execute(p);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -76,12 +69,11 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
         FileOutputStream outputStream;        try {
             outputStream =new FileOutputStream (f);
             outputStream.write(string.getBytes());
-            System.out.println(outputStream);
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //System.out.println("sss"+f.exists());
+
     }
     public Object loadFromXML() {
         XStream xstream = new XStream();
@@ -105,10 +97,13 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
     }
 
     public void refreshData(){
+
+
         TextView errorMessage = (TextView)findViewById(R.id.logInError);
         EditText username = (EditText)findViewById(R.id.username);
         EditText password = (EditText)findViewById(R.id.password);
 
+        // Clear the textfields and show error message (if there is any)
         errorMessage.setText(error);
         username.setText("");
         password.setText("");
@@ -128,6 +123,7 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
 
         error ="";
 
+        // Check if the user has entered a username
         if (username.getText()==null || username.getText().toString().length()==0){
             error += "Please enter your username! ";
         }
@@ -136,6 +132,9 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
 
         if (error.length()==0) {
 
+            // Check if the system contains the entered username
+            // If yes, switch to Dashboard_Acticity
+            // Otherwise, report error
             for (Applicant anApplicant : ms.getApplicants()) {
                 if (username.getText().toString().equals(anApplicant.getName())) {
                     found = true;
@@ -156,6 +155,7 @@ public class Login_Activity extends AppCompatActivity implements AsyncResponse {
 
     }
 
+    // This method is called when the "register" button is clicked
     public void switchToRegister(View v){
         Intent registerIntent = new Intent(Login_Activity.this, Register_Activity.class);
         Login_Activity.this.startActivity(registerIntent);
