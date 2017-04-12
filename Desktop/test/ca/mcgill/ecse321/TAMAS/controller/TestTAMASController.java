@@ -61,9 +61,7 @@ public class TestTAMASController {
 		TamasController tc = new TamasController(ms);
 		try {
 			tc.changeAllocationStatus(ms, i, c);
-		} catch (InvalidInputException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
 		}
 
 		ManagementSystem ms1 = ms;

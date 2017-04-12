@@ -22,9 +22,6 @@ public class TamasController {
 
 	private ManagementSystem ms = new ManagementSystem();
 	
-	public TamasController(ManagementSystem ms) {
-		this.ms = ms;
-	}
 
 	/**
 	 * @param mm
