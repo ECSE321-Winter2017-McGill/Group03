@@ -242,7 +242,7 @@ public class TestTAMASController {
 		assertEquals(1, ms.getJobPostings().size());
 
 		String name = "abc";
-		int id = 111;
+		String id = "111";
 		String major = "a";
 		boolean isUndergrad = true;
 		String year = "2111";
@@ -272,7 +272,7 @@ public class TestTAMASController {
 		ms2.delete();
 	}
 
-	private void checkResultApplication(String name, int id, String major, boolean isUndergrad, String year, String exp,
+	private void checkResultApplication(String name, String id, String major, boolean isUndergrad, String year, String exp,
 			String firstChoice, String secondChoice, String thirdChoice, int totalAppointmentHour,
 			ManagementSystem ms2) {
 
@@ -283,7 +283,7 @@ public class TestTAMASController {
 		assertEquals(1, ms2.getApplicant(0).getApplications().size());
 
 		assertEquals(name, ms2.getApplicant(0).getName());
-		assertEquals(id, ms2.getApplicant(0).getStudentID());
+		assertEquals(id, ""+ ms2.getApplicant(0).getStudentID());
 		assertEquals(major, ms2.getApplicant(0).getMajor());
 		assertEquals(isUndergrad, ms2.getApplicant(0).getIsUnderGraduated());
 		assertEquals(year, ms2.getApplicant(0).getYear());
@@ -314,7 +314,8 @@ public class TestTAMASController {
 
 		String error = null;
 		String name = "abc";
-		int id = 111;
+		String id = "111";
+		int idNum = 111;
 		String major = "a";
 		boolean isUndergrad = true;
 		String year = "2111";
@@ -324,7 +325,7 @@ public class TestTAMASController {
 		String thirdChoice = "no";
 		int totalAppointmentHour = 10;
 
-		Applicant ap = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice,
+		Applicant ap = new Applicant(idNum, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice,
 				"", totalAppointmentHour, ms);
 		assertEquals(1, ms.getApplicants().size());
 
@@ -354,7 +355,7 @@ public class TestTAMASController {
 		assertEquals(0, ms.getApplicants().size());
 
 		String name = "Kaiyue";
-		int id = 111;
+		String id = "111";
 		String major = "CE";
 		boolean isUndergrad = true;
 		String year = "2111";
@@ -382,7 +383,7 @@ public class TestTAMASController {
 
 	}
 
-	private void checkResultApplicant(String name, int id, String major, boolean isUndergrad, String year, String exp,
+	private void checkResultApplicant(String name, String id, String major, boolean isUndergrad, String year, String exp,
 			String firstChoice, String secondChoice, String thirdChoice, int totalAppointmentHour,
 			ManagementSystem ms2) {
 
@@ -393,7 +394,7 @@ public class TestTAMASController {
 		assertEquals(0, ms2.getApplicant(0).getApplications().size());
 
 		assertEquals(name, ms2.getApplicant(0).getName());
-		assertEquals(id, ms2.getApplicant(0).getStudentID());
+		assertEquals(id, ms2.getApplicant(0).getStudentID()+"");
 		assertEquals(major, ms2.getApplicant(0).getMajor());
 		assertEquals(isUndergrad, ms2.getApplicant(0).getIsUnderGraduated());
 		assertEquals(year, ms2.getApplicant(0).getYear());
@@ -410,7 +411,7 @@ public class TestTAMASController {
 
 		String error = null;
 		String name = null;
-		int id = 123;
+		String id = "123";
 		String major = "a";
 		boolean isUndergrad = true;
 		String year = "2111";
@@ -441,7 +442,7 @@ public class TestTAMASController {
 
 		String error = null;
 		String name = "abc";
-		int id = -1;
+		String id = "-1";
 		String major = "a";
 		boolean isUndergrad = true;
 		String year = "2111";
@@ -472,7 +473,7 @@ public class TestTAMASController {
 
 		String error = null;
 		String name = "abc";
-		int id = 112;
+		String id = "112";
 		String major = null;
 		boolean isUndergrad = true;
 		String year = "2111";
@@ -503,7 +504,7 @@ public class TestTAMASController {
 
 		String error = null;
 		String name = "abc";
-		int id = 112;
+		String id = "112";
 		String major = "CE";
 		boolean isUndergrad = true;
 		String year = "2111";
@@ -647,15 +648,15 @@ public class TestTAMASController {
 		String semester = "Winter3000";
 		String courseName = "ECSE";
 		String courseCode = "232323";
-		int credit = 10;
-		int maxStudent = 1;
+		String credit = "10";
+		String maxStudent = "1";
 		String instructorName = "Gates";
-		int numGraderNeeded = 0;
-		int numLab = 0;
-		int numTut = 0;
-		int labHour = 0;
-		int tutHour = 0;
-		int totalGraderHour = 10;
+		String numGraderNeeded = "0";
+		String numLab = "0";
+		String numTut = "0";
+		String labHour = "0";
+		String tutHour = "0";
+		String totalGraderHour = "10";
 
 		TamasController tc = new TamasController(ms);
 		try {
@@ -677,9 +678,9 @@ public class TestTAMASController {
 		ms2.delete();
 	}
 
-	private void checkResultCourse(String semester, String courseName, String courseCode, int credit, int maxStudent,
-			String instructorName, int numGraderNeeded, int numLab, int numTut, int labHour, int tutHour,
-			int totalGraderHour, ManagementSystem ms2) {
+	private void checkResultCourse(String semester, String courseName, String courseCode, String credit, String maxStudent,
+			String instructorName, String numGraderNeeded, String numLab, String numTut, String labHour, String tutHour,
+			String totalGraderHour, ManagementSystem ms2) {
 
 		assertEquals(0, ms2.getApplicants().size());
 		assertEquals(0, ms2.getJobPostings().size());
@@ -687,17 +688,17 @@ public class TestTAMASController {
 		assertEquals(1, ms2.getInstructors().size());
 
 		assertEquals(semester, ms2.getCourse(0).getSemester());
-		assertEquals(courseName, ms2.getCourse(0).getCourseName());
+		assertEquals(courseName, ms2.getCourse(0).getCourseName()+"");
 		assertEquals(courseCode, ms2.getCourse(0).getCourseCode());
-		assertEquals(credit, ms2.getCourse(0).getCredit());
-		assertEquals(maxStudent, ms2.getCourse(0).getNumStudent());
+		assertEquals(credit, ms2.getCourse(0).getCredit()+"");
+		assertEquals(maxStudent, ms2.getCourse(0).getNumStudent()+"");
 		assertEquals(instructorName, ms2.getCourse(0).getInstructor().getName());
-		assertEquals(numGraderNeeded, ms2.getCourse(0).getNumGraderNeeded());
-		assertEquals(numLab, ms2.getCourse(0).getNumLab());
-		assertEquals(numTut, ms2.getCourse(0).getNumTutorial());
-		assertEquals(labHour, ms2.getCourse(0).getLabHour());
-		assertEquals(tutHour, ms2.getCourse(0).getTutorialHour());
-		assertEquals(totalGraderHour, ms2.getCourse(0).getTotalGraderHour());
+		assertEquals(numGraderNeeded, ms2.getCourse(0).getNumGraderNeeded()+"");
+		assertEquals(numLab, ms2.getCourse(0).getNumLab()+"");
+		assertEquals(numTut, ms2.getCourse(0).getNumTutorial()+"");
+		assertEquals(labHour, ms2.getCourse(0).getLabHour()+"");
+		assertEquals(tutHour, ms2.getCourse(0).getTutorialHour()+"");
+		assertEquals(totalGraderHour, ms2.getCourse(0).getTotalGraderHour()+"");
 	}
 
 	@Test
@@ -705,18 +706,19 @@ public class TestTAMASController {
 		assertEquals(0, ms.getCourses().size());
 
 		String error = null;
+
 		String semester = "Winter3000";
 		String courseName = null;
 		String courseCode = "232323";
-		int credit = 10;
-		int maxStudent = 1;
+		String credit = "10";
+		String maxStudent = "1";
 		String instructorName = "Gates";
-		int numGraderNeeded = 0;
-		int numLab = 0;
-		int numTut = 0;
-		int labHour = 0;
-		int tutHour = 0;
-		int totalGraderHour = 10;
+		String numGraderNeeded = "0";
+		String numLab = "0";
+		String numTut = "0";
+		String labHour = "0";
+		String tutHour = "0";
+		String totalGraderHour = "10";
 
 		TamasController tc = new TamasController(ms);
 		try {
@@ -742,15 +744,15 @@ public class TestTAMASController {
 		String semester = "Winter3000";
 		String courseName = "ECSE";
 		String courseCode = "";
-		int credit = 10;
-		int maxStudent = 1;
+		String credit = "10";
+		String maxStudent = "1";
 		String instructorName = "Gates";
-		int numGraderNeeded = 0;
-		int numLab = 0;
-		int numTut = 0;
-		int labHour = 0;
-		int tutHour = 0;
-		int totalGraderHour = 10;
+		String numGraderNeeded = "0";
+		String numLab = "0";
+		String numTut = "0";
+		String labHour = "0";
+		String tutHour = "0";
+		String totalGraderHour = "10";
 
 		TamasController tc = new TamasController(ms);
 		try {
@@ -776,15 +778,15 @@ public class TestTAMASController {
 		String semester = "Winter3000";
 		String courseName = "ECSE";
 		String courseCode = "232323";
-		int credit = -1;
-		int maxStudent = 1;
+		String credit = "-1";
+		String maxStudent = "100";
 		String instructorName = "Gates";
-		int numGraderNeeded = 0;
-		int numLab = 0;
-		int numTut = 0;
-		int labHour = 0;
-		int tutHour = 0;
-		int totalGraderHour = 10;
+		String numGraderNeeded = "0";
+		String numLab = "0";
+		String numTut = "0";
+		String labHour = "0";
+		String tutHour = "0";
+		String totalGraderHour = "10";
 
 		TamasController tc = new TamasController(ms);
 		try {
@@ -810,15 +812,15 @@ public class TestTAMASController {
 		String semester = "Winter3000";
 		String courseName = "ECSE";
 		String courseCode = "232323";
-		int credit = 10;
-		int maxStudent = -1;
+		String credit = "10";
+		String maxStudent = "-1";
 		String instructorName = "Gates";
-		int numGraderNeeded = 0;
-		int numLab = 0;
-		int numTut = 0;
-		int labHour = 0;
-		int tutHour = 0;
-		int totalGraderHour = 10;
+		String numGraderNeeded = "0";
+		String numLab = "0";
+		String numTut = "0";
+		String labHour = "0";
+		String tutHour = "0";
+		String totalGraderHour = "10";
 
 		TamasController tc = new TamasController(ms);
 		try {
@@ -844,15 +846,15 @@ public class TestTAMASController {
 		String semester = "Winter3000";
 		String courseName = "ECSE";
 		String courseCode = "232323";
-		int credit = 10;
-		int maxStudent = 1;
+		String credit = "10";
+		String maxStudent = "1";
 		String instructorName = null;
-		int numGraderNeeded = 0;
-		int numLab = 0;
-		int numTut = 0;
-		int labHour = 0;
-		int tutHour = 0;
-		int totalGraderHour = 10;
+		String numGraderNeeded = "0";
+		String numLab = "0";
+		String numTut = "0";
+		String labHour = "0";
+		String tutHour = "0";
+		String totalGraderHour = "10";
 
 		TamasController tc = new TamasController(ms);
 		try {
@@ -869,25 +871,60 @@ public class TestTAMASController {
 	}
 
 	@Test
-	public void testCreateCourseInvalidNumLabAndTut() {
+	public void testCreateCourseInvalidNumLab() {
 		assertEquals(0, ms.getCourses().size());
 
 		String error = null;
-		String realError = ("Please specify the numebr of lab sessions in the correct format! "
-				+ "Please specify the number of tutorials in the correct format!").trim();
+		String realError = ("Please specify the numebr of lab sessions in the correct format!").trim();
 
 		String semester = "Winter3000";
 		String courseName = "ECSE";
 		String courseCode = "232323";
-		int credit = 10;
-		int maxStudent = 1;
+		String credit = "10";
+		String maxStudent = "1";
 		String instructorName = "Gates";
-		int numGraderNeeded = 0;
-		int numLab = -1;
-		int numTut = -1;
-		int labHour = 0;
-		int tutHour = 0;
-		int totalGraderHour = 10;
+		String numGraderNeeded = "0";
+		String numLab = "-1";
+		String numTut = "1";
+		String labHour = "0";
+		String tutHour = "0";
+		String totalGraderHour = "10";
+
+		TamasController tc = new TamasController(ms);
+		try {
+			tc.createCourse(semester, courseName, courseCode, credit, maxStudent, instructorName, numGraderNeeded,
+					numLab, numTut, labHour, tutHour, totalGraderHour);
+
+		} catch (InvalidInputException e) {
+			// TODO Auto-generated catch block
+			error = e.getMessage();
+		}
+		error = error.trim();
+
+		assertEquals(realError, error);
+
+		assertEquals(0, ms.getCourses().size());
+	}
+	
+	@Test
+	public void testCreateCourseInvalidNumTut() {
+		assertEquals(0, ms.getCourses().size());
+
+		String error = null;
+		String realError = ("Please specify the number of tutorials in the correct format!").trim();
+
+		String semester = "Winter3000";
+		String courseName = "ECSE";
+		String courseCode = "232323";
+		String credit = "10";
+		String maxStudent = "1";
+		String instructorName = "Gates";
+		String numGraderNeeded = "0";
+		String numLab = "1";
+		String numTut = "-1";
+		String labHour = "0";
+		String tutHour = "0";
+		String totalGraderHour = "10";
 
 		TamasController tc = new TamasController(ms);
 		try {
@@ -915,15 +952,15 @@ public class TestTAMASController {
 		String semester = "Winter3000";
 		String courseName = "ECSE";
 		String courseCode = "232323";
-		int credit = 10;
-		int maxStudent = 1;
+		String credit = "10";
+		String maxStudent = "1";
 		String instructorName = "Gates";
-		int numGraderNeeded = -1;
-		int numLab = 0;
-		int numTut = 0;
-		int labHour = 0;
-		int tutHour = 0;
-		int totalGraderHour = 10;
+		String numGraderNeeded = "-1";
+		String numLab = "0";
+		String numTut = "0";
+		String labHour = "0";
+		String tutHour = "0";
+		String totalGraderHour = "10";
 
 		TamasController tc = new TamasController(ms);
 		try {
@@ -951,16 +988,15 @@ public class TestTAMASController {
 		String semester = "Winter3000";
 		String courseName = "ECSE";
 		String courseCode = "232323";
-		int credit = 10;
-		int maxStudent = 1;
+		String credit = "10";
+		String maxStudent = "1";
 		String instructorName = "Gates";
-		int numGraderNeeded = 1;
-		int numLab = 0;
-		int numTut = 0;
-		int labHour = -1;
-		int tutHour = -1;
-		int totalGraderHour = 10;
-
+		String numGraderNeeded = "0";
+		String numLab = "0";
+		String numTut = "0";
+		String labHour = "-1";
+		String tutHour = "-1";
+		String totalGraderHour = "10";
 		TamasController tc = new TamasController(ms);
 		try {
 			tc.createCourse(semester, courseName, courseCode, credit, maxStudent, instructorName, numGraderNeeded,
