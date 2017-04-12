@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.TAMAS.view;
 import ca.mcgill.ecse321.TAMAS.controller.TamasController;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
+import ca.mcgill.ecse321.TAMAS.model.Application.Status;
 import ca.mcgill.ecse321.TAMAS.model.Course;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
@@ -29,32 +30,36 @@ import javax.swing.WindowConstants;
 
 public class AllApplication extends JFrame {
 
-
 	private static final long serialVersionUID = 5797257474418419821L;
 
 	private ManagementSystem ms;
-	private static String filename = "output/data.xml";
+	// private static String filename = "output/data.xml";
 
 	private Object user;
 	private HashMap<String, Course> courseMap = new HashMap<String, Course>();
-	private HashMap<String, Application> applicationMap = new HashMap<String,Application>();
-	
-	private TamasController tc;
+	private HashMap<String, Application> applicationMap = new HashMap<String, Application>();
+
+	// private TamasController tc;
 	private String[][] data;
 	private JTable table;
-	
+
 	private JComboBox<String> allJobPostingCourse = new JComboBox<String>(new String[0]);
 	private JComboBox<String> offerApplication = new JComboBox<String>(new String[0]);
 	private int selectedCourse;
 	private int selectedApplication;
-	
+
 	public AllApplication(ManagementSystem ms, Object user) {
+
 		this.user = user;
 		this.ms = ms;
-		tc = new TamasController(ms);
-		data = new String[ms.numberOfApplicants() * 3 + 1][5];
+		// tc = new TamasController(ms);
+		int num = 0;
+		for (Applicant ap : ms.getApplicants()) {
+			num += ap.numberOfApplications();
+		}
+		data = new String[num + 1][5];
 		initComponents();
-		
+
 		// Clear the selected data
 		selectedCourse = -1;
 		allJobPostingCourse.setSelectedIndex(selectedCourse);
@@ -84,8 +89,9 @@ public class AllApplication extends JFrame {
 				data[i][4] = myApplication.getStatus().toString();
 				i++;
 			}
-		} 
-		// An instructor can only see application related to the job posting of his/her course
+		}
+		// An instructor can only see application related to the job posting of
+		// his/her course
 		else if (user.getClass().equals(Instructor.class)) {
 			Instructor anInstructor = (Instructor) user;
 			List<Course> myCourses = anInstructor.getCourses();
@@ -110,7 +116,7 @@ public class AllApplication extends JFrame {
 					i++;
 				}
 			}
-		} 
+		}
 		// Department can see all of the application
 		else {
 			for (Applicant anApplicant : ms.getApplicants()) {
@@ -143,27 +149,25 @@ public class AllApplication extends JFrame {
 		JButton applyJobButton = new JButton("Apply for a Position");
 		JButton backButton = new JButton("Back");
 		JButton viewAllocation = new JButton("View Allocation");
-		
+
 		// These buttons are for applicant only
 		JButton acceptOfferButton = new JButton("Accept Offer");
 		JButton rejectOfferButton = new JButton("Reject Offer");
 		JButton viewEvalButton = new JButton("View Evaluation");
 
 		// get frame ready;
-		
 
 		BorderLayout layout = new BorderLayout();
 		Container pane = getContentPane();
 		pane.setLayout(layout);
 		pane.add(scrollPane, BorderLayout.PAGE_START);
-		
+
 		// Instructor can view only the allocation for his/her courses
 		if (user.getClass().equals(Instructor.class)) {
 			setTitle("View All Applications");
-			
+
 			buttomPane.add(backButton);
 			pane.add(buttomPane, BorderLayout.PAGE_END);
-						
 
 			Instructor anInstructor = (Instructor) user;
 			List<Course> myCourses = anInstructor.getCourses();
@@ -172,51 +176,52 @@ public class AllApplication extends JFrame {
 				allJobPostingCourse.addItem(courseDescription);
 				courseMap.put(courseDescription, aCourse);
 			}
-			
+
 			commandPane.add(allJobPostingCourse);
 			commandPane.add(viewAllocation);
 			pane.add(commandPane, BorderLayout.CENTER);
-		} 
-		
-		// Applicant cannot view allocation at all, but he/she can accept and reject offer 
+		}
+
+		// Applicant cannot view allocation at all, but he/she can accept and
+		// reject offer
 		else if (user.getClass().equals(Applicant.class)) {
 			setTitle("View My Applications");
-						
+
 			buttomPane.add(applyJobButton);
 			buttomPane.add(backButton);
 			pane.add(buttomPane, BorderLayout.PAGE_END);
-			
-			
-			for (Application aApplication: ((Applicant)user).getApplications()){
-				if (aApplication.getStatusFullName().equals("SELECTED")){
-					String appDescription = aApplication.getJobPosting().getJobTitle() + " for " + aApplication.getJobPosting().getCourse().getCourseCode();
+
+			for (Application aApplication : ((Applicant) user).getApplications()) {
+				if (aApplication.getStatusFullName().equals("SELECTED")) {
+					String appDescription = aApplication.getJobPosting().getJobTitle() + " for "
+							+ aApplication.getJobPosting().getCourse().getCourseCode();
 					offerApplication.addItem(appDescription);
 					applicationMap.put(appDescription, aApplication);
 				}
 			}
-						
+
 			commandPane.add(offerApplication);
 			commandPane.add(acceptOfferButton);
 			commandPane.add(rejectOfferButton);
 			commandPane.add(viewEvalButton);
 			pane.add(commandPane, BorderLayout.CENTER);
-			
-		} 
-		
+
+		}
+
 		// Department can view allocations for all of the courses
 		else {
 			setTitle("View All Applications");
-			
+
 			buttomPane.add(applyJobButton);
 			buttomPane.add(backButton);
 			pane.add(buttomPane, BorderLayout.PAGE_END);
 
-			for (Course aCourse: ms.getCourses()){
+			for (Course aCourse : ms.getCourses()) {
 				String courseDescription = aCourse.getCourseName() + " (" + aCourse.getCourseCode() + ")";
 				allJobPostingCourse.addItem(courseDescription);
 				courseMap.put(courseDescription, aCourse);
 			}
-						
+
 			commandPane.add(allJobPostingCourse);
 			commandPane.add(viewAllocation);
 			pane.add(commandPane, BorderLayout.CENTER);
@@ -224,25 +229,23 @@ public class AllApplication extends JFrame {
 		pack();
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		
 
 		// add actions listeners
 		applyJobButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (ms.getCourses().size()==0){
+				if (ms.getCourses().size() == 0) {
 					JOptionPane.showMessageDialog(AllApplication.this,
-							"No Job Posting has been published.\n"
-							+ "Please try again later.");
-				}else{
-					final ManagementSystem ms = PersistenceXStream.initializeModelManager(filename);
+							"No Job Posting has been published.\n" + "Please try again later.");
+				} else {
+					// final ManagementSystem ms =
+					// PersistenceXStream.initializeModelManager(filename);
 					new ApplyForJob(ms, user).setVisible(true);
 					dispose();
 				}
 			}
 		});
 
-		
 		// Add action listeners to course toggle list for Allocation
 		allJobPostingCourse.addActionListener(new ActionListener() {
 			@Override
@@ -252,29 +255,26 @@ public class AllApplication extends JFrame {
 				selectedCourse = cb.getSelectedIndex();
 			}
 		});
-		
-		
+
 		viewAllocation.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (allJobPostingCourse.getItemCount()==0){
-					JOptionPane.showMessageDialog(AllApplication.this,"No allocation available for viewing.");
-				}
-				else if (selectedCourse<0){
-					JOptionPane.showMessageDialog(AllApplication.this,"You must select a course.");
-				}
-				else{
+				if (allJobPostingCourse.getItemCount() == 0) {
+					JOptionPane.showMessageDialog(AllApplication.this, "No allocation available for viewing.");
+				} else if (selectedCourse < 0) {
+					JOptionPane.showMessageDialog(AllApplication.this, "You must select a course.");
+				} else {
 					String courseDescription = allJobPostingCourse.getItemAt(selectedCourse).toString();
 					Course selectedCourse = courseMap.get(courseDescription);
-					
-					new AllocationPage(ms,selectedCourse,user).setVisible(true);
+
+					new AllocationPage(ms, selectedCourse, user).setVisible(true);
 					setVisible(false);
-					}
+				}
 			}
 		});
-		
-		
-		// Add action listeners to application toggle list for accept/reject Offer
+
+		// Add action listeners to application toggle list for accept/reject
+		// Offer
 		offerApplication.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -283,48 +283,40 @@ public class AllApplication extends JFrame {
 				selectedApplication = cb.getSelectedIndex();
 			}
 		});
-		
-		
-		
+
 		acceptOfferButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				acceptOfferButtonActionPerformed(e);
 			}
 		});
-		
-		
+
 		rejectOfferButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				rejectOfferButtonActionPerformed(e);
 			}
 		});
-		
-		
-		
+
 		viewEvalButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				if (((Applicant)user).getEvaluation() != null){
-					if (((Applicant)user).getEvaluation().trim().length()<=2){
+
+				if (((Applicant) user).getEvaluation() != null) {
+					if (((Applicant) user).getEvaluation().trim().length() <= 2) {
 						JOptionPane.showMessageDialog(AllApplication.this, "No evaluation is available for viewing.");
 					}
 
-					else{
-						new ViewEvaluation(ms,user).setVisible(true);
+					else {
+						new ViewEvaluation(ms, user).setVisible(true);
 						dispose();
 					}
-				}
-				else{
+				} else {
 					JOptionPane.showMessageDialog(AllApplication.this, "No evaluation is available for viewing.");
 				}
 
 			}
 		});
-		
-		
 
 		backButton.addActionListener(new ActionListener() {
 			@Override
@@ -335,46 +327,79 @@ public class AllApplication extends JFrame {
 		});
 
 	}
-	
-	private void acceptOfferButtonActionPerformed(ActionEvent e){
-		if (offerApplication.getItemCount()==0){
-			JOptionPane.showMessageDialog(AllApplication.this,"You do not have any offer.");
-		}
-		else if (selectedApplication<0){
-			JOptionPane.showMessageDialog(AllApplication.this,"You must select an offer.");
-		}
-		else{
+
+	private void acceptOfferButtonActionPerformed(ActionEvent e) {
+		TamasController tc = new TamasController(ms);
+		if (offerApplication.getItemCount() == 0) {
+			JOptionPane.showMessageDialog(AllApplication.this, "You do not have any offer.");
+		} else if (selectedApplication < 0) {
+			JOptionPane.showMessageDialog(AllApplication.this, "You must select an offer.");
+		} else {
 			String appDescription = offerApplication.getItemAt(selectedApplication).toString();
 			Application selectedApp = applicationMap.get(appDescription);
-			if (tc.offerAccepted(selectedApp)){
+			if (tc.offerAccepted(selectedApp)) {
 				JOptionPane.showMessageDialog(AllApplication.this, "Offer already accepted.");
-			}
-			else{
-				tc.acceptOffer(selectedApp);
+			} else {
+//				selectedApp=TamasController.acceptOffer(selectedApp);
+				selectedApp.setStatus(Status.OFFER_ACCEPTED);
+				// for(Application apn:ms.getApplications()){
+				// apn.setStatus(Status.OFFER_ACCEPTED);
+				// }
+				// Applicant ap=selectedApp.getApplicant();
+				for (Applicant ap : ms.getApplicants()) {
+					if (ap.getName().equals(selectedApp.getApplicant().getName())) {
+						for (Application apn : ap.getApplications()) {
+							System.out.println("aaa");
+							// if
+							// (apn.getJobPosting().getJobTitle().equals(selectedApp.getJobPosting().getJobTitle()))
+							// {
+							apn.setStatus(Status.OFFER_ACCEPTED);
+							// }
+						}
+					}
+				}
+				// System.out.println(selectedApp.getStatusFullName());
+
+				// Application newapp=new Application(0,
+				// selectedApp.getJobPosting(), selectedApp.getApplicant(), ms);
+
+				// selectedApp.getApplicant().addApplication(newapp);
+
+				//// for (Application aa : ms.getApplications()) {
+				// System.out.println(aa.getStatus());
+				// }
+
+				// if
+				// (selectedApp.getStatusFullName().equals(Status.OFFER_ACCEPTED))
+				// {
+				// System.out.println("11111111111111aasaaaaaaaaaaaaaa");
+				//
+				// }
 				dispose();
-				new AllApplication(ms,user).setVisible(true);
+				// final ManagementSystem ma =
+				// PersistenceXStream.initializeModelManager("output/data.xml");
+				PersistenceXStream.saveToXMLwithXStream(ms);
+				new AllApplication(ms, user).setVisible(true);
 			}
-			
+
 		}
 	}
-	
-	public void rejectOfferButtonActionPerformed(ActionEvent e){
-		if (offerApplication.getItemCount()==0){
-			JOptionPane.showMessageDialog(AllApplication.this,"You do not have any offer.");
-		}
-		else if (selectedApplication<0){
-			JOptionPane.showMessageDialog(AllApplication.this,"You must select an offer.");
-		}
-		else{
+
+	public void rejectOfferButtonActionPerformed(ActionEvent e) {
+		TamasController tc = new TamasController(ms);
+		if (offerApplication.getItemCount() == 0) {
+			JOptionPane.showMessageDialog(AllApplication.this, "You do not have any offer.");
+		} else if (selectedApplication < 0) {
+			JOptionPane.showMessageDialog(AllApplication.this, "You must select an offer.");
+		} else {
 			String appDescription = offerApplication.getItemAt(selectedApplication).toString();
 			Application selectedApp = applicationMap.get(appDescription);
-			if (tc.offerRejected(selectedApp)){
+			if (tc.offerRejected(selectedApp)) {
 				JOptionPane.showMessageDialog(AllApplication.this, "Offer already rejected.");
-			}
-			else{
+			} else {
 				tc.rejectOffer(selectedApp);
 				dispose();
-				new AllApplication(ms,user).setVisible(true);
+				new AllApplication(ms, user).setVisible(true);
 			}
 		}
 	}

@@ -314,7 +314,7 @@ public class TamasController {
 		System.out.println("create");
 		System.out.println(ap.numberOfApplications());
 		if (ap.getApplications().size() < 3) {
-			Application application = new Application(0, jp, ap);
+			Application application = new Application(0,jp, ap);
 			application.setStatus(Status.PENDING);
 			ap.addApplication(application);
 		}
@@ -718,11 +718,35 @@ public class TamasController {
 		return false;
 	}
 
-	public void acceptOffer(Application application) {
-		if (application.getStatus().equals(Status.SELECTED)) {
-			application.setStatus(Status.OFFER_ACCEPTED);
-			PersistenceXStream.saveToXMLwithXStream(ms);
+	public void acceptOffer(ManagementSystem mm, Application application) {
+		// if (application.getStatus().equals(Status.SELECTED)) {
+
+		// Applicant ap=application.getApplicant();
+		// Application napp=new
+		// Application(application.getHour(),application.getJobPosting(),application.getApplicant());
+		// while (!application.getStatusFullName().equals("OFFER_ACCEPTED")) {
+		application.setStatus(Status.OFFER_ACCEPTED);
+		System.out.println("aaaaaaa");
+		// }
+		// napp.setStatus(Status.OFFER_ACCEPTED);
+		// ap.addApplication(napp);
+		// application.delete();
+		PersistenceXStream.saveToXMLwithXStream(mm);
+	}
+
+	private void refreshStatus(Applicant ap) {
+
+		for (Applicant aa : ms.getApplicants()) {
+			if (aa.getName().equals(ap.getName())) {
+				ms.addApplicant(ap);
+				aa.delete();
+				break;
+			}
+
 		}
+
+		ms.addApplicant(ap);
+
 	}
 
 	public void rejectOffer(Application application) {
