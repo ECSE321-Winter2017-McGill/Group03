@@ -36,39 +36,30 @@ public class AllocationPage extends JFrame {
 	private Course course;
 	private Object user;
 	private TamasController tc;
-
 	private JPanel mainPane;
 	private JScrollPane consolePane;
 	private JLabel commandLine;
 	private JScrollPane scrollPane;
-
 	private JPanel commandPane;
 	private JPanel buttomPane;
-
 	private JLabel budgetRemainingLabel;
 	private JLabel budgetRemainingTextField;
 	private JButton createButton;
 	private JButton modifyButton;
 	private JButton finalizeButton;
 	private JButton backButton;
-	// private JButton deleteButton;
-
 	private HashMap<String, Application> applicationMap = new HashMap<String, Application>();
 	private JButton viewDetailButton;
-	// private JButton acceptAppButton;
 	private JButton rejectAppButton;
 	private JButton checkGradButton;
 	private int selectedApplication;
-
 	private JSplitPane splitPane;
-
 	private JTable table;
 	private String[] columnNames = { "Name", "U/G", "Job Title", "Appointment Hour" };
 	private String[][] data;
-
 	private int valueSet = 0;
 	private HashMap<String, Applicant> nameApplicantMap = new HashMap<String, Applicant>();
-
+	
 	public AllocationPage(ManagementSystem ms, Course course, Object user) {
 		this.ms = ms;
 		this.course = course;
@@ -80,7 +71,7 @@ public class AllocationPage extends JFrame {
 
 	private void initComponents() {
 
-		String[] columnNames = { "Name", "U/G", "Job Title", "Appointment Hour" };
+		String[] columnNames = { "Name", "U/G", "Job Title", "Appointment Hour" ,"Allocation Status"};
 		int numApplications = 0;
 		//
 		if (course.getCourseJobAllocation() == null) {
@@ -105,7 +96,7 @@ public class AllocationPage extends JFrame {
 			}
 		}
 
-		data = new String[numApplications][4];
+		data = new String[numApplications][5];
 
 		int i = 0;
 
@@ -124,15 +115,9 @@ public class AllocationPage extends JFrame {
 							data[i][1] = "Grad";
 						}
 						data[i][2] = aApplication.getJobPosting().getJobTitle();
-						// if (aApplication.getHour() < 45) {
-						// System.out.println(aApplication.getHour());
-						// data[i][3] = "45";
-						// } else {
-						System.out.println(aApplication.getHour());
 						data[i][3] = Integer.toString(aApplication.getHour());
-						// }
-
-						i++;
+						data[i][4] = "No Allocations yet";
+ 						i++;
 					}
 				}
 			}
@@ -149,12 +134,8 @@ public class AllocationPage extends JFrame {
 							data[i][1] = "Grad";
 						}
 						data[i][2] = aApplication.getJobPosting().getJobTitle();
-						// if (aApplication.getHour() < 45) {
-						//
-						// data[i][3] = "45";
-						// } else {
 						data[i][3] = Integer.toString(aApplication.getHour());
-						// }
+						data[i][4] = course.getCourseJobAllocation().getAllocationStatusFullName();
 						i++;
 					}
 				}
@@ -182,23 +163,8 @@ public class AllocationPage extends JFrame {
 		budgetRemainingTextField = new JLabel();
 		budgetRemainingTextField.setText("<html><p>" + Integer.toString(budget) + "</p></html>");
 		budgetRemainingTextField.setForeground(Color.BLACK);
-		// budgetRemainingTextField.setEditable(false);
-
-		// deleteButton = new JButton("Remove Applicant");
-		// deleteButton.addActionListener(new ActionListener() {
-		// @Override
-		// public void actionPerformed(ActionEvent arg0) {
-		// // check for selected row first
-		// if (table.getSelectedRow() != -1) {
-		// // remove selected row from the model
-		// tableModel.removeRow(table.getSelectedRow());
-		//// table.convertRowIndexToModel(int index)
-		// }
-		// }
-		// });
 		final JComboBox<String> allApplication = new JComboBox<String>(new String[0]);
 		viewDetailButton = new JButton("View Details");
-		// acceptAppButton = new JButton("Accept");
 		rejectAppButton = new JButton("Reject");
 		checkGradButton = new JButton("Check Grad");
 
@@ -237,23 +203,6 @@ public class AllocationPage extends JFrame {
 			}
 		});
 
-		// int j = 0;
-		// for (Applicant anApplicant: ms.getApplicants()) {
-		// for (Application aApplication: anApplicant.getApplications()){
-		// if
-		// (aApplication.getJobPosting().getCourse().getCourseName().equals(course.getCourseName())){
-		// if (aApplication.getJobPosting().getJobTitle().equals("TA")){
-		//// allTAHourAppointed.add((int)hourSpinner[j].getValue());
-		// j++;
-		// }
-		// else if(aApplication.getJobPosting().getJobTitle().equals("Grader")){
-		//// allGraderHourAppointed.add((int)hourSpinner[j].getValue());
-		// j++;
-		// }
-		// }
-		// }
-		// }
-
 		setTitle("View Allocation");
 
 		BorderLayout layout = new BorderLayout();
@@ -270,14 +219,8 @@ public class AllocationPage extends JFrame {
 		add(splitPane);
 		setSize(new Dimension(100, 255));
 
-		//
-		// Container pane = getContentPane();
-		// pane.setLayout(layout);
 		mainPane.add(scrollPane, BorderLayout.PAGE_START);
 		if (user.getClass().equals(Instructor.class)) {
-
-			// TODO: Change needed (what if no allocation, what should
-			// instructor see on ToggleList)
 			for (Applicant anApplicant : ms.getApplicants()) {
 				for (Application aApplication : anApplicant.getApplications()) {
 					if (aApplication.getStatusFullName().equals("SELECTED") && aApplication.getJobPosting().getCourse()
@@ -336,19 +279,15 @@ public class AllocationPage extends JFrame {
 
 			commandPane.add(allApplication);
 			commandPane.add(viewDetailButton);
-			// commandPane.add(acceptAppButton);
 			commandPane.add(rejectAppButton);
-
 			commandPane.add(budgetRemainingLabel);
 			commandPane.add(budgetRemainingTextField);
-			// commandPane.add(deleteButton);
 			mainPane.add(commandPane, BorderLayout.CENTER);
-
 			buttomPane.add(backButton);
 			if (course.getCourseJobAllocation() == null) {
 				buttomPane.add(checkGradButton);
 				buttomPane.add(createButton);
-			} else if (course.getCourseJobAllocation().getAllocationStatusFullName().equals("INSTRUCTOR_APPROVED")) {
+			} else {//if (course.getCourseJobAllocation().getAllocationStatusFullName().equals("INSTRUCTOR_APPROVED")) {
 				buttomPane.add(finalizeButton);
 			}
 			mainPane.add(buttomPane, BorderLayout.PAGE_END);
@@ -376,44 +315,6 @@ public class AllocationPage extends JFrame {
 				}
 			}
 		});
-
-		// acceptAppButton.addActionListener(new ActionListener() {
-		// @Override
-		// public void actionPerformed(ActionEvent e) {
-		// if (allApplication.getItemCount() == 0) {
-		// JOptionPane.showMessageDialog(AllocationPage1.this, "No application
-		// has been submitted.");
-		// } else {
-		// int reply = JOptionPane.showConfirmDialog(AllocationPage1.this,
-		// "Hire for all tutorial/lab sessions?", null,
-		// JOptionPane.YES_NO_OPTION);
-		// if (reply == JOptionPane.YES_OPTION) {
-		// valueSet = course.getLabHour() * course.getNumLab()
-		// + course.getTutorialHour() * course.getNumTutorial();
-		//
-		// } else if (reply == JOptionPane.NO_OPTION) {
-		// valueSet = 0;
-		// }
-		//
-		// String appDescription =
-		// allApplication.getItemAt(selectedApplication).toString();
-		// Application selectedApp = applicationMap.get(appDescription);
-		// if (tc.applicationAccepted(selectedApp)) {
-		// JOptionPane.showMessageDialog(AllocationPage1.this, "Application
-		// already accepted.");
-		// } else {
-		// try {
-		//// tc.acceptApplication(selectedApp);
-		// } catch (InvalidInputException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// }
-		// dispose();
-		// initComponents();
-		// }
-		// }
-		// });
 
 		rejectAppButton.addActionListener(new ActionListener() {
 			@Override
@@ -468,13 +369,7 @@ public class AllocationPage extends JFrame {
 						data[i][1] = "Grad";
 					}
 					data[i][2] = aApplication.getJobPosting().getJobTitle();
-					// if (aApplication.getHour() < 45) {
-					// System.out.println(aApplication.getHour());
-					// data[i][3] = "45";
-					// } else {
-					// System.out.println(aApplication.getHour());
 					data[i][3] = Integer.toString(aApplication.getHour());
-					// }
 					i++;
 				}
 			}
@@ -493,11 +388,6 @@ public class AllocationPage extends JFrame {
 		budgetRemainingTextField.setText("$" + tc.getRemainingBudget(course));
 
 	}
-
-	// private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt)
-	// {
-	//
-	// }
 
 	private void checkGradButtonActionPerformed(java.awt.event.ActionEvent evt) {
 
@@ -584,9 +474,6 @@ public class AllocationPage extends JFrame {
 		for (int i = 0; i < data.length; i++) {
 			try {
 				if (table.getModel().getValueAt(i, 2).equals("TA")) {
-					// System.out.println(nameApplicantMap.get(table.getModel().getValueAt(i,
-					// 0)).getName());
-
 					String des = (String) table.getModel().getValueAt(i, 0);
 					HashMap<String, Applicant> newmap = nameApplicantMap;
 
@@ -604,14 +491,10 @@ public class AllocationPage extends JFrame {
 
 		}
 		try {
-			// for(int i=0;i<1)
-			//
-
 			tc.changeHours(course.getCourseJobAllocation(), ms, taAppointed, allTAHourAppointed, graderAppointed,
 					allGraderHourAppointed);
 
 		} catch (Exception e) {
-
 			error = e.getMessage();
 			System.out.println("Error = " + error);
 		}
@@ -622,7 +505,7 @@ public class AllocationPage extends JFrame {
 		try {
 			tc.finalizeAllocation(course.getCourseJobAllocation());
 		} catch (InvalidInputException e) {
-			e.getMessage();
+			JOptionPane.showMessageDialog(AllocationPage.this, e.getMessage());
 		}
 	}
 
