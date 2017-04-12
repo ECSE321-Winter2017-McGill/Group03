@@ -53,7 +53,6 @@ public class DDBmanager extends AsyncTask<Parameters, Void, String> {
 		try {
 			outputStream =new FileOutputStream (f);
 			outputStream.write(string.getBytes());
-			System.out.println(outputStream);
 			outputStream.close();
 		} catch (Exception e) {
 			e.printStackTrace();

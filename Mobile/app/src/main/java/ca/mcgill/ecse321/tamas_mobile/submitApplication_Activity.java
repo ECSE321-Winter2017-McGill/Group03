@@ -59,6 +59,7 @@ public class submitApplication_Activity extends AppCompatActivity implements Asy
     }
 
     private void refreshData() {
+
         Spinner degree = (Spinner) findViewById(R.id.degree_spinner);
         ArrayAdapter<String> degreeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
 

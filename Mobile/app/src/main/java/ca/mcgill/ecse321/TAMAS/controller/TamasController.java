@@ -238,7 +238,7 @@ public class TamasController {
 		System.out.println(ap.numberOfApplications());
 		if (ap.getApplications().size() < 3) {
 			Application application = new Application(0,jp, ap);
-			application.setStatus(Status.SELECTED);
+			application.setStatus(Status.PENDING);
 			ap.addApplication(application);
 		}
 
