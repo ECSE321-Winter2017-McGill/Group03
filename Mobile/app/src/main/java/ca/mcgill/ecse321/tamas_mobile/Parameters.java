@@ -8,7 +8,7 @@ public class Parameters {
     public Context c;
     public ManagementSystem ms;
     public int option;
-    public Parameters(Context c, ManagementSystem ms,int option){
+    public Parameters(Context c, ManagementSystem ms, int option){
         this.c=c;
         this.ms=ms;
         this.option=option;

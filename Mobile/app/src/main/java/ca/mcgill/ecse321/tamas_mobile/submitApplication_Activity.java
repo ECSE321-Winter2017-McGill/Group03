@@ -3,11 +3,8 @@ package ca.mcgill.ecse321.tamas_mobile;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,22 +13,15 @@ import android.widget.TextView;
 
 import com.thoughtworks.xstream.XStream;
 
-import org.w3c.dom.Text;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import ca.mcgill.ecse321.TAMAS.Web.controller.DDBmanager;
 import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.controller.TamasController;
-import ca.mcgill.ecse321.TAMAS.model.Allocation;
-import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Course;
-import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 
@@ -118,9 +108,10 @@ public class submitApplication_Activity extends AppCompatActivity implements Asy
         ManagementSystem ms = (ManagementSystem) loadFromXML();
 
         for (Course aCourse : ms.getCourses()) {
-            preferenceAdapter1.add(aCourse.getCourseCode());
-            preferenceAdapter2.add(aCourse.getCourseCode());
-            preferenceAdapter3.add(aCourse.getCourseCode());
+                preferenceAdapter1.add(aCourse.getCourseCode());
+                preferenceAdapter2.add(aCourse.getCourseCode());
+                preferenceAdapter3.add(aCourse.getCourseCode());
+
         }
 
         preference1.setAdapter(preferenceAdapter1);
@@ -135,11 +126,6 @@ public class submitApplication_Activity extends AppCompatActivity implements Asy
         if (error.trim().length() > 0) {
 
             final Dialog dialog = new Dialog(context);
-//            dialog.setContentView( R.layout.dialog_submit );
-//            TextView edit_model = (TextView) dialog.findViewById( R.id.edit_model );
-//            edit_model.setText( android.os.Build.DEVICE );
-//            dialog.setTitle( "Enter Details" );
-//            dialog.show( );
 
             dialog.setContentView(R.layout.statusdialog);
             dialog.setTitle("Error message");

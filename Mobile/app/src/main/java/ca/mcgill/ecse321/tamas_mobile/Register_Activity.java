@@ -4,26 +4,22 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.mapper.Mapper;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import ca.mcgill.ecse321.TAMAS.Web.controller.DDBmanager;
 import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.controller.TamasController;
-import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
-import com.thoughtworks.xstream.XStream;
+
 public class Register_Activity extends AppCompatActivity implements AsyncResponse{
 //public class Register_Activity extends AppCompatActivity{
 
@@ -49,6 +45,7 @@ public class Register_Activity extends AppCompatActivity implements AsyncRespons
 
         EditText newuser = (EditText)findViewById(R.id.newuser);
 
+        // Report an error if the user doesn't enter a username
         if (newuser.getText().toString()==null || newuser.getText().toString().trim().length()==0){
             error += "You must enter a username! ";
         }
@@ -57,6 +54,8 @@ public class Register_Activity extends AppCompatActivity implements AsyncRespons
                 try {
                     int numOfExitsingApp=ms.numberOfApplicants();
                     TamasController tc = new TamasController(ms);
+
+                    // Call the register method in controller
                     tc.registerApplicant(newuser.getText().toString());
                     if (ms!=null) {
                         System.out.println("HHD");
@@ -81,10 +80,12 @@ public class Register_Activity extends AppCompatActivity implements AsyncRespons
         EditText newuser = (EditText)findViewById(R.id.newuser);
         TextView errorMessage =(TextView)findViewById(R.id.registerError);
 
+        // Clear the textfields and show error message (if there is any)
         errorMessage.setText(error);
         newuser.setText("");
     }
 
+    // This method is called when the back button is clicked
     public void backToLogIn(View v){
         Intent toLogIn = new Intent(Register_Activity.this, Login_Activity.class);
         Register_Activity.this.startActivity(toLogIn);

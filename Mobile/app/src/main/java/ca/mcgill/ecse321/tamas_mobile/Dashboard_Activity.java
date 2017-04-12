@@ -16,6 +16,8 @@ public class Dashboard_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_);
+
+        // Get the username of the current user
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
 
@@ -24,7 +26,7 @@ public class Dashboard_Activity extends AppCompatActivity {
     }
 
 
-
+    // This method is called when log out button is clicked
     public void logOut(View v){
 
         Intent logOutIntent = new Intent(Dashboard_Activity.this, Login_Activity.class);
@@ -32,6 +34,7 @@ public class Dashboard_Activity extends AppCompatActivity {
 
     }
 
+    // This method is called when the "click here to view job postings" textview is clicked
     public void viewJobPosting(View v) {
 
         Intent viewJobPostingIntent = new Intent(Dashboard_Activity.this, ViewJobPosting_Activity.class);
@@ -40,8 +43,8 @@ public class Dashboard_Activity extends AppCompatActivity {
 
     }
 
-    //Can be done next time
 
+    // This method is called when the "click here to view your applications" textview is clicked
     public void viewApplication(View v){
 
         Intent viewApplicationIntent = new Intent(Dashboard_Activity.this, ViewStatus_Activity.class);

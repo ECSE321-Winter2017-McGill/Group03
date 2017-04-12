@@ -50,11 +50,13 @@ public class ViewSpecificJobPosting_Activity extends AppCompatActivity implement
         TextView preferredExp = (TextView) findViewById(R.id.preferredExperience);
         Button applyButton = (Button) findViewById(R.id.applyButton);
 
+        // Get the username of the current user
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
         title = intent.getStringExtra("title");
         course = intent.getStringExtra("course");
 
+        // Find the selected JobPosting object from the system
         JobPosting thisPosting = null;
         for (JobPosting aPosting : ms.getJobPostings()) {
             if (aPosting.getJobTitle().equals(title) && aPosting.getCourse().getCourseCode().equals(course)) {
@@ -63,6 +65,7 @@ public class ViewSpecificJobPosting_Activity extends AppCompatActivity implement
             }
         }
 
+        // If the selected JobPosting object is found, display its details on the screen
         if (thisPosting != null) {
             jobPostingTitle.setText(thisPosting.getCourse().getCourseCode() + " - " + thisPosting.getJobTitle());
             jobTitle.setText(thisPosting.getJobTitle());
@@ -78,6 +81,7 @@ public class ViewSpecificJobPosting_Activity extends AppCompatActivity implement
             preferredExp.setText(thisPosting.getPerferredExperience());
         }
 
+        // If the deadline hasn't passed, the apply button will be enabled
         Date today = tc.getToday();
         if (tc.isDeadlinePassed(today)) {
             applyButton.setEnabled(false);
@@ -85,6 +89,7 @@ public class ViewSpecificJobPosting_Activity extends AppCompatActivity implement
     }
 
 
+    // This method is called when the save&submit button is clicked
     public void apply(View v){
         Intent applyIntent =  new Intent(ViewSpecificJobPosting_Activity.this, submitApplication_Activity.class);
         applyIntent.putExtra("username",username);
@@ -93,6 +98,7 @@ public class ViewSpecificJobPosting_Activity extends AppCompatActivity implement
         ViewSpecificJobPosting_Activity.this.startActivity(applyIntent);
     }
 
+    // This method is called when the back button is clicked
     public void backToViewJobPosting(View v){
         Intent viewApplicationIntent = new Intent(ViewSpecificJobPosting_Activity.this, ViewJobPosting_Activity.class);
         viewApplicationIntent.putExtra("username",username);
