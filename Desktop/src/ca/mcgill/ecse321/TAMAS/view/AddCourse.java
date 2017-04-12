@@ -61,6 +61,11 @@ public class AddCourse extends JFrame {
 	private JSeparator horizontalLineMiddle;
 	
 
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 * @param user User
+	 */
 	public AddCourse(ManagementSystem ms, Object user) {
 		this.ms = ms;
 		this.user = user;
@@ -69,6 +74,9 @@ public class AddCourse extends JFrame {
 		refreshData();
 	}
 
+	/**
+	 * Initialize all components
+	 */
 	private void initComponents() {
 		
 		formTitle = new JLabel("Add Course");
@@ -257,6 +265,10 @@ public class AddCourse extends JFrame {
 	}
 	
 	
+	/**
+	 * If there is an error, error will be displayed
+	 * If no errors occurred upon submission, then the form is cleared out
+	 */
 	private void refreshData() {
 		// error
 		errorMessage.setText(error);
@@ -287,6 +299,10 @@ public class AddCourse extends JFrame {
 		pack();
 	}
 	
+	/**
+	 * Action triggered when submitting the form
+	 * @param evt Action event
+	 */
 	private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO: Add a Course name attribute to model.
 		TamasController tc = new TamasController(ms);
@@ -295,7 +311,7 @@ public class AddCourse extends JFrame {
 
 	    if (selectedSemester < 0){
 	        error = error + "Please specify a semester.";
-	        }
+	    }
 	    
 	    if (error.trim().length() == 0) {
 	        // call the controller
@@ -414,11 +430,18 @@ public class AddCourse extends JFrame {
 		refreshData();
 	}
 	
+	/**
+	 * Action triggered when cancelling the form
+	 * @param evt Action event
+	 */
 	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		backToAllCourses();
 		setVisible(false);
 	}
 	
+	/**
+	 * Return to all courses
+	 */
 	private void backToAllCourses() {
 		new AllCourses(ms, user).setVisible(true);
 	}

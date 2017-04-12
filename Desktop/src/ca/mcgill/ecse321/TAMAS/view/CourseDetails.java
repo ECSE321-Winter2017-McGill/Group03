@@ -60,6 +60,12 @@ public class CourseDetails extends JFrame {
 	private Course course;
 	private Object user;
 	
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 * @param course Course
+	 * @param user User
+	 */
 	public CourseDetails(ManagementSystem ms, Course course, Object user) {
 		this.ms = ms;
 		this.course = course;
@@ -67,6 +73,9 @@ public class CourseDetails extends JFrame {
 		initComponents();
 	}
 
+	/**
+	 * Initialize all components
+	 */
 	private void initComponents() {
 		
 		formTitle = new JLabel("Course");
@@ -267,10 +276,17 @@ public class CourseDetails extends JFrame {
 		
 	}
 	
+	/**
+	 * Action triggered when closing the course details
+	 * @param evt Action event
+	 */
 	private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		setVisible(false);
 	}
 	
+	/**
+	 * Return to all courses page
+	 */
 	private void backToAllCourses() {
 		new AllCourses(ms, user).setVisible(true);
 	}

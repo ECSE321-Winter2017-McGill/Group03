@@ -38,12 +38,20 @@ public class ViewWriteEvaluation extends JFrame {
 	private HashMap<String, Applicant> Appmap = new HashMap<>();
 	JLabel lblEvaluation = new JLabel(" ");
 
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 * @param user User
+	 */
 	public ViewWriteEvaluation(ManagementSystem ms, Object user) {
 		this.ms = ms;
 		this.user = user;
 		initialize();
 	}
 
+	/**
+	 * Initialize all components
+	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 719, 534);
@@ -153,6 +161,9 @@ public class ViewWriteEvaluation extends JFrame {
 
 	}
 
+	/**
+	 * Updates the list of evaluations for TA
+	 */
 	protected void updataList() {
 		String TA = (String) TAlist.getSelectedItem();
 		Applicant ta = Appmap.get(TA);
@@ -163,6 +174,9 @@ public class ViewWriteEvaluation extends JFrame {
 		}
 	}
 
+	/**
+	 * Return to main page
+	 */
 	public void backToMain() {
 		new MainPage(user).setVisible(true);
 	}
