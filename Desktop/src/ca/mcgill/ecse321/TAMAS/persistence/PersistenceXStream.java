@@ -45,11 +45,11 @@ public abstract class PersistenceXStream {
 	public static boolean saveToXMLwithXStream(Object obj) {
 		xstream.setMode(XStream.ID_REFERENCES);
 		String xml = xstream.toXML(obj); // save our xml file
-//		try {
-//			DBmanager.updateDB(xml);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		try {
+			DBmanager.updateDB(xml);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		try {
 			FileWriter writer = new FileWriter(filename);
 			writer.write(xml);
@@ -63,7 +63,7 @@ public abstract class PersistenceXStream {
 
 	public static Object loadFromXMLwithXStream() {
 		xstream.setMode(XStream.ID_REFERENCES);
-//		DBmanager.writeFile(DBmanager.getDB());
+		DBmanager.writeFile(DBmanager.getDB());
 		try {
 			FileReader fileReader = new FileReader(filename); // load our xml
 																// file
