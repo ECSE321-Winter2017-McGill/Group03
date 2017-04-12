@@ -23,6 +23,12 @@ public class TamasController {
 	private ManagementSystem ms = new ManagementSystem();
 
 	//Deleted????
+	/**
+	 * @param mm Management System
+	 * @param user User
+	 * @param course Course
+	 * @throws InvalidInputException
+	 */
 	public static void changeAllocationStatus(ManagementSystem mm, Object user, Course course)
 			throws InvalidInputException {
 
@@ -45,6 +51,15 @@ public class TamasController {
 
 	}
 
+	/**
+	 * @param mm Management System
+	 * @param course Course
+	 * @param tas List of TAs
+	 * @param taHours List of TA hours
+	 * @param graders List of graders
+	 * @param graderHours List of grader hours
+	 * @throws InvalidInputException
+	 */
 	public void createAllocation(ManagementSystem mm, Course course, ArrayList<Applicant> tas, ArrayList<Integer> taHours, ArrayList<Applicant>graders, ArrayList<Integer>graderHours)
 			throws InvalidInputException {
 
@@ -138,6 +153,9 @@ public class TamasController {
 		PersistenceXStream.saveToXMLwithXStream(mm);
 	}
 
+	/**
+	 * @return today's date
+	 */
 	public static Date getToday() {
 
 		Calendar c = Calendar.getInstance();
@@ -150,6 +168,9 @@ public class TamasController {
 		return c.getTime();
 	}
 
+	/**
+	 * @return date of default deadline
+	 */
 	public static Date getDefaultDeadLine() {
 		Calendar c = Calendar.getInstance();
 		// default deadline
@@ -160,11 +181,18 @@ public class TamasController {
 		return c.getTime();
 	}
 
+	/**
+	 * @return boolean that indicates if default deadline is passed
+	 */
 	public static boolean isDeadlinePassed() {
 
 		return isDeadlinePassed(getDefaultDeadLine());
 	}
 
+	/**
+	 * @param deadline Deadline
+	 * @return boolean that indicates if given deadline is passed
+	 */
 	public static boolean isDeadlinePassed(Date deadline) {
 
 		if (deadline.before(getToday())) {
@@ -175,10 +203,19 @@ public class TamasController {
 
 	}
 
+	/**
+	 * Class constructor
+	 * @param ms Management System
+	 */
 	public TamasController(ManagementSystem ms) {
 		this.ms = ms;
 	}
 
+	/**
+	 * @param ta TA
+	 * @param eval Evaluation for the TA
+	 * @throws InvalidInputException
+	 */
 	public void createTAEval(Applicant ta, String eval) throws InvalidInputException {
 		String error = "";
 
@@ -201,6 +238,14 @@ public class TamasController {
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 
+	/**
+	 * @param jobPosition Job Position
+	 * @param deadlineDate Deadline for job posting
+	 * @param exp Preferred Experience
+	 * @param hourlyRate Hourly wage
+	 * @param aCourse Course
+	 * @throws InvalidInputException
+	 */
 	public void createJobPosting(String jobPosition, Date deadlineDate, String exp, double hourlyRate, Course aCourse)
 			throws InvalidInputException {
 		String error = "";
@@ -226,6 +271,20 @@ public class TamasController {
 
 	}
 
+	/**
+	 * @param jp Job Posting
+	 * @param name Name of application
+	 * @param id ID
+	 * @param major Major of applicant
+	 * @param isUndergrad Boolean indicating if applicant is an undergrad
+	 * @param year Year
+	 * @param exp Experience
+	 * @param firstChoice First choice
+	 * @param secondChoice Second choice
+	 * @param thirdChoice Third choice
+	 * @param totalAppointmentHour Total appointment hour
+	 * @throws InvalidInputException
+	 */
 	public void createApplication(JobPosting jp, String name, int id, String major, boolean isUndergrad, String year,
 			String exp, String firstChoice, String secondChoice, String thirdChoice, int totalAppointmentHour)
 			throws InvalidInputException {
@@ -254,6 +313,20 @@ public class TamasController {
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 
+	/**
+	 * @param name Name of applicant
+	 * @param id ID of applicant
+	 * @param major Major of applicant
+	 * @param isUndergrad Boolean indicating if applicant is an undergrad
+	 * @param year Year
+	 * @param exp Experience
+	 * @param firstChoice First choice
+	 * @param secondChoice Second choice
+	 * @param thirdChoice Third choice
+	 * @param totalAppointmentHour Total appointment hour
+	 * @return new applicant
+	 * @throws InvalidInputException
+	 */
 	private Applicant createApplicant(String name, int id, String major, boolean isUndergrad, String year, String exp,
 			String firstChoice, String secondChoice, String thirdChoice, int totalAppointmentHour)
 			throws InvalidInputException {
@@ -295,6 +368,10 @@ public class TamasController {
 
 	}
 
+	/**
+	 * @param name Name of applicant
+	 * @throws InvalidInputException
+	 */
 	public void registerApplicant(String name) throws InvalidInputException {
 
 		String error = "";
@@ -340,6 +417,10 @@ public class TamasController {
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 
+	/**
+	 * @param name Name of instructor
+	 * @throws InvalidInputException
+	 */
 	public void registerInstructor(String name) throws InvalidInputException {
 
 		String error = "";
@@ -385,6 +466,21 @@ public class TamasController {
 
 	}
 
+	/**
+	 * @param semester Semester
+	 * @param courseName Course name
+	 * @param courseCode Course code
+	 * @param credit Number of credits
+	 * @param maxStudent Maximum number of students
+	 * @param instructorName Instructor's name
+	 * @param numGraderNeeded Number of graders needed
+	 * @param numLab Number of lab sessions
+	 * @param numTutorial Number of tutorial sessions
+	 * @param labHour Number of lab hours
+	 * @param tutorialHour Number of tutorial hours
+	 * @param totalGraderHour Total number of grader hours
+	 * @throws InvalidInputException
+	 */
 	public void createCourse(String semester, String courseName, String courseCode, int credit, int maxStudent,
 			String instructorName, int numGraderNeeded, int numLab, int numTutorial, int labHour, int tutorialHour,
 			int totalGraderHour) throws InvalidInputException {
@@ -466,6 +562,10 @@ public class TamasController {
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 
+	/**
+	 * @param application Application
+	 * @return boolean that indicates if application is accepted
+	 */
 	public boolean applicationAccepted(Application application) {
 		if (application.getStatus().equals(Status.SELECTED)) {
 			return true;
@@ -473,6 +573,10 @@ public class TamasController {
 		return false;
 	}
 
+	/**
+	 * @param application Application
+	 * @return boolean that indicates if application is rejected
+	 */
 	public boolean applicationRejected(Application application) {
 		if (application.getStatus().equals(Status.REJECTED)) {
 			return true;
@@ -481,6 +585,10 @@ public class TamasController {
 	}
 
 
+	/**
+	 * @param application Application
+	 * @throws InvalidInputException
+	 */
 	public void acceptApplication(Application application) throws InvalidInputException {
 		if (application.getStatus().equals(Status.PENDING)) {
 			application.setStatus(Status.OFFER_ACCEPTED);
@@ -488,6 +596,9 @@ public class TamasController {
 		}
 	}
 
+	/**
+	 * @param application Application
+	 */
 	public void rejectApplication(Application application) {
 		if (application.getStatus().equals(Status.PENDING)) {
 			application.setStatus(Status.OFFER_DECLINED);
@@ -497,6 +608,15 @@ public class TamasController {
 	}
 
 	//Can take a course instead of an allocation
+	/**
+	 * @param allocation Allocation object
+	 * @param mm Management system
+	 * @param tas List of TAs
+	 * @param taHours Number of TA hours
+	 * @param graders List of graders
+	 * @param graderHours Number of grader hours
+	 * @throws InvalidInputException
+	 */
 	public void changeHours(Allocation allocation, ManagementSystem mm, ArrayList<Applicant> tas, ArrayList<Integer> taHours, ArrayList<Applicant>graders, ArrayList<Integer>graderHours) throws InvalidInputException {
 		if (allocation == null) {
 			throw new InvalidInputException("Select a course! ");
@@ -592,6 +712,10 @@ public class TamasController {
 		PersistenceXStream.saveToXMLwithXStream(mm);
 	}
 	
+	/**
+	 * @param allocation Allocation
+	 * @throws InvalidInputException
+	 */
 	public void finalizeAllocation(Allocation allocation) throws InvalidInputException{
 		if (!allocation.getAllocationStatusFullName().equals("INSTRUCTOR_APPROVED")){
 			throw new InvalidInputException("The allocation cannot be finalized before it is approved by the instructor! ");

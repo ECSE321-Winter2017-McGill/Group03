@@ -43,6 +43,11 @@ public class AllApplication extends JFrame {
 	private String[][] data;
 	private JTable table;
 
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 * @param user User
+	 */
 	public AllApplication(ManagementSystem ms, Object user) {
 		this.user = user;
 		this.ms = ms;
@@ -51,6 +56,9 @@ public class AllApplication extends JFrame {
 		initComponents();
 	}
 
+	/**
+	 * Initialize all components
+	 */
 	private void initComponents() {
 		// get table data ready;
 		String[] columnNames = { "Applicant Name", "U/G", "Job Title", "Course Code", "Application Status" };
@@ -238,6 +246,9 @@ public class AllApplication extends JFrame {
 
 	}
 
+	/**
+	 * Return to main page
+	 */
 	private void backToMain() {
 		new MainPage(user).setVisible(true);
 	}

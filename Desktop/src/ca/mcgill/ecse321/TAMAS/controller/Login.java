@@ -14,6 +14,12 @@ public class Login {
 	private static String myDriver = "org.gjt.mm.mysql.Driver";
 	private static String myUrl = "jdbc:mysql://test.cabyhhnybi2l.us-west-2.rds.amazonaws.com/test";
 	@SuppressWarnings("unused")
+	private static ManagementSystem ms = new ManagementSystem();
+
+	/**
+	 * @param q
+	 * @return result set for database access
+	 */
 	private static ResultSet getDB(String q) {
 		try {
 			Class.forName(myDriver);
@@ -31,6 +37,9 @@ public class Login {
 		return null;
 	}
 
+	/**
+	 * @param q
+	 */
 	@SuppressWarnings("unused")
 	private static void updateDB(String q) {
 		try {
