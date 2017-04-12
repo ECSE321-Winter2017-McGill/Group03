@@ -22,7 +22,6 @@ public class TamasController {
 
 	private ManagementSystem ms = new ManagementSystem();
 
-	// Deleted????
 	public static void changeAllocationStatus(ManagementSystem mm, Object user, Course course)
 			throws InvalidInputException {
 
@@ -48,8 +47,6 @@ public class TamasController {
 	public void createAllocation(ManagementSystem mm, Course course, ArrayList<Applicant> tas,
 			ArrayList<Integer> taHours, ArrayList<Applicant> graders, ArrayList<Integer> graderHours)
 			throws InvalidInputException {
-
-		// System.out.println(tas.size()+""+graders.size());
 
 		if (course == null) {
 			throw new InvalidInputException("Can not change allocation due to null course. ");
@@ -141,32 +138,6 @@ public class TamasController {
 			}
 
 			allocation.setAllocationStatus(AllocationStatus.INITIAL);
-			// /course.setCourseJobAllocation(allocation);
-			// for (int i=0; i<listApplicant.size();i++){
-			// List<Application>allApplications =
-			// listApplicant.get(i).getApplications();
-			// for (int j=0;j<allApplications.size();j++){
-			// Course thisCourse =
-			// allApplications.get(j).getJobPosting().getCourse();
-			// String jobTitle =
-			// allApplications.get(j).getJobPosting().getJobTitle();
-			// if
-			// (thisCourse.getSemester().equals(course.getSemester())&&thisCourse.getCourseCode().equals(course.getCourseCode())){
-			// if (jobTitle.equals("TA")){
-			// if(180-listApplicant.get(i).getTotalAppointmentHours()<listHours.get(i).intValue()){
-			// allocation.addApplicant(listApplicant.get(i));
-			// }
-			// else{
-			// throw new InvalidInputException();
-			// }
-			// }
-			// else if (jobTitle.equals("Grader")){
-			// allocation.addApplicant(listApplicant.get(i));
-			// }
-			// }
-			// }
-			// }
-			//
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new InvalidInputException(e.getMessage());
@@ -314,7 +285,7 @@ public class TamasController {
 		System.out.println("create");
 		System.out.println(ap.numberOfApplications());
 		if (ap.getApplications().size() < 3) {
-			Application application = new Application(0,jp, ap);
+			Application application = new Application(0, jp, ap);
 			application.setStatus(Status.PENDING);
 			ap.addApplication(application);
 		}
@@ -513,7 +484,6 @@ public class TamasController {
 			}
 		}
 
-		// TODO: consider modifying this
 		if (instructor == null) {
 			instructor = new Instructor(instructorName, ms);
 		}
@@ -535,7 +505,7 @@ public class TamasController {
 		double temp = (numLab * labHour + numTutorial * tutorialHour) / 180;
 		int numTaNeeded = (int) Math.ceil(temp);
 
-		// TODO: HOW TO CALCULATE BUDGET
+		// HOW TO CALCULATE BUDGET
 		double budgetCalculated = (18 * hourRequiredTa) + (15 * totalGraderHour);
 
 		@SuppressWarnings("unused")
@@ -557,14 +527,6 @@ public class TamasController {
 		}
 		return false;
 	}
-
-	// public void acceptApplication(Application application) throws
-	// InvalidInputException {
-	// if (application.getStatus().equals(Status.PENDING)) {
-	// application.setStatus(Status.OFFER_ACCEPTED);
-	// PersistenceXStream.saveToXMLwithXStream(ms);
-	// }
-	// }
 
 	public void rejectApplication(Application application) {
 		if (application.getStatus().equals(Status.PENDING)) {
@@ -719,34 +681,10 @@ public class TamasController {
 	}
 
 	public void acceptOffer(ManagementSystem mm, Application application) {
-		// if (application.getStatus().equals(Status.SELECTED)) {
-
-		// Applicant ap=application.getApplicant();
-		// Application napp=new
-		// Application(application.getHour(),application.getJobPosting(),application.getApplicant());
-		// while (!application.getStatusFullName().equals("OFFER_ACCEPTED")) {
-		application.setStatus(Status.OFFER_ACCEPTED);
-		System.out.println("aaaaaaa");
-		// }
-		// napp.setStatus(Status.OFFER_ACCEPTED);
-		// ap.addApplication(napp);
-		// application.delete();
-		PersistenceXStream.saveToXMLwithXStream(mm);
-	}
-
-	private void refreshStatus(Applicant ap) {
-
-		for (Applicant aa : ms.getApplicants()) {
-			if (aa.getName().equals(ap.getName())) {
-				ms.addApplicant(ap);
-				aa.delete();
-				break;
-			}
-
+		if (application.getStatus().equals(Status.SELECTED)) {
+			application.setStatus(Status.OFFER_ACCEPTED);
+			PersistenceXStream.saveToXMLwithXStream(ms);
 		}
-
-		ms.addApplicant(ap);
-
 	}
 
 	public void rejectOffer(Application application) {

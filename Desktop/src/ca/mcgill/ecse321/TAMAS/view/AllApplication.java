@@ -340,44 +340,17 @@ public class AllApplication extends JFrame {
 			if (tc.offerAccepted(selectedApp)) {
 				JOptionPane.showMessageDialog(AllApplication.this, "Offer already accepted.");
 			} else {
-//				selectedApp=TamasController.acceptOffer(selectedApp);
 				selectedApp.setStatus(Status.OFFER_ACCEPTED);
-				// for(Application apn:ms.getApplications()){
-				// apn.setStatus(Status.OFFER_ACCEPTED);
-				// }
-				// Applicant ap=selectedApp.getApplicant();
 				for (Applicant ap : ms.getApplicants()) {
 					if (ap.getName().equals(selectedApp.getApplicant().getName())) {
 						for (Application apn : ap.getApplications()) {
-							System.out.println("aaa");
-							// if
-							// (apn.getJobPosting().getJobTitle().equals(selectedApp.getJobPosting().getJobTitle()))
-							// {
-							apn.setStatus(Status.OFFER_ACCEPTED);
-							// }
+							if (selectedApp.getJobPosting().getJobTitle().equals(apn.getJobPosting().getJobTitle())) {
+								apn.setStatus(Status.OFFER_ACCEPTED);
+							}
 						}
 					}
 				}
-				// System.out.println(selectedApp.getStatusFullName());
-
-				// Application newapp=new Application(0,
-				// selectedApp.getJobPosting(), selectedApp.getApplicant(), ms);
-
-				// selectedApp.getApplicant().addApplication(newapp);
-
-				//// for (Application aa : ms.getApplications()) {
-				// System.out.println(aa.getStatus());
-				// }
-
-				// if
-				// (selectedApp.getStatusFullName().equals(Status.OFFER_ACCEPTED))
-				// {
-				// System.out.println("11111111111111aasaaaaaaaaaaaaaa");
-				//
-				// }
 				dispose();
-				// final ManagementSystem ma =
-				// PersistenceXStream.initializeModelManager("output/data.xml");
 				PersistenceXStream.saveToXMLwithXStream(ms);
 				new AllApplication(ms, user).setVisible(true);
 			}
@@ -397,8 +370,18 @@ public class AllApplication extends JFrame {
 			if (tc.offerRejected(selectedApp)) {
 				JOptionPane.showMessageDialog(AllApplication.this, "Offer already rejected.");
 			} else {
-				tc.rejectOffer(selectedApp);
+				selectedApp.setStatus(Status.OFFER_DECLINED);
+				for (Applicant ap : ms.getApplicants()) {
+					if (ap.getName().equals(selectedApp.getApplicant().getName())) {
+						for (Application apn : ap.getApplications()) {
+							if (selectedApp.getJobPosting().getJobTitle().equals(apn.getJobPosting().getJobTitle())) {
+								apn.setStatus(Status.OFFER_DECLINED);
+							}
+						}
+					}
+				}
 				dispose();
+				PersistenceXStream.saveToXMLwithXStream(ms);
 				new AllApplication(ms, user).setVisible(true);
 			}
 		}
