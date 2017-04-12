@@ -457,7 +457,6 @@ public class AllocationPage extends JFrame {
 		}
 
 		try {
-			System.out.println(course.getCourseJobAllocation() == null);
 			tc.createAllocation(ms, course, taAppointed, allTAHourAppointed, graderAppointed, allGraderHourAppointed);
 			budgetRemainingLabel.setText("<html><p>" + tc.getRemainingBudget(course) + "</p></html>");
 		} catch (Exception e) {
@@ -496,7 +495,6 @@ public class AllocationPage extends JFrame {
 
 		} catch (Exception e) {
 			error = e.getMessage();
-			System.out.println("Error = " + error);
 		}
 		refreshData();
 	}

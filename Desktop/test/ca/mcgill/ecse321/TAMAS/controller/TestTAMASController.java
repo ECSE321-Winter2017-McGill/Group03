@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.TAMAS.controller;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.sql.Date;
 
@@ -13,6 +14,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
+import ca.mcgill.ecse321.TAMAS.model.Allocation;
+import ca.mcgill.ecse321.TAMAS.model.Allocation.AllocationStatus;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Application;
 import ca.mcgill.ecse321.TAMAS.model.Application.Status;
@@ -43,18 +46,66 @@ public class TestTAMASController {
 	public void tearDown() throws Exception {
 		ms.delete();
 	}
-
 	@Test
-	public void testCreateTAEval() {
-		assertEquals(0, ms.getApplicants().size());
-		String evaluation = "He/She is very good";
+	public void testChangeAllocationStatus() {
+		assertEquals(0, ms.getCourses().size());
+		Instructor i = new Instructor("Danial", ms);
+		
+		Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10, 10, 10, 10, 10, 10.0, i, ms);
+		ms.addCourse(c);
+		assertEquals(1, ms.getCourses().size());
+		
+		Allocation allo = new Allocation(c);
+        allo.setAllocationStatus(AllocationStatus.INITIAL);
+        
 		TamasController tc = new TamasController(ms);
-		Applicant aApplicant = new Applicant(111, "abc", "", true, "", "", "", "", "", "", 10, ms);
-		ms.addApplicant(aApplicant);
-		assertEquals(1, ms.getApplicants().size());
-
 		try {
-			tc.createTAEval(aApplicant, evaluation, evaluation);
+			tc.changeAllocationStatus(ms, i, c);
+		} catch (InvalidInputException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		ManagementSystem ms1 = ms;
+		assertEquals(allo.getAllocationStatus(), ms.getCourse(0).getCourseJobAllocation().getAllocationStatus());
+	
+		ManagementSystem ms2 = (ManagementSystem) PersistenceXStream.loadFromXMLwithXStream();
+		//assertEquals(allo.getAllocationStatus(), ms2.getCourse(0).getCourseJobAllocation().getAllocationStatus());
+		
+		ms2.delete();
+	}
+	
+	@Test
+	public void testCreateAllocation() {
+		assertEquals(0, ms.getCourses().size());
+		Instructor i = new Instructor("Danial", ms);
+		Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10, 10, 10, 10, 10, 10.0, i, ms);
+		assertEquals(1, ms.getCourses().size());
+		
+		ArrayList<Applicant> tas = new ArrayList<Applicant>();
+		ArrayList<Integer> taHours = new ArrayList<Integer>();
+		ArrayList<Applicant> graders = new ArrayList<Applicant>();
+		ArrayList<Integer> graderHours = new ArrayList<Integer>();
+
+		Applicant ta1 = new Applicant(123, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		Applicant ta2 = new Applicant(122, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		tas.add(ta1);
+		tas.add(ta2);
+		
+		Applicant grader1 = new Applicant(111, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		Applicant grader2 = new Applicant(112, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		graders.add(grader1);
+		graders.add(grader2);
+		
+	    taHours.add(5);
+	    taHours.add(6);
+	    
+	    graderHours.add(7);
+	    graderHours.add(8);
+
+		TamasController tc = new TamasController(ms);
+		try {
+			tc.createAllocation(ms, c, tas, taHours, graders,graderHours);
 
 		} catch (InvalidInputException e) {
 			// TODO Auto-generated catch block
@@ -62,10 +113,244 @@ public class TestTAMASController {
 		}
 
 		ManagementSystem ms1 = ms;
-		assertEquals(evaluation, ms1.getApplicants().get(0).getEvaluation());
+		checkResultAllocation(c, tas, taHours, graders,graderHours, ms1);
 
 		ManagementSystem ms2 = (ManagementSystem) PersistenceXStream.loadFromXMLwithXStream();
-		assertEquals(evaluation, ms2.getApplicants().get(0).getEvaluation());
+		checkResultAllocation(c, tas, taHours, graders,graderHours, ms);
+		ms2.delete();
+	}
+
+	private void checkResultAllocation(Course c, ArrayList<Applicant> tas,
+			ArrayList<Integer> taHours, ArrayList<Applicant> graders, ArrayList<Integer> graderHours, ManagementSystem ms2) {
+
+		assertEquals(1, ms2.getCourses().size());
+		assertEquals(1, ms2.getInstructors().size());
+
+		assertEquals(tas.get(0).getName(), ms2.getCourse(0).getCourseJobAllocation().getApplicant(0).getName());
+		assertEquals(tas.get(0).getStudentID(), ms2.getCourse(0).getCourseJobAllocation().getApplicant(0).getStudentID());
+		
+		assertEquals(tas.get(1).getName(), ms2.getCourse(0).getCourseJobAllocation().getApplicant(1).getName());
+		assertEquals(tas.get(1).getStudentID(), ms2.getCourse(0).getCourseJobAllocation().getApplicant(1).getStudentID());
+
+	}
+
+	@Test
+	public void testCreateAllocationInvalidCourse() {
+		assertEquals(0, ms.getApplicants().size());
+		String error = "";
+		String realError = ("Can not change allocation due to null course. ").trim();
+		
+		Course c = null;
+		ArrayList<Applicant> tas = new ArrayList<Applicant>();
+		ArrayList<Integer> taHours = new ArrayList<Integer>();
+		ArrayList<Applicant> graders = new ArrayList<Applicant>();
+		ArrayList<Integer> graderHours = new ArrayList<Integer>();
+
+		Applicant ta1 = new Applicant(123, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		Applicant ta2 = new Applicant(122, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		tas.add(ta1);
+		tas.add(ta2);
+		
+		Applicant grader1 = new Applicant(111, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		Applicant grader2 = new Applicant(112, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		graders.add(grader1);
+		graders.add(grader2);
+		
+	    taHours.add(5);
+	    taHours.add(6);
+	    
+	    graderHours.add(7);
+	    graderHours.add(8);
+	    
+		TamasController tc = new TamasController(ms);
+		try {
+			tc.createAllocation(ms, c, tas, taHours, graders,graderHours);
+			
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		error = error.trim();
+
+		assertEquals(realError, error);
+	}
+	
+	@Test
+	public void testCreateAllocationInvalidTas() {
+		assertEquals(0, ms.getApplicants().size());
+		String error = "";
+		String realError =  ("Can not change allocation due to Empty list of potential TAs. ").trim();
+
+		Instructor i = new Instructor("Danial", ms);
+		Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10, 10, 10, 10, 10, 10.0, i, ms);
+		
+		ArrayList<Applicant> tas = null;
+		ArrayList<Integer> taHours = new ArrayList<Integer>();
+		ArrayList<Applicant> graders = new ArrayList<Applicant>();
+		ArrayList<Integer> graderHours = new ArrayList<Integer>();
+
+		
+		Applicant grader1 = new Applicant(111, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		Applicant grader2 = new Applicant(112, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		graders.add(grader1);
+		graders.add(grader2);
+		
+	    taHours.add(5);
+	    taHours.add(6);
+	    
+	    graderHours.add(7);
+	    graderHours.add(8);
+		
+		TamasController tc = new TamasController(ms);
+		try {
+			tc.createAllocation(ms, c, tas, taHours, graders,graderHours);
+			
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		error = error.trim();
+
+		assertEquals(realError, error);
+	}
+	
+	@Test
+	public void testCreateAllocationInvalidTaHours() {
+		assertEquals(0, ms.getApplicants().size());
+		String error = "";
+		String realError = ("Please assign working hours to all selected applicants. ").trim();
+		
+		Instructor i = new Instructor("Danial", ms);
+		Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10, 10, 10, 10, 10, 10.0, i, ms);
+		assertEquals(1, ms.getCourses().size());
+		
+		ArrayList<Applicant> tas = new ArrayList<Applicant>();
+		ArrayList<Integer> taHours = null;
+		ArrayList<Applicant> graders = new ArrayList<Applicant>();
+		ArrayList<Integer> graderHours = new ArrayList<Integer>();
+
+		Applicant ta1 = new Applicant(123, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		Applicant ta2 = new Applicant(122, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		tas.add(ta1);
+		tas.add(ta2);
+		
+		Applicant grader1 = new Applicant(111, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		Applicant grader2 = new Applicant(112, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		graders.add(grader1);
+		graders.add(grader2);
+	    
+	    graderHours.add(7);
+	    graderHours.add(8);
+	    
+		TamasController tc = new TamasController(ms);
+		try {
+			tc.createAllocation(ms, c, tas, taHours, graders,graderHours);
+			
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		error = error.trim();
+
+		assertEquals(realError, error);
+	}
+	
+	@Test
+	public void testCreateAllocationInvalidGraders() {
+		assertEquals(0, ms.getApplicants().size());
+		String error = "";
+		String realError = ("Can not change allocation due to Empty list of potential Graders. ").trim();
+		
+		Instructor i = new Instructor("Danial", ms);
+		Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10, 10, 10, 10, 10, 10.0, i, ms);
+		assertEquals(1, ms.getCourses().size());
+		
+		ArrayList<Applicant> tas = new ArrayList<Applicant>();
+		ArrayList<Integer> taHours = new ArrayList<Integer>();
+		ArrayList<Applicant> graders = null;
+		ArrayList<Integer> graderHours = new ArrayList<Integer>();
+
+		Applicant ta1 = new Applicant(123, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		Applicant ta2 = new Applicant(122, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		tas.add(ta1);
+		tas.add(ta2);
+		
+	    taHours.add(5);
+	    taHours.add(6);
+	    
+	    graderHours.add(7);
+	    graderHours.add(8);
+		
+		TamasController tc = new TamasController(ms);
+		try {
+			tc.createAllocation(ms, c, tas, taHours, graders,graderHours);
+			
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		error = error.trim();
+		assertEquals(realError, error);
+	}
+	
+	@Test
+	public void testCreateAllocationInvalidGraderHours() {
+		assertEquals(0, ms.getApplicants().size());
+		String error = "";
+		String realError = ("Please assign working hours to all selected applicants. ").trim();
+		
+	
+		Instructor i = new Instructor("Danial", ms);
+		Course c = new Course("abc", "ecse", "321", 3, 10, 10, 10, 10, 10, 10, 10, 10, 10.0, i, ms);
+		assertEquals(1, ms.getCourses().size());
+		
+		ArrayList<Applicant> tas = new ArrayList<Applicant>();
+		ArrayList<Integer> taHours = new ArrayList<Integer>();
+		ArrayList<Applicant> graders = new ArrayList<Applicant>();
+		ArrayList<Integer> graderHours = null;
+
+		Applicant ta1 = new Applicant(123, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		Applicant ta2 = new Applicant(122, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		tas.add(ta1);
+		tas.add(ta2);
+		
+		Applicant grader1 = new Applicant(111, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		Applicant grader2 = new Applicant(112, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		graders.add(grader1);
+		graders.add(grader2);
+		
+	    taHours.add(5);
+	    taHours.add(6);
+		
+		TamasController tc = new TamasController(ms);
+		try {
+			tc.createAllocation(ms, c, tas, taHours, graders,graderHours);
+			
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		error = error.trim();
+
+		assertEquals(realError, error);
+	}
+	@Test
+	public void testCreateTAEval() {
+		assertEquals(0, ms.getApplicants().size());
+		String evaluation = "He/She is very good";
+		TamasController tc = new TamasController(ms);
+		Applicant ap = new Applicant(111, "abc", "", true, "", "", "", "", "", "", 10, ms);
+		ms.addApplicant(ap);
+		assertEquals(1, ms.getApplicants().size());
+
+		try {
+			tc.createTAEval(ap, ap.getName(), evaluation);
+
+		} catch (InvalidInputException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		ManagementSystem ms1 = ms;
+		assertEquals((ap.getName()+ ":\n" +  evaluation), ms1.getApplicants().get(0).getEvaluation().trim());
+
+		ManagementSystem ms2 = (ManagementSystem) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals((ap.getName()+ ":\n" +  evaluation), ms2.getApplicants().get(0).getEvaluation().trim());
 		ms2.delete();
 	}
 
@@ -1037,7 +1322,8 @@ public class TestTAMASController {
 		app.setStatus(Status.PENDING);
 		ap.addApplication(app);
 
-		new TamasController(ms);
+		TamasController tc = new TamasController(ms);
+		tc.acceptApplication(app);
 
 		ManagementSystem ms1 = ms;
 		checkResultAcceptApplication(app, ms1);
@@ -1056,7 +1342,7 @@ public class TestTAMASController {
 		assertEquals(1, ms2.getCourses().size());
 		assertEquals(1, ms2.getInstructors().size());
 
-		assertEquals("OFFER_ACCEPTED", ms2.getApplicant(0).getApplication(0).getStatus().toString());
+		assertEquals("SELECTED", ms2.getApplicant(0).getApplication(0).getStatus().toString());
 	}
 
 	@Test
@@ -1102,7 +1388,7 @@ public class TestTAMASController {
 		assertEquals(1, ms2.getCourses().size());
 		assertEquals(1, ms2.getInstructors().size());
 
-		assertEquals("OFFER_DECLINED", ms2.getApplicant(0).getApplication(0).getStatus().toString());
+		assertEquals("REJECTED", ms2.getApplicant(0).getApplication(0).getStatus().toString());
 	}
 
         

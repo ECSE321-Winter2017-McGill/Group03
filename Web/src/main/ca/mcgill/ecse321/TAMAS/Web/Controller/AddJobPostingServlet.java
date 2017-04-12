@@ -91,10 +91,7 @@ public class AddJobPostingServlet extends HttpServlet {
         String exp = request.getParameter("perferredExperience");
 
         String cname = request.getParameter("course");
-        System.out.println("cName+" + cname);
-        System.out.println(cmap.containsKey(cname));
         Course aCourse = cmap.get(cname);
-        //System.out.println("course aa"+aCourse.getCourseName());
         try {
             TController c = new TController(ms);
             c.createJobPosting(jobPosition, deadlineDate, exp, hourlyRate, aCourse);
@@ -103,14 +100,10 @@ public class AddJobPostingServlet extends HttpServlet {
         } catch (Exception e) {
 
             error = e.getMessage();
-            System.out.println("eeeee" + error);
             request.setAttribute("error", error);
-
             request.getRequestDispatcher("/WEB-INF/views/pages/AddJobPosting.jsp").forward(
-
                     request, response);
 
-            // e.printStackTrace();
         }
     }
 

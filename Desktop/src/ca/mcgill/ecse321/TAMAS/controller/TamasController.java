@@ -376,8 +376,6 @@ public class TamasController {
 		Applicant ap = createApplicant(name, id, major, isUndergrad, year, exp, firstChoice, secondChoice, thirdChoice,
 				totalAppointmentHour);
 
-		System.out.println("create");
-		System.out.println(ap.numberOfApplications());
 		if (ap.getApplications().size() < 3) {
 			Application application = new Application(0, jp, ap);
 			application.setStatus(Status.PENDING);
@@ -772,9 +770,9 @@ public class TamasController {
 	 *            Application
 	 * @throws InvalidInputException
 	 */
-	public void acceptApplication(Application application) throws InvalidInputException {
+	public void acceptApplication(Application application) {
 		if (application.getStatus().equals(Status.PENDING)) {
-			application.setStatus(Status.OFFER_ACCEPTED);
+			application.setStatus(Status.SELECTED);
 			PersistenceXStream.saveToXMLwithXStream(ms);
 		}
 	}
@@ -879,8 +877,6 @@ public class TamasController {
 			}
 
 			if ((taBudget + graderBudget) > allocation.getCourse().getBudgetCalculated()) {
-				// allocation.delete();
-				System.out.println("budgert error");
 				throw new InvalidInputException("This allocation exceeds the budget!");
 			}
 
@@ -913,16 +909,12 @@ public class TamasController {
 				}
 			}
 
-			System.out.println("set status" + allocation.setAllocationStatus(AllocationStatus.INSTRUCTOR_APPROVED));
 			try {
 				PersistenceXStream.saveToXMLwithXStream(mm);
 			} catch (Exception e) {
-				System.out.println("per error" + e.getMessage());
-
+				throw new InvalidInputException(e.getMessage());
 			}
-			System.out.println(PersistenceXStream.saveToXMLwithXStream(mm));
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			throw new InvalidInputException(e.getMessage());
 		}
 

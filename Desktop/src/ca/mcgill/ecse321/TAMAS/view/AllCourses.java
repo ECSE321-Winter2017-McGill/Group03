@@ -16,7 +16,6 @@ import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -34,10 +33,6 @@ public class AllCourses extends JFrame {
 	private JComboBox<String> allCourse = new JComboBox<String>(new String[0]);
 	private int selectedCourse;
 	private HashMap<String, Course> courseMap = new HashMap<String, Course>();
-	private JComboBox<String> allCourse = new JComboBox<String>(new String[0]);
-	
-	private String error;
-
 	/**
 	 * Class constructor
 	 * @param ms Management system
@@ -94,7 +89,8 @@ public class AllCourses extends JFrame {
 		// Combobox action listenser
 		allCourse.addActionListener(new java.awt.event.ActionListener() {
 	        public void actionPerformed(java.awt.event.ActionEvent evt) {
-	            JComboBox<String> cb = (JComboBox<String>) evt.getSource();
+	            @SuppressWarnings("unchecked")
+				JComboBox<String> cb = (JComboBox<String>) evt.getSource();
 	            selectedCourse = cb.getSelectedIndex();
 	        }
 	    });
@@ -145,8 +141,6 @@ public class AllCourses extends JFrame {
 		viewDetailButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				error = "";
 				
 				if (allCourse.getItemCount()==0){
 					JOptionPane.showMessageDialog(AllCourses.this,
