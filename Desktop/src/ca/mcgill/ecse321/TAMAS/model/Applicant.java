@@ -1,5 +1,5 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
+/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
@@ -395,7 +395,7 @@ public class Applicant
     return 3;
   }
 
-  public Application addApplication(JobPosting aJobPosting)
+  public Application addApplication(int aHour, JobPosting aJobPosting)
   {
     if (numberOfApplications() >= maximumNumberOfApplications())
     {
@@ -403,7 +403,7 @@ public class Applicant
     }
     else
     {
-      return new Application(aJobPosting, this);
+      return new Application(aHour, aJobPosting, this);
     }
   }
 
@@ -495,7 +495,7 @@ public class Applicant
 
   public String toString()
   {
-	  String outputString = "";
+    String outputString = "";
     return super.toString() + "["+
             "studentID" + ":" + getStudentID()+ "," +
             "name" + ":" + getName()+ "," +

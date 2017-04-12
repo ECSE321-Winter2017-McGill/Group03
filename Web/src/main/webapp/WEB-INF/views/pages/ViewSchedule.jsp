@@ -66,19 +66,6 @@
 
 	});
 </script>
-<!-- function saveEvent(event) {
-		window.alert(event);
-		$.ajax({
-			url : 'Schedule.jsp',
-			type : 'post',
-			data : {
-				event : event
-			},
-			dataType : 'json',
-			success : function(response) {
-				console.log('response');
-			}
-		}); -->
 <style>
 body {
 	padding: 0;
@@ -118,11 +105,6 @@ body {
 							TA Evaluaion</a></li>
 					<li><a href="viewAllApplication.jsp"><i
 							class="fa fa-dashboard fa-fw"></i> View Application</a></li>
-					<li><a href="Schedule.jsp"><i
-							class="fa fa-dashboard fa-fw"></i> TA Schedule</a></li>
-
-
-
 				</ul>
 			</div>
 		</div>

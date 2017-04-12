@@ -62,13 +62,15 @@ public class AddJobPostingServlet extends HttpServlet {
 
     }
 
-    protected void doPost(HttpServletRequest request,
+    @SuppressWarnings("deprecation")
+	protected void doPost(HttpServletRequest request,
 
                           HttpServletResponse response) throws ServletException, IOException {
         String fileName = "output/data.xml";
         final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
         error = "";
-        DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+        @SuppressWarnings("unused")
+		DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
         String jobPosition = request.getParameter("jobTitle");
 
         String dl = request.getParameter("deadLine");

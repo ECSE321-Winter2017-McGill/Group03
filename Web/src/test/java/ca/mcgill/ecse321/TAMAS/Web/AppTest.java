@@ -512,9 +512,9 @@ public class AppTest {
    					,"",totalAppointmentHour, ms);
    		  assertEquals(1, ms.getApplicants().size());
    		  
-   		  Application app1 = new Application(jp,ap);
-   		  Application app2 = new Application(jp,ap);
-   		  Application app3 = new Application(jp,ap);
+   		  Application app1 = new Application(0, jp,ap);
+   		  Application app2 = new Application(0, jp,ap);
+   		  Application app3 = new Application(0, jp,ap);
 
    		  ap.addApplication(app1);
    		  ap.addApplication(app2);
@@ -600,8 +600,8 @@ public class AppTest {
 		  assertEquals(0, ms.getApplicants().size()); 
 		  
 		  Applicant ap1 = new Applicant(111, "a", "", true, "", "","", "", "", "", 10, ms);
-		  Applicant ap2 = new Applicant(111, "b", "", true, "", "","", "", "", "", 10, ms);
-		  Applicant ap3 = new Applicant(111, "c", "", true, "", "","", "", "", "", 10, ms);
+		  new Applicant(111, "b", "", true, "", "","", "", "", "", 10, ms);
+		  new Applicant(111, "c", "", true, "", "","", "", "", "", 10, ms);
 
 		  assertEquals(3, ms.getApplicants().size());
 		  
@@ -628,8 +628,8 @@ public class AppTest {
 		  assertEquals(0, ms.getApplicants().size()); 
 		  
 		  Instructor Inst1 = new Instructor("a", ms);
-		  Instructor Inst2 = new Instructor("b", ms);
-		  Instructor Inst3 = new Instructor("c", ms);
+		  new Instructor("b", ms);
+		  new Instructor("c", ms);
 		  
 		  assertEquals(3, ms.getInstructors().size());
 		  
@@ -1020,7 +1020,7 @@ public class AppTest {
       	    ms.addJobPosting(jp);
             assertEquals(1, ms.getJobPostings().size());
             
-            Application app = new Application(jp,ap);
+            Application app = new Application(0, jp,ap);;
             app.setStatus(Status.PENDING);
      		ap.addApplication(app);
 
@@ -1062,7 +1062,7 @@ public class AppTest {
       	    ms.addJobPosting(jp);
             assertEquals(1, ms.getJobPostings().size());
             
-            Application app = new Application(jp,ap);
+            Application app = new Application(0, jp,ap);;
      		ap.addApplication(app);
 
      		String error = null;
@@ -1111,7 +1111,7 @@ public class AppTest {
           	    ms.addJobPosting(jp);
                 assertEquals(1, ms.getJobPostings().size());
                 
-                Application app = new Application(jp,ap);
+                Application app = new Application(0, jp,ap);;
                 app.setStatus(Status.PENDING);
          		ap.addApplication(app);
 
@@ -1138,7 +1138,7 @@ public class AppTest {
         		  assertEquals(1, ms2.getCourses().size());
         		  assertEquals(1, ms2.getInstructors().size());
         		  
-        		  assertEquals("OFFER_DECLINED", ms2.getApplicant(0).getApplication(0).getStatus().toString());
+        		  assertEquals("REJECTED", ms2.getApplicant(0).getApplication(0).getStatus().toString());
         		}
                 
                 @Test 
@@ -1163,7 +1163,7 @@ public class AppTest {
               	    ms.addJobPosting(jp);
                     assertEquals(1, ms.getJobPostings().size());
                     
-                    Application app = new Application(jp,ap);
+                    Application app = new Application(0, jp,ap);;
              		ap.addApplication(app);
 
              		String error = null;

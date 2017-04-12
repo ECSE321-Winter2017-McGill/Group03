@@ -24,7 +24,6 @@ import javax.swing.WindowConstants;
 
 public class AllCourses extends JFrame {
 
-
 	private static final long serialVersionUID = 5797257474418419821L;
 
 	private ManagementSystem ms;
@@ -33,8 +32,7 @@ public class AllCourses extends JFrame {
 	private Object user;
 	private int selectedCourse;
 	private HashMap<String, Course> courseMap = new HashMap<String, Course>();
-	
-	
+	private JComboBox<String> allCourse = new JComboBox<String>(new String[0]);
 
 	/**
 	 * Class constructor
@@ -45,17 +43,19 @@ public class AllCourses extends JFrame {
 		this.user = user;
 		this.ms = ms;
 		initComponents();
+		selectedCourse = -1;
+		allCourse.setSelectedIndex(selectedCourse);
 	}
 
 	/**
 	 * Initialize all components
 	 */
 	private void initComponents() {
-		
+
 		// get table data ready;
 
-		String[] columnNames = { "Semester", "Course Code", "Course Name", "Credit", "Instructor",
-				 "Num of Tutorials", "Num of Labs"};
+		String[] columnNames = { "Semester", "Course Code", "Course Name", "Credit", "Instructor", "Num of Tutorials",
+				"Num of Labs" };
 		String[][] data = new String[ms.numberOfCourses() + 1][7];
 
 		int i = 0;
@@ -72,7 +72,6 @@ public class AllCourses extends JFrame {
 				i++;
 			}
 		}
-		
 
 		// get table itself ready;
 		final JTable table = new JTable(data, columnNames);
@@ -83,17 +82,25 @@ public class AllCourses extends JFrame {
 		JPanel buttomPane = new JPanel();
 
 		// get the rest of frame ready;
-		final JComboBox<String> allCourse = new JComboBox<String>(new String[0]);
 		JButton viewDetailButton = new JButton("View Details");
 		JButton addCourse = new JButton("Add a Course");
 		JButton backButton = new JButton("Back");
 
-		for (Course aCourse: ms.getCourses()){
+		// Combobox action listenser
+		allCourse.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				@SuppressWarnings("unchecked")
+				JComboBox<String> cb = (JComboBox<String>) evt.getSource();
+				selectedCourse = cb.getSelectedIndex();
+			}
+		});
+
+		for (Course aCourse : ms.getCourses()) {
 			String courseDescription = aCourse.getCourseName() + " (" + aCourse.getCourseCode() + ")";
 			allCourse.addItem(courseDescription);
 			courseMap.put(courseDescription, aCourse);
 		}
-		
+
 		// get frame ready;
 		setTitle("View All Course");
 		BorderLayout layout = new BorderLayout();
@@ -106,12 +113,10 @@ public class AllCourses extends JFrame {
 			pane.add(commandPane, BorderLayout.CENTER);
 			buttomPane.add(backButton);
 			pane.add(buttomPane, BorderLayout.PAGE_END);
-		} 
-		else if (user.getClass().equals(Applicant.class)){
+		} else if (user.getClass().equals(Applicant.class)) {
 			buttomPane.add(backButton);
 			pane.add(buttomPane, BorderLayout.PAGE_END);
-		}
-		else {
+		} else {
 			commandPane.add(allCourse);
 			commandPane.add(viewDetailButton);
 			pane.add(commandPane, BorderLayout.CENTER);
@@ -122,26 +127,26 @@ public class AllCourses extends JFrame {
 		pack();
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		
-		
+
 		// add actions listeners
 		viewDetailButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (allCourse.getItemCount()==0){
-					JOptionPane.showMessageDialog(AllCourses.this,
-							"No course information has been submitted.");
-				}else{
+
+				if (allCourse.getItemCount() == 0) {
+					JOptionPane.showMessageDialog(AllCourses.this, "No course information has been submitted.");
+				} else if (selectedCourse < 0) {
+					JOptionPane.showMessageDialog(AllCourses.this, "You need to select a course.");
+				} else {
+
 					String courseDescription = allCourse.getItemAt(selectedCourse).toString();
 					Course selectedCourse = courseMap.get(courseDescription);
-					
-					new CourseDetails(ms,selectedCourse,user).setVisible(true);
+					System.out.print(courseDescription);
+					new CourseDetails(ms, selectedCourse, user).setVisible(true);
 				}
 			}
 		});
-		
-		
-		
+
 		addCourse.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -150,7 +155,7 @@ public class AllCourses extends JFrame {
 				dispose();
 			}
 		});
-		
+
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -158,7 +163,7 @@ public class AllCourses extends JFrame {
 				setVisible(false);
 			}
 		});
-		
+
 	}
 
 	/**

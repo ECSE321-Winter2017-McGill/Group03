@@ -1,9 +1,6 @@
 package ca.mcgill.ecse321.TAMAS.persistence;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,18 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import ca.mcgill.ecse321.TAMAS.model.Applicant;
-import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
-import ca.mcgill.ecse321.TAMAS.view.AllJobPostings;
-import ca.mcgill.ecse321.TAMAS.view.ShowProgress;
-
 public class DBmanager {
 	private static String user = "wzs1234566";
 	private static String password = "yuwen120";
 	private static String myDriver = "org.gjt.mm.mysql.Driver";
 	private static String myUrl = "jdbc:mysql://test.cabyhhnybi2l.us-west-2.rds.amazonaws.com/test";
-	private static ManagementSystem ms = new ManagementSystem();
-
+	
 	public static void writeFile(String data) {
 
 		try {
@@ -81,6 +72,7 @@ public class DBmanager {
 	}
 
 	public static void updateDB(String data) {
+		System.out.println(data);
 		String q = "update xml set xml ='" + data + "' where data='data'";
 		try {
 			Class.forName(myDriver);

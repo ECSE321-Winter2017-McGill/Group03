@@ -31,23 +31,23 @@ public class AddCourse extends JFrame {
 	private JLabel codeLabel;
 	private JTextField codeTextField;
 	private JLabel creditLabel;
-	private JTextField creditTextField;
+	private JTextField creditTextField;    /////////////////////////
 	private JLabel maxStudentLabel;
-	private JTextField maxStudentTextField;
+	private JTextField maxStudentTextField;        /////////////////////
 	private JLabel instructorLabel;
 	private JTextField instructorTextField;
 	
 	private JLabel numGraderNeededLabel;
-	private JTextField numGraderNeededTextField;
+	private JTextField numGraderNeededTextField;         ////////////////
 	private JLabel numLabLabel;
-	private JTextField numLabTextField;
+	private JTextField numLabTextField;               ////////////////
 	private JLabel numTutorialLabel;
-	private JTextField numTutorialTextField;
+	private JTextField numTutorialTextField;               /////////////
 
 	private JLabel labHourLabel;
-	private JTextField labHourTextField;
+	private JTextField labHourTextField;           ///////////
 	private JLabel tutorialHourLabel;
-	private JTextField tutorialHourTextField;
+	private JTextField tutorialHourTextField;        ///////////
 	private JLabel totalGraderHourLabel;
 	private JTextField totalGraderHourTextField;
 	
@@ -329,6 +329,7 @@ public class AddCourse extends JFrame {
 			else{
 				creditHour = Integer.parseInt(creditTextField.getText());
 			}
+
 			
 			
 			int maxStudentNum = 0;

@@ -1,5 +1,5 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
+/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
@@ -443,7 +443,6 @@ public class Course
       jobPosting.remove(aJobPosting);
     }
     
-      
     Instructor placeholderInstructor = instructor;
     this.instructor = null;
     placeholderInstructor.removeCourse(this);
@@ -455,7 +454,7 @@ public class Course
 
   public String toString()
   {
-	  String outputString = "";
+    String outputString = "";
     return super.toString() + "["+
             "semester" + ":" + getSemester()+ "," +
             "courseName" + ":" + getCourseName()+ "," +
