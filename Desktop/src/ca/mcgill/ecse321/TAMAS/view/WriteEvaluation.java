@@ -54,7 +54,7 @@ public class WriteEvaluation extends JFrame {
 	 * @param ms Management system
 	 * @param user User
 	 */
-	public ViewWriteEvaluation(ManagementSystem ms, Object user) {
+	public WriteEvaluation(ManagementSystem ms, Object user) {
 		this.ms = ms;
 		this.user = user;
 		

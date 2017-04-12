@@ -8,6 +8,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
+
 public class Login {
 	private static String user = "wzs1234566";
 	private static String password = "yuwen120";
@@ -20,6 +22,7 @@ public class Login {
 	 * @param q
 	 * @return result set for database access
 	 */
+	@SuppressWarnings("unused")
 	private static ResultSet getDB(String q) {
 		try {
 			Class.forName(myDriver);

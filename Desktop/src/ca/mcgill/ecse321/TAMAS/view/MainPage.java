@@ -38,7 +38,9 @@ public class MainPage extends JFrame {
 
 	/**
 	 * Class constructor
-	 * @param user User
+	 * 
+	 * @param user
+	 *            User
 	 */
 	public MainPage(Object user) {
 		this.user = user;
@@ -47,7 +49,9 @@ public class MainPage extends JFrame {
 
 	/**
 	 * Initialize all components
-	 * @param role Role
+	 * 
+	 * @param role
+	 *            Role
 	 */
 	private void initComponents(Object role) {
 
@@ -181,6 +185,7 @@ public class MainPage extends JFrame {
 			}
 
 		});
+	}
 
 	/**
 	 * Return to main page
