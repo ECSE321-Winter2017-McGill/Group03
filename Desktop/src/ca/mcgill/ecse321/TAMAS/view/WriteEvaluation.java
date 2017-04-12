@@ -48,6 +48,12 @@ public class WriteEvaluation extends JFrame {
 	private JTextPane textPane = new JTextPane();
 	private String error = "";
 
+
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 * @param user User
+	 */
 	public WriteEvaluation(ManagementSystem ms, Object user) {
 		this.ms = ms;
 		this.user = user;
@@ -56,13 +62,17 @@ public class WriteEvaluation extends JFrame {
 		taSelected = -1;
 		TAlist.setSelectedIndex(taSelected);
 	}
-
+	/**
+	 * Initialize all components
+	 */
 	private void initialize(final Object user) {
 		
 		textPane.setBackground(Color.GRAY.brighter());
 		textPane.setForeground(Color.BLACK);
 		
-		
+	
+
+
 		frame = new JFrame();
 		frame.setBounds(100, 100, 719, 534);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -237,6 +247,9 @@ public class WriteEvaluation extends JFrame {
 	}
 	
 
+	/**
+	 * Updates the list of evaluations for TA
+	 */
 	protected void updataList() {
 		String TA = (String) TAlist.getSelectedItem();
 		Applicant ta = Appmap.get(TA);
@@ -250,6 +263,9 @@ public class WriteEvaluation extends JFrame {
 		}
 	}
 
+	/**
+	 * Return to main page
+	 */
 	public void backToMain() {
 		new MainPage(user).setVisible(true);
 	}

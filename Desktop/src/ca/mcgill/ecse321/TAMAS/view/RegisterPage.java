@@ -19,9 +19,6 @@ import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 
 public class RegisterPage extends JFrame{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -765105219779249925L;
 	//UI elements
 	private JLabel errorMessage;
@@ -43,13 +40,21 @@ public class RegisterPage extends JFrame{
 	private JButton cancelButton;
 	
 	private ManagementSystem ms;
-	public RegisterPage(ManagementSystem ms){
+	
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 */
+	public RegisterPage(ManagementSystem ms) {
 		this.ms = ms;
 		initComponents();
 		refreshData();
 	}
 	
-	private void initComponents(){
+	/**
+	 * Initialize all components
+	 */
+	private void initComponents() {
 		
 		errorMessage = new JLabel ("");
 		errorMessage.setForeground(Color.RED);
@@ -149,6 +154,9 @@ public class RegisterPage extends JFrame{
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 	
+	/**
+	 * Display error, or reset page if there are no errors
+	 */
 	private void refreshData(){
 		errorMessage.setText(error);
 		
@@ -163,6 +171,10 @@ public class RegisterPage extends JFrame{
 	}
 	
 	
+	/**
+	 * Action triggered when registering
+	 * @param evt Action event
+	 */
 	private void registerButtonActionPerformed(java.awt.event.ActionEvent evt){
 		
 		String username = usernameTextField.getText();
@@ -205,6 +217,10 @@ public class RegisterPage extends JFrame{
 
 	}
 	
+	/**
+	 * Action triggered when cancelling a registration
+	 * @param evt Action event
+	 */
 	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt){
 		new LoginDialog().setVisible(true);
 		setVisible(false);

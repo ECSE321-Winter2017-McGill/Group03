@@ -72,7 +72,6 @@ public class DBmanager {
 	}
 
 	public static void updateDB(String data) {
-		System.out.println(data);
 		String q = "update xml set xml ='" + data + "' where data='data'";
 		try {
 			Class.forName(myDriver);

@@ -26,6 +26,15 @@ public class TamasController {
 		this.ms = ms;
 	}
 
+	/**
+	 * @param mm
+	 *            Management System
+	 * @param user
+	 *            User
+	 * @param course
+	 *            Course
+	 * @throws InvalidInputException
+	 */
 	public static void changeAllocationStatus(ManagementSystem mm, Object user, Course course)
 			throws InvalidInputException {
 
@@ -48,6 +57,21 @@ public class TamasController {
 
 	}
 
+	/**
+	 * @param mm
+	 *            Management System
+	 * @param course
+	 *            Course
+	 * @param tas
+	 *            List of TAs
+	 * @param taHours
+	 *            List of TA hours
+	 * @param graders
+	 *            List of graders
+	 * @param graderHours
+	 *            List of grader hours
+	 * @throws InvalidInputException
+	 */
 	public void createAllocation(ManagementSystem mm, Course course, ArrayList<Applicant> tas,
 			ArrayList<Integer> taHours, ArrayList<Applicant> graders, ArrayList<Integer> graderHours)
 			throws InvalidInputException {
@@ -184,6 +208,10 @@ public class TamasController {
 
 	}
 
+	/**
+	 * @return today's date
+	 */
+
 	public static Date getToday() {
 
 		Calendar c = Calendar.getInstance();
@@ -196,6 +224,9 @@ public class TamasController {
 		return c.getTime();
 	}
 
+	/**
+	 * @return date of default deadline
+	 */
 	public static Date getDefaultDeadLine() {
 		Calendar c = Calendar.getInstance();
 		// default deadline
@@ -206,11 +237,19 @@ public class TamasController {
 		return c.getTime();
 	}
 
+	/**
+	 * @return boolean that indicates if default deadline is passed
+	 */
 	public static boolean isDeadlinePassed() {
 
 		return isDeadlinePassed(getDefaultDeadLine());
 	}
 
+	/**
+	 * @param deadline
+	 *            Deadline
+	 * @return boolean that indicates if given deadline is passed
+	 */
 	public static boolean isDeadlinePassed(Date deadline) {
 
 		if (deadline.before(getToday())) {
@@ -221,9 +260,26 @@ public class TamasController {
 
 	}
 
-	
+	/**
+	 * Class constructor
+	 * 
+	 * @param ms
+	 *            Management System
+	 */
+	public TamasController(ManagementSystem ms) {
+		this.ms = ms;
+	}
+
 
 	public void createTAEval(Applicant ta, String header, String eval) throws InvalidInputException {
+
+		/**
+		 * @param ta
+		 *            TA
+		 * @param eval
+		 *            Evaluation for the TA
+		 * @throws InvalidInputException
+		 */
 		String error = "";
 
 		if (eval.trim().length() == 0) {
@@ -271,6 +327,19 @@ public class TamasController {
 
 	}
 
+	/**
+	 * @param jobPosition
+	 *            Job Position
+	 * @param deadlineDate
+	 *            Deadline for job posting
+	 * @param exp
+	 *            Preferred Experience
+	 * @param hourlyRate
+	 *            Hourly wage
+	 * @param aCourse
+	 *            Course
+	 * @throws InvalidInputException
+	 */
 	public void createJobPosting(String jobPosition, Date deadlineDate, String exp, double hourlyRate, Course aCourse)
 			throws InvalidInputException {
 		String error = "";
@@ -296,7 +365,35 @@ public class TamasController {
 
 	}
 
-	public void createApplication(JobPosting jp, String name, int id, String major, boolean isUndergrad, String year,
+
+	/**
+	 * @param jp
+	 *            Job Posting
+	 * @param name
+	 *            Name of application
+	 * @param id
+	 *            ID
+	 * @param major
+	 *            Major of applicant
+	 * @param isUndergrad
+	 *            Boolean indicating if applicant is an undergrad
+	 * @param year
+	 *            Year
+	 * @param exp
+	 *            Experience
+	 * @param firstChoice
+	 *            First choice
+	 * @param secondChoice
+	 *            Second choice
+	 * @param thirdChoice
+	 *            Third choice
+	 * @param totalAppointmentHour
+	 *            Total appointment hour
+	 * @throws InvalidInputException
+	 */
+	public void createApplication(JobPosting jp, String name, String id, String major, boolean isUndergrad, String year,
+
+
 			String exp, String firstChoice, String secondChoice, String thirdChoice, int totalAppointmentHour)
 			throws InvalidInputException {
 
@@ -304,10 +401,8 @@ public class TamasController {
 		Applicant ap = createApplicant(name, id, major, isUndergrad, year, exp, firstChoice, secondChoice, thirdChoice,
 				totalAppointmentHour);
 
-		System.out.println("create");
-		System.out.println(ap.numberOfApplications());
-		
 		// Check if the applicant has more than three applications
+
 		if (ap.getApplications().size() < 3) {
 			Application application = new Application(0, jp, ap);
 			application.setStatus(Status.PENDING);
@@ -325,16 +420,42 @@ public class TamasController {
 
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
+	/**
+	 * @param name Name of applicant
+	 * @param id ID of applicant
+	 * @param major Major of applicant
+	 * @param isUndergrad Boolean indicating if applicant is an undergrad
+	 * @param year Year
+	 * @param exp Experience
+	 * @param firstChoice First choice
+	 * @param secondChoice Second choice
+	 * @param thirdChoice Third choice
+	 * @param totalAppointmentHour Total appointment hour
+	 * @return new applicant
+	 * @throws InvalidInputException
+	 */
 
-	public Applicant createApplicant(String name, int id, String major, boolean isUndergrad, String year, String exp,
+	public Applicant createApplicant(String name, String id, String major, boolean isUndergrad, String year, String exp,
+
+
 			String firstChoice, String secondChoice, String thirdChoice, int totalAppointmentHour)
 			throws InvalidInputException {
+
 		String error = "";
 
 		if (name == null || name.trim().length() == 0) {
 			error += "Name cannot be empty!";
 		}
-		if (id < 0) {
+		
+		int idNum = 0;
+		try {
+				idNum = Integer.parseInt(id);
+				} catch (NumberFormatException e) {
+					error += "id must be a number! ";
+				} catch (NullPointerException e) {
+					error += "id must be a number! ";
+				}
+		if (idNum < 0) {
 			error += "You must input a valid id!";
 		}
 		if (major == null || major.trim().length() == 0) {
@@ -361,7 +482,7 @@ public class TamasController {
 			}
 		}
 
-		this_applicant = new Applicant(id, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice,
+		this_applicant = new Applicant(idNum, name, exp, isUndergrad, major, year, firstChoice, secondChoice, thirdChoice,
 				"", totalAppointmentHour, ms);
 
 		PersistenceXStream.saveToXMLwithXStream(ms);
@@ -369,6 +490,11 @@ public class TamasController {
 
 	}
 
+	/**
+	 * @param name
+	 *            Name of applicant
+	 * @throws InvalidInputException
+	 */
 	public void registerApplicant(String name) throws InvalidInputException {
 
 		String error = "";
@@ -415,6 +541,11 @@ public class TamasController {
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 
+	/**
+	 * @param name
+	 *            Name of instructor
+	 * @throws InvalidInputException
+	 */
 	public void registerInstructor(String name) throws InvalidInputException {
 
 		String error = "";
@@ -461,9 +592,38 @@ public class TamasController {
 
 	}
 
-	public void createCourse(String semester, String courseName, String courseCode, int credit, int maxStudent,
-			String instructorName, int numGraderNeeded, int numLab, int numTutorial, int labHour, int tutorialHour,
-			int totalGraderHour) throws InvalidInputException {
+	/**
+	 * @param semester
+	 *            Semester
+	 * @param courseName
+	 *            Course name
+	 * @param courseCode
+	 *            Course code
+	 * @param credit
+	 *            Number of credits
+	 * @param maxStudent
+	 *            Maximum number of students
+	 * @param instructorName
+	 *            Instructor's name
+	 * @param numGraderNeeded
+	 *            Number of graders needed
+	 * @param numLab
+	 *            Number of lab sessions
+	 * @param numTutorial
+	 *            Number of tutorial sessions
+	 * @param labHour
+	 *            Number of lab hours
+	 * @param tutorialHour
+	 *            Number of tutorial hours
+	 * @param totalGraderHour
+	 *            Total number of grader hours
+	 * @throws InvalidInputException
+	 */
+	public void createCourse(String semester, String courseName, String courseCode, String credit, String maxStudent,
+			String instructorName, String numGraderNeeded, String numLab, String numTutorial, String labHour, String tutorialHour,
+			String totalGraderHour) throws InvalidInputException {
+
+
 
 		String error = "";
 		courseCode = courseCode.replaceAll("\\s+", "");
@@ -473,33 +633,104 @@ public class TamasController {
 		if (courseCode == null || courseCode.trim().length() == 0) {
 			error += "Please specify the course code! ";
 		}
-		if (credit < 0) {
+		
+		int creditNum = 0;
+		try {
+			 	creditNum = Integer.parseInt(credit);
+				} catch (NumberFormatException e) {
+					error += "Please specify the number of credits in the correct format! ";
+				} catch (NullPointerException e) {
+					error += "Please specify the number of credits in the correct format! ";
+			    }	
+		if (creditNum < 0) {
 			error += "Please specify the number of credits in the correct format! ";
 		}
-		if (maxStudent < 0) {
+		
+		int maxStudentNum = 0;
+		try {
+			maxStudentNum = Integer.parseInt(maxStudent);
+				} catch (NumberFormatException e) {
+					error += "max student must be a number! ";
+				} catch (NullPointerException e) {
+					error += "max student must be a number! ";
+			    }	
+		if (maxStudentNum < 0) {
 			error += "Please specify the maximum number of students in the correct format! ";
 		}
+		
 		if (instructorName == null || instructorName.trim().length() == 0) {
 			error += "Please specify the instructor! ";
 		}
-		if (labHour < 0) {
+		
+		int labHourNum = 0;
+		try {
+			labHourNum = Integer.parseInt(labHour);
+				} catch (NumberFormatException e) {
+					error += "lab hour must be a number! ";
+				} catch (NullPointerException e) {
+					error += "lab hour must be a number! ";
+			    }	
+		if (labHourNum < 0) {
 			error += "Please specify a correct lab hour! ";
 		}
-		if (tutorialHour < 0) {
+		
+		int tutorialHourNum = 0;
+		try {
+			tutorialHourNum = Integer.parseInt(tutorialHour);
+				} catch (NumberFormatException e) {
+					error += "tutorial hour must be a number! ";
+				} catch (NullPointerException e) {
+					error += "tutorial hour must be a number! ";
+			    }	
+		if (tutorialHourNum < 0) {
 			error += "Please specify a correct tutorial hour! ";
 		}
-		if (numLab < 0) {
+		
+		int numLabNum = 0;
+		try {
+			numLabNum = Integer.parseInt(numLab);
+				} catch (NumberFormatException e) {
+					error += "number of labs must be a number! ";
+				} catch (NullPointerException e) {
+					error += "number of labs must be a number! ";
+			    }	
+		if (numLabNum < 0) {
 			error += "Please specify the numebr of lab sessions in the correct format! ";
 		}
-		if (numTutorial < 0) {
+		
+		int numTutorialNum = 0;
+		try {
+			numTutorialNum = Integer.parseInt(numTutorial);
+				} catch (NumberFormatException e) {
+					error += "number of tutorials must be a number! ";
+				} catch (NullPointerException e) {
+					error += "number of tutorials must be a number! ";
+			    }	
+		if (numTutorialNum < 0) {
 			error += "Please specify the number of tutorials in the correct format! ";
 		}
 
-		if (numGraderNeeded < 0) {
+		int numGraderNeededNum = 0;
+		try {
+			numGraderNeededNum = Integer.parseInt(numGraderNeeded);
+				} catch (NumberFormatException e) {
+					error += "number of Grader needed must be a number! ";
+				} catch (NullPointerException e) {
+					error += "number of Grader needed must be a number! ";
+			    }	
+		if (numGraderNeededNum < 0) {
 			error += "Please specify the number of Grader needed in the correct format! ";
 		}
 
-		if (totalGraderHour < 0) {
+		int totalGraderHourNum = 0;
+		try {
+			totalGraderHourNum = Integer.parseInt(totalGraderHour);
+				} catch (NumberFormatException e) {
+					error += "total grader hour must be a number! ";
+				} catch (NullPointerException e) {
+					error += "total grader hour must be a number! ";
+			    }	
+		if (totalGraderHourNum < 0) {
 			error += "Please specify the Grader appointment hour in the correct format! ";
 		}
 
@@ -525,23 +756,27 @@ public class TamasController {
 		// Required total TA working hours of a course
 		// labHour = total hour for one lab session/semester
 		// tutorialHour = total hour for one tutorial session/semester
-		int hourRequiredTa = numLab * labHour + numTutorial * tutorialHour;
+		int hourRequiredTa = numLabNum * labHourNum + numTutorialNum * tutorialHourNum;
 
 		// The total number of TA needed for a course = ceil(total hours/max
 		// working hours of a TA)
 		// This gives the minimum number of TA needed
-		double temp = (numLab * labHour + numTutorial * tutorialHour) / 180;
+		double temp = (numLabNum * labHourNum + numTutorialNum* tutorialHourNum) / 180;
 		int numTaNeeded = (int) Math.ceil(temp);
 
-		// HOW TO CALCULATE BUDGET
-		double budgetCalculated = (18 * hourRequiredTa) + (15 * totalGraderHour);
 
-		@SuppressWarnings("unused")
-		Course newCourse = new Course(semester, courseName, courseCode.trim(), numTutorial, numLab, maxStudent, credit,
-				numTaNeeded, numGraderNeeded, labHour, tutorialHour, totalGraderHour, budgetCalculated, instructor, ms);
+		double budgetCalculated = (18 * hourRequiredTa) + (15 * totalGraderHourNum);
+
+		Course newCourse = new Course(semester, courseName, courseCode.trim(), numTutorialNum, numLabNum, maxStudentNum, creditNum,
+				numTaNeeded, numGraderNeededNum, labHourNum, tutorialHourNum, totalGraderHourNum, budgetCalculated, instructor, ms);
 		PersistenceXStream.saveToXMLwithXStream(ms);
 	}
 
+	/**
+	 * @param application
+	 *            Application
+	 * @return boolean that indicates if application is accepted
+	 */
 	public boolean applicationAccepted(Application application) {
 		if (application.getStatus().equals(Status.SELECTED)) {
 			return true;
@@ -549,12 +784,34 @@ public class TamasController {
 		return false;
 	}
 
+	/**
+	 * @param application
+	 *            Application
+	 * @return boolean that indicates if application is rejected
+	 */
 	public boolean applicationRejected(Application application) {
 		if (application.getStatus().equals(Status.REJECTED)) {
 			return true;
 		}
 		return false;
 	}
+
+	/**
+	 * @param application
+	 *            Application
+	 * @throws InvalidInputException
+	 */
+	public void acceptApplication(Application application) {
+		if (application.getStatus().equals(Status.PENDING)) {
+			application.setStatus(Status.SELECTED);
+			PersistenceXStream.saveToXMLwithXStream(ms);
+		}
+	}
+
+	/**
+	 * @param application
+	 *            Application
+	 */
 
 	public void rejectApplication(Application application) {
 		if (application.getStatus().equals(Status.PENDING)) {
@@ -564,7 +821,23 @@ public class TamasController {
 
 	}
 
-	
+	// Can take a course instead of an allocation
+	/**
+	 * @param allocation
+	 *            Allocation object
+	 * @param mm
+	 *            Management system
+	 * @param tas
+	 *            List of TAs
+	 * @param taHours
+	 *            Number of TA hours
+	 * @param graders
+	 *            List of graders
+	 * @param graderHours
+	 *            Number of grader hours
+	 * @throws InvalidInputException
+	 */
+
 	public void changeHours(Allocation allocation, ManagementSystem mm, ArrayList<Applicant> tas,
 			ArrayList<Integer> taHours, ArrayList<Applicant> graders, ArrayList<Integer> graderHours)
 			throws InvalidInputException {
@@ -672,7 +945,7 @@ public class TamasController {
 				}
 			}
 
-			
+
 			try {
 				PersistenceXStream.saveToXMLwithXStream(mm);
 			} catch (Exception e) {
@@ -680,6 +953,7 @@ public class TamasController {
 
 			}
 			
+
 		} catch (Exception e) {
 			throw new InvalidInputException(e.getMessage());
 		}
@@ -690,6 +964,13 @@ public class TamasController {
 		if (!allocation.getAllocationStatusFullName().equals("INSTRUCTOR_APPROVED")) {
 			throw new InvalidInputException(
 					"The allocation cannot be finalized. It could because of Instructor haven't approved it yet, or it has already be finalized. ");
+
+			/**
+			 * @param allocation
+			 *            Allocation
+			 * @throws InvalidInputException
+			 */
+
 		}
 		allocation.setAllocationStatus(AllocationStatus.FINAL_APPROVAL);
 		PersistenceXStream.saveToXMLwithXStream(ms);

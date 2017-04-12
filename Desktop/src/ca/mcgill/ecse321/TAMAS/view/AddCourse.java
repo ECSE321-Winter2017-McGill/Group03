@@ -61,6 +61,11 @@ public class AddCourse extends JFrame {
 	private JSeparator horizontalLineMiddle;
 	
 
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 * @param user User
+	 */
 	public AddCourse(ManagementSystem ms, Object user) {
 		this.ms = ms;
 		this.user = user;
@@ -69,6 +74,9 @@ public class AddCourse extends JFrame {
 		refreshData();
 	}
 
+	/**
+	 * Initialize all components
+	 */
 	private void initComponents() {
 		
 		formTitle = new JLabel("Add Course");
@@ -257,6 +265,10 @@ public class AddCourse extends JFrame {
 	}
 	
 	
+	/**
+	 * If there is an error, error will be displayed
+	 * If no errors occurred upon submission, then the form is cleared out
+	 */
 	private void refreshData() {
 		// error
 		errorMessage.setText(error);
@@ -287,6 +299,10 @@ public class AddCourse extends JFrame {
 		pack();
 	}
 	
+	/**
+	 * Action triggered when submitting the form
+	 * @param evt Action event
+	 */
 	private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO: Add a Course name attribute to model.
 		TamasController tc = new TamasController(ms);
@@ -295,112 +311,24 @@ public class AddCourse extends JFrame {
 
 	    if (selectedSemester < 0){
 	        error = error + "Please specify a semester.";
-	        }
+	    }
 	    
 	    if (error.trim().length() == 0) {
 	        // call the controller
 			String semester = (String) semesterToggleList.getSelectedItem();
 			String courseName = nameTextField.getText(); 
 			String courseCode = codeTextField.getText();
-			
-			int creditHour = 0;
-			if (creditTextField.getText() == null || creditTextField.getText().trim().length() == 0){
-				creditHour = -1;
-			}
-			else if (!creditTextField.getText().matches("[0-9]+")){
-				creditHour = -1;
-			}
-			else{
-				creditHour = Integer.parseInt(creditTextField.getText());
-			}
 
-			
-			
-			int maxStudentNum = 0;
-			if (maxStudentTextField.getText() == null || maxStudentTextField.getText().trim().length() == 0){
-				maxStudentNum = -1;
-			}
-			else if (!maxStudentTextField.getText().matches("[0-9]+")){
-				maxStudentNum = -1;
-			}
-			else{
-				maxStudentNum = Integer.parseInt(maxStudentTextField.getText());
-			}
-			
-			
+			String creditHour = creditTextField.getText();
+			String maxStudentNum = maxStudentTextField.getText();
 			String instructorName = instructorTextField.getText();
+			String numLab = numLabTextField.getText();
+			String numTutorial = numTutorialTextField.getText();
+			String labHour = labHourTextField.getText();
+			String tutorialHour = tutorialHourTextField.getText();
+			String numGrader = numGraderNeededTextField.getText();
+			String totalGraderHour = totalGraderHourTextField.getText();
 			
-			
-			int numLab = 0;
-			if (numLabTextField.getText() == null || numLabTextField.getText().trim().length() == 0){
-				numLab = -1;
-			}
-			else if (!numLabTextField.getText().matches("[0-9]+")){
-				numLab = -1;
-			}
-			else{
-				numLab = Integer.parseInt(numLabTextField.getText());
-			}
-			
-			
-			int numTutorial = 0;
-			if (numTutorialTextField.getText() == null || numTutorialTextField.getText().trim().length() == 0){
-				numTutorial = -1;
-			}
-			else if (!numTutorialTextField.getText().matches("[0-9]+")){
-				numTutorial = -1;
-			}
-			else{
-				numTutorial = Integer.parseInt(numTutorialTextField.getText());
-			}
-			
-			
-			int labHour = 0;
-			if (labHourTextField.getText() == null || labHourTextField.getText().trim().length() == 0){
-				labHour = -1;
-			}
-			else if (!labHourTextField.getText().matches("[0-9]+")){
-				labHour = -1;
-			}
-			else{
-				labHour = Integer.parseInt(labHourTextField.getText());
-			}
-			
-			
-			int tutorialHour = 0;
-			if (tutorialHourTextField.getText() == null || tutorialHourTextField.getText().trim().length() == 0){
-				tutorialHour = -1;
-			}
-			else if (!tutorialHourTextField.getText().matches("[0-9]+")){
-				tutorialHour = -1;
-			}
-			else{
-				tutorialHour = Integer.parseInt(tutorialHourTextField.getText());
-			}
-					
-			
-			int numGrader = 0;
-			if (numGraderNeededTextField.getText() == null || numGraderNeededTextField.getText().trim().length() == 0){
-				numGrader = -1;
-			}
-			else if (!numGraderNeededTextField.getText().matches("[0-9]+")){
-				numGrader = -1;
-			}
-			else{
-				numGrader = Integer.parseInt(numGraderNeededTextField.getText());
-			}
-			
-			
-			int totalGraderHour = 0;
-			if (totalGraderHourTextField.getText() == null || totalGraderHourTextField.getText().trim().length() == 0){
-				totalGraderHour = -1;
-			}
-			else if (!totalGraderHourTextField.getText().matches("[0-9]+")){
-				totalGraderHour = -1;
-			}
-			else{
-				totalGraderHour = Integer.parseInt(totalGraderHourTextField.getText());
-			}
 			
 		    try {
 		    	tc.createCourse(semester,courseName,courseCode,creditHour,maxStudentNum,instructorName,
@@ -415,11 +343,18 @@ public class AddCourse extends JFrame {
 		refreshData();
 	}
 	
+	/**
+	 * Action triggered when cancelling the form
+	 * @param evt Action event
+	 */
 	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		backToAllCourses();
 		setVisible(false);
 	}
 	
+	/**
+	 * Return to all courses
+	 */
 	private void backToAllCourses() {
 		new AllCourses(ms, user).setVisible(true);
 	}

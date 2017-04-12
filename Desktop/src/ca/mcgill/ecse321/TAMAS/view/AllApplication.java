@@ -43,10 +43,18 @@ public class AllApplication extends JFrame {
 	private String[][] data;
 	private JTable table;
 
+
 	private JComboBox<String> allJobPostingCourse = new JComboBox<String>(new String[0]);
 	private JComboBox<String> offerApplication = new JComboBox<String>(new String[0]);
 	private int selectedCourse;
 	private int selectedApplication;
+
+
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 * @param user User
+	 */
 
 	public AllApplication(ManagementSystem ms, Object user) {
 
@@ -67,6 +75,9 @@ public class AllApplication extends JFrame {
 		offerApplication.setSelectedIndex(selectedApplication);
 	}
 
+	/**
+	 * Initialize all components
+	 */
 	private void initComponents() {
 		// get table data ready;
 		String[] columnNames = { "Applicant Name", "U/G", "Job Title", "Course Code", "Application Status" };
@@ -386,6 +397,11 @@ public class AllApplication extends JFrame {
 			}
 		}
 	}
+
+
+	/**
+	 * Return to main page
+	 */
 
 	private void backToMain() {
 		new MainPage(user).setVisible(true);

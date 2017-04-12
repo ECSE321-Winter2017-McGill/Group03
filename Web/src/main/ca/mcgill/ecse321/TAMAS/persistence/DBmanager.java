@@ -17,7 +17,6 @@ public class DBmanager {
 	private static String myDriver = "org.gjt.mm.mysql.Driver";
 	private static String myUrl = "jdbc:mysql://test.cabyhhnybi2l.us-west-2.rds.amazonaws.com/test";
 	public static void writeFile(String data) {
-		System.out.println("Write1");
 		try {
 			FileWriter writer = new FileWriter("output/data.xml");
 			writer.write(data);
@@ -28,7 +27,6 @@ public class DBmanager {
 	}
 
 	public static String readFile(String fileName) throws IOException {
-		System.out.println("Read");
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		try {
 			StringBuilder sb = new StringBuilder();
@@ -46,7 +44,6 @@ public class DBmanager {
 	}
 
 	public static String getDB() {
-		System.out.println("GetDB1");
 		ResultSet rs = null;
 		String q = "xml";
 		try {
@@ -73,7 +70,6 @@ public class DBmanager {
 	}
 
 	public static void updateDB(String data) {
-		System.out.println("updateDB");
 		String q = "update xml set xml ='" + data + "' where data='data'";
 		try {
 			Class.forName(myDriver);

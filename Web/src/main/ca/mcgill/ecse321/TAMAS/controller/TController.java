@@ -27,7 +27,7 @@ public class TController {
 	public static Date getToday() {
 
 		Calendar c = Calendar.getInstance();
-
+		
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
@@ -121,8 +121,6 @@ public class TController {
 		Applicant ap = createApplicant(name, id, major, isUndergrad, year, exp, firstChoice, secondChoice, thirdChoice,
 				totalAppointmentHour);
 
-		System.out.println("create");
-		System.out.println(ap.numberOfApplications());
 		if (ap.getApplications().size() < 3) {
 			Application application = new Application(0, jp, ap);
 			ap.addApplication(application);

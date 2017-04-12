@@ -30,20 +30,27 @@ public class AllCourses extends JFrame {
 	private static String filename = "output/data.xml";
 
 	private Object user;
+	private JComboBox<String> allCourse = new JComboBox<String>(new String[0]);
 	private int selectedCourse;
 	private HashMap<String, Course> courseMap = new HashMap<String, Course>();
-	private JComboBox<String> allCourse = new JComboBox<String>(new String[0]);
-
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 * @param user User
+	 */
 	public AllCourses(ManagementSystem ms, Object user) {
 		this.user = user;
 		this.ms = ms;
 		initComponents();
 		selectedCourse = -1;
 		allCourse.setSelectedIndex(selectedCourse);
+
 	}
 
+	/**
+	 * Initialize all components
+	 */
 	private void initComponents() {
-
 		// get table data ready;
 
 		String[] columnNames = { "Semester", "Course Code", "Course Name", "Credit", "Instructor", "Num of Tutorials",
@@ -74,9 +81,19 @@ public class AllCourses extends JFrame {
 		JPanel buttomPane = new JPanel();
 
 		// get the rest of frame ready;
+
 		JButton viewDetailButton = new JButton("View Details");
 		JButton addCourse = new JButton("Add a Course");
 		JButton backButton = new JButton("Back");
+		
+		// Combobox action listenser
+		allCourse.addActionListener(new java.awt.event.ActionListener() {
+	        public void actionPerformed(java.awt.event.ActionEvent evt) {
+	            @SuppressWarnings("unchecked")
+				JComboBox<String> cb = (JComboBox<String>) evt.getSource();
+	            selectedCourse = cb.getSelectedIndex();
+	        }
+	    });
 
 		// Combobox action listenser
 		allCourse.addActionListener(new java.awt.event.ActionListener() {
@@ -124,17 +141,21 @@ public class AllCourses extends JFrame {
 		viewDetailButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				if (allCourse.getItemCount() == 0) {
-					JOptionPane.showMessageDialog(AllCourses.this, "No course information has been submitted.");
-				} else if (selectedCourse < 0) {
-					JOptionPane.showMessageDialog(AllCourses.this, "You need to select a course.");
-				} else {
-
+				
+				if (allCourse.getItemCount()==0){
+					JOptionPane.showMessageDialog(AllCourses.this,
+							"No course information has been submitted.");
+				}
+				else if (selectedCourse < 0){
+					JOptionPane.showMessageDialog(AllCourses.this,
+							"You need to select a course.");
+				}
+				else{
+					
 					String courseDescription = allCourse.getItemAt(selectedCourse).toString();
 					Course selectedCourse = courseMap.get(courseDescription);
 					System.out.print(courseDescription);
-					new CourseDetails(ms, selectedCourse, user).setVisible(true);
+					new CourseDetails(ms,selectedCourse,user).setVisible(true);
 				}
 			}
 		});
@@ -158,6 +179,9 @@ public class AllCourses extends JFrame {
 
 	}
 
+	/**
+	 * Return to main page
+	 */
 	private void backToMain() {
 		new MainPage(user).setVisible(true);
 	}

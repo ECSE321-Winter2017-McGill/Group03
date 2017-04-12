@@ -1,12 +1,13 @@
+// This class is used for login purposes, it connects to a mysql database and checks the username and password.
+
+
 package ca.mcgill.ecse321.TAMAS.controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
-import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 
 public class Login {
@@ -14,28 +15,14 @@ public class Login {
 	private static String password = "yuwen120";
 	private static String myDriver = "org.gjt.mm.mysql.Driver";
 	private static String myUrl = "jdbc:mysql://test.cabyhhnybi2l.us-west-2.rds.amazonaws.com/test";
+	@SuppressWarnings("unused")
 	private static ManagementSystem ms = new ManagementSystem();
 
-	public static void main(String[] args) {
-		ResultSet rs = getDB("login");
-		String name="Jackson";
-		@SuppressWarnings("unused")
-
-		Applicant applicant = new Applicant (123,name,null,true,"","","","","","",0,ms);
-
-		
-		try {
-			while (rs.next()) {
-
-				String r = rs.getString("login where Name='"+name+"'");
-				System.out.println(r);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
+	/**
+	 * @param q
+	 * @return result set for database access
+	 */
+	@SuppressWarnings("unused")
 	private static ResultSet getDB(String q) {
 		try {
 			Class.forName(myDriver);
@@ -53,6 +40,9 @@ public class Login {
 		return null;
 	}
 
+	/**
+	 * @param q
+	 */
 	@SuppressWarnings("unused")
 	private static void updateDB(String q) {
 		try {

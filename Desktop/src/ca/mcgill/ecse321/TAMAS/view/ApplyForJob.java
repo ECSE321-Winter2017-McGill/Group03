@@ -73,6 +73,11 @@ public class ApplyForJob extends JFrame {
 
 	private ManagementSystem ms;
 
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 * @param user User
+	 */
 	public ApplyForJob(ManagementSystem ms, Object user) {
 		this.ms = ms;
 		this.user = user;
@@ -80,6 +85,9 @@ public class ApplyForJob extends JFrame {
 		refreshData();
 	}
 
+	/**
+	 * Initialize all components
+	 */
 	public void initComponents() {
 
 		formTitle = new JLabel("Application");
@@ -277,8 +285,14 @@ public class ApplyForJob extends JFrame {
 		}
 
 	}
-
+	/**
+	 * Add component to the layout
+	 * @param o Component
+	 */
 	private void addlayout(Component name, Component firstChoice, Component secondChoice, Component thirdChoice) {
+
+
+
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -327,6 +341,9 @@ public class ApplyForJob extends JFrame {
 		setResizable(false);
 	}
 
+	/**
+	 * Refresh data if no errors occurred
+	 */
 	private void refreshData() {
 		// error
 		errorMessage.setText(error);
@@ -353,6 +370,10 @@ public class ApplyForJob extends JFrame {
 		pack();
 	}
 
+	/**
+	 * Action triggered when submitting the job application
+	 * @param evt Action event
+	 */
 	private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
 
 		// TODO: Change the appointment hour after we have the allocation
@@ -383,15 +404,7 @@ public class ApplyForJob extends JFrame {
 				name = nameTextField.getText();
 			}
 
-			int id;
-			if (idTextField.getText().equals("")) {
-				id = -1;
-			} else if (!idTextField.getText().matches("[0-9]+")) {
-				id = -1;
-			} else {
-				id = Integer.parseInt(idTextField.getText());
-			}
-
+			String id = idTextField.getText();
 			String major = majorTextField.getText();
 
 			boolean isUndergrad = true;
@@ -442,11 +455,18 @@ public class ApplyForJob extends JFrame {
 		refreshData();
 	}
 
+	/**
+	 * Action triggered when cancelling the job application
+	 * @param evt Action event
+	 */
 	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		backToAllApp();
 		setVisible(false);
 	}
 
+	/**
+	 * Return to all applications page
+	 */
 	private void backToAllApp() {
 		new AllApplication(ms, user).setVisible(true);
 	}

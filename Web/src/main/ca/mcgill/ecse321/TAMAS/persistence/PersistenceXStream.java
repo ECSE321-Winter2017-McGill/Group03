@@ -24,8 +24,6 @@ public abstract class PersistenceXStream {
 		// load model if exists, create otherwise
 		File file = new File(fileName);
 		if (file.exists()) {
-			System.out.println("File Exists");
-
 			ms = (ManagementSystem) loadFromXMLwithXStream();
 		}
 
@@ -47,7 +45,6 @@ public abstract class PersistenceXStream {
 	public static String saveToXMLwithXStream(Object obj) {
 		xstream.setMode(XStream.ID_REFERENCES);
 		String xml = xstream.toXML(obj); // save our xml file
-		System.out.println(xml);
 		try {
 			DBmanager.updateDB(xml);
 		} catch (Exception e) {
