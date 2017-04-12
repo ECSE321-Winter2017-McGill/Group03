@@ -1,3 +1,6 @@
+
+//This is the same controller used in our desktop Application
+
 package ca.mcgill.ecse321.TAMAS.controller;
 
 import java.util.Date;
@@ -15,7 +18,6 @@ import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.DBmanager;
-import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
 public class TController {
 	private static XStream xstream = new XStream();
@@ -340,6 +342,7 @@ public class TController {
 		// TODO: HOW TO CALCULATE BUDGET
 		double budgetCalculated = (18 * hourRequiredTa) + (15 * totalGraderHour);
 
+		@SuppressWarnings("unused")
 		Course newCourse = new Course(semester, courseName, courseCode.trim(), numTutorial, numLab, maxStudent, credit, numTaNeeded,
 				numGraderNeeded, labHour, tutorialHour,totalGraderHour,budgetCalculated, instructor, ms);
 		DBmanager.updateDB(this.objToXML(ms));

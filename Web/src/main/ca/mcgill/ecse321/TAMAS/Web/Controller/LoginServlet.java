@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
 
-import ca.mcgill.ecse321.TAMAS.model.Applicant;
-import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.DBmanager;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
@@ -21,10 +19,6 @@ import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 @WebServlet(urlPatterns = "/login.do")
 
 public class LoginServlet extends HttpServlet {
-
-	// private LoginService userValidationService = new LoginService();
-
-	// private TodoService todoService = new TodoService();
 
 	/**
 	 * 
@@ -47,35 +41,14 @@ public class LoginServlet extends HttpServlet {
 
 		DBmanager.writeFile(DBmanager.getDB());
 		String fileName = "output/data.xml";
+		@SuppressWarnings("unused")
 		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
 		String name = request.getParameter("username");
 
 		String password = request.getParameter("password");
-//		boolean found = false;
-//		for (Applicant a : ms.getApplicants()) {
-//			if (a.getName().equals(name)) {
-//				found = true;
-//				String role = "applicant";
-//				request.getSession().setAttribute("role", role);
-//				break;
-//			}
-//		}
-//		for (Instructor a : ms.getInstructors()) {
-//			if (a.getName().equals(name)) {
-//				found = true;
-//				String role = "instructor";
-//				request.getSession().setAttribute("role", role);
-//				break;
-//			}
-//		}
-//
-//		if (!found) {
-//			request.getSession().setAttribute("role", "department");
-//			found=true;
-//		}
 
 		request.getSession().setAttribute("name", name);
-		if (password.equals("t")) {
+		if (password.equals("password")) {
 
 			request.getSession().setAttribute("name", name);
 			request.getRequestDispatcher("/WEB-INF/views/pages/dashboard.jsp").forward(request, response);

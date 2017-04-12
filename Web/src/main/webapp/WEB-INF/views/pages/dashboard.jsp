@@ -33,8 +33,6 @@
 							TA Evaluaion</a></li>
 					<li><a href="viewAllApplication.jsp"><i
 							class="fa fa-dashboard fa-fw"></i> View Application</a></li>
-					<li><a href="Schedule.jsp"><i
-							class="fa fa-dashboard fa-fw"></i> TA Schedule</a></li>
 				</ul>
 			</div>
 		</div>
@@ -105,13 +103,14 @@
 
 
 			</div>
-			<div class="box-footer clearfix">
+			<!-- <div class="box-footer clearfix">
 				<a href="javascript:void(0)"
 					class="btn btn-sm btn-info btn-flat pull-left">Add New Courses</a>
 				<a href="javascript:void(0)"
 					class="btn btn-sm btn-default btn-flat pull-right">View All
 					Courses</a>
 			</div>
+			 -->
 		</div>
 	</div>
 

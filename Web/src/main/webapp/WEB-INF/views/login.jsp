@@ -40,7 +40,7 @@
 								</div>
 								<div id="formsAuthenticationArea">
 									<div id="userNameArea">
-										<input id="userNameInput" name="username" type="text" value="" tabindex="1" class="text fullWidth" spellcheck="false" placeholder="Default name: test"
+										<input id="userNameInput" name="username" type="text" value="" tabindex="1" class="text fullWidth" spellcheck="false" placeholder="Instructor Name:"
 										 autocomplete="off" />
 									</div>
 

@@ -600,8 +600,8 @@ public class AppTest {
 		  assertEquals(0, ms.getApplicants().size()); 
 		  
 		  Applicant ap1 = new Applicant(111, "a", "", true, "", "","", "", "", "", 10, ms);
-		  Applicant ap2 = new Applicant(111, "b", "", true, "", "","", "", "", "", 10, ms);
-		  Applicant ap3 = new Applicant(111, "c", "", true, "", "","", "", "", "", 10, ms);
+		  new Applicant(111, "b", "", true, "", "","", "", "", "", 10, ms);
+		  new Applicant(111, "c", "", true, "", "","", "", "", "", 10, ms);
 
 		  assertEquals(3, ms.getApplicants().size());
 		  
@@ -628,8 +628,8 @@ public class AppTest {
 		  assertEquals(0, ms.getApplicants().size()); 
 		  
 		  Instructor Inst1 = new Instructor("a", ms);
-		  Instructor Inst2 = new Instructor("b", ms);
-		  Instructor Inst3 = new Instructor("c", ms);
+		  new Instructor("b", ms);
+		  new Instructor("c", ms);
 		  
 		  assertEquals(3, ms.getInstructors().size());
 		  

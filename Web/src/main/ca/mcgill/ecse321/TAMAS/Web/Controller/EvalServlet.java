@@ -17,8 +17,6 @@ import com.thoughtworks.xstream.XStream;
 
 import ca.mcgill.ecse321.TAMAS.controller.TController;
 import ca.mcgill.ecse321.TAMAS.model.Applicant;
-import ca.mcgill.ecse321.TAMAS.model.Course;
-import ca.mcgill.ecse321.TAMAS.model.JobPosting;
 import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.DBmanager;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
@@ -57,12 +55,9 @@ public class EvalServlet extends HttpServlet {
 
 		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
 
-		try {
-			
+		try {		
 			TController c = new TController(ms);
-			System.out.println(taName+"eval1:"+Eval);
 			c.createTAEval(taName, Eval);
-			System.out.println(taName+"eval2:"+Eval);
 			DBmanager.updateDB(objToXML(ms));
 		} catch (Exception e) {
 			evalError=e.getMessage();
