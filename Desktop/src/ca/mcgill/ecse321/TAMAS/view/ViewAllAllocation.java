@@ -14,6 +14,11 @@ public class ViewAllAllocation extends JFrame{
 	 */
 	private static final long serialVersionUID = -6085118368680695878L;
 	private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+	
+
+	/**
+	 * Class constructor
+	 */
 	public ViewAllAllocation() {
 		getContentPane().setLayout(null);
 		

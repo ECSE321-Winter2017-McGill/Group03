@@ -55,13 +55,23 @@ public class ApplicationDetails extends JFrame {
 	@SuppressWarnings("unused")
 	private Object user;
 
+	/**
+	 * Class constructor
+	 * @param ms Management system
+	 * @param app Applicant
+	 * @param user User
+	 */
 	public ApplicationDetails(ManagementSystem ms, Applicant app, Object user) {
+
 		this.ms = ms;
 		this.app = app;
 		this.user = user;
 		initComponents();
 	}
 
+	/**
+	 * Initialize all components
+	 */
 	public void initComponents() {
 
 		formTitle = new JLabel("Application");
@@ -183,14 +193,25 @@ public class ApplicationDetails extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
+<<<<<<< HEAD
 
+=======
+	
+	/**
+	 * Action triggered when back button is clicked
+	 * @param evt Action event
+	 */
+>>>>>>> master
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		backToAllocation();
 		dispose();
 	}
+<<<<<<< HEAD
 
 	private void backToAllocation() {
 		// new AllocationPage().setVisible(true);
 	}
 
+=======
+>>>>>>> master
 }

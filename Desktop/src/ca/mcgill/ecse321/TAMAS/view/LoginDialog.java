@@ -18,9 +18,7 @@ import ca.mcgill.ecse321.TAMAS.model.ManagementSystem;
 import ca.mcgill.ecse321.TAMAS.persistence.PersistenceXStream;
 
 public class LoginDialog extends JFrame {
-	/**
-	* 
-	*/
+
 	private static String fileName = "output/data.xml";
 	private HashMap<String, String> loginInfo = new HashMap<>();
 	private static final long serialVersionUID = -4375840286920173785L;
@@ -32,6 +30,9 @@ public class LoginDialog extends JFrame {
 	private JButton btnRegister;
 	private boolean succeeded;
 
+	/**
+	 * Class constructor
+	 */
 	public LoginDialog() {
 
 		JPanel panel = new JPanel(new GridBagLayout());
@@ -116,6 +117,11 @@ public class LoginDialog extends JFrame {
 		setResizable(false);
 	}
 
+	/**
+	 * @param username Username
+	 * @param password Password
+	 * @return boolean that indicates if user is authenticated
+	 */
 	protected boolean authenticate(String username, String password) {
 		// TODO Auto-generated method stub
 		loginInfo.put("i", "i");
@@ -128,18 +134,30 @@ public class LoginDialog extends JFrame {
 		return false;
 	}
 
+	/**
+	 * @return username Username
+	 */
 	public String getUsername() {
 		return tfUsername.getText().trim();
 	}
 
+	/**
+	 * @return password Password
+	 */
 	public String getPassword() {
 		return new String(pfPassword.getPassword());
 	}
 
+	/**
+	 * @return boolean that indicates if succeeded
+	 */
 	public boolean isSucceeded() {
 		return succeeded;
 	}
 
+	/**
+	 * @return role of the user
+	 */
 	private Object getUserRole() {
 		final ManagementSystem ms = PersistenceXStream.initializeModelManager(fileName);
 

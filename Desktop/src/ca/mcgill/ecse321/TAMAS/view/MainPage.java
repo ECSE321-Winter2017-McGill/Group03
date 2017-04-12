@@ -36,11 +36,19 @@ public class MainPage extends JFrame {
 
 	private Object user;
 
+	/**
+	 * Class constructor
+	 * @param user User
+	 */
 	public MainPage(Object user) {
 		this.user = user;
 		initComponents(user);
 	}
 
+	/**
+	 * Initialize all components
+	 * @param role Role
+	 */
 	private void initComponents(Object role) {
 
 		viewCourse = new JButton("   View All Courses   ");
@@ -174,6 +182,11 @@ public class MainPage extends JFrame {
 
 		});
 
+	/**
+	 * Return to main page
+	 */
+	public void backToMain() {
+		new MainPage(user).setVisible(true);
 	}
 
 }
